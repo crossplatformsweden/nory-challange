@@ -25,7 +25,7 @@ jobs:
           cache: 'pnpm'
 
       - name: 🧩 Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: 🧪 Lint
         run: pnpm lint
@@ -57,7 +57,7 @@ jobs:
           cache: 'pnpm'
 
       - name: 🧩 Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: 🚀 Install Playwright browsers
         run: pnpm install:playwright
@@ -86,7 +86,7 @@ jobs:
           cache: 'pnpm'
 
       - name: 🧩 Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: 🏗️ Build
         run: pnpm build
