@@ -96,6 +96,15 @@ Format all code with Prettier:
 pnpm format
 ```
 
+## Git Hooks
+
+This repository uses Husky and lint-staged to enforce code quality:
+
+- **pre-commit**: Automatically runs linting, type checking, and formatting on staged files
+- **pre-push**: Runs a full build to ensure everything compiles before pushing to remote
+
+The hooks are automatically set up when running `pnpm install` due to the prepare script.
+
 ## Architecture
 
 This Turborepo uses:
@@ -108,6 +117,8 @@ This Turborepo uses:
 - [pnpm](https://pnpm.io/) for package management
 - [Playwright](https://playwright.dev/) for end-to-end testing
 - [Storybook](https://storybook.js.org/) for UI component development and documentation
+- [Husky](https://typicode.github.io/husky/) for Git hooks
+- [lint-staged](https://github.com/lint-staged/lint-staged) for running linters on staged files
 
 The UI components package (`@repo/ui`) is configured to be consumed directly by Next.js applications. The component `.tsx` files are consumed directly using `transpilePackages` in `next.config.ts`.
 
