@@ -20,13 +20,61 @@
     },
     "test": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "test/**/*.tsx", "playwright.config.ts"],
+      "inputs": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "test/**/*.ts",
+        "test/**/*.tsx",
+        "app/**/*.ts",
+        "app/**/*.tsx",
+        "__tests__/**/*.ts",
+        "__tests__/**/*.tsx",
+        "jest.config.*",
+        "jest.setup.*"
+      ],
+      "outputs": ["coverage/**"]
+    },
+    "test:watch": {
+      "cache": false,
+      "persistent": true
+    },
+    "test:coverage": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "test/**/*.ts",
+        "test/**/*.tsx",
+        "app/**/*.ts",
+        "app/**/*.tsx",
+        "__tests__/**/*.ts",
+        "__tests__/**/*.tsx",
+        "jest.config.js",
+        "jest.setup.js"
+      ],
+      "outputs": ["coverage/**"]
+    },
+    "e2e:test": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "test/**/*.ts",
+        "test/**/*.tsx",
+        "playwright.config.ts"
+      ],
       "outputs": ["test-results/**", "playwright-report/**"],
       "env": ["CI"]
     },
     "test:ui": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "test/**/*.tsx", "playwright.config.ts"],
+      "inputs": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "test/**/*.ts",
+        "test/**/*.tsx",
+        "playwright.config.ts"
+      ],
       "outputs": [],
       "env": ["CI"]
     },
@@ -40,7 +88,13 @@
     },
     "build-storybook": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.stories.ts", "src/**/*.stories.tsx", ".storybook/**/*"],
+      "inputs": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "src/**/*.stories.ts",
+        "src/**/*.stories.tsx",
+        ".storybook/**/*"
+      ],
       "outputs": ["storybook-static/**"]
     }
   }

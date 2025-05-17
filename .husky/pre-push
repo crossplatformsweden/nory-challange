@@ -1,3 +1,7 @@
 # Run full build to ensure everything compiles
 echo "Running full build check before push..."
 pnpm build
+
+# Run tests to make sure everything is working
+echo "Running tests before push..."
+pnpm test

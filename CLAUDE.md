@@ -51,7 +51,23 @@ pnpm build-storybook
 
 ### Testing
 
-Run E2E tests:
+Run unit tests with Jest:
+
+```bash
+# Run all unit tests
+pnpm test
+
+# Run tests in watch mode
+pnpm test:watch
+
+# Run tests with coverage report
+pnpm test:coverage
+
+# Run tests for a specific package/app
+pnpm --filter web test
+```
+
+Run E2E tests with Playwright:
 
 ```bash
 # Install Playwright browsers (first time only)
