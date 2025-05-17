@@ -6,7 +6,12 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "check-types": "turbo run check-types",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "e2e": "turbo run test --filter=@repo/e2e-tests",
+    "e2e:ui": "turbo run test:ui --filter=@repo/e2e-tests",
+    "storybook": "turbo run storybook --filter=@repo/ui",
+    "build-storybook": "turbo run build-storybook --filter=@repo/ui",
+    "install:playwright": "turbo run install:browsers --filter=@repo/e2e-tests"
   },
   "devDependencies": {
     "prettier": "^3.5.3",
