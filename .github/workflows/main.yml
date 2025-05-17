@@ -27,13 +27,16 @@ jobs:
       - name: 🧩 Install dependencies
         run: pnpm install --no-frozen-lockfile
 
+      - name: 🏗️ Build UI packages
+        run: pnpm --filter @repo/ui build
+
       - name: 🧪 Lint
         run: pnpm lint
 
       - name: 📝 Type check
         run: pnpm check-types
 
-      - name: 🏗️ Build
+      - name: 🏗️ Build all
         run: pnpm build
 
   test:
