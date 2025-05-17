@@ -1,0 +1,2376 @@
+openapi: "3.0.0"
+info:
+  title: Nory Inventory API
+  description: API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
+  version: "1.0.0"
+servers:
+  - url: https://api.nory.example.com/api
+    description: Production server
+  - url: http://localhost:8080/api
+    description: Local development server
+
+tags:
+  - name: Locations
+    description: Operations related to locations (restaurants, etc.)
+  - name: Staff
+    description: Operations related to staff members at specific locations
+  - name: Ingredients
+    description: Operations related to core inventory item definitions
+  - name: Recipes
+    description: Operations related to global recipe definitions
+  - name: Recipe Ingredient Links
+    description: Operations linking recipes to ingredients and specifying quantities required per recipe unit.
+  - name: Modifiers
+    description: Operations related to global recipe modifier groups
+  - name: Modifier Options
+    description: Operations related to individual options within modifier groups.
+  - name: Location Menu Items
+    description: Operations linking recipes to locations as menu items, with location-specific details like price and available modifiers.
+  - name: Location Ingredient Costs
+    description: Operations for managing location-specific costs for ingredients.
+  - name: Inventory Stock
+    description: Operations related to current inventory stock levels at locations.
+  - name: Inventory Movements
+    description: Operations logging changes in inventory stock (waste, restock, sales, transfers, etc.).
+
+paths:
+  /locations:
+    get:
+      tags:
+        - Locations
+      operationId: listLocations
+      summary: List all locations
+      description: Retrieve a list of all locations managed in the inventory system.
+      responses:
+        "200":
+          description: A list of locations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Location"
+              # examples: Add examples here
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Locations
+      operationId: createLocation
+      summary: Create a new location
+      description: Add a new location to the inventory system.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LocationCreate"
+            # examples: Add examples here
+      responses:
+        "201":
+          description: The newly created location.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Location"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /locations/{locationId}:
+    parameters:
+      - in: path
+        name: locationId
+        required: true
+        schema:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "The unique identifier of the location."
+        # example: "location1"
+    get:
+      tags:
+        - Locations
+      operationId: getLocationById
+      summary: Get a single location by ID
+      description: Retrieve a specific location using its unique ID.
+      responses:
+        "200":
+          description: The location details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Location"
+            # examples: Add examples here
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    patch:
+      tags:
+        - Locations
+      operationId: updateLocation
+      summary: Update a location
+      description: Update details of an existing location.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LocationUpdate"
+            # examples: Add examples here
+      responses:
+        "200":
+          description: The updated location details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Location"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Locations
+      operationId: deleteLocation
+      summary: Delete a location
+      description: Remove a location from the system. This might also require handling related data (staff, inventory, menu items, etc.).
+      responses:
+        "204":
+          description: Location successfully deleted. (No content)
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /locations/{locationId}/staff: # Nested Staff under Location
+    parameters:
+      - in: path
+        name: locationId
+        required: true
+        schema:
+          type: string
+          # format: uuid
+          description: "The unique identifier of the location."
+        # example: "location1"
+    get:
+      tags:
+        - Staff
+      operationId: listStaffByLocation
+      summary: List staff for a specific location
+      description: Retrieve a list of all staff members working at the specified location.
+      responses:
+        "200":
+          description: A list of staff members.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Staff"
+              # examples: Add examples here
+        "404":
+          description: Location not found. # Specific 404 for parent resource
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Staff
+      operationId: createStaffAtLocation
+      summary: Create a new staff member for a location
+      description: Add a new staff member associated with the specified location.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StaffCreate"
+            # examples: Add examples here
+      responses:
+        "201":
+          description: The newly created staff member.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Staff"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          description: Location not found. # Specific 404 for parent resource
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /locations/{locationId}/staff/{staffId}: # Nested Staff detail
+    parameters:
+      - in: path
+        name: locationId
+        required: true
+        schema:
+          type: string
+          # format: uuid
+          description: "The unique identifier of the location."
+        # example: "location1"
+      - in: path
+        name: staffId
+        required: true
+        schema:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "The unique identifier of the staff member."
+        # example: "staff1"
+    get:
+      tags:
+        - Staff
+      operationId: getStaffByLocationAndId
+      summary: Get a staff member by ID for a specific location
+      description: Retrieve a specific staff member using their unique ID within the context of a location.
+      responses:
+        "200":
+          description: The staff member details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Staff"
+            # examples: Add examples here
+        "404":
+          $ref: "#/components/responses/NotFound" # Could be location or staff not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    patch:
+      tags:
+        - Staff
+      operationId: updateStaffAtLocation
+      summary: Update a staff member for a location
+      description: Update details of an existing staff member associated with the specified location.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StaffUpdate"
+            # examples: Add examples here
+      responses:
+        "200":
+          description: The updated staff member details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Staff"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound" # Could be location or staff not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Staff
+      operationId: deleteStaffAtLocation
+      summary: Delete a staff member from a location
+      description: Remove a staff member association with the specified location.
+      responses:
+        "204":
+          description: Staff member successfully deleted from location.
+        "404":
+          $ref: "#/components/responses/NotFound" # Could be location or staff not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /ingredients: # Global Ingredients (Inventory Items definition)
+    get:
+      tags:
+        - Ingredients
+      operationId: listIngredients
+      summary: List all ingredients
+      description: Retrieve a list of all defined inventory ingredients.
+      responses:
+        "200":
+          description: A list of ingredients.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ingredient"
+              # examples: Add examples here
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Ingredients
+      operationId: createIngredient
+      summary: Create a new ingredient
+      description: Add a new ingredient definition to the inventory.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IngredientCreate"
+            # examples: Add examples here
+      responses:
+        "201":
+          description: The newly created ingredient.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ingredient"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /ingredients/{ingredientId}: # Global Ingredient detail
+    parameters:
+      - in: path
+        name: ingredientId
+        required: true
+        schema:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "The unique identifier of the ingredient."
+        # example: "ingredient1"
+    get:
+      tags:
+        - Ingredients
+      operationId: getIngredientById
+      summary: Get an ingredient by ID
+      description: Retrieve a specific ingredient definition using its unique ID.
+      responses:
+        "200":
+          description: The ingredient details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ingredient"
+            # examples: Add examples here
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    patch:
+      tags:
+        - Ingredients
+      operationId: updateIngredient
+      summary: Update an ingredient
+      description: Update details of an existing ingredient definition.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IngredientUpdate"
+            # examples: Add examples here
+      responses:
+        "200":
+          description: The updated ingredient details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ingredient"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Ingredients
+      operationId: deleteIngredient
+      summary: Delete an ingredient
+      description: Remove an ingredient definition from the system. This might require checks for existing stock or recipe links.
+      responses:
+        "204":
+          description: Ingredient successfully deleted.
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /recipes: # Global Recipe definitions
+    get:
+      tags:
+        - Recipes
+      operationId: listRecipes
+      summary: List all recipes
+      description: Retrieve a list of all defined recipes.
+      responses:
+        "200":
+          description: A list of recipes.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Recipe"
+              # examples: Add examples here
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Recipes
+      operationId: createRecipe
+      summary: Create a new recipe
+      description: Add a new recipe definition.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecipeCreate"
+            # examples: Add examples here
+      responses:
+        "201":
+          description: The newly created recipe.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipe"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /recipes/{recipeId}: # Global Recipe detail
+    parameters:
+      - in: path
+        name: recipeId
+        required: true
+        schema:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "The unique identifier of the recipe."
+        # example: "recipe1"
+    get:
+      tags:
+        - Recipes
+      operationId: getRecipeById
+      summary: Get a recipe by ID
+      description: Retrieve a specific recipe using its unique ID.
+      responses:
+        "200":
+          description: The recipe details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipe"
+            # examples: Add examples here
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    patch:
+      tags:
+        - Recipes
+      operationId: updateRecipe
+      summary: Update a recipe
+      description: Update details of an existing recipe definition.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecipeUpdate"
+            # examples: Add examples here
+      responses:
+        "200":
+          description: The updated recipe details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipe"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Recipes
+      operationId: deleteRecipe
+      summary: Delete a recipe
+      description: Remove a recipe definition. This might require checks for existing ingredient links or menu item links.
+      responses:
+        "204":
+          description: Recipe successfully deleted.
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /recipes/{recipeId}/ingredientLinks: # Nested Recipe Ingredient Links list (renamed for clarity)
+    parameters:
+      - in: path
+        name: recipeId
+        required: true
+        schema:
+          type: string
+          # format: uuid
+          description: "The unique identifier of the recipe."
+        # example: "recipe1"
+    get:
+      tags:
+        - Recipe Ingredient Links
+      operationId: listRecipeIngredientLinks
+      summary: List ingredient links for a recipe
+      description: Retrieve a list of all ingredients required for the specified recipe, including their quantities.
+      responses:
+        "200":
+          description: A list of recipe ingredient links.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RecipeIngredientLink"
+              # examples: Add examples here
+        "404":
+          description: Recipe not found.
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Recipe Ingredient Links
+      operationId: createRecipeIngredientLink
+      summary: Add an ingredient to a recipe
+      description: Link an ingredient to a recipe with a specific required quantity.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecipeIngredientLinkCreate"
+            # examples: Add examples here
+      responses:
+        "201":
+          description: The newly created recipe-ingredient link.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecipeIngredientLink"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound" # Could be recipe or ingredient not found
+        "409":
+          $ref: "#/components/responses/Conflict" # If the ingredient is already linked to this recipe
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /recipes/{recipeId}/ingredientLinks/{recipeIngredientLinkId}: # Nested Recipe Ingredient Link detail
+    parameters:
+      - in: path
+        name: recipeId
+        required: true
+        schema:
+          type: string
+          # format: uuid
+          description: "The unique identifier of the recipe."
+        # example: "recipe1"
+      - in: path
+        name: recipeIngredientLinkId
+        required: true
+        schema:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "The unique identifier of the recipe-ingredient link."
+        # example: "link1"
+    # Note: PATCH is missing here, assuming recipe-ingredient links are immutable and need re-creation if quantity changes.
+    # Add PATCH if updates are needed, using RecipeIngredientLinkUpdate schema.
+    delete:
+      tags:
+        - Recipe Ingredient Links
+      operationId: deleteRecipeIngredientLink
+      summary: Remove a recipe ingredient link
+      description: Remove a specific ingredient requirement from a recipe.
+      responses:
+        "204":
+          description: Recipe ingredient link successfully removed.
+        "404":
+          $ref: "#/components/responses/NotFound" # Could be recipe or link not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /modifiers: # Global Modifier definitions
+    get:
+      tags:
+        - Modifiers
+      operationId: listModifiers
+      summary: List all modifiers
+      description: Retrieve a list of all defined modifier groups (e.g., "Milk Options").
+      responses:
+        "200":
+          description: A list of modifiers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Modifier"
+              # examples: Add examples here
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Modifiers
+      operationId: createModifier
+      summary: Create a new modifier group
+      description: Add a new modifier group definition.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModifierCreate"
+            # examples: Add examples here
+      responses:
+        "201":
+          description: The newly created modifier.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Modifier"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /modifiers/{modifierId}: # Global Modifier detail
+    parameters:
+      - in: path
+        name: modifierId
+        required: true
+        schema:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "The unique identifier of the modifier group."
+        # example: "modifier1"
+    get:
+      tags:
+        - Modifiers
+      operationId: getModifierById
+      summary: Get a modifier by ID
+      description: Retrieve a specific modifier group using its unique ID.
+      responses:
+        "200":
+          description: The modifier details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Modifier"
+            # examples: Add examples here
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    patch:
+      tags:
+        - Modifiers
+      operationId: updateModifier
+      summary: Update a modifier group
+      description: Update details of an existing modifier group definition.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModifierUpdate"
+            # examples: Add examples here
+      responses:
+        "200":
+          description: The updated modifier details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Modifier"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Modifiers
+      operationId: deleteModifier
+      summary: Delete a modifier group
+      description: Remove a modifier group definition. This might require checks for existing options or menu item links.
+      responses:
+        "204":
+          description: Modifier group successfully deleted.
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /modifiers/{modifierId}/options: # Nested Modifier Options list
+    parameters:
+      - in: path
+        name: modifierId
+        required: true
+        schema:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "The unique identifier of the modifier group."
+        # example: "modifier1"
+    get:
+      tags:
+        - Modifier Options
+      operationId: listModifierOptions
+      summary: List options for a modifier group
+      description: Retrieve a list of all individual options within the specified modifier group.
+      responses:
+        "200":
+          description: A list of modifier options.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ModifierOption"
+              # examples: Add examples here
+        "404":
+          description: Modifier group not found.
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Modifier Options
+      operationId: createModifierOption
+      summary: Create a new modifier option for a group
+      description: Add a new individual option to an existing modifier group.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModifierOptionCreate"
+            # examples: Add examples here
+      responses:
+        "201":
+          description: The newly created modifier option.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModifierOption"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound" # Modifier group not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /modifiers/{modifierId}/options/{modifierOptionId}: # Nested Modifier Option detail
+    parameters:
+      - in: path
+        name: modifierId
+        required: true
+        schema:
+          type: string
+          # format: uuid
+          description: "The unique identifier of the modifier group."
+        # example: "modifier1"
+      - in: path
+        name: modifierOptionId
+        required: true
+        schema:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "The unique identifier of the modifier option."
+        # example: "option1"
+    get:
+      tags:
+        - Modifier Options
+      operationId: getModifierOptionById
+      summary: Get a modifier option by ID for a group
+      description: Retrieve a specific modifier option using its unique ID within the context of a modifier group.
+      responses:
+        "200":
+          description: The modifier option details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModifierOption"
+            # examples: Add examples here
+        "404":
+          $ref: "#/components/responses/NotFound" # Could be group or option not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    patch:
+      tags:
+        - Modifier Options
+      operationId: updateModifierOption
+      summary: Update a modifier option for a group
+      description: Update details of an existing modifier option within the specified modifier group.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModifierOptionUpdate"
+            # examples: Add examples here
+      responses:
+        "200":
+          description: The updated modifier option details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModifierOption"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound" # Could be group or option not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Modifier Options
+      operationId: deleteModifierOption
+      summary: Delete a modifier option from a group
+      description: Remove a specific modifier option from the specified modifier group.
+      responses:
+        "204":
+          description: Modifier option successfully deleted.
+        "404":
+          $ref: "#/components/responses/NotFound" # Could be group or option not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /locations/{locationId}/menuItems: # Nested Menu Items under Location (renamed)
+    parameters:
+      - in: path
+        name: locationId
+        required: true
+        schema:
+          type: string
+          # format: uuid
+          description: "The unique identifier of the location."
+        # example: "location1"
+    get:
+      tags:
+        - Location Menu Items
+      operationId: listLocationMenuItems
+      summary: List menu items for a specific location
+      description: Retrieve a list of all menu items available at the specified location, including prices and enabled modifiers.
+      responses:
+        "200":
+          description: A list of menu items for the location.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LocationMenuItem"
+              # examples: Add examples here
+        "404":
+          description: Location not found.
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Location Menu Items
+      operationId: createLocationMenuItem
+      summary: Add a recipe as a menu item to a location
+      description: Create a link between a recipe and a location, defining its price and available modifiers as a menu item.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LocationMenuItemCreate"
+            # examples: Add examples here
+      responses:
+        "201":
+          description: The newly created location menu item.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LocationMenuItem"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound" # Location or Recipe not found
+        "409":
+          $ref: "#/components/responses/Conflict" # If menu item for this recipe already exists at location
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /locations/{locationId}/menuItems/{menuItemId}: # Nested Menu Item detail
+    parameters:
+      - in: path
+        name: locationId
+        required: true
+        schema:
+          type: string
+          # format: uuid
+          description: "The unique identifier of the location."
+        # example: "location1"
+      - in: path
+        name: menuItemId
+        required: true
+        schema:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "The unique identifier of the menu item for this location."
+        # example: "menuItem1"
+    get:
+      tags:
+        - Location Menu Items
+      operationId: getLocationMenuItemById
+      summary: Get a menu item by ID for a location
+      description: Retrieve a specific menu item using its unique ID within the context of a location.
+      responses:
+        "200":
+          description: The menu item details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LocationMenuItem"
+            # examples: Add examples here
+        "404":
+          $ref: "#/components/responses/NotFound" # Could be location or menu item not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    patch:
+      tags:
+        - Location Menu Items
+      operationId: updateLocationMenuItem
+      summary: Update a menu item for a location
+      description: Update details (like price or modifiers) of an existing menu item at the specified location.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LocationMenuItemUpdate"
+            # examples: Add examples here
+      responses:
+        "200":
+          description: The updated menu item details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LocationMenuItem"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound" # Could be location or menu item not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Location Menu Items
+      operationId: deleteLocationMenuItem
+      summary: Remove a menu item from a location
+      description: Make a menu item unavailable at a specific location.
+      responses:
+        "204":
+          description: Menu item successfully removed from location.
+        "404":
+          $ref: "#/components/responses/NotFound" # Could be location or menu item not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /locations/{locationId}/ingredientCosts: # New Nested Location Ingredient Costs
+    parameters:
+      - in: path
+        name: locationId
+        required: true
+        schema:
+          type: string
+          # format: uuid
+          description: "The unique identifier of the location."
+        # example: "location1"
+    get:
+      tags:
+        - Location Ingredient Costs
+      operationId: listLocationIngredientCosts
+      summary: List ingredient costs for a specific location
+      description: Retrieve a list of location-specific costs for ingredients.
+      responses:
+        "200":
+          description: A list of location ingredient cost records.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LocationIngredientCost"
+              # examples: Add examples here
+        "404":
+          description: Location not found.
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Location Ingredient Costs
+      operationId: createLocationIngredientCost
+      summary: Create a location-specific ingredient cost record
+      description: Define the cost of an ingredient specifically for a location.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LocationIngredientCostCreate"
+            # examples: Add examples here
+      responses:
+        "201":
+          description: The newly created location ingredient cost record.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LocationIngredientCost"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound" # Location or Ingredient not found
+        "409":
+          $ref: "#/components/responses/Conflict" # If cost for this ingredient+location already exists
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /locations/{locationId}/ingredientCosts/{locationIngredientCostId}: # New Nested Location Ingredient Cost detail
+    parameters:
+      - in: path
+        name: locationId
+        required: true
+        schema:
+          type: string
+          # format: uuid
+          description: "The unique identifier of the location."
+        # example: "location1"
+      - in: path
+        name: locationIngredientCostId
+        required: true
+        schema:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "The unique identifier of the location ingredient cost record."
+        # example: "locCost1"
+    get:
+      tags:
+        - Location Ingredient Costs
+      operationId: getLocationIngredientCostById
+      summary: Get a location-specific ingredient cost by ID
+      description: Retrieve a specific ingredient cost record for a location using its unique ID.
+      responses:
+        "200":
+          description: The location ingredient cost details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LocationIngredientCost"
+            # examples: Add examples here
+        "404":
+          $ref: "#/components/responses/NotFound" # Could be location or cost record not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    patch:
+      tags:
+        - Location Ingredient Costs
+      operationId: updateLocationIngredientCost
+      summary: Update a location-specific ingredient cost
+      description: Update the cost value for an existing ingredient cost record at a location.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LocationIngredientCostUpdate"
+            # examples: Add examples here
+      responses:
+        "200":
+          description: The updated location ingredient cost record.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LocationIngredientCost"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound" # Could be location or cost record not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Location Ingredient Costs
+      operationId: deleteLocationIngredientCost
+      summary: Delete a location-specific ingredient cost record
+      description: Remove a specific ingredient cost record for a location.
+      responses:
+        "204":
+          description: Location ingredient cost record successfully deleted.
+        "404":
+          $ref: "#/components/responses/NotFound" # Could be location or cost record not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  # --- Inventory Tracking Paths (Top-Level for easier querying across locations) ---
+
+  /inventory_stock:
+    get:
+      tags:
+        - Inventory Stock
+      operationId: listInventoryStock
+      summary: List inventory stock levels
+      description: Retrieve current inventory stock levels, optionally filtered by location or ingredient. Includes embedded location and ingredient summaries.
+      parameters:
+        - in: query
+          name: locationId
+          schema:
+            type: string
+            # format: uuid
+          description: Optional, filter stock by location ID.
+        - in: query
+          name: ingredientId
+          schema:
+            type: string
+            # format: uuid
+          description: Optional, filter stock by ingredient ID.
+        # Add common pagination/sorting parameters here if needed
+      responses:
+        "200":
+          description: A list of inventory stock records.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InventoryStock"
+              # examples: Add examples here
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Inventory Stock
+      operationId: createInventoryStock
+      summary: Create a new inventory stock record
+      description: Create a record for an ingredient's stock level at a specific location. This is typically for initial setup or adding an item to a location for the first time. Subsequent changes should use movements.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InventoryStockCreate"
+            # examples: Add examples here
+      responses:
+        "201":
+          description: The newly created inventory stock record.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryStock"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound" # Location or ingredient not found
+        "409":
+          $ref: "#/components/responses/Conflict" # Conflict if stock for this item+location already exists
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /inventory_stock/{stockId}:
+    parameters:
+      - in: path
+        name: stockId
+        required: true
+        schema:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "The unique identifier of the inventory stock record (the link between ingredient and location)."
+        # example: "stock1"
+    # NOTE: Direct PATCH/DELETE on stock records is less common than using movements.
+    # Keeping PATCH for simple adjustments if needed, but delete is questionable.
+    get: # Added GET for single stock record
+      tags:
+        - Inventory Stock
+      operationId: getInventoryStockById
+      summary: Get an inventory stock record by ID
+      description: Retrieve a specific inventory stock record. Includes embedded location and ingredient summaries.
+      responses:
+        "200":
+          description: The inventory stock record.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryStock"
+            # examples: Add examples here
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    patch:
+      tags:
+        - Inventory Stock
+      operationId: updateInventoryStock
+      summary: Update an inventory stock entry (e.g., adjust quantity)
+      description: Directly adjust the quantity of a specific ingredient at a location. Consider using Inventory Movements for auditable changes.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InventoryStockUpdate"
+            # examples: Add examples here
+      responses:
+        "200":
+          description: The updated inventory stock record.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryStock"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Inventory Stock
+      operationId: deleteInventoryStock # Consider if this operation makes business sense
+      summary: Delete an inventory stock record
+      description: Remove a specific ingredient's stock record for a location. Use with caution as this removes the historical link.
+      responses:
+        "204":
+          description: Inventory stock record successfully deleted.
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /inventory_movements:
+    get:
+      tags:
+        - Inventory Movements
+      operationId: listInventoryMovements
+      summary: List inventory movements (stock changes)
+      description: Retrieve a history of inventory stock changes (movements), useful for tracking usage, waste, and restocking. Includes embedded ingredient summaries.
+      parameters:
+        - in: query
+          name: locationId
+          schema:
+            type: string
+            # format: uuid
+          description: Optional, filter movements by location ID.
+        - in: query
+          name: ingredientId
+          schema:
+            type: string
+            # format: uuid
+          description: Optional, filter movements by ingredient ID.
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum: [waste, restock, sale, adjustment, transfer_in, transfer_out]
+          description: Optional, filter movements by type.
+        - in: query
+          name: startTime # Use camelCase
+          schema:
+            type: string
+            format: date-time
+          description: Optional, filter movements from this timestamp onwards.
+        - in: query
+          name: endTime # Use camelCase
+          schema:
+            type: string
+            format: date-time
+          description: Optional, filter movements up to this timestamp.
+        # Add common pagination/sorting parameters
+      responses:
+        "200":
+          description: A list of inventory movements.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InventoryMovement"
+              # examples: Add examples here
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Inventory Movements
+      operationId: createInventoryMovement
+      summary: Create a new inventory movement (e.g., log waste or restock)
+      description: Record a change in stock for a specific ingredient at a location. This is the preferred way to track stock changes over direct stock updates.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InventoryMovementCreate"
+            # examples: Add examples here
+      responses:
+        "201":
+          description: The newly created inventory movement record.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryMovement"
+            # examples: Add examples here
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound" # Location or ingredient not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+      # Note: No PATCH/DELETE for movements - they are historical records.
+
+components:
+  schemas:
+    # --- Common Error Schema ---
+    ErrorResponse:
+      type: object
+      description: Standard error response structure.
+      required:
+        - type
+        - title
+        - status
+        - detail
+      properties:
+        type:
+          type: string
+          description: A URI reference that identifies the problem type.
+          format: url
+          example: "https://example.com/problems/invalid-request"
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          minLength: 1
+          example: "Invalid Request Parameters"
+        status:
+          type: integer
+          description: The HTTP status code generated by the origin server.
+          minimum: 100
+          maximum: 599
+          example: 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem.
+          minLength: 1
+          example: "The 'name' field is required."
+        instance:
+          type: string
+          description: A URI reference that identifies the specific occurrence of the problem.
+          format: uri
+          nullable: true
+          example: "/api/locations"
+        errors:
+          type: object
+          description: Optional field-specific validation errors.
+          additionalProperties:
+            type: array
+            items:
+              type: string
+              minLength: 1
+          nullable: true
+          example:
+            name: ["Name cannot be empty"]
+            quantity: ["Quantity must be a positive number"]
+
+    # --- Summary Schemas for Embedding ---
+    LocationSummary:
+      type: object
+      description: A summary of location information for embedding.
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          # format: uuid
+          description: "Unique identifier for the location."
+          readOnly: true
+          example: "location1"
+        name:
+          type: string
+          description: "The name of the location."
+          minLength: 1
+          maxLength: 255
+          readOnly: true
+          example: "Central Kitchen"
+
+    IngredientSummary:
+      type: object
+      description: A summary of ingredient information for embedding.
+      required:
+        - id
+        - name
+        - unit
+      properties:
+        id:
+          type: string
+          # format: uuid
+          description: "Unique identifier for the ingredient definition."
+          readOnly: true
+          example: "ingredient1"
+        name:
+          type: string
+          description: "The name of the ingredient."
+          minLength: 1
+          maxLength: 255
+          readOnly: true
+          example: "Coffee Beans"
+        unit:
+          type: string
+          description: "The standard unit of measurement for this item."
+          minLength: 1
+          maxLength: 50
+          readOnly: true
+          example: "kg"
+
+    # --- Resource Schemas ---
+    Location:
+      type: object
+      description: Represents a physical location (restaurant, etc.).
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "Unique identifier for the location."
+          readOnly: true
+          example: "location1"
+        name:
+          type: string
+          description: "The name of the location."
+          minLength: 1
+          maxLength: 255
+          example: "Central Kitchen"
+        address:
+          type: string
+          nullable: true
+          description: "The physical address of the location."
+          minLength: 1
+          maxLength: 500
+          example: "123 Main St"
+
+    LocationCreate:
+      type: object
+      description: Data required to create a new location.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: "The name of the location."
+          minLength: 1
+          maxLength: 255
+          example: "Uptown Branch"
+        address:
+          type: string
+          nullable: true
+          description: "The physical address of the location."
+          minLength: 1
+          maxLength: 500
+          example: "789 Oak Ave"
+
+    LocationUpdate:
+      type: object
+      description: Data for updating an existing location. All fields are optional.
+      properties:
+        name:
+          type: string
+          description: "The updated name of the location."
+          minLength: 1
+          maxLength: 255
+          example: "Central Commissary"
+        address:
+          type: string
+          nullable: true
+          description: "The updated physical address of the location."
+          minLength: 1
+          maxLength: 500
+          example: "New 123 Main St"
+
+    Staff:
+      type: object
+      description: Represents a staff member associated with a location.
+      required:
+        - id
+        - name
+        - locationId
+      properties:
+        id:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "Unique identifier for the staff member."
+          readOnly: true
+          example: "staff1"
+        name:
+          type: string
+          description: "The full name of the staff member."
+          minLength: 1
+          maxLength: 255
+          example: "Alice Smith"
+        dob:
+          type: string
+          format: date
+          nullable: true
+          description: "Date of birth."
+          example: "1990-01-30"
+        role:
+          type: string
+          nullable: true
+          description: "The role or position of the staff member (e.g., Manager, Chef)."
+          minLength: 1
+          maxLength: 100
+          # enum: [Manager, Chef, Barista, Server, Kitchen Porter] # Add enum if roles are fixed
+          example: "Manager"
+        iban:
+          type: string
+          nullable: true
+          description: "Staff member's IBAN for payroll."
+          # Consider pattern validation for IBAN: pattern: "^[A-Z]{2}[0-9]{2}(?:[ ]?[0-9]{4}){4}(?:[ ]?[0-9]{1,2})?$"
+          example: "NL91ABNA0417164300"
+        bic:
+          type: string
+          nullable: true
+          description: "Staff member's BIC/SWIFT code."
+          # Consider pattern validation for BIC: pattern: "^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$"
+          example: "ABNANL2A"
+        locationId:
+          type: string # ID of the parent location document
+          # format: uuid
+          description: "The ID of the location where the staff member primarily works."
+          readOnly: true # Implicit from path on create/update, server sets on response
+          example: "location1"
+
+    StaffCreate:
+      type: object
+      description: Data required to create a new staff member.
+      required:
+        - name
+        # locationId is implicit from path for create
+      properties:
+        name:
+          type: string
+          description: "The full name of the staff member."
+          minLength: 1
+          maxLength: 255
+          example: "Charlie Brown"
+        dob:
+          type: string
+          format: date
+          nullable: true
+          description: "Date of birth."
+          example: "1995-05-15"
+        role:
+          type: string
+          nullable: true
+          description: "The role or position."
+          minLength: 1
+          maxLength: 100
+          # enum: [Manager, Chef, Barista, Server, Kitchen Porter]
+          example: "Barista"
+        iban:
+          type: string
+          nullable: true
+          description: "Staff member's IBAN for payroll."
+          example: "DE89370400400619322000"
+        bic:
+          type: string
+          nullable: true
+          description: "Staff member's BIC/SWIFT code."
+          example: "COBADEFFXXX"
+
+    StaffUpdate:
+      type: object
+      description: Data for updating an existing staff member. All fields are optional.
+      properties:
+        name:
+          type: string
+          description: "The updated full name."
+          minLength: 1
+          maxLength: 255
+          example: "Alice A. Smith"
+        dob:
+          type: string
+          format: date
+          nullable: true
+          description: "Updated date of birth."
+          example: "1990-01-30"
+        role:
+          type: string
+          nullable: true
+          description: "The updated role or position."
+          minLength: 1
+          maxLength: 100
+          # enum: [Manager, Chef, Barista, Server, Kitchen Porter]
+          example: "Senior Manager"
+        iban:
+          type: string
+          nullable: true
+          description: "Updated IBAN."
+          example: "GB29NWBK60161331926819"
+        bic:
+          type: string
+          nullable: true
+          description: "Updated BIC/SWIFT code."
+          example: "NWBKGB2L"
+
+    Ingredient:
+      type: object
+      description: Represents a definition of an item that can be stocked (e.g., "Coffee Beans", "Milk").
+      required:
+        - id
+        - name
+        - unit
+      properties:
+        id:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "Unique identifier for the ingredient definition."
+          readOnly: true
+          example: "ingredient1"
+        name:
+          type: string
+          description: "The name of the ingredient."
+          minLength: 1
+          maxLength: 255
+          example: "Coffee Beans"
+        unit:
+          type: string
+          description: "The standard unit of measurement for this item (e.g., kg, liter, pieces)."
+          minLength: 1
+          maxLength: 50
+          # Consider making this an enum if units are fixed:
+          # enum: [kg, gram, liter, ml, piece, unit, each]
+          example: "kg"
+        cost:
+          type: number
+          format: float
+          nullable: true
+          description: "The average cost per unit of the ingredient globally or default if location-specific cost not set."
+          minimum: 0
+          example: 12.50
+
+    IngredientCreate:
+      type: object
+      description: Data required to create a new ingredient definition.
+      required:
+        - name
+        - unit
+      properties:
+        name:
+          type: string
+          description: "The name of the ingredient."
+          minLength: 1
+          maxLength: 255
+          example: "Flour"
+        unit:
+          type: string
+          description: "The standard unit of measurement."
+          minLength: 1
+          maxLength: 50
+          # enum: [kg, gram, liter, ml, piece, unit, each]
+          example: "kg"
+        cost:
+          type: number
+          format: float
+          nullable: true
+          description: "The average cost per unit of the ingredient."
+          minimum: 0
+          example: 1.80
+
+    IngredientUpdate:
+      type: object
+      description: Data for updating an existing ingredient definition. All fields are optional.
+      properties:
+        name:
+          type: string
+          description: "The updated name."
+          minLength: 1
+          maxLength: 255
+          example: "Premium Coffee Beans"
+        unit:
+          type: string
+          description: "The updated standard unit of measurement."
+          minLength: 1
+          maxLength: 50
+          # enum: [kg, gram, liter, ml, piece, unit, each]
+          example: "grams"
+        cost:
+          type: number
+          format: float
+          nullable: true
+          description: "The updated average cost per unit."
+          minimum: 0
+          example: 13.00
+
+    Recipe:
+      type: object
+      description: Represents a definition of a menu item or product that uses ingredients.
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "Unique identifier for the recipe definition."
+          readOnly: true
+          example: "recipe1"
+        name:
+          type: string
+          description: "The name of the recipe (e.g., 'Espresso', 'Cappuccino')."
+          minLength: 1
+          maxLength: 255
+          example: "Espresso"
+        description:
+          type: string
+          nullable: true
+          description: "A description of the recipe."
+          minLength: 1
+          maxLength: 1000
+          example: "Standard double shot espresso"
+
+    RecipeCreate:
+      type: object
+      description: Data required to create a new recipe definition.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: "The name of the recipe."
+          minLength: 1
+          maxLength: 255
+          example: "Latte"
+        description:
+          type: string
+          nullable: true
+          description: "A description of the recipe."
+          minLength: 1
+          maxLength: 1000
+          example: "Espresso with steamed milk and thin foam"
+
+    RecipeUpdate:
+      type: object
+      description: Data for updating an existing recipe definition. All fields are optional.
+      properties:
+        name:
+          type: string
+          description: "The updated name."
+          minLength: 1
+          maxLength: 255
+          example: "Double Espresso"
+        description:
+          type: string
+          nullable: true
+          description: "The updated description."
+          minLength: 1
+          maxLength: 1000
+          example: "Standard double shot espresso"
+
+    RecipeIngredientLink:
+      type: object
+      description: Links a recipe to an ingredient, specifying the required quantity for one serving/unit of the recipe. Represents the association resource.
+      required:
+        - id
+        - recipeId
+        - ingredientId
+        - quantity
+      properties:
+        id:
+          type: string # Unique ID for this link document/record
+          # format: uuid
+          description: "Unique identifier for the recipe-ingredient link."
+          readOnly: true
+          example: "link1"
+        recipeId:
+          type: string # ID of the parent recipe
+          # format: uuid
+          description: "The ID of the recipe this link belongs to."
+          readOnly: true
+          example: "recipe1"
+        ingredientId:
+          type: string # ID of the ingredient
+          # format: uuid
+          description: "The ID of the required ingredient."
+          readOnly: true
+          example: "ingredient1"
+        quantity:
+          type: number
+          format: float
+          description: "The quantity of the ingredient required per unit of the recipe in the ingredient's standard unit."
+          minimum: 0 # Quantity cannot be negative
+          example: 0.018
+
+    RecipeIngredientLinkCreate:
+      type: object
+      description: Data required to create a new link between a recipe and an ingredient.
+      required:
+        - ingredientId
+        - quantity
+      properties:
+        # recipeId is implicit from the path for creation
+        ingredientId:
+          type: string
+          # format: uuid
+          description: "The ID of the required ingredient."
+          example: "ingredient2"
+        quantity:
+          type: number
+          format: float
+          description: "The quantity required."
+          minimum: 0
+          example: 0.25
+
+    Modifier:
+      type: object
+      description: Represents a group of recipe options (e.g., "Milk Options", "Sweeteners").
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "Unique identifier for the modifier group."
+          readOnly: true
+          example: "modifier1"
+        name:
+          type: string
+          description: "The name of the modifier group."
+          minLength: 1
+          maxLength: 255
+          example: "Milk Options"
+
+    ModifierCreate:
+      type: object
+      description: Data required to create a new modifier group.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: "The name of the modifier group."
+          minLength: 1
+          maxLength: 255
+          example: "Add-ins"
+
+    ModifierUpdate:
+      type: object
+      description: Data for updating an existing modifier group. All fields are optional.
+      properties:
+        name:
+          type: string
+          description: "The updated name."
+          minLength: 1
+          maxLength: 255
+          example: "Dairy Options"
+
+    ModifierOption:
+      type: object
+      description: Represents a single choice within a modifier group (e.g., "Oat Milk" within "Milk Options").
+      required:
+        - id
+        - modifierId
+        - name
+        - price
+      properties:
+        id:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "Unique identifier for the modifier option."
+          readOnly: true
+          example: "option1"
+        modifierId:
+          type: string # ID of the parent modifier group
+          # format: uuid
+          description: "The ID of the modifier group this option belongs to."
+          readOnly: true
+          example: "modifier1"
+        name:
+          type: string
+          description: "The name of the modifier option."
+          minLength: 1
+          maxLength: 255
+          example: "Whole Milk"
+        price:
+          type: number
+          format: float
+          description: "The additional cost associated with choosing this option."
+          minimum: 0
+          example: 0.00
+
+    ModifierOptionCreate:
+      type: object
+      description: Data required to create a new modifier option.
+      required:
+        - name
+        - price
+        # modifierId is implicit from path for creation
+      properties:
+        name:
+          type: string
+          description: "The name of the modifier option."
+          minLength: 1
+          maxLength: 255
+          example: "Almond Milk"
+        price:
+          type: number
+          format: float
+          description: "The additional cost."
+          minimum: 0
+          example: 0.60
+
+    ModifierOptionUpdate:
+      type: object
+      description: Data for updating an existing modifier option. All fields are optional.
+      properties:
+        name:
+          type: string
+          description: "The updated name."
+          minLength: 1
+          maxLength: 255
+          example: "Regular Milk"
+        price:
+          type: number
+          format: float
+          description: "The updated additional cost."
+          minimum: 0
+          example: 0.00
+
+    LocationMenuItem:
+      type: object
+      description: Links a specific recipe to a specific location as a menu item, indicating it is available there and defining its price and available modifiers. Represents the association resource.
+      required:
+        - id
+        - locationId
+        - recipeId
+        - price
+        # modifierIds - included in schema, but optional/nullable in data
+      properties:
+        id:
+          type: string # Unique ID for this menu item document/record at a location
+          # format: uuid
+          description: "Unique identifier for the location menu item link."
+          readOnly: true
+          example: "menuItem1"
+        locationId:
+          type: string # ID of the parent location document
+          # format: uuid
+          description: "The ID of the location where this menu item is available."
+          readOnly: true
+          example: "location1"
+        recipeId:
+          type: string # ID of the recipe
+          # format: uuid
+          description: "The ID of the recipe this menu item is based on."
+          example: "recipe1"
+        price:
+          type: number
+          format: float
+          description: "The price of the menu item at this location."
+          minimum: 0
+          example: 3.00
+        modifierIds:
+          type: array
+          description: "A list of Modifier IDs whose options are available for this menu item at this location."
+          items:
+            type: string # Modifier ID type
+            # format: uuid
+          nullable: true
+          example: ["modifier1", "modifier2"]
+
+    LocationMenuItemCreate:
+      type: object
+      description: Data required to link a recipe to a location as a menu item.
+      required:
+        - recipeId
+        - price
+        # locationId is implicit from path for creation
+      properties:
+        recipeId:
+          type: string
+          # format: uuid
+          description: "The ID of the recipe this menu item is based on."
+          example: "recipe2"
+        price:
+          type: number
+          format: float
+          description: "The price of the menu item at this location."
+          minimum: 0
+          example: 4.75
+        modifierIds:
+          type: array
+          description: "A list of Modifier IDs to enable for this menu item at this location."
+          items:
+            type: string
+            # format: uuid
+          nullable: true
+          example: ["modifier1"]
+
+    LocationMenuItemUpdate:
+      type: object
+      description: Data for updating an existing location menu item (e.g., changing price or available modifiers). All fields are optional.
+      properties:
+        recipeId:
+          type: string # While possible, might represent creating a new menu item association instead.
+          # format: uuid
+          description: "The updated ID of the recipe this menu item is based on."
+          example: "recipe3" # Consider if this should be allowed or if a new menu item should be created
+        price:
+          type: number
+          format: float
+          description: "The updated price of the menu item at this location."
+          minimum: 0
+          example: 4.90
+        modifierIds:
+          type: array
+          description: "An updated list of Modifier IDs enabled for this menu item at this location. Sends the complete list to replace the existing one."
+          items:
+            type: string
+            # format: uuid
+          nullable: true
+          example: ["modifier1", "modifier3"]
+
+    LocationIngredientCost: # New schema for location-specific cost
+      type: object
+      description: Represents a location-specific cost for an ingredient, overriding the global ingredient cost.
+      required:
+        - id
+        - locationId
+        - ingredientId
+        - costPerUnit
+      properties:
+        id:
+          type: string # Unique ID for this cost record
+          # format: uuid
+          description: "Unique identifier for the location ingredient cost record."
+          readOnly: true
+          example: "locCost1"
+        locationId:
+          type: string # ID of the parent location document
+          # format: uuid
+          description: "The ID of the location."
+          readOnly: true
+          example: "location1"
+        ingredientId:
+          type: string # ID of the ingredient
+          # format: uuid
+          description: "The ID of the ingredient."
+          readOnly: true
+          example: "ingredient1"
+        costPerUnit:
+          type: number
+          format: float
+          description: "The specific cost per unit of the ingredient at this location."
+          minimum: 0
+          example: 13.50
+        updatedAt: # Added timestamp for cost history if needed later
+          type: string
+          format: date-time
+          description: "Timestamp when the cost was last updated."
+          readOnly: true
+          example: "2023-10-27T12:00:00Z"
+
+    LocationIngredientCostCreate:
+      type: object
+      description: Data required to create a location-specific ingredient cost record.
+      required:
+        - ingredientId
+        - costPerUnit
+        # locationId is implicit from path for creation
+      properties:
+        ingredientId:
+          type: string
+          # format: uuid
+          description: "The ID of the ingredient."
+          example: "ingredient2"
+        costPerUnit:
+          type: number
+          format: float
+          description: "The specific cost per unit of the ingredient at this location."
+          minimum: 0
+          example: 2.00
+
+    LocationIngredientCostUpdate:
+      type: object
+      description: Data for updating a location-specific ingredient cost record.
+      required:
+        - costPerUnit
+      properties:
+        costPerUnit:
+          type: number
+          format: float
+          description: "The updated cost per unit."
+          minimum: 0
+          example: 14.00
+
+    InventoryStock:
+      type: object
+      description: Represents the current quantity of a specific ingredient at a specific location.
+      required:
+        - id
+        - locationId
+        - ingredientId
+        - quantity
+        - updatedAt
+        - ingredient # IngredientSummary is now required in the response
+        - location # LocationSummary is now required in the response
+      properties:
+        id:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "Unique identifier for the stock record."
+          readOnly: true
+          example: "stock1"
+        locationId:
+          type: string # ID of the parent location document
+          # format: uuid
+          description: "The ID of the location where the stock is held."
+          readOnly: true # Implicit from query param, server sets on response
+          example: "location1"
+        ingredientId:
+          type: string # ID of the ingredient
+          # format: uuid
+          description: "The ID of the ingredient."
+          readOnly: true # Implicit from query param, server sets on response
+          example: "ingredient1"
+        quantity:
+          type: number
+          format: float
+          description: "The current quantity of the ingredient at this location in its standard unit."
+          minimum: 0
+          example: 5.5
+        updatedAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the stock quantity was last updated."
+          readOnly: true
+          example: "2023-10-27T10:00:00Z"
+        ingredient: # Embedded ingredient summary
+          $ref: "#/components/schemas/IngredientSummary"
+          description: "Summary of the related ingredient."
+        location: # Embedded location summary
+          $ref: "#/components/schemas/LocationSummary"
+          description: "Summary of the related location."
+
+    InventoryStockCreate:
+      type: object
+      description: Data required to create an initial inventory stock record for an ingredient at a location.
+      required:
+        - locationId
+        - ingredientId
+        - quantity
+      properties:
+        locationId:
+          type: string
+          # format: uuid
+          description: "The ID of the location."
+          example: "location1"
+        ingredientId:
+          type: string
+          # format: uuid
+          description: "The ID of the ingredient."
+          example: "ingredient3"
+        quantity:
+          type: number
+          format: float
+          description: "The initial quantity."
+          minimum: 0
+          example: 3.0
+
+    InventoryStockUpdate:
+      type: object
+      description: Data for updating an existing inventory stock record. Only quantity is typically directly updated.
+      required:
+        - quantity # Quantity is the main thing to update here
+      properties:
+        quantity:
+          type: number
+          format: float
+          description: "The new quantity for the ingredient at this location."
+          minimum: 0
+          example: 5.0
+
+    InventoryMovement:
+      type: object
+      description: Represents a log of changes to inventory stock (e.g., sale, waste, restock).
+      required:
+        - id
+        - locationId
+        - ingredientId
+        - quantity
+        - type
+        - createdAt
+        - ingredient # IngredientSummary is now required in the response
+        - unit # Unit is now required in the response
+        - costPerUnit # CostPerUnit is now required in the response
+      properties:
+        id:
+          type: string # Matches Firestore ID type
+          # format: uuid
+          description: "Unique identifier for the movement record."
+          readOnly: true
+          example: "movement1"
+        locationId:
+          type: string
+          # format: uuid
+          description: "The ID of the location where the movement occurred."
+          example: "location1"
+        ingredientId:
+          type: string
+          # format: uuid
+          description: "The ID of the ingredient affected."
+          example: "ingredient1"
+        quantity:
+          type: number
+          format: float
+          description: "The change in quantity in the ingredient's standard unit. Positive for additions (restock, transfer_in), negative for removals (waste, sale, transfer_out)."
+          # No overall min/max here as it can be positive or negative.
+          example: -0.018
+        type:
+          type: string
+          description: "The type of inventory movement."
+          enum: [waste, restock, sale, adjustment, transfer_in, transfer_out]
+          example: "sale"
+        notes:
+          type: string
+          nullable: true
+          description: "Optional notes about the movement (e.g., reason for waste)."
+        createdAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the movement was recorded."
+          readOnly: true
+          example: "2023-10-27T11:06:00Z"
+        recordedByStaffId: # Added staff ID
+          type: string
+          # format: uuid
+          nullable: true # Might be automated movement (e.g., from a sale)
+          description: "The ID of the staff member who recorded the movement, if applicable."
+          example: "staff1"
+        ingredient: # Embedded ingredient summary
+          $ref: "#/components/schemas/IngredientSummary"
+          description: "Summary of the related ingredient."
+        unit: # Redundant if ingredient summary is embedded, but can be kept for flatness
+          type: string
+          description: "The unit of measurement for this movement's quantity."
+          minLength: 1
+          maxLength: 50
+          readOnly: true
+          example: "kg"
+        costPerUnit: # Stored cost at time of movement
+          type: number
+          format: float
+          description: "The cost per unit of the ingredient at the time of this movement."
+          minimum: 0 # Cost should not be negative
+          nullable: true # Cost might not be tracked for all movement types
+          readOnly: true # Server sets this
+          example: 13.50
+
+    InventoryMovementCreate:
+      type: object
+      description: Data required to record a new inventory movement.
+      required:
+        - locationId
+        - ingredientId
+        - quantity
+        - type
+      properties:
+        locationId:
+          type: string
+          # format: uuid
+          description: "The ID of the location where the movement occurred."
+          example: "location1"
+        ingredientId:
+          type: string
+          # format: uuid
+          description: "The ID of the ingredient affected."
+          example: "ingredient1"
+        quantity:
+          type: number
+          format: float
+          description: "The change in quantity. Use positive for additions, negative for removals."
+          # No overall min/max here. Validation (e.g., waste must be <= current stock, restock must be positive)
+          # is business logic, potentially handled by Zod refine or server-side.
+          example: 10.0
+        type:
+          type: string
+          description: "The type of inventory movement."
+          enum: [waste, restock, sale, adjustment, transfer_in, transfer_out]
+          example: "restock"
+        notes:
+          type: string
+          nullable: true
+          description: "Optional notes about the movement."
+          example: "Broken bag"
+        recordedByStaffId: # Optional staff ID
+          type: string
+          # format: uuid
+          nullable: true
+          description: "The ID of the staff member recording the movement."
+
+  # --- Response Definitions ---
+  responses:
+    NotFound:
+      description: The specified resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          # examples: Add examples here
+
+    BadRequest:
+      description: The request was malformed or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          # examples: Add examples here
+
+    Conflict:
+      description: The request could not be completed due to a conflict with the current state of the resource.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          # examples: Add examples here
+
+    InternalServerError:
+      description: An unexpected error occurred on the server.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          # examples: Add examples here
