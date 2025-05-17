@@ -12,17 +12,17 @@ jobs:
       - name: 📚 Checkout code
         uses: actions/checkout@v4
 
-      - name: 🔧 Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'pnpm'
-
       - name: 📦 Install pnpm
         uses: pnpm/action-setup@v3
         with:
           version: 8.x
           run_install: false
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'pnpm'
 
       - name: 🧩 Install dependencies
         run: pnpm install
@@ -44,17 +44,17 @@ jobs:
       - name: 📚 Checkout code
         uses: actions/checkout@v4
 
-      - name: 🔧 Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'pnpm'
-
       - name: 📦 Install pnpm
         uses: pnpm/action-setup@v3
         with:
           version: 8.x
           run_install: false
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'pnpm'
 
       - name: 🧩 Install dependencies
         run: pnpm install
@@ -73,17 +73,17 @@ jobs:
       - name: 📚 Checkout code
         uses: actions/checkout@v4
 
-      - name: 🔧 Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'pnpm'
-
       - name: 📦 Install pnpm
         uses: pnpm/action-setup@v3
         with:
           version: 8.x
           run_install: false
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'pnpm'
 
       - name: 🧩 Install dependencies
         run: pnpm install
