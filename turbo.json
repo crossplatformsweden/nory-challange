@@ -1,6 +1,7 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
+  "globalEnv": ["CI"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -20,12 +21,14 @@
     "test": {
       "dependsOn": ["^build"],
       "inputs": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "test/**/*.tsx", "playwright.config.ts"],
-      "outputs": ["test-results/**", "playwright-report/**"]
+      "outputs": ["test-results/**", "playwright-report/**"],
+      "env": ["CI"]
     },
     "test:ui": {
       "dependsOn": ["^build"],
       "inputs": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "test/**/*.tsx", "playwright.config.ts"],
-      "outputs": []
+      "outputs": [],
+      "env": ["CI"]
     },
     "install:browsers": {
       "cache": false

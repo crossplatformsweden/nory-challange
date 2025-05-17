@@ -1,11 +1,14 @@
 import { defineConfig, devices } from '@playwright/test';
 
+// Read environment variable with fallback
+const isCI = process.env.CI === 'true';
+
 export default defineConfig({
   testDir: './src',
   fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  forbidOnly: isCI,
+  retries: isCI ? 2 : 0,
+  workers: isCI ? 1 : undefined,
   reporter: 'html',
   use: {
     trace: 'on-first-retry',
@@ -28,7 +31,7 @@ export default defineConfig({
   webServer: {
     command: 'cd ../../apps/web && pnpm dev',
     url: 'http://localhost:3001',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: !isCI,
     stdout: 'pipe',
     stderr: 'pipe',
   },
