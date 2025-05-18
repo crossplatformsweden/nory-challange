@@ -2,6 +2,9 @@ import React from 'react';
 import { cn } from '../../utils';
 import { type BaseProps, type Size, type Variant } from '../../types';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { useButton } from '@react-aria/button';
+import { useObjectRef } from '@react-aria/utils';
+import type { AriaButtonProps } from '@react-types/button';
 
 const buttonVariants = cva(
   [
@@ -43,7 +46,7 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends BaseProps,
     VariantProps<typeof buttonVariants>,
-    Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'size'> {
+    Omit<AriaButtonProps<'button'>, 'size'> {
   /** The button's visual variant */
   variant?: Variant;
   /** The button's size */
@@ -56,6 +59,8 @@ export interface ButtonProps
   startIcon?: React.ReactNode;
   /** Icon to display at the end of the button */
   endIcon?: React.ReactNode;
+  /** Whether the button is disabled */
+  disabled?: boolean;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -72,37 +77,25 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       ...props
     },
-    ref
+    forwardedRef
   ) => {
+    const ref = useObjectRef(forwardedRef);
     const isDisabled = disabled || isLoading;
     
-    // Accessible keyboard navigation and ARIA attributes
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
-      // Ensure Space and Enter keys trigger the button
-      if (e.key === ' ' || e.key === 'Enter') {
-        e.preventDefault();
-        if (!isDisabled && props.onClick) {
-          props.onClick(e as unknown as React.MouseEvent<HTMLButtonElement>);
-        }
-      }
-      
-      // Original onKeyDown handler if provided
-      if (props.onKeyDown) {
-        props.onKeyDown(e);
-      }
-    };
+    const { buttonProps } = useButton(
+      {
+        ...props,
+        isDisabled,
+        elementType: 'button',
+      } as AriaButtonProps<'button'>,
+      ref
+    );
     
     return (
       <button
         ref={ref}
-        role="button"
-        aria-disabled={isDisabled}
-        aria-busy={isLoading}
-        tabIndex={isDisabled ? -1 : 0}
+        {...buttonProps}
         className={cn(buttonVariants({ variant, size, fullWidth, isLoading }), className)}
-        disabled={isDisabled}
-        onKeyDown={handleKeyDown}
-        {...props}
       >
         {isLoading && (
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
