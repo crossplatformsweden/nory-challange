@@ -1,5 +1,5 @@
 {
   "extends": "@repo/typescript-config/base.json",
-  "include": ["."],
+  "include": [".", "base.ts", "react.ts", "next.ts", "eslint.config.ts"],
   "exclude": ["dist", "build", "node_modules"]
 }
