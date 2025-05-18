@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { TurborepoLogo } from "@repo/ui/turborepo-logo";
-import {Button} from "@repo/ui/components/button/button";
+import { Button } from "@repo/ui/components/button";
 
 const LINKS = [
   {
@@ -97,14 +97,14 @@ export default function Page() {
       </div>
 
       <div className="grid mb-32 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        {LINKS.map(({ title, href, description }) => (
-          <>
-            <h3 key="title">
+        {LINKS.map(({ title, href, description }, index) => (
+          <div key={index} className="group">
+            <h3 className="mb-3 text-2xl font-bold">
               {title}
-              {description}
             </h3>
-            <a>{href}</a>
-          </>
+            <p className="m-0 max-w-[30ch] text-sm opacity-50">{description}</p>
+            <a href={href} className="text-blue-500 hover:text-blue-700">{href}</a>
+          </div>
         ))}
       </div>
     </main>
