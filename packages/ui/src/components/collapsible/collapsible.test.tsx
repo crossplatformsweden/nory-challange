@@ -8,11 +8,13 @@ jest.mock('@radix-ui/react-collapsible', () => {
   
   const CollapsibleContext = React.createContext({ open: false, onOpenChange: () => {} });
   
-  const Root = ({ children, open = false, onOpenChange, ...props }) => {
-    const [isOpen, setIsOpen] = React.useState(open);
+  const Root = ({ children, open, defaultOpen = false, onOpenChange, ...props }) => {
+    const [isOpen, setIsOpen] = React.useState(open !== undefined ? open : defaultOpen);
     
     React.useEffect(() => {
-      setIsOpen(open);
+      if (open !== undefined) {
+        setIsOpen(open);
+      }
     }, [open]);
     
     const handleOpenChange = (value) => {

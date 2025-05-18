@@ -94,9 +94,10 @@ describe("Progress", () => {
       />
     );
     
-    const progressRoot = screen.getByTestId("progress-root");
-    expect(progressRoot).toHaveAttribute("data-testid", testId);
-    expect(progressRoot).toHaveAttribute("aria-label", ariaLabel);
+    // Test that we can find the element by the custom test id
+    const progressEl = screen.getByTestId(testId);
+    expect(progressEl).toBeInTheDocument();
+    expect(progressEl).toHaveAttribute("aria-label", ariaLabel);
   });
 
   it("accepts ref forwarding", () => {
