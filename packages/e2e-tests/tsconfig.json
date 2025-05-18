@@ -4,8 +4,9 @@
     "target": "es2019",
     "lib": ["es2019", "dom"],
     "types": ["node", "@playwright/test"],
-    "outDir": "dist"
+    "outDir": "dist",
+    "skipLibCheck": true
   },
-  "include": ["src", "playwright.config.ts", "eslint.config.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src", "playwright.config.ts", "eslint.config.ts", "types.d.ts"],
+  "exclude": ["node_modules", "../eslint-config/**/*"]
 }
