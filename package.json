@@ -7,6 +7,9 @@
     "lint": "turbo run lint",
     "check-types": "turbo run check-types",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch",
+    "test:coverage": "turbo run test:coverage",
     "e2e": "turbo run test --filter=@repo/e2e-tests",
     "e2e:ui": "turbo run test:ui --filter=@repo/e2e-tests",
     "storybook": "turbo run storybook --filter=@repo/ui",
@@ -24,5 +27,13 @@
   "packageManager": "pnpm@8.15.6",
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "@adobe/react-spectrum": "^3.41.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "globals": "^16.1.0",
+    "jest": "^29.7.0",
+    "tailwind-merge": "^2.2.2"
   }
 }

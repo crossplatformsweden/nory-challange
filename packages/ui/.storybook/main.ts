@@ -17,25 +17,19 @@ const config: StorybookConfig = {
     autodocs: "tag",
   },
   staticDirs: ["../public"],
-  // This is important for Tailwind CSS to work correctly in Storybook
-  webpackFinal: async (config: any) => {
-    config.module.rules.push({
-      test: /\.css$/,
-      use: [
-        {
-          loader: 'postcss-loader',
-          options: {
-            postcssOptions: {
-              plugins: [
-                require('tailwindcss'),
-                require('autoprefixer'),
-              ],
-            },
-          },
+  viteFinal: async (config) => {
+    return {
+      ...config,
+      css: {
+        ...config.css,
+        postcss: {
+          plugins: [
+            require('tailwindcss'),
+            require('autoprefixer'),
+          ],
         },
-      ],
-    });
-    return config;
+      },
+    };
   },
 };
 

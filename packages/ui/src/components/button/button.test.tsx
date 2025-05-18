@@ -1,20 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
 import { Button } from './button';
-
-// Temporary workaround for TypeScript errors with Jest DOM extensions
-declare global {
-  namespace jest {
-    interface Matchers<R> {
-      toHaveTextContent: (text: string) => R;
-      toHaveClass: (className: string) => R;
-      toBeDisabled: () => R;
-      toBeInTheDocument: () => R;
-      toContainElement: (element: HTMLElement | null) => R;
-    }
-  }
-}
 
 describe('Button', () => {
   it('renders correctly', () => {
