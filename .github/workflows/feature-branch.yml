@@ -1,0 +1,50 @@
+name: 🌿 Feature Branch Workflow
+
+on:
+  push:
+    branches: [feature/**, improvement/**]
+  pull_request:
+    branches: [develop]
+
+jobs:
+  validate:
+    name: 🔍 Validate & Test
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.52.0-noble
+      options: --ipc=host
+    env:
+      HOME: /root
+    steps:
+      - name: 📚 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8.x
+          run_install: false
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "pnpm"
+
+      - name: 🧩 Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: 🏗️ Build
+        run: pnpm build
+
+      - name: 🧪 Lint
+        run: pnpm lint
+
+      - name: 📝 Type check
+        run: pnpm check-types
+
+      - name: 🚀 Install Playwright browsers
+        run: pnpm install:playwright
+
+      - name: 🧪 Run tests
+        run: pnpm test

@@ -20,13 +20,49 @@
     },
     "test": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "test/**/*.tsx", "playwright.config.ts"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "test/**/*.{js,jsx,ts,tsx}",
+        "app/**/*.{js,jsx,ts,tsx}",
+        "__tests__/**/*.{js,jsx,ts,tsx}",
+        "jest.config.*",
+        "jest.setup.*"
+      ],
+      "outputs": ["coverage/**"]
+    },
+    "test:watch": {
+      "cache": false,
+      "persistent": true
+    },
+    "test:coverage": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "test/**/*.{js,jsx,ts,tsx}",
+        "app/**/*.{js,jsx,ts,tsx}",
+        "__tests__/**/*.{js,jsx,ts,tsx}",
+        "jest.config.*",
+        "jest.setup.*"
+      ],
+      "outputs": ["coverage/**"]
+    },
+    "e2e:test": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "test/**/*.{js,jsx,ts,tsx}",
+        "playwright.config.*"
+      ],
       "outputs": ["test-results/**", "playwright-report/**"],
       "env": ["CI"]
     },
     "test:ui": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "test/**/*.tsx", "playwright.config.ts"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "test/**/*.{js,jsx,ts,tsx}",
+        "playwright.config.*"
+      ],
       "outputs": [],
       "env": ["CI"]
     },
@@ -40,7 +76,11 @@
     },
     "build-storybook": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.stories.ts", "src/**/*.stories.tsx", ".storybook/**/*"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "src/**/*.stories.{js,jsx,ts,tsx}",
+        ".storybook/**/*"
+      ],
       "outputs": ["storybook-static/**"]
     }
   }

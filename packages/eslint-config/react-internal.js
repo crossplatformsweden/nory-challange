@@ -1,39 +1,51 @@
-import js from "@eslint/js";
+import baseConfig from "./base.js";
 import eslintConfigPrettier from "eslint-config-prettier";
-import tseslint from "typescript-eslint";
-import pluginReactHooks from "eslint-plugin-react-hooks";
-import pluginReact from "eslint-plugin-react";
+import typescriptEslint from "@typescript-eslint/eslint-plugin";
+import typescriptEslintParser from "@typescript-eslint/parser";
+import eslintPluginReactHooks from "eslint-plugin-react-hooks";
+import eslintPluginReact from "eslint-plugin-react";
 import globals from "globals";
-import { config as baseConfig } from "./base.js";
 
-/**
- * A custom ESLint configuration for libraries that use React.
- *
- * @type {import("eslint").Linter.Config} */
+const pluginReact = eslintPluginReact;
+const pluginReactHooks = eslintPluginReactHooks;
+
 export const config = [
   ...baseConfig,
-  js.configs.recommended,
-  eslintConfigPrettier,
-  ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
   {
+    files: ["**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
-      ...pluginReact.configs.flat.recommended.languageOptions,
+      parser: typescriptEslintParser,
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
       globals: {
-        ...globals.serviceworker,
         ...globals.browser,
+        ...globals.es2021,
+        ...globals.node,
       },
     },
-  },
-  {
     plugins: {
-      "react-hooks": pluginReactHooks,
+      "@typescript-eslint": typescriptEslint,
+      "react-hooks": eslintPluginReactHooks,
+      react: eslintPluginReact,
     },
-    settings: { react: { version: "detect" } },
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
     rules: {
-      ...pluginReactHooks.configs.recommended.rules,
+      ...(typescriptEslint.configs.recommended?.rules ?? {}),
+      ...(pluginReact.configs.flat.recommended.rules ?? {}),
+      ...(pluginReactHooks.configs.recommended.rules ?? {}),
       // React scope no longer necessary with new JSX transform.
       "react/react-in-jsx-scope": "off",
+      "@typescript-eslint/no-var-requires": "off",
     },
   },
+  eslintConfigPrettier,
 ];

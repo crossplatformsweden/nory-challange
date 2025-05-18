@@ -1,32 +1,50 @@
 import js from "@eslint/js";
+import globals from "globals";
 import eslintConfigPrettier from "eslint-config-prettier";
-import turboPlugin from "eslint-plugin-turbo";
-import tseslint from "typescript-eslint";
+// Removed turbo plugin due to compatibility issues
+// import turboPlugin from "eslint-plugin-turbo";
+import typescriptEslint from "@typescript-eslint/eslint-plugin";
+import typescriptEslintParser from "@typescript-eslint/parser";
+// @ts-ignore
 import onlyWarn from "eslint-plugin-only-warn";
 
 /**
  * A shared ESLint configuration for the repository.
- *
- * @type {import("eslint").Linter.Config}
- * */
-export const config = [
+ */
+const config = [
   js.configs.recommended,
-  eslintConfigPrettier,
-  ...tseslint.configs.recommended,
   {
+    files: ["**/*.{js,jsx,ts,tsx}"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      parser: typescriptEslintParser,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.es2021,
+        ...globals.node,
+      },
+    },
     plugins: {
-      turbo: turboPlugin,
+      "@typescript-eslint": typescriptEslint,
+      "only-warn": onlyWarn,
     },
     rules: {
-      "turbo/no-undeclared-env-vars": "warn",
+      "no-console": ["warn", { allow: ["warn", "error"] }],
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": ["error"],
+      "@typescript-eslint/no-var-requires": "off",
     },
   },
-  {
-    plugins: {
-      onlyWarn,
-    },
-  },
+  eslintConfigPrettier,
   {
     ignores: ["dist/**"],
   },
 ];
+
+export default config;
