@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { cn } from '../../utils';
 import { type BaseProps, type Size, type Variant } from '../../types';

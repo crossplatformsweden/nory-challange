@@ -1,28 +1,27 @@
 /** @type {import('jest').Config} */
 const config = {
-  preset: 'ts-jest',
-  testEnvironment: 'jsdom',
+  preset: "ts-jest",
+  testEnvironment: "jsdom",
   transform: {
-    '^.+\\.tsx?$': ['ts-jest', {
-      tsconfig: '<rootDir>/tsconfig.json',
-    }],
+    "^.+\\.tsx?$": [
+      "ts-jest",
+      {
+        tsconfig: "<rootDir>/tsconfig.json",
+      },
+    ],
   },
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
-    '\\.(css|less|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
-    '\\.(gif|ttf|eot|svg|png|jpg|jpeg)$': '<rootDir>/__mocks__/fileMock.js',
+    "^@/(.*)$": "<rootDir>/src/$1",
+    "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
+    "\\.(gif|ttf|eot|svg|png|jpg|jpeg)$": "<rootDir>/__mocks__/fileMock.js",
   },
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  testPathIgnorePatterns: [
-    '/node_modules/',
-    '/.turbo/',
-    '/dist/',
-  ],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  testPathIgnorePatterns: ["/node_modules/", "/.turbo/", "/dist/"],
   collectCoverageFrom: [
-    'src/**/*.{ts,tsx}',
-    '!src/**/*.stories.{ts,tsx}',
-    '!src/**/*.d.ts',
-    '!src/index.ts',
+    "src/**/*.{ts,tsx}",
+    "!src/**/*.stories.{ts,tsx}",
+    "!src/**/*.d.ts",
+    "!src/index.ts",
   ],
   coverageThreshold: {
     global: {
@@ -34,4 +33,4 @@ const config = {
   },
 };
 
-module.exports = config;
+export default config;

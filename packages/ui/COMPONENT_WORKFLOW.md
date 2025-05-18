@@ -24,30 +24,36 @@ Start by creating the component implementation file:
 
 ```tsx
 // Button.tsx
-import React from 'react';
-import { useButton } from '@react-aria/button';
-import { useObjectRef } from '@react-aria/utils';
-import { cn } from '../../utils';
-import { type BaseProps } from '../../types';
+import React from "react";
+import { useButton } from "@react-aria/button";
+import { useObjectRef } from "@react-aria/utils";
+import { cn } from "../../utils";
+import { type BaseProps } from "../../types";
 
 export interface ButtonProps extends BaseProps {
   // Define component-specific props here
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, forwardedRef) => {
-  const ref = useObjectRef(forwardedRef);
-  // Use React Aria hooks for accessibility
-  
-  // Implement component logic
-  
-  return (
-    <button ref={ref} className={cn('base-styles', props.className)}>
-      {props.children}
-    </button>
-  );
-});
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (props, forwardedRef) => {
+    const ref = useObjectRef(forwardedRef);
 
-Button.displayName = 'Button';
+    //'use client';
+    // FOR NEXTJS ServerComponents compability with react-aria. Make sure its 'use client'
+
+    // Use React Aria hooks for accessibility
+
+    // Implement component logic
+
+    return (
+      <button ref={ref} className={cn("base-styles", props.className)}>
+        {props.children}
+      </button>
+    );
+  },
+);
+
+Button.displayName = "Button";
 ```
 
 ### 2. Tests
@@ -56,21 +62,21 @@ Create comprehensive tests for your component:
 
 ```tsx
 // Button.test.tsx
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { Button } from './Button';
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { Button } from "./Button";
 
-describe('Button', () => {
-  it('renders correctly', () => {
+describe("Button", () => {
+  it("renders correctly", () => {
     render(<Button>Click Me</Button>);
-    expect(screen.getByRole('button')).toHaveTextContent('Click Me');
+    expect(screen.getByRole("button")).toHaveTextContent("Click Me");
   });
 
-  it('handles click events', async () => {
+  it("handles click events", async () => {
     const handleClick = jest.fn();
     render(<Button onClick={handleClick}>Click Me</Button>);
-    
-    await userEvent.click(screen.getByRole('button'));
+
+    await userEvent.click(screen.getByRole("button"));
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
@@ -88,16 +94,16 @@ Create stories for all component variants:
 
 ```tsx
 // Button.stories.tsx
-import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from './Button';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Button } from "./Button";
 
 const meta: Meta<typeof Button> = {
-  title: 'Components/Button',
+  title: "Components/Button",
   component: Button,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     // Define arg types here
   },
@@ -108,8 +114,8 @@ type Story = StoryObj<typeof Button>;
 
 export const Primary: Story = {
   args: {
-    children: 'Button',
-    variant: 'primary',
+    children: "Button",
+    variant: "primary",
   },
 };
 
@@ -126,7 +132,7 @@ Create an index file to export your component:
 
 ```tsx
 // index.ts
-export * from './Button';
+export * from "./Button";
 ```
 
 ## Quality Checklist
