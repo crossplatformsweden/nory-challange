@@ -1,32 +1,15 @@
-import { Linter } from "eslint";
-import { config as baseConfig } from "./base.js";
+import baseConfig from "./base.js";
 import eslintConfigPrettier from "eslint-config-prettier";
-const typescriptEslint = require("@typescript-eslint/eslint-plugin") as any;
-const typescriptEslintParser = require("@typescript-eslint/parser") as any;
-const eslintPluginReactHooks = require("eslint-plugin-react-hooks") as any;
-const eslintPluginReact = require("eslint-plugin-react") as any;
+import typescriptEslint from "@typescript-eslint/eslint-plugin";
+import typescriptEslintParser from "@typescript-eslint/parser";
+import eslintPluginReactHooks from "eslint-plugin-react-hooks";
+import eslintPluginReact from "eslint-plugin-react";
 import globals from "globals";
 
-const pluginReact = eslintPluginReact as unknown as {
-  configs: {
-    flat: {
-      recommended: {
-        languageOptions: Linter.FlatConfig["languageOptions"];
-        rules: Linter.FlatConfig["rules"];
-      };
-    };
-  };
-};
+const pluginReact = eslintPluginReact;
+const pluginReactHooks = eslintPluginReactHooks;
 
-const pluginReactHooks = eslintPluginReactHooks as unknown as {
-  configs: {
-    recommended: {
-      rules: Linter.FlatConfig["rules"];
-    };
-  };
-};
-
-export const config: Linter.FlatConfig[] = [
+export const config = [
   ...baseConfig,
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
@@ -66,6 +49,3 @@ export const config: Linter.FlatConfig[] = [
   },
   eslintConfigPrettier,
 ];
-
- 
- 

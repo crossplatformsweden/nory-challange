@@ -1,6 +1,7 @@
 {
   "name": "@repo/e2e-tests",
   "version": "0.0.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "test": "playwright test",
@@ -16,6 +17,7 @@
     "@playwright/test": "^1.40.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/eslint-config-prettier": "^6.11.3",
     "@types/node": "^22.15.3",
     "eslint": "^9.26.0",
     "typescript": "5.8.2"

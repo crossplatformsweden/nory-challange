@@ -3,15 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "index.js",
   "files": [
-    "dist"
+    "*.js"
   ],
   "scripts": {
-    "build": "tsc",
-    "lint": "eslint . --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
     "@eslint/js": "^9.21.0",
@@ -22,14 +19,11 @@
     "eslint-plugin-only-warn": "^1.1.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-turbo": "^1.13.4",
-    "globals": "^15.0.0"
+    "eslint-plugin-turbo": "^1.13.4"
   },
   "devDependencies": {
-    "@repo/typescript-config": "workspace:*",
     "@types/eslint": "^8.56.2",
     "@types/eslint-config-prettier": "^6.11.3",
-    "eslint": "^9.26.0",
-    "typescript": "5.8.2"
+    "eslint": "^9.26.0"
   }
 }

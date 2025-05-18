@@ -39,5 +39,8 @@
     "*.{json,md,mdx,css}": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "globals": "^16.1.0"
   }
 }

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Gradient } from './gradient';
+import { Gradient } from './gradient.js';
 
-const meta = {
+const meta: Meta<typeof Gradient> = {
   title: 'UI/Gradient',
   component: Gradient,
   parameters: {
@@ -15,7 +15,7 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof Gradient>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

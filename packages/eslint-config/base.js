@@ -1,17 +1,17 @@
-import { Linter } from "eslint";
 import js from "@eslint/js";
 import globals from "globals";
 import eslintConfigPrettier from "eslint-config-prettier";
-import turboPlugin from "eslint-plugin-turbo";
-const typescriptEslint = require("@typescript-eslint/eslint-plugin");
-const typescriptEslintParser = require("@typescript-eslint/parser");
+// Removed turbo plugin due to compatibility issues
+// import turboPlugin from "eslint-plugin-turbo";
+import typescriptEslint from "@typescript-eslint/eslint-plugin";
+import typescriptEslintParser from "@typescript-eslint/parser";
 // @ts-ignore
-const onlyWarn = require("eslint-plugin-only-warn");
+import onlyWarn from "eslint-plugin-only-warn";
 
 /**
  * A shared ESLint configuration for the repository.
  */
-export const config: Linter.FlatConfig[] = [
+const config = [
   js.configs.recommended,
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
@@ -32,7 +32,6 @@ export const config: Linter.FlatConfig[] = [
     },
     plugins: {
       "@typescript-eslint": typescriptEslint,
-      turbo: turboPlugin,
       "only-warn": onlyWarn,
     },
     rules: {
@@ -46,4 +45,6 @@ export const config: Linter.FlatConfig[] = [
   {
     ignores: ["dist/**"],
   },
-]; 
+];
+
+export default config;
