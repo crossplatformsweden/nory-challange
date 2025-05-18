@@ -20,41 +20,7 @@ src/
 
 ### 1. Implementation
 
-Start by creating the component implementation file:
-
-```tsx
-// Button.tsx
-import React from "react";
-import { useButton } from "@react-aria/button";
-import { useObjectRef } from "@react-aria/utils";
-import { cn } from "../../utils";
-import { type BaseProps } from "../../types";
-
-export interface ButtonProps extends BaseProps {
-  // Define component-specific props here
-}
-
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (props, forwardedRef) => {
-    const ref = useObjectRef(forwardedRef);
-
-    //'use client';
-    // FOR NEXTJS ServerComponents compability with react-aria. Make sure its 'use client'
-
-    // Use React Aria hooks for accessibility
-
-    // Implement component logic
-
-    return (
-      <button ref={ref} className={cn("base-styles", props.className)}>
-        {props.children}
-      </button>
-    );
-  },
-);
-
-Button.displayName = "Button";
-```
+See current implementation.
 
 ### 2. Tests
 
@@ -140,7 +106,6 @@ export * from "./Button";
 Before submitting a component, ensure that:
 
 - [ ] Component is fully typed with TypeScript
-- [ ] Component is accessible (React Aria or manual a11y)
 - [ ] Component has comprehensive tests (>80% coverage)
 - [ ] Component has Storybook stories for all variants
 - [ ] Component follows design system guidelines
