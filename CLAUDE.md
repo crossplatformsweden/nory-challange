@@ -51,7 +51,23 @@ pnpm build-storybook
 
 ### Testing
 
-Run E2E tests:
+Run unit tests with Jest:
+
+```bash
+# Run all unit tests
+pnpm test
+
+# Run tests in watch mode
+pnpm test:watch
+
+# Run tests with coverage report
+pnpm test:coverage
+
+# Run tests for a specific package/app
+pnpm --filter web test
+```
+
+Run E2E tests with Playwright:
 
 ```bash
 # Install Playwright browsers (first time only)
@@ -96,6 +112,44 @@ Format all code with Prettier:
 pnpm format
 ```
 
+## Git Flow
+
+This repository follows the Git Flow branching model. See [GIT_FLOW.md](./GIT_FLOW.md) for detailed workflow instructions.
+
+### Branch Structure
+
+- **`main` / `master`**: Production-ready code
+- **`develop`**: Integration branch for feature development
+- **`feature/*`**: New features
+- **`improvement/*`**: Improvements to existing features
+- **`release/*`**: Release preparation
+- **`hotfix/*`**: Emergency production fixes
+
+### Creating a New Feature
+
+```bash
+# Start from develop branch
+git checkout develop
+
+# Create and switch to a new feature branch
+git checkout -b feature/your-feature-name
+
+# After making changes, push to remote
+git push -u origin feature/your-feature-name
+
+# Create a PR to merge back to develop
+```
+
+## CI/CD Pipeline
+
+This repository uses GitHub Actions for CI/CD:
+
+- Feature branches: Validate and test
+- Develop branch: Validate, test, and build Storybook
+- Release branches: Validate, test, and build Storybook
+- Main branch: Validate, test, and deploy
+- Hotfix branches: Validate and test
+
 ## Git Hooks
 
 This repository uses Husky and lint-staged to enforce code quality:
@@ -119,6 +173,7 @@ This Turborepo uses:
 - [Storybook](https://storybook.js.org/) for UI component development and documentation
 - [Husky](https://typicode.github.io/husky/) for Git hooks
 - [lint-staged](https://github.com/lint-staged/lint-staged) for running linters on staged files
+- [GitHub Actions](https://github.com/features/actions) for CI/CD
 
 The UI components package (`@repo/ui`) is configured to be consumed directly by Next.js applications. The component `.tsx` files are consumed directly using `transpilePackages` in `next.config.ts`.
 

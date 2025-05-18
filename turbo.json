@@ -20,7 +20,14 @@
     },
     "test": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "test/**/*.tsx", "**/*.test.ts", "**/*.test.tsx", "jest.config.js", "jest.setup.js"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "test/**/*.{js,jsx,ts,tsx}",
+        "app/**/*.{js,jsx,ts,tsx}",
+        "__tests__/**/*.{js,jsx,ts,tsx}",
+        "jest.config.*",
+        "jest.setup.*"
+      ],
       "outputs": ["coverage/**"],
       "env": ["CI"]
     },
@@ -30,19 +37,34 @@
     },
     "test:coverage": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "test/**/*.tsx", "**/*.test.ts", "**/*.test.tsx", "jest.config.js", "jest.setup.js"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "test/**/*.{js,jsx,ts,tsx}",
+        "app/**/*.{js,jsx,ts,tsx}",
+        "__tests__/**/*.{js,jsx,ts,tsx}",
+        "jest.config.*",
+        "jest.setup.*"
+      ],
       "outputs": ["coverage/**"],
       "env": ["CI"]
     },
-    "test:e2e": {
+    "e2e:test": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "test/**/*.tsx", "playwright.config.ts"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "test/**/*.{js,jsx,ts,tsx}",
+        "playwright.config.*"
+      ],
       "outputs": ["test-results/**", "playwright-report/**"],
       "env": ["CI"]
     },
     "test:e2e:ui": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "test/**/*.tsx", "playwright.config.ts"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "test/**/*.{js,jsx,ts,tsx}",
+        "playwright.config.*"
+      ],
       "outputs": [],
       "env": ["CI"]
     },
@@ -56,7 +78,11 @@
     },
     "build-storybook": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.stories.ts", "src/**/*.stories.tsx", ".storybook/**/*"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "src/**/*.stories.{js,jsx,ts,tsx}",
+        ".storybook/**/*"
+      ],
       "outputs": ["storybook-static/**"]
     }
   }

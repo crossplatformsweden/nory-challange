@@ -13,6 +13,7 @@ This document outlines the plan for creating a comprehensive design system with 
 ## Component Implementation Plan
 
 Each component should include:
+
 - TypeScript implementation with proper typing
 - Comprehensive Jest tests using React Testing Library
 - Storybook stories covering all variants and states
@@ -21,30 +22,31 @@ Each component should include:
 
 ### Component Progress Tracker
 
-| Component | Implementation | Tests | Storybook | Status |
-|-----------|---------------|-------|-----------|--------|
-| Button | = | = | = | Not Started |
-| Input | = | = | = | Not Started |
-| Checkbox | = | = | = | Not Started |
-| Switch | = | = | = | Not Started |
-| Radio | = | = | = | Not Started |
-| Select | = | = | = | Not Started |
-| ComboBox | = | = | = | Not Started |
-| Dialog | = | = | = | Not Started |
-| Popover | = | = | = | Not Started |
-| Tooltip | = | = | = | Not Started |
-| Tabs | = | = | = | Not Started |
-| Accordion | = | = | = | Not Started |
-| Card | = | = | = | Not Started |
-| Badge | = | = | = | Not Started |
-| Avatar | = | = | = | Not Started |
-| Alert/Toast | = | = | = | Not Started |
-| Table | = | = | = | Not Started |
-| Pagination | = | = | = | Not Started |
+| Component   | Implementation | Tests | Storybook | Status      |
+| ----------- | -------------- | ----- | --------- | ----------- |
+| Button      | =              | =     | =         | Not Started |
+| Input       | =              | =     | =         | Not Started |
+| Checkbox    | =              | =     | =         | Not Started |
+| Switch      | =              | =     | =         | Not Started |
+| Radio       | =              | =     | =         | Not Started |
+| Select      | =              | =     | =         | Not Started |
+| ComboBox    | =              | =     | =         | Not Started |
+| Dialog      | =              | =     | =         | Not Started |
+| Popover     | =              | =     | =         | Not Started |
+| Tooltip     | =              | =     | =         | Not Started |
+| Tabs        | =              | =     | =         | Not Started |
+| Accordion   | =              | =     | =         | Not Started |
+| Card        | =              | =     | =         | Not Started |
+| Badge       | =              | =     | =         | Not Started |
+| Avatar      | =              | =     | =         | Not Started |
+| Alert/Toast | =              | =     | =         | Not Started |
+| Table       | =              | =     | =         | Not Started |
+| Pagination  | =              | =     | =         | Not Started |
 
 ## Component Requirements
 
 ### Button
+
 - Variants: primary, secondary, outline, ghost, link, danger
 - States: default, hover, focus, active, disabled, loading
 - Sizes: sm, md, lg, xl
@@ -52,6 +54,7 @@ Each component should include:
 - Full width option
 
 ### Input
+
 - Base text input
 - With labels, help text, validation states
 - With/without icons (left/right)
@@ -60,36 +63,42 @@ Each component should include:
 - Sizes: sm, md, lg
 
 ### Checkbox
+
 - Default checkbox
 - Indeterminate state
 - With label (left/right)
 - States: default, hover, focus, disabled, checked
 
 ### Switch
+
 - Default toggle
 - With label (left/right)
 - States: default, hover, focus, disabled, checked
 - Sizes: sm, md, lg
 
 ### Radio
+
 - Default radio
 - Radio group
 - With label (left/right)
 - States: default, hover, focus, disabled, checked
 
 ### Select
+
 - Single select
 - States: default, hover, focus, disabled, error
 - With label, help text
 - Sizes: sm, md, lg
 
 ### ComboBox
+
 - Autocomplete functionality
 - States: default, hover, focus, disabled, loading
 - With clear button
 - Custom filtering
 
 ### Dialog
+
 - Modal variant
 - Alert variant
 - With close button
@@ -97,52 +106,61 @@ Each component should include:
 - With/without overlay
 
 ### Popover
+
 - Basic popover
 - Different placements
 - With/without arrow
 - With close button
 
 ### Tooltip
+
 - Different placements
 - Delay options
 - Different sizes
 
 ### Tabs
+
 - Horizontal tabs
 - Vertical tabs
 - With/without icons
 - Underlined/boxed variants
 
 ### Accordion
+
 - Single/multiple open items
 - With/without icons
 - Custom styling for headers/content
 
 ### Card
+
 - Different padding options
 - With/without header/footer
 - Interactive/clickable variant
 - Bordered/borderless variants
 
 ### Badge
+
 - Different colors
 - With/without dots
 - Sizes: sm, md, lg
 - Pill/square variants
 
 ### Avatar
+
 - Image variant
 - Initials variant
 - Sizes: xs, sm, md, lg, xl
 - With status indicator
 
 ### Alert/Toast
+
 - Different types (info, success, warning, error)
 - With/without icons
 - With/without close button
 - Auto-dismiss option
 
 ### Table
+
 - Basic table with sorting
 - Pagination integration
 - Selection (single/multiple)
@@ -150,6 +168,7 @@ Each component should include:
 - Resizable columns
 
 ### Pagination
+
 - Number buttons
 - Previous/next buttons
 - Items per page selector
@@ -168,6 +187,7 @@ Each component should include:
 ## Testing Strategy
 
 Each component should have tests for:
+
 - Rendering correctly with different props
 - Handling user interactions
 - Accessibility features
@@ -177,9 +197,16 @@ Each component should have tests for:
 ## Storybook Strategy
 
 Each component should have stories for:
+
 - All variants
 - All sizes
 - All states
 - Interactive examples
 - Documentation with usage guidelines
 - Accessibility guidelines
+
+using github cli
+
+follow branch feature/UiComponentsWithJestTesting And make sure the tests are ok.
+
+CHECK packages/ui/COMPONENT_WORKFLOW.md for more instructions.

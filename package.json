@@ -15,18 +15,30 @@
     "storybook": "turbo run storybook --filter=@repo/ui",
     "build-storybook": "turbo run build-storybook --filter=@repo/ui",
     "install:playwright": "turbo run install:browsers --filter=@repo/e2e-tests",
-    "prepare": "husky"
+    "prepare": "husky",
+    "all": "pnpm build --filter=./packages/* && pnpm check-types --filter=./packages/* && pnpm lint --filter=./packages/* && pnpm test --filter=./packages/* && pnpm build --filter=./apps/* && pnpm check-types --filter=./apps/* && pnpm lint --filter=./apps/* && pnpm test --filter=./apps/*"
   },
   "devDependencies": {
+    "@types/node": "^22.15.3",
     "husky": "^9.1.7",
     "lint-staged": "^16.0.0",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
+    "ts-node": "^10.9.2",
     "turbo": "^2.5.3"
   },
   "packageManager": "pnpm@8.15.6",
   "engines": {
     "node": ">=18"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "jest --bail --findRelatedTests"
+    ],
+    "*.{json,md,mdx,css}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@adobe/react-spectrum": "^3.41.0",

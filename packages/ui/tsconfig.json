@@ -1,8 +1,9 @@
 {
   "extends": "@repo/typescript-config/react-library.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "skipLibCheck": true
   },
-  "include": ["src"],
+  "include": ["src", "eslint.config.ts", "types.d.ts"],
   "exclude": ["dist", "build", "node_modules"]
 }
