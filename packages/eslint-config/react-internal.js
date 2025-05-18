@@ -26,6 +26,7 @@ export const config = [
         ...globals.browser,
         ...globals.es2021,
         ...globals.node,
+        ...globals.jest,
       },
     },
     plugins: {

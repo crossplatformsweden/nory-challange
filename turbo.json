@@ -28,7 +28,8 @@
         "jest.config.*",
         "jest.setup.*"
       ],
-      "outputs": ["coverage/**"]
+      "outputs": ["coverage/**"],
+      "env": ["CI"]
     },
     "test:watch": {
       "cache": false,
@@ -44,7 +45,8 @@
         "jest.config.*",
         "jest.setup.*"
       ],
-      "outputs": ["coverage/**"]
+      "outputs": ["coverage/**"],
+      "env": ["CI"]
     },
     "e2e:test": {
       "dependsOn": ["^build"],
@@ -56,7 +58,7 @@
       "outputs": ["test-results/**", "playwright-report/**"],
       "env": ["CI"]
     },
-    "test:ui": {
+    "test:e2e:ui": {
       "dependsOn": ["^build"],
       "inputs": [
         "src/**/*.{js,jsx,ts,tsx}",

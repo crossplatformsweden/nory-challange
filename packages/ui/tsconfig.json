@@ -2,8 +2,20 @@
   "extends": "@repo/typescript-config/react-library.json",
   "compilerOptions": {
     "outDir": "dist",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/components/ui/*": ["./src/components/*"],
+      "@/hooks/*": ["./src/hooks/*"]
+    }
   },
   "include": ["src", "eslint.config.ts", "types.d.ts"],
-  "exclude": ["dist", "build", "node_modules"]
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules",
+    "**/*.test.tsx",
+    "**/*.test.ts",
+    "**/*.stories.tsx"
+  ]
 }

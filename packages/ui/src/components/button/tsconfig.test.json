@@ -1,0 +1,7 @@
+{
+  "extends": "../../../tsconfig.json",
+  "include": ["button.test.tsx", "button.stories.tsx"],
+  "compilerOptions": {
+    "noEmit": true
+  }
+}

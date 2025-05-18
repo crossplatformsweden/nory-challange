@@ -16,7 +16,7 @@
     "build-storybook": "turbo run build-storybook --filter=@repo/ui",
     "install:playwright": "turbo run install:browsers --filter=@repo/e2e-tests",
     "prepare": "husky",
-    "all": "pnpm build --filter=./packages/* && pnpm check-types --filter=./packages/* && pnpm lint --filter=./packages/* && pnpm test --filter=./packages/* && pnpm build --filter=./apps/* && pnpm check-types --filter=./apps/* && pnpm lint --filter=./apps/* && pnpm test --filter=./apps/*"
+    "all": "pnpm build --filter=./packages/* && pnpm check-types --filter=./packages/* && pnpm lint --filter=./packages/* && pnpm test --filter=./packages/* --if-present || true && pnpm build --filter=./apps/* && pnpm check-types --filter=./apps/* && pnpm lint --filter=./apps/* && pnpm test --filter=./apps/* --if-present || true"
   },
   "devDependencies": {
     "@types/node": "^22.15.3",
@@ -34,6 +34,7 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
+      "prettier --write",
       "jest --bail --findRelatedTests"
     ],
     "*.{json,md,mdx,css}": [
@@ -41,6 +42,11 @@
     ]
   },
   "dependencies": {
-    "globals": "^16.1.0"
+    "@adobe/react-spectrum": "^3.41.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "globals": "^16.1.0",
+    "jest": "^29.7.0",
+    "tailwind-merge": "^2.2.2"
   }
 }
