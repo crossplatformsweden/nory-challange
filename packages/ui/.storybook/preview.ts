@@ -1,5 +1,6 @@
 import type { Preview } from "@storybook/react";
 import "../src/styles.css";
+import "@repo/tailwind-config/shared-styles.css";
 
 const preview: Preview = {
   parameters: {
@@ -10,6 +11,20 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    backgrounds: {
+      default: "light",
+      values: [
+        {
+          name: "light",
+          value: "#ffffff",
+        },
+        {
+          name: "dark",
+          value: "#0f172a",
+        },
+      ],
+    },
+    layout: "centered",
   },
 };
 
