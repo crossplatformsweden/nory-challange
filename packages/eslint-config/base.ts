@@ -2,7 +2,7 @@ import { Linter } from "eslint";
 import js from "@eslint/js";
 import globals from "globals";
 import eslintConfigPrettier from "eslint-config-prettier";
-const turboPlugin = require("eslint-plugin-turbo");
+import turboPlugin from "eslint-plugin-turbo";
 const typescriptEslint = require("@typescript-eslint/eslint-plugin");
 const typescriptEslintParser = require("@typescript-eslint/parser");
 // @ts-ignore
