@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.52.0-noble
+      options: --ipc=host
     steps:
       - name: 📚 Checkout code
         uses: actions/checkout@v4
@@ -39,9 +40,6 @@ jobs:
 
       - name: 📝 Type check
         run: pnpm check-types
-
-      - name: 🚀 Install Playwright browsers
-        run: pnpm install:playwright
 
       - name: 🧪 Run tests
         run: pnpm test

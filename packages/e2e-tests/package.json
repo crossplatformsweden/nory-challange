@@ -8,7 +8,7 @@
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
     "report": "playwright show-report",
-    "install:browsers": "playwright install --with-deps",
+    "install:browsers": "playwright install --with-deps chromium firefox webkit",
     "install:deps": "pnpm install && pnpm install:browsers",
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit"
