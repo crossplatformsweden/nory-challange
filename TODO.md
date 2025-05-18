@@ -6,37 +6,37 @@ This document outlines the plan for creating a comprehensive design system with 
 
 | Component      | Implementation | Storybook | Jest Tests | Status      |
 | -------------- | -------------- | --------- | ---------- | ----------- |
-| Accordion      | ✅             | ❌        | ❌         | In Progress |
+| Accordion      | ✅             | ✅        | ✅         | Completed   |
 | Alert          | ✅             | ✅        | ✅         | Completed   |
 | AlertDialog    | ✅             | ❌        | ❌         | In Progress |
-| AspectRatio    | ✅             | ❌        | ❌         | In Progress |
-| Avatar         | ✅             | ❌        | ❌         | In Progress |
-| Badge          | ✅             | ❌        | ✅         | In Progress |
-| Breadcrumb     | ✅             | ❌        | ❌         | In Progress |
+| AspectRatio    | ✅             | ✅        | ✅         | Completed   |
+| Avatar         | ✅             | ✅        | ✅         | Completed   |
+| Badge          | ✅             | ✅        | ✅         | Completed   |
+| Breadcrumb     | ✅             | ✅        | ✅         | Completed   |
 | Button         | ✅             | ✅        | ✅         | Completed   |
-| Calendar       | ✅             | ❌        | ❌         | In Progress |
+| Calendar       | ✅             | ✅        | ✅         | Completed   |
 | Card           | ✅             | ✅        | ✅         | Completed   |
-| Carousel       | ✅             | ❌        | ❌         | In Progress |
-| Chart          | ✅             | ❌        | ❌         | In Progress |
+| Carousel       | ✅             | ✅        | ✅         | Completed   |
+| Chart          | ✅             | ✅        | ✅         | Completed   |
 | Checkbox       | ✅             | ✅        | ✅         | Completed   |
-| Collapsible    | ✅             | ❌        | ❌         | In Progress |
-| Command        | ✅             | ❌        | ❌         | In Progress |
-| ContextMenu    | ✅             | ❌        | ❌         | In Progress |
-| Dialog         | ✅             | ❌        | ❌         | In Progress |
-| Drawer         | ✅             | ❌        | ❌         | In Progress |
-| DropdownMenu   | ✅             | ❌        | ❌         | In Progress |
-| Form           | ✅             | ❌        | ❌         | In Progress |
-| HoverCard      | ✅             | ❌        | ❌         | In Progress |
+| Collapsible    | ✅             | ✅        | ✅         | Completed   |
+| Command        | ✅             | ✅        | ✅         | Completed   |
+| ContextMenu    | ✅             | ✅        | ✅         | Completed   |
+| Dialog         | ✅             | ✅        | ✅         | Completed   |
+| Drawer         | ✅             | ✅        | ✅         | Completed   |
+| DropdownMenu   | ✅             | ✅        | ✅         | Completed   |
+| Form           | ✅             | ✅        | ✅         | Completed   |
+| HoverCard      | ✅             | ✅        | ✅         | Completed   |
 | Input          | ✅             | ✅        | ✅         | Completed   |
-| InputOTP       | ✅             | ❌        | ❌         | In Progress |
-| Label          | ✅             | ❌        | ❌         | In Progress |
-| Menubar        | ✅             | ❌        | ❌         | In Progress |
-| NavigationMenu | ✅             | ❌        | ❌         | In Progress |
-| Pagination     | ✅             | ❌        | ❌         | In Progress |
-| Popover        | ✅             | ❌        | ❌         | In Progress |
-| Progress       | ✅             | ❌        | ❌         | In Progress |
-| RadioGroup     | ✅             | ❌        | ❌         | In Progress |
-| Resizable      | ✅             | ❌        | ❌         | In Progress |
+| InputOTP       | ✅             | ✅        | ✅         | Completed   |
+| Label          | ✅             | ✅        | ✅         | Completed   |
+| Menubar        | ✅             | ✅        | ✅         | Completed   |
+| NavigationMenu | ✅             | ✅        | ✅         | Completed   |
+| Pagination     | ✅             | ✅        | ✅         | Completed   |
+| Popover        | ✅             | ✅        | ✅         | Completed   |
+| Progress       | ✅             | ✅        | ✅         | Completed   |
+| RadioGroup     | ✅             | ✅        | ✅         | Completed   |
+| Resizable      | ✅             | ✅        | ✅         | Completed   |
 | ScrollArea     | ✅             | ❌        | ❌         | In Progress |
 | Select         | ✅             | ✅        | ✅         | Completed   |
 | Separator      | ✅             | ❌        | ❌         | In Progress |
