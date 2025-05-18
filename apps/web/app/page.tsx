@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Button } from "@repo/ui/components/button";
 
 const LINKS = [
   {
@@ -71,7 +70,6 @@ export default function Page() {
             <div className="flex justify-center items-center z-50">
             </div>
           </div>
-         <Button>Hello</Button>
           <div className="z-50 flex flex-col items-center justify-center gap-5 px-6 text-center lg:gap-6">
             <svg
               className="w-[160px] md:w-[200px] fill-black dark:fill-white"
