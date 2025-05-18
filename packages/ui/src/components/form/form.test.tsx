@@ -32,7 +32,7 @@ jest.mock("@radix-ui/react-slot", () => ({
   ),
 }));
 
-jest.mock("@/components/ui/label", () => ({
+jest.mock("../label", () => ({
   Label: ({ children, ...props }: any) => (
     <label data-testid="ui-label" {...props}>
       {children}

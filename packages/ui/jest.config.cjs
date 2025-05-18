@@ -1,5 +1,5 @@
 /** @type {import('jest').Config} */
-const config = {
+module.exports = {
   preset: "ts-jest",
   testEnvironment: "jsdom",
   transform: {
@@ -7,15 +7,17 @@ const config = {
       "ts-jest",
       {
         tsconfig: "<rootDir>/tsconfig.json",
+        useESM: true,
       },
     ],
   },
   moduleNameMapper: {
+    "^@/components/ui/(.*)$": "<rootDir>/src/components/$1",
     "^@/(.*)$": "<rootDir>/src/$1",
     "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
     "\\.(gif|ttf|eot|svg|png|jpg|jpeg)$": "<rootDir>/__mocks__/fileMock.js",
   },
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.cjs"],
   testPathIgnorePatterns: ["/node_modules/", "/.turbo/", "/dist/"],
   collectCoverageFrom: [
     "src/**/*.{ts,tsx}",
@@ -32,5 +34,3 @@ const config = {
     },
   },
 };
-
-export default config;

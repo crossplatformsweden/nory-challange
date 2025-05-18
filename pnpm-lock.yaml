@@ -173,6 +173,7 @@ importers:
 
   packages/ui:
     specifiers:
+      '@hookform/resolvers': ^5.0.1
       '@radix-ui/react-accordion': ^1.2.10
       '@radix-ui/react-alert-dialog': ^1.0.5
       '@radix-ui/react-aspect-ratio': ^1.0.3
@@ -218,7 +219,7 @@ importers:
       '@testing-library/user-event': ^14.5.2
       '@types/jest': ^29.5.12
       '@types/react': ^19.1.0
-      autoprefixer: ^10.4.20
+      autoprefixer: ^10.4.21
       class-variance-authority: ^0.7.1
       clsx: ^2.1.1
       cmdk: ^0.2.1
@@ -246,6 +247,7 @@ importers:
       typescript: 5.8.2
       vaul: ^0.9.0
       vite: ^6.3.5
+      zod: ^3.24.4
     dependencies:
       '@radix-ui/react-accordion': 1.2.10_2sdyanqo2b7vzitftgpe3cm4yy
       '@radix-ui/react-alert-dialog': 1.1.13_2sdyanqo2b7vzitftgpe3cm4yy
@@ -291,6 +293,7 @@ importers:
       tailwind-merge: 2.6.0
       vaul: 0.9.9_2sdyanqo2b7vzitftgpe3cm4yy
     devDependencies:
+      '@hookform/resolvers': 5.0.1_react-hook-form@7.56.4
       '@repo/eslint-config': link:../eslint-config
       '@repo/tailwind-config': link:../tailwind-config
       '@repo/typescript-config': link:../typescript-config
@@ -321,6 +324,7 @@ importers:
       tsc-alias: 1.8.16
       typescript: 5.8.2
       vite: 6.3.5
+      zod: 3.24.4
 
 packages:
 
@@ -1083,6 +1087,15 @@ packages:
     dependencies:
       tslib: 2.8.1
     dev: false
+
+  /@hookform/resolvers/5.0.1_react-hook-form@7.56.4:
+    resolution: {integrity: sha512-u/+Jp83luQNx9AdyW2fIPGY6Y7NG68eN2ZW8FOJYL+M0i4s49+refdJdOp/A9n9HFQtQs3HIDHQvX3ZET2o7YA==}
+    peerDependencies:
+      react-hook-form: ^7.55.0
+    dependencies:
+      '@standard-schema/utils': 0.3.0
+      react-hook-form: 7.56.4_react@19.1.0
+    dev: true
 
   /@humanfs/core/0.19.1:
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -6235,6 +6248,10 @@ packages:
       react-dom: 19.1.0_react@19.1.0
     dev: false
 
+  /@standard-schema/utils/0.3.0:
+    resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==}
+    dev: true
+
   /@storybook/addon-a11y/8.6.14_storybook@8.6.14:
     resolution: {integrity: sha512-fozv6enO9IgpWq2U8qqS8MZ21Nt+MVHiRQe3CjnCpBOejTyo/ATm690PeYYRVHVG6M/15TVePb0h3ngKQbrrzQ==}
     peerDependencies:
@@ -10981,7 +10998,6 @@ packages:
       react: ^16.8.0 || ^17 || ^18 || ^19
     dependencies:
       react: 19.1.0
-    dev: false
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -12543,3 +12559,7 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  /zod/3.24.4:
+    resolution: {integrity: sha512-OdqJE9UDRPwWsrHjLN2F8bPxvwJBK22EHLWtanu0LSYr5YqzsaaW3RMgmjwr8Rypg5k+meEJdSPXJZXE/yqOMg==}
+    dev: true

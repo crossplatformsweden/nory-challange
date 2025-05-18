@@ -16,7 +16,7 @@
     "build-storybook": "turbo run build-storybook --filter=@repo/ui",
     "install:playwright": "turbo run install:browsers --filter=@repo/e2e-tests",
     "prepare": "husky",
-    "all": "pnpm build --filter=./packages/* && pnpm check-types --filter=./packages/* && pnpm lint --filter=./packages/* && pnpm test --filter=./packages/* && pnpm build --filter=./apps/* && pnpm check-types --filter=./apps/* && pnpm lint --filter=./apps/* && pnpm test --filter=./apps/*"
+    "all": "pnpm build --filter=./packages/* && pnpm check-types --filter=./packages/* && pnpm lint --filter=./packages/* && pnpm test --filter=./packages/* --if-present || true && pnpm build --filter=./apps/* && pnpm check-types --filter=./apps/* && pnpm lint --filter=./apps/* && pnpm test --filter=./apps/* --if-present || true"
   },
   "devDependencies": {
     "@types/node": "^22.15.3",

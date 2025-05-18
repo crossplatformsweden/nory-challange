@@ -27,9 +27,9 @@
     "lint": "eslint src || exit 0",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "jest --config=jest.config.js",
-    "test:watch": "jest --config=jest.config.js --watch",
-    "test:coverage": "jest --config=jest.config.js --coverage"
+    "test": "jest --config=jest.config.cjs",
+    "test:watch": "jest --config=jest.config.cjs --watch",
+    "test:coverage": "jest --config=jest.config.cjs --coverage"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.10",
@@ -80,6 +80,7 @@
     "react-dom": "^19"
   },
   "devDependencies": {
+    "@hookform/resolvers": "^5.0.1",
     "@repo/eslint-config": "workspace:*",
     "@repo/tailwind-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
@@ -109,6 +110,7 @@
     "ts-jest": "^29.1.2",
     "tsc-alias": "^1.8.8",
     "typescript": "5.8.2",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "zod": "^3.24.4"
   }
 }

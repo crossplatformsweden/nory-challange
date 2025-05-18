@@ -67,7 +67,7 @@ jest.mock('cmdk', () => {
 });
 
 // Mock Dialog components
-jest.mock('@/components/ui/dialog', () => {
+jest.mock('../../components/dialog', () => {
   const React = require('react');
   return {
     Dialog: ({ children, ...props }) => (
