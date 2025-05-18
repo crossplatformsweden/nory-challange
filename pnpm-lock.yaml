@@ -245,6 +245,7 @@ importers:
       tsc-alias: ^1.8.8
       typescript: 5.8.2
       vaul: ^0.9.0
+      vite: ^6.3.5
     dependencies:
       '@radix-ui/react-accordion': 1.2.10_2sdyanqo2b7vzitftgpe3cm4yy
       '@radix-ui/react-alert-dialog': 1.1.13_2sdyanqo2b7vzitftgpe3cm4yy
@@ -319,6 +320,7 @@ importers:
       ts-jest: 29.3.4_bvazw3ni7egt7tzyxtigjcz3ta
       tsc-alias: 1.8.16
       typescript: 5.8.2
+      vite: 6.3.5
 
 packages:
 

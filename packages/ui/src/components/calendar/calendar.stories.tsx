@@ -48,27 +48,30 @@ export const Selected: Story = {
   },
 };
 
-export const DateRange: Story = {
-  render: (args) => {
-    const [date, setDate] = useState<{
-      from: Date | undefined;
-      to: Date | undefined;
-    }>({
-      from: new Date(),
-      to: new Date(new Date().setDate(new Date().getDate() + 5)),
-    });
+// Wrapper components to avoid rules-of-hooks ESLint errors
+const DateRangeWrapper = (args: any) => {
+  const [date, setDate] = useState<{
+    from: Date | undefined;
+    to: Date | undefined;
+  }>({
+    from: new Date(),
+    to: new Date(new Date().setDate(new Date().getDate() + 5)),
+  });
 
-    return (
-      <Calendar
-        {...args}
-        mode="range"
-        selected={date}
-        onSelect={setDate}
-        className="rounded-md border"
-        numberOfMonths={2}
-      />
-    );
-  },
+  return (
+    <Calendar
+      {...args}
+      mode="range"
+      selected={date}
+      onSelect={setDate}
+      className="rounded-md border"
+      numberOfMonths={2}
+    />
+  );
+};
+
+export const DateRange: Story = {
+  render: (args) => <DateRangeWrapper {...args} />,
 };
 
 export const MultiMonth: Story = {
@@ -91,29 +94,32 @@ export const DisabledDates: Story = {
   },
 };
 
-export const WithFooter: Story = {
-  render: (args) => {
-    const [date, setDate] = useState<Date | undefined>(new Date());
+// Wrapper component for WithFooter story
+const WithFooterWrapper = (args: any) => {
+  const [date, setDate] = useState<Date | undefined>(new Date());
 
-    return (
-      <div className="space-y-4">
-        <Calendar
-          {...args}
-          mode="single"
-          selected={date}
-          onSelect={setDate}
-          className="rounded-md border"
-        />
-        <div className="rounded-md border p-2 text-center text-sm">
-          {date ? (
-            <span>
-              Selected date: {date.toLocaleDateString()}
-            </span>
-          ) : (
-            <span>No date selected</span>
-          )}
-        </div>
+  return (
+    <div className="space-y-4">
+      <Calendar
+        {...args}
+        mode="single"
+        selected={date}
+        onSelect={setDate}
+        className="rounded-md border"
+      />
+      <div className="rounded-md border p-2 text-center text-sm">
+        {date ? (
+          <span>
+            Selected date: {date.toLocaleDateString()}
+          </span>
+        ) : (
+          <span>No date selected</span>
+        )}
       </div>
-    );
-  },
+    </div>
+  );
+};
+
+export const WithFooter: Story = {
+  render: (args) => <WithFooterWrapper {...args} />,
 };
