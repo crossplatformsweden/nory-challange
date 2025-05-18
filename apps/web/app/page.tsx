@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { TurborepoLogo } from "@repo/ui/turborepo-logo";
 import { Button } from "@repo/ui/components/button";
 
 const LINKS = [
@@ -70,7 +69,6 @@ export default function Page() {
             </div>
 
             <div className="flex justify-center items-center z-50">
-              <TurborepoLogo />
             </div>
           </div>
          <Button>Hello</Button>
