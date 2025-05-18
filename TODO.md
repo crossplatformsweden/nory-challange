@@ -2,6 +2,59 @@
 
 This document outlines the plan for creating a comprehensive design system with React Aria components, Jest testing, and Storybook integration.
 
+## Component Testing Status
+
+| Component      | Implementation | Storybook | Jest Tests | Status      |
+| -------------- | -------------- | --------- | ---------- | ----------- |
+| Accordion      | ✅             | ❌        | ❌         | In Progress |
+| Alert          | ✅             | ✅        | ✅         | Completed   |
+| AlertDialog    | ✅             | ❌        | ❌         | In Progress |
+| AspectRatio    | ✅             | ❌        | ❌         | In Progress |
+| Avatar         | ✅             | ❌        | ❌         | In Progress |
+| Badge          | ✅             | ❌        | ✅         | In Progress |
+| Breadcrumb     | ✅             | ❌        | ❌         | In Progress |
+| Button         | ✅             | ✅        | ✅         | Completed   |
+| Calendar       | ✅             | ❌        | ❌         | In Progress |
+| Card           | ✅             | ✅        | ✅         | Completed   |
+| Carousel       | ✅             | ❌        | ❌         | In Progress |
+| Chart          | ✅             | ❌        | ❌         | In Progress |
+| Checkbox       | ✅             | ✅        | ✅         | Completed   |
+| Collapsible    | ✅             | ❌        | ❌         | In Progress |
+| Command        | ✅             | ❌        | ❌         | In Progress |
+| ContextMenu    | ✅             | ❌        | ❌         | In Progress |
+| Dialog         | ✅             | ❌        | ❌         | In Progress |
+| Drawer         | ✅             | ❌        | ❌         | In Progress |
+| DropdownMenu   | ✅             | ❌        | ❌         | In Progress |
+| Form           | ✅             | ❌        | ❌         | In Progress |
+| HoverCard      | ✅             | ❌        | ❌         | In Progress |
+| Input          | ✅             | ✅        | ✅         | Completed   |
+| InputOTP       | ✅             | ❌        | ❌         | In Progress |
+| Label          | ✅             | ❌        | ❌         | In Progress |
+| Menubar        | ✅             | ❌        | ❌         | In Progress |
+| NavigationMenu | ✅             | ❌        | ❌         | In Progress |
+| Pagination     | ✅             | ❌        | ❌         | In Progress |
+| Popover        | ✅             | ❌        | ❌         | In Progress |
+| Progress       | ✅             | ❌        | ❌         | In Progress |
+| RadioGroup     | ✅             | ❌        | ❌         | In Progress |
+| Resizable      | ✅             | ❌        | ❌         | In Progress |
+| ScrollArea     | ✅             | ❌        | ❌         | In Progress |
+| Select         | ✅             | ✅        | ✅         | Completed   |
+| Separator      | ✅             | ❌        | ❌         | In Progress |
+| Sheet          | ✅             | ❌        | ❌         | In Progress |
+| Sidebar        | ✅             | ❌        | ❌         | In Progress |
+| Skeleton       | ✅             | ❌        | ❌         | In Progress |
+| Slider         | ✅             | ❌        | ❌         | In Progress |
+| Sonner         | ✅             | ❌        | ❌         | In Progress |
+| Switch         | ✅             | ❌        | ❌         | In Progress |
+| Table          | ✅             | ❌        | ❌         | In Progress |
+| Tabs           | ✅             | ❌        | ❌         | In Progress |
+| Textarea       | ✅             | ❌        | ❌         | In Progress |
+| Toast          | ✅             | ❌        | ❌         | In Progress |
+| Toaster        | ✅             | ❌        | ❌         | In Progress |
+| ToggleGroup    | ✅             | ❌        | ❌         | In Progress |
+| Toggle         | ✅             | ❌        | ❌         | In Progress |
+| Tooltip        | ✅             | ❌        | ❌         | In Progress |
+
 ## Component Implementation Plan
 
 Each component should include:
@@ -33,8 +86,13 @@ Each component should have stories for:
 - Documentation with usage guidelines
 - Accessibility guidelines
 
-using github cli
+## Workflow
 
-follow branch feature/UiComponentsWithJestTesting And make sure the tests are ok.
+Following the branch `feature/UiComponentsWithJestTesting` and checking `packages/ui/COMPONENT_WORKFLOW.md` for detailed implementation instructions.
 
-CHECK packages/ui/COMPONENT_WORKFLOW.md for more instructions.
+## Next Steps
+
+1. Continue adding Storybook stories for remaining components
+2. Continue adding Jest tests for remaining components
+3. Validate accessibility of all components
+4. Add documentation for component usage
