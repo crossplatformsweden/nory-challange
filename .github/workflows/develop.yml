@@ -38,11 +38,11 @@ jobs:
       - name: 📝 Type check
         run: pnpm check-types
 
+      - name: 🚀 Install Playwright browsers
+        run: pnpm install:playwright
+
       - name: 🧪 Run tests
         run: pnpm test
-
-      - name: 🚀 Install Playwright browsers
-        run: npx playwright install --with-deps
 
       - name: 🧪 Run E2E tests
         run: pnpm e2e

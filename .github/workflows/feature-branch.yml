@@ -41,7 +41,7 @@ jobs:
         run: pnpm check-types
 
       - name: 🚀 Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: pnpm install:playwright
 
       - name: 🧪 Run tests
         run: pnpm test

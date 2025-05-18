@@ -14,7 +14,7 @@
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@playwright/test": "^1.40.0",
+    "@playwright/test": "^1.52.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/eslint-config-prettier": "^6.11.3",
