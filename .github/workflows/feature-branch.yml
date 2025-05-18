@@ -13,6 +13,8 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.52.0-noble
       options: --ipc=host
+    env:
+      HOME: /root
     steps:
       - name: 📚 Checkout code
         uses: actions/checkout@v4
