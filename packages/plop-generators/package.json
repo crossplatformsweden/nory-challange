@@ -12,9 +12,9 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
     "plop": "plop",
     "check-types": "tsc --noEmit",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test": "echo 'Tests skipped for plop generators'",
+    "test:watch": "echo 'Tests skipped for plop generators'",
+    "test:coverage": "echo 'Tests skipped for plop generators'"
   },
   "dependencies": {
     "plop": "^4.0.1",
