@@ -1,0 +1,122 @@
+name: Test Results Visualization
+
+on:
+  workflow_run:
+    workflows: ['🌿 Feature Branch Workflow']
+    types:
+      - completed
+
+jobs:
+  visualize:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Playwright report
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          name: playwright-report
+          path: playwright-report
+          workflow: feature-branch.yml
+          run_id: ${{ github.event.workflow_run.id }}
+
+      - name: Download screenshots
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          name: playwright-screenshots
+          path: screenshots
+          workflow: feature-branch.yml
+          run_id: ${{ github.event.workflow_run.id }}
+
+      - name: Download Jest results
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          name: jest-results
+          path: jest-results
+          workflow: feature-branch.yml
+          run_id: ${{ github.event.workflow_run.id }}
+
+      - name: Create PR Comment
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            // Get PR number from the workflow run
+            const prNumber = context.payload.workflow_run.pull_requests[0]?.number;
+            if (!prNumber) {
+              console.log('No PR found for this workflow run');
+              return;
+            }
+
+            // Read test results
+            const jestResults = JSON.parse(fs.readFileSync('jest-results/.last-run.json', 'utf8'));
+            const playwrightReport = fs.existsSync('playwright-report/index.html');
+
+            // Create comment body with emojis and better formatting
+            let commentBody = `## 🧪 Test Results Summary\n\n`;
+            commentBody += `### 📊 Test Status\n`;
+            commentBody += `- Jest Tests: ${jestResults.status === 'passed' ? '✅ Passed' : '❌ Failed'}\n`;
+            commentBody += `- Playwright Tests: ${playwrightReport ? '✅ Report Available' : '❌ No Report'}\n\n`;
+
+            // Add detailed Jest results
+            commentBody += `### 🔍 Jest Details\n`;
+            commentBody += `- Failed Tests: ${jestResults.failedTests.length}\n`;
+            if (jestResults.failedTests.length > 0) {
+              commentBody += `\nFailed Test Cases:\n`;
+              jestResults.failedTests.forEach(test => {
+                commentBody += `- \`${test}\`\n`;
+              });
+            }
+            commentBody += `\n`;
+
+            // Add Playwright results with better formatting
+            commentBody += `### 🌐 Playwright Report\n`;
+            commentBody += `- [View Full Report](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${context.payload.workflow_run.id})\n\n`;
+
+            // Add screenshots if any failed tests
+            const screenshots = fs.readdirSync('screenshots');
+            if (screenshots.length > 0) {
+              commentBody += `### 📸 Failed Test Screenshots\n`;
+              screenshots.forEach(screenshot => {
+                const screenshotUrl = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${context.payload.workflow_run.id}/artifacts/${context.payload.workflow_run.id}`;
+                commentBody += `- [${screenshot}](${screenshotUrl})\n`;
+              });
+            }
+
+            // Add workflow run link
+            commentBody += `\n### 🔗 Links\n`;
+            commentBody += `- [View Workflow Run](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${context.payload.workflow_run.id})\n`;
+            commentBody += `- [Download All Artifacts](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${context.payload.workflow_run.id}/artifacts)\n`;
+
+            // Create or update PR comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber
+            });
+
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('## 🧪 Test Results Summary')
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: commentBody
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: commentBody
+              });
+            }
