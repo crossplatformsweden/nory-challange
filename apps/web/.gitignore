@@ -36,3 +36,4 @@ yarn-error.log*
 # playwright
 /screenshots
 /playwright-report
+/test-results
