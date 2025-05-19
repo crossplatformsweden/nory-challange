@@ -43,11 +43,8 @@ jobs:
       - name: 📝 Type check
         run: pnpm check-types
 
-      - name: 🚀 Install Playwright
-        run: npx playwright install
-
-      - name: 🚀 Install Playwright browsers
-        run: npx playwright install --with-deps chromium firefox webkit
+      - name: 🎭 Install Playwright
+        run: pnpm install:playwright
 
       - name: 🧪 Run tests
         run: pnpm test
