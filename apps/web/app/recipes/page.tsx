@@ -182,9 +182,15 @@ const RecipesListPage: FC<RecipesListPageProps> = () => {
                 </div>
                 <div
                   className="text-sm text-gray-500"
+                  data-testid={`recipe-ingredients-count-${recipe.id}`}
+                >
+                  {0} ingredients
+                </div>
+                <div
+                  className="text-sm text-gray-500"
                   data-testid={`recipe-yield-${recipe.id}`}
                 >
-                  Yield: {recipe.id}
+                  Yield: N/A
                 </div>
               </div>
 

@@ -333,12 +333,19 @@ const RecipeIngredientLinksPage: FC<RecipeIngredientLinksPageProps> = () => {
                     {recipeId}
                   </p>
                 </div>
-                {recipeData?.data?.description && (
-                  <div className="mb-4">
-                    <h3 className="text-lg font-semibold">Description</h3>
-                    <p>{recipeData.data.description}</p>
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold">Description</h3>
+                  <div className="flex flex-col gap-1">
+                    <span className="text-sm text-gray-500">Description:</span>
+                    <p
+                      data-testid="recipe-ingredient-links-recipe-description"
+                      className="text-sm"
+                    >
+                      {recipeData?.data?.description ||
+                        'No description provided'}
+                    </p>
                   </div>
-                )}
+                </div>
               </div>
 
               <div className="card-actions mt-4 justify-end">

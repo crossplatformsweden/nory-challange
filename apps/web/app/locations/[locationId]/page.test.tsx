@@ -120,7 +120,7 @@ describe('LocationDetailPage', () => {
   });
 
   it('renders error state correctly', () => {
-    renderComponent(false, null);
+    renderComponent(false, new Error('Failed to load location'));
 
     expect(screen.getByTestId('location-detail-error')).toBeInTheDocument();
     expect(

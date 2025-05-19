@@ -139,7 +139,7 @@ describe('InventoryStockPage', () => {
   });
 
   it('renders error state correctly', () => {
-    renderComponent(false, null);
+    renderComponent(false, new Error('Failed to load inventory stock'));
 
     expect(screen.getByTestId('inventory-stock-error')).toBeInTheDocument();
     expect(

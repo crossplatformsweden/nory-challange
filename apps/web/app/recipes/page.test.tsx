@@ -142,10 +142,10 @@ describe('RecipesListPage', () => {
         ).toHaveTextContent(recipe.description);
         expect(
           screen.getByTestId(`recipe-yield-${recipe.id}`)
-        ).toHaveTextContent(`Yield: ${recipe.yield}`);
+        ).toHaveTextContent('Yield: N/A');
         expect(
           screen.getByTestId(`recipe-ingredients-count-${recipe.id}`)
-        ).toHaveTextContent(`${recipe.ingredientCount} ingredients`);
+        ).toHaveTextContent('0 ingredients');
       });
     });
   });

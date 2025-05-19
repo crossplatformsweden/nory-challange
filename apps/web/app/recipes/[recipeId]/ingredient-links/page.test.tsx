@@ -4,6 +4,9 @@ import {
   useListRecipeIngredientLinks,
   useDeleteRecipeIngredientLink,
   useGetRecipeById,
+  useGetIngredientById,
+  Recipe,
+  RecipeIngredientLink,
 } from '@nory/api-client';
 import { useParams, useRouter } from 'next/navigation';
 
@@ -12,6 +15,7 @@ jest.mock('@nory/api-client', () => ({
   useListRecipeIngredientLinks: jest.fn(),
   useDeleteRecipeIngredientLink: jest.fn(),
   useGetRecipeById: jest.fn(),
+  useGetIngredientById: jest.fn(),
 }));
 
 // Mock next/navigation
@@ -38,14 +42,13 @@ jest.mock('next/navigation', () => ({
  */
 
 describe('RecipeIngredientLinksPage', () => {
-  const mockRecipe = {
+  const mockRecipe: Recipe = {
     id: '123',
     name: 'Test Recipe',
     description: 'Test Description',
-    yield: '4 servings',
   };
 
-  const mockIngredientLinks = [
+  const mockIngredientLinks: RecipeIngredientLink[] = [
     {
       id: '1',
       recipeId: '123',
@@ -90,6 +93,15 @@ describe('RecipeIngredientLinksPage', () => {
     (useDeleteRecipeIngredientLink as jest.Mock).mockReturnValue(
       mockDeleteMutation
     );
+
+    // Add mock for useGetIngredientById
+    (useGetIngredientById as jest.Mock).mockImplementation((id) => ({
+      data: {
+        data: mockIngredients[id] || { name: 'Unknown', unit: 'unknown' },
+      },
+      isLoading: false,
+      error: null,
+    }));
   });
 
   it('renders the page container and title', () => {
@@ -160,8 +172,16 @@ describe('RecipeIngredientLinksPage', () => {
       screen.getByTestId('recipe-ingredient-links-content')
     ).toBeInTheDocument();
     expect(
-      screen.getByTestId('recipe-ingredient-links-add-button')
+      screen.getByTestId('recipe-ingredient-links-back-button')
     ).toBeInTheDocument();
+
+    // Check loading and error states are not present
+    expect(
+      screen.queryByTestId('recipe-ingredient-links-loading')
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('recipe-ingredient-links-error')
+    ).not.toBeInTheDocument();
 
     // Check table elements
     expect(
@@ -177,9 +197,6 @@ describe('RecipeIngredientLinksPage', () => {
     ).toBeInTheDocument();
     expect(
       screen.getByTestId('recipe-ingredient-links-recipe-id')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByTestId('recipe-ingredient-links-recipe-yield')
     ).toBeInTheDocument();
     expect(
       screen.getByTestId('recipe-ingredient-links-recipe-description')
@@ -216,11 +233,8 @@ describe('RecipeIngredientLinksPage', () => {
         screen.getByTestId('recipe-ingredient-links-recipe-id')
       ).toHaveTextContent(mockRecipe.id);
       expect(
-        screen.getByTestId('recipe-ingredient-links-recipe-yield')
-      ).toHaveTextContent(mockRecipe.yield);
-      expect(
         screen.getByTestId('recipe-ingredient-links-recipe-description')
-      ).toHaveTextContent(mockRecipe.description);
+      ).toHaveTextContent(mockRecipe.description || '');
 
       mockIngredientLinks.forEach((link) => {
         expect(

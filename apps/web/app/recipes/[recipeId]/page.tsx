@@ -79,7 +79,11 @@ const RecipeDetailPage: FC<RecipeDetailPageProps> = () => {
     },
   });
 
-  const { data: ingredientLinksData } = useListRecipeIngredientLinks(recipeId, {
+  const {
+    data: ingredientLinksData,
+    isLoading: ingredientLinksLoading,
+    error: ingredientLinksError,
+  } = useListRecipeIngredientLinks(recipeId, {
     query: {
       refetchOnMount: true,
       refetchOnWindowFocus: false,
@@ -90,6 +94,62 @@ const RecipeDetailPage: FC<RecipeDetailPageProps> = () => {
   const handleGoBack = () => {
     router.back();
   };
+
+  if (error) {
+    return (
+      <div
+        className="container mx-auto px-4 py-8"
+        data-testid="recipe-detail-page"
+      >
+        {/* Page Header */}
+        <div className="mb-6 flex items-center">
+          <button
+            onClick={handleGoBack}
+            className="btn btn-circle btn-ghost mr-4"
+            data-testid="recipe-detail-back-button"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+          <h1 className="text-3xl font-bold" data-testid="recipe-detail-title">
+            Error
+          </h1>
+        </div>
+
+        <div className="alert alert-error" data-testid="recipe-detail-error">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 shrink-0 stroke-current"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>
+            Error loading recipe:{' '}
+            {error ? (error as Error).message : 'Unknown error'}
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   if (!data?.data) {
     return (
@@ -197,7 +257,7 @@ const RecipeDetailPage: FC<RecipeDetailPageProps> = () => {
           </svg>
           <span>
             Error loading recipe:{' '}
-            {error instanceof Error ? error.message : 'Unknown error'}
+            {error ? (error as Error).message : 'Unknown error'}
           </span>
         </div>
       )}
@@ -222,69 +282,101 @@ const RecipeDetailPage: FC<RecipeDetailPageProps> = () => {
 
                   <div>
                     <h3 className="text-lg font-semibold">Details</h3>
-                    <p className="text-gray-600">
-                      No additional details available
+                    <p className="text-gray-600" data-testid="recipe-detail-id">
+                      Recipe ID: {recipe.id}
                     </p>
                   </div>
                 </div>
 
-                <div className="card-actions mt-6 justify-end">
-                  <Link
-                    href={`/recipes/${recipe.id}/edit`}
-                    className="btn btn-primary"
-                    data-testid="recipe-detail-edit-button"
+                <div>
+                  <h3
+                    className="text-lg font-semibold"
+                    data-testid="recipe-detail-actions-title"
                   >
-                    Edit Recipe
-                  </Link>
-                  <button
-                    className="btn btn-error"
-                    data-testid="recipe-detail-delete-button"
-                  >
-                    Delete Recipe
-                  </button>
+                    Actions
+                  </h3>
+                  <div className="card-actions mt-6 justify-end">
+                    <Link
+                      href={`/recipes/${recipe.id}/ingredient-links`}
+                      className="btn btn-outline"
+                      data-testid="recipe-detail-ingredients-link"
+                    >
+                      Manage Ingredients
+                    </Link>
+                    <Link
+                      href={`/recipes/${recipe.id}/edit`}
+                      className="btn btn-primary"
+                      data-testid="recipe-detail-edit-button"
+                    >
+                      Edit Recipe
+                    </Link>
+                    <button
+                      className="btn btn-error"
+                      data-testid="recipe-detail-delete-button"
+                    >
+                      Delete Recipe
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Ingredient Links */}
-            <div className="card bg-base-100 shadow-xl">
-              <div className="card-body">
-                <h2 className="card-title">Ingredients</h2>
-                <div className="overflow-x-auto">
-                  <table className="table w-full">
-                    <thead>
-                      <tr>
-                        <th>Ingredient</th>
-                        <th>Quantity</th>
-                        <th>Unit</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {ingredientLinksData?.data &&
-                      ingredientLinksData.data.length > 0 ? (
-                        ingredientLinksData.data.map((link) => (
-                          <tr key={link.id}>
-                            <td>{link.ingredientId}</td>
-                            <td>{link.quantity}</td>
-                            <td>Unit</td>
-                            <td>
-                              <button className="btn btn-sm btn-error">
-                                Remove
-                              </button>
+            <div className="mt-8">
+              <div className="mb-4 flex items-center justify-between">
+                <h2
+                  className="text-2xl font-bold"
+                  data-testid="recipe-detail-ingredients-title"
+                >
+                  Ingredients
+                </h2>
+                <Link
+                  href={`/recipes/${recipe.id}/ingredient-links`}
+                  className="btn btn-sm btn-outline"
+                  data-testid="recipe-detail-view-all-ingredients"
+                >
+                  View All Ingredients
+                </Link>
+              </div>
+              <div data-testid="recipe-detail-ingredients-content">
+                {ingredientLinksData?.data?.length ? (
+                  <div
+                    className="overflow-x-auto"
+                    data-testid="recipe-detail-ingredients-table"
+                  >
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th>Ingredient ID</th>
+                          <th>Quantity</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {ingredientLinksData.data.map((link) => (
+                          <tr
+                            key={link.id}
+                            data-testid={`recipe-ingredient-row-${link.id}`}
+                          >
+                            <td
+                              data-testid={`recipe-ingredient-name-${link.id}`}
+                            >
+                              {link.ingredientId}
+                            </td>
+                            <td
+                              data-testid={`recipe-ingredient-amount-${link.id}`}
+                            >
+                              {link.quantity}
                             </td>
                           </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan={4} className="text-center">
-                            No ingredients added yet
-                          </td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div data-testid="recipe-detail-ingredients-empty">
+                    No ingredients linked to this recipe.
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -47,7 +47,7 @@ describe('IngredientDetailPage', () => {
     cost: 10.99,
   };
 
-  const renderComponent = (loading = false, error = null) => {
+  const renderComponent = (loading = false, error: Error | null = null) => {
     // Mock useParams to return a test ingredientId
     (useParams as jest.Mock).mockReturnValue({ ingredientId: '123' });
 
@@ -104,7 +104,7 @@ describe('IngredientDetailPage', () => {
   });
 
   it('renders error state when there is an error', () => {
-    renderComponent(false, null);
+    renderComponent(false, new Error('Failed to load ingredient'));
     expect(screen.getByTestId('ingredient-detail-error')).toBeInTheDocument();
   });
 });

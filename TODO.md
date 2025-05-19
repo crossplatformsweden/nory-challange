@@ -127,3 +127,140 @@ All pages use:
 - React Hook Form for form handling
 - Tanstack Query for data fetching
 - Proper loading, error, and empty states
+
+# Test Failures and Required Fixes
+
+## 1. Recipes List Page (`app/recipes/page.test.tsx`)
+
+- [x] Add `recipe-ingredients-count-${recipe.id}` data-testid to recipe cards
+- [ ] Update test to match actual implementation or update implementation to match test expectations
+
+## 2. Ingredient Detail Page (`app/ingredients/[ingredientId]/page.test.tsx`)
+
+- [x] Add `ingredient-detail-error` data-testid for error state
+- [ ] Implement error state UI component
+- [ ] Update test to match actual implementation or update implementation to match test expectations
+
+## 3. Inventory Stock Page (`app/locations/[locationId]/inventory-stock/page.test.tsx`)
+
+- [x] Add `inventory-stock-error` data-testid for error state
+- [ ] Implement error state UI component
+- [ ] Update test to match actual implementation or update implementation to match test expectations
+
+## 4. Location Detail Page (`app/locations/[locationId]/page.test.tsx`)
+
+- [x] Add `location-detail-error` data-testid for error state
+- [ ] Implement error state UI component
+- [ ] Update test to match actual implementation or update implementation to match test expectations
+
+## 5. Recipe Detail Page (`app/recipes/[recipeId]/page.test.tsx`)
+
+- [ ] Fix `useListRecipeIngredientLinks` hook implementation
+  - Error: `TypeError: (0 , _apiclient.useListRecipeIngredientLinks) is not a function`
+  - [ ] Check if hook is properly exported from @nory/api-client
+  - [ ] Verify hook implementation in API client
+  - [ ] Update imports if necessary
+- [ ] Fix all failing tests:
+  - [ ] "shows loading state"
+  - [ ] "shows error state"
+  - [ ] "renders recipe details when data is loaded"
+  - [ ] "renders empty state for ingredients and menu items when none exist"
+  - [ ] "calls useGetRecipeById with correct parameters"
+  - [ ] "navigates back when back button is clicked"
+
+## 6. Recipe Ingredient Links Page (`app/recipes/[recipeId]/ingredient-links/page.test.tsx`)
+
+- [ ] Fix Jest worker exceptions
+  - [ ] Check for memory leaks
+  - [ ] Verify test setup and teardown
+  - [ ] Review test dependencies
+
+## General Tasks
+
+- [ ] Review and update all error state implementations to be consistent
+- [ ] Ensure all data-testid attributes are properly implemented
+- [ ] Verify all API client hooks are properly exported and implemented
+- [ ] Update test files to match actual component implementations
+- [ ] Add proper error handling and loading states to all components
+
+## Mock Data and Type Verification
+
+- [ ] Verify mock data types match API response types
+
+  - [ ] Check all test mock data against TypeScript interfaces
+  - [ ] Ensure mock data includes all required fields
+  - [ ] Validate nested object structures
+  - [ ] Verify enum values are correct
+
+- [ ] Update test utilities
+
+  - [ ] Create type-safe mock data generators
+  - [ ] Add type checking for mock data in tests
+  - [ ] Implement helper functions for common mock patterns
+  - [ ] Add validation for mock data structure
+
+- [ ] Test Data Consistency
+
+  - [ ] Ensure mock data is consistent across all test files
+  - [ ] Verify mock data matches API schema
+  - [ ] Add type guards for mock data validation
+  - [ ] Document mock data structure and usage
+
+- [ ] API Client Type Verification
+
+  - [ ] Verify all API client hooks have proper TypeScript types
+  - [ ] Check response types match API schema
+  - [ ] Validate mutation input types
+  - [ ] Ensure error types are properly typed
+
+- [ ] Test Helper Functions
+  - [ ] Add type-safe test utilities
+  - [ ] Create reusable mock data builders
+  - [ ] Implement type checking for test assertions
+  - [ ] Add helper functions for common test patterns
+
+# TODO
+
+## Completed
+
+- [x] Add `recipe-ingredients-count-${recipe.id}` data-testid to recipes list page
+- [x] Add `ingredient-detail-error` data-testid and error state to ingredient detail page
+- [x] Add `inventory-stock-error` data-testid and error state to inventory stock page
+- [x] Add `location-detail-error` data-testid and error state to location detail page
+- [x] Recipe detail page: handle loading, error, and content states for ingredient links with correct test IDs
+
+## In Progress / Next
+
+- [ ] Review and fix any Jest worker exceptions in the ingredient links page test (`apps/web/app/recipes/[recipeId]/ingredient-links/page.test.tsx`) if they still occur
+- [ ] Review all pages for any missing error states or test IDs as per the test files
+- [ ] General: Ensure all error state UI components and data-testid attributes are implemented and consistent with tests
+
+# Test Improvements Todo List
+
+## Current Test Issues
+
+- [ ] Fix failing test for `recipe-detail-ingredients-empty` element
+- [ ] Fix failing test for `recipe-detail-id` element
+- [ ] Fix failing test for `recipe-detail-actions-title` element
+- [ ] Fix failing test for `recipe-detail-ingredients-link` element
+
+## Test Coverage Improvements
+
+- [ ] Add tests for ingredient link management functionality
+- [ ] Add tests for recipe deletion confirmation
+- [ ] Add tests for recipe editing navigation
+- [ ] Add tests for error handling in ingredient loading
+- [ ] Add tests for loading states in ingredient section
+
+## Test Structure Improvements
+
+- [ ] Organize test cases into logical groups (loading, error, success states)
+- [ ] Add more descriptive test names
+- [ ] Improve mock data organization
+- [ ] Add test utilities for common setup
+
+## Documentation
+
+- [ ] Update test documentation with new test cases
+- [ ] Add comments explaining complex test scenarios
+- [ ] Document mock data structure

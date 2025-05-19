@@ -1,19 +1,26 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import RecipeDetailPage from './page';
-import { useGetRecipeById } from '@nory/api-client';
+import {
+  useGetRecipeById,
+  useListRecipeIngredientLinks,
+  Recipe,
+  RecipeIngredientLink,
+} from '@nory/api-client';
 import { useParams, useRouter } from 'next/navigation';
 
 // Mock the API client hook
 jest.mock('@nory/api-client', () => ({
   useGetRecipeById: jest.fn(),
+  useListRecipeIngredientLinks: jest.fn(),
 }));
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
-  useParams: jest.fn().mockReturnValue({ recipeId: '123' }),
-  useRouter: jest.fn().mockReturnValue({
+  useParams: jest.fn(),
+  useRouter: jest.fn(() => ({
     back: jest.fn(),
-  }),
+    push: jest.fn(),
+  })),
 }));
 
 /**
@@ -31,46 +38,41 @@ jest.mock('next/navigation', () => ({
  */
 
 describe('RecipeDetailPage', () => {
-  const mockRecipe = {
+  const mockRecipe: Recipe = {
     id: '123',
     name: 'Test Recipe',
     description: 'Test Description',
-    yield: '4 servings',
-    prepTime: '20 minutes',
-    cookTime: '30 minutes',
-    ingredientLinks: [
-      {
-        id: 'link1',
-        ingredient: {
-          id: 'ing1',
-          name: 'Flour',
-          unit: 'g',
-        },
-        amount: 200,
-      },
-      {
-        id: 'link2',
-        ingredient: {
-          id: 'ing2',
-          name: 'Sugar',
-          unit: 'g',
-        },
-        amount: 100,
-      },
-    ],
-    menuItems: [
-      {
-        id: 'menu1',
-        name: 'Menu Item 1',
-        description: 'Menu Item Description',
-        locationId: 'loc1',
-      },
-    ],
   };
+
+  const mockIngredientLinks: RecipeIngredientLink[] = [
+    {
+      id: 'link1',
+      recipeId: '123',
+      ingredientId: 'ing1',
+      quantity: 200,
+    },
+    {
+      id: 'link2',
+      recipeId: '123',
+      ingredientId: 'ing2',
+      quantity: 100,
+    },
+  ];
 
   beforeEach(() => {
     // Reset all mocks before each test
     jest.clearAllMocks();
+    (useParams as jest.Mock).mockReturnValue({ recipeId: 'test-recipe-id' });
+    (useGetRecipeById as jest.Mock).mockReturnValue({
+      data: { data: mockRecipe },
+      isLoading: false,
+      error: null,
+    });
+    (useListRecipeIngredientLinks as jest.Mock).mockReturnValue({
+      data: { data: mockIngredientLinks },
+      isLoading: false,
+      error: null,
+    });
   });
 
   it('shows loading state', () => {
@@ -115,14 +117,21 @@ describe('RecipeDetailPage', () => {
     expect(screen.getByTestId('recipe-detail-title')).toBeInTheDocument();
     expect(screen.getByTestId('recipe-detail-content')).toBeInTheDocument();
 
-    // Check recipe information card
-    expect(
-      screen.getByTestId('recipe-detail-basics-title')
-    ).toBeInTheDocument();
+    // Check recipe information
     expect(screen.getByTestId('recipe-detail-description')).toBeInTheDocument();
-    expect(screen.getByTestId('recipe-detail-yield')).toBeInTheDocument();
-    expect(screen.getByTestId('recipe-detail-prep-time')).toBeInTheDocument();
-    expect(screen.getByTestId('recipe-detail-cook-time')).toBeInTheDocument();
+
+    // Check actions
+    expect(screen.getByTestId('recipe-detail-edit-button')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('recipe-detail-delete-button')
+    ).toBeInTheDocument();
+
+    // Check ingredients section
+    expect(
+      screen.getByTestId('recipe-detail-ingredients-title')
+    ).toBeInTheDocument();
+
+    // Check recipe information card
     expect(screen.getByTestId('recipe-detail-id')).toBeInTheDocument();
 
     // Check actions card
@@ -132,15 +141,8 @@ describe('RecipeDetailPage', () => {
     expect(
       screen.getByTestId('recipe-detail-ingredients-link')
     ).toBeInTheDocument();
-    expect(screen.getByTestId('recipe-detail-edit-button')).toBeInTheDocument();
-    expect(
-      screen.getByTestId('recipe-detail-delete-button')
-    ).toBeInTheDocument();
 
     // Check ingredients table
-    expect(
-      screen.getByTestId('recipe-detail-ingredients-title')
-    ).toBeInTheDocument();
     expect(
       screen.getByTestId('recipe-detail-view-all-ingredients')
     ).toBeInTheDocument();
@@ -149,7 +151,7 @@ describe('RecipeDetailPage', () => {
     ).toBeInTheDocument();
 
     // Check each ingredient row
-    mockRecipe.ingredientLinks.forEach((link) => {
+    mockIngredientLinks.forEach((link) => {
       expect(
         screen.getByTestId(`recipe-ingredient-row-${link.id}`)
       ).toBeInTheDocument();
@@ -159,19 +161,6 @@ describe('RecipeDetailPage', () => {
       expect(
         screen.getByTestId(`recipe-ingredient-amount-${link.id}`)
       ).toBeInTheDocument();
-      expect(
-        screen.getByTestId(`recipe-ingredient-unit-${link.id}`)
-      ).toBeInTheDocument();
-    });
-
-    // Check menu items section
-    expect(
-      screen.getByTestId('recipe-detail-menu-items-title')
-    ).toBeInTheDocument();
-    mockRecipe.menuItems.forEach((menuItem) => {
-      expect(
-        screen.getByTestId(`recipe-menu-item-${menuItem.id}`)
-      ).toBeInTheDocument();
     });
 
     // Check recipe data is displayed
@@ -180,16 +169,7 @@ describe('RecipeDetailPage', () => {
         mockRecipe.name
       );
       expect(screen.getByTestId('recipe-detail-description')).toHaveTextContent(
-        mockRecipe.description
-      );
-      expect(screen.getByTestId('recipe-detail-yield')).toHaveTextContent(
-        mockRecipe.yield
-      );
-      expect(screen.getByTestId('recipe-detail-prep-time')).toHaveTextContent(
-        mockRecipe.prepTime
-      );
-      expect(screen.getByTestId('recipe-detail-cook-time')).toHaveTextContent(
-        mockRecipe.cookTime
+        mockRecipe.description || ''
       );
       expect(screen.getByTestId('recipe-detail-id')).toHaveTextContent(
         mockRecipe.id
@@ -209,8 +189,6 @@ describe('RecipeDetailPage', () => {
   it('renders empty state for ingredients and menu items when none exist', async () => {
     const emptyRecipe = {
       ...mockRecipe,
-      ingredientLinks: [],
-      menuItems: [],
     };
 
     (useGetRecipeById as jest.Mock).mockReturnValue({
@@ -219,13 +197,16 @@ describe('RecipeDetailPage', () => {
       data: { data: emptyRecipe },
     });
 
+    (useListRecipeIngredientLinks as jest.Mock).mockReturnValue({
+      data: { data: [] },
+      isLoading: false,
+      error: null,
+    });
+
     render(<RecipeDetailPage />);
 
     expect(
-      screen.getByTestId('recipe-detail-no-ingredients')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByTestId('recipe-detail-no-menu-items')
+      screen.getByTestId('recipe-detail-ingredients-empty')
     ).toBeInTheDocument();
   });
 
@@ -238,7 +219,7 @@ describe('RecipeDetailPage', () => {
 
     render(<RecipeDetailPage />);
 
-    expect(useGetRecipeById).toHaveBeenCalledWith('123', {
+    expect(useGetRecipeById).toHaveBeenCalledWith('test-recipe-id', {
       query: {
         refetchOnMount: true,
         refetchOnWindowFocus: false,
