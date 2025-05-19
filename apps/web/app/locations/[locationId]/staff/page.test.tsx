@@ -21,6 +21,12 @@ jest.mock('next/navigation', () => ({
   useParams: jest.fn(() => ({
     locationId: '123',
   })),
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+    back: jest.fn(),
+  })),
+  useSearchParams: jest.fn(() => new URLSearchParams()),
+  usePathname: jest.fn(() => '/mock-path'),
 }));
 
 // Mock the API client hook

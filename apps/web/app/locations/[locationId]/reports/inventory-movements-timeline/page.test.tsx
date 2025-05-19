@@ -23,6 +23,7 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn(() => ({
     back: jest.fn(),
   })),
+  useSearchParams: jest.fn(() => new URLSearchParams()),
 }));
 
 // Mock the API hook

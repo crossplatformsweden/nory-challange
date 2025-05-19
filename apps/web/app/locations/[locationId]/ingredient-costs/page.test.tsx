@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import IngredientCostsListPage from './page';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useListLocationIngredientCosts } from '@nory/api-client';
 
 /**
@@ -18,13 +18,20 @@ import { useListLocationIngredientCosts } from '@nory/api-client';
  */
 
 // Mock the navigation hooks
-jest.mock('next/navigation', () => ({
-  useParams: jest.fn(),
-  useRouter: jest.fn(() => ({
+jest.mock('next/navigation', () => {
+  const mockUseParams = jest.fn(() => ({ locationId: '123' }));
+  const mockUseRouter = jest.fn(() => ({
     back: jest.fn(),
     push: jest.fn(),
-  })),
-}));
+  }));
+  const mockUseSearchParams = jest.fn(() => new URLSearchParams());
+
+  return {
+    useParams: mockUseParams,
+    useRouter: mockUseRouter,
+    useSearchParams: mockUseSearchParams,
+  };
+});
 
 // Mock the API hook
 jest.mock('@nory/api-client', () => ({
@@ -62,9 +69,6 @@ describe('IngredientCostsListPage', () => {
     error: Error | null = null,
     data = mockData
   ) => {
-    // Mock useParams
-    (useParams as jest.Mock).mockReturnValue({ locationId: '123' });
-
     // Mock the API hook response
     (useListLocationIngredientCosts as jest.Mock).mockReturnValue({
       data: loading ? null : data,
@@ -80,7 +84,7 @@ describe('IngredientCostsListPage', () => {
   });
 
   it('renders the page', () => {
-    render(<IngredientCostsListPage />);
+    renderComponent();
     expect(
       screen.getByTestId('ingredient-costs-list-page')
     ).toBeInTheDocument();

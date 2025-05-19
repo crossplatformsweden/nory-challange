@@ -88,18 +88,21 @@ describe('CreateStaffPage', () => {
     render(<CreateStaffPage />);
 
     // Enter invalid email
-    fireEvent.change(screen.getByTestId('create-staff-email-input'), {
+    const emailInput = screen.getByTestId('create-staff-email-input');
+    fireEvent.change(emailInput, {
       target: { value: 'invalid-email' },
     });
 
-    // Submit form
-    fireEvent.click(screen.getByTestId('create-staff-submit-button'));
+    // Submit form to trigger validation
+    fireEvent.submit(
+      screen.getByTestId('create-staff-content').querySelector('form')!
+    );
 
     // Check for email validation error
     await waitFor(() => {
-      expect(
-        screen.getByTestId('create-staff-email-error')
-      ).toBeInTheDocument();
+      const errorElement = screen.getByTestId('create-staff-email-error');
+      expect(errorElement).toBeInTheDocument();
+      expect(errorElement).toHaveTextContent('Invalid email address');
     });
   });
 

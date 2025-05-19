@@ -37,20 +37,18 @@ jest.mock('@nory/api-client', () => ({
 
 describe('CreateIngredientCostPage', () => {
   const mockIngredientsData = {
-    data: {
-      ingredients: [
-        {
-          id: 'ing1',
-          name: 'Flour',
-          unit: 'kg',
-        },
-        {
-          id: 'ing2',
-          name: 'Sugar',
-          unit: 'kg',
-        },
-      ],
-    },
+    data: [
+      {
+        id: 'ing1',
+        name: 'Flour',
+        unit: 'kg',
+      },
+      {
+        id: 'ing2',
+        name: 'Sugar',
+        unit: 'kg',
+      },
+    ],
   };
 
   const renderComponent = (
@@ -198,7 +196,7 @@ describe('CreateIngredientCostPage', () => {
     });
 
     // Submit the form
-    fireEvent.click(screen.getByTestId('ingredient-cost-create-submit-button'));
+    fireEvent.submit(screen.getByTestId('ingredient-cost-create-form'));
 
     await waitFor(() => {
       expect(mockMutate).toHaveBeenCalledWith(
@@ -206,7 +204,7 @@ describe('CreateIngredientCostPage', () => {
           locationId: '123',
           data: {
             ingredientId: 'ing1',
-            cost: 10.99,
+            costPerUnit: 10.99,
           },
         },
         expect.any(Object)

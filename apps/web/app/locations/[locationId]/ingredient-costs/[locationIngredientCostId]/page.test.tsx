@@ -34,7 +34,8 @@ describe('IngredientCostDetailPage', () => {
   const mockData = {
     data: {
       id: '1',
-      cost: 10.99,
+      costPerUnit: 10.99,
+      ingredientId: 'ing1',
       ingredient: {
         id: 'ing1',
         name: 'Flour',

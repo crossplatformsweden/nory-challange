@@ -78,7 +78,9 @@ describe('ReportsOverviewPage', () => {
     renderComponent(false, new Error(errorMessage));
 
     expect(screen.getByTestId('reports-overview-error')).toBeInTheDocument();
-    expect(screen.getByText(errorMessage)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Error loading reports:.*Failed to load reports/)
+    ).toBeInTheDocument();
   });
 
   it('renders reports content when data is loaded', () => {

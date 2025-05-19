@@ -66,7 +66,7 @@ import {
 
 interface CreateIngredientCostFormData {
   ingredientId: string;
-  cost: number;
+  costPerUnit: number;
 }
 
 const CreateIngredientCostPage: FC = () => {
@@ -93,7 +93,7 @@ const CreateIngredientCostPage: FC = () => {
         locationId: locationId as string,
         data: {
           ingredientId: data.ingredientId,
-          costPerUnit: data.cost,
+          costPerUnit: data.costPerUnit,
         },
       },
       {
@@ -206,7 +206,7 @@ const CreateIngredientCostPage: FC = () => {
                   step="0.01"
                   min="0"
                   className="input input-bordered w-full"
-                  {...register('cost', {
+                  {...register('costPerUnit', {
                     required: 'Cost is required',
                     min: {
                       value: 0,
@@ -215,13 +215,13 @@ const CreateIngredientCostPage: FC = () => {
                   })}
                   data-testid="ingredient-cost-create-cost-input"
                 />
-                {errors.cost && (
+                {errors.costPerUnit && (
                   <label
                     className="label"
                     data-testid="ingredient-cost-create-cost-error"
                   >
                     <span className="label-text-alt text-error">
-                      {errors.cost.message}
+                      {errors.costPerUnit.message}
                     </span>
                   </label>
                 )}
