@@ -87,21 +87,20 @@ const CreateIngredientCostPage: FC = () => {
     router.back();
   };
 
-  const onSubmit = (data: CreateIngredientCostFormData) => {
-    createIngredientCost(
-      {
-        locationId: locationId as string,
-        data: {
-          ingredientId: data.ingredientId,
-          costPerUnit: data.costPerUnit,
-        },
+  const onSubmit = async (data: CreateIngredientCostFormData) => {
+    const formData = {
+      locationId: locationId as string,
+      data: {
+        ingredientId: data.ingredientId,
+        costPerUnit: Number(data.costPerUnit),
       },
-      {
-        onSuccess: () => {
-          router.push(`/locations/${locationId}/ingredient-costs`);
-        },
-      }
-    );
+    };
+
+    createIngredientCost(formData, {
+      onSuccess: () => {
+        router.push(`/locations/${locationId}/ingredient-costs`);
+      },
+    });
   };
 
   return (
@@ -158,7 +157,12 @@ const CreateIngredientCostPage: FC = () => {
           data-testid="ingredient-cost-create-form"
         >
           <div className="card-body">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-6"
+              data-testid="ingredient-cost-create-form-element"
+              noValidate
+            >
               {/* Ingredient Selection */}
               <div className="form-control w-full">
                 <label

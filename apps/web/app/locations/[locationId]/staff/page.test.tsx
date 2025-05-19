@@ -87,8 +87,18 @@ describe('StaffListPage', () => {
   it('renders staff cards when data is available', () => {
     // Mock the hook to return sample data
     const mockStaff = [
-      { id: '1', name: 'John Doe', email: 'john@example.com', role: 'Manager' },
-      { id: '2', name: 'Jane Smith', email: 'jane@example.com', role: 'Staff' },
+      {
+        id: '1',
+        name: 'John Doe',
+        role: 'Manager',
+        dob: '1990-01-01',
+      },
+      {
+        id: '2',
+        name: 'Jane Smith',
+        role: 'Staff',
+        dob: '1992-02-02',
+      },
     ];
 
     (useListStaffByLocation as jest.Mock).mockReturnValue({
@@ -103,8 +113,8 @@ describe('StaffListPage', () => {
     expect(screen.getByTestId('staff-card-1')).toBeInTheDocument();
     expect(screen.getByTestId('staff-card-2')).toBeInTheDocument();
     expect(screen.getByTestId('staff-name-1')).toBeInTheDocument();
-    expect(screen.getByTestId('staff-email-1')).toBeInTheDocument();
     expect(screen.getByTestId('staff-role-1')).toBeInTheDocument();
+    expect(screen.getByTestId('staff-dob-1')).toBeInTheDocument();
     expect(screen.getByTestId('staff-view-1')).toBeInTheDocument();
   });
 });

@@ -40,28 +40,28 @@ jest.mock('@nory/api-client', () => ({
 
 describe('IngredientCostsListPage', () => {
   const mockData = {
-    data: {
-      ingredientCosts: [
-        {
-          id: '1',
-          cost: 10.99,
-          ingredient: {
-            id: 'ing1',
-            name: 'Flour',
-            unit: 'kg',
-          },
+    data: [
+      {
+        id: '1',
+        costPerUnit: 10.99,
+        ingredientId: 'ing1',
+        ingredient: {
+          id: 'ing1',
+          name: 'Flour',
+          unit: 'kg',
         },
-        {
-          id: '2',
-          cost: 5.99,
-          ingredient: {
-            id: 'ing2',
-            name: 'Sugar',
-            unit: 'kg',
-          },
+      },
+      {
+        id: '2',
+        costPerUnit: 5.99,
+        ingredientId: 'ing2',
+        ingredient: {
+          id: 'ing2',
+          name: 'Sugar',
+          unit: 'kg',
         },
-      ],
-    },
+      },
+    ],
   };
 
   const renderComponent = (
@@ -156,7 +156,7 @@ describe('IngredientCostsListPage', () => {
   });
 
   it('renders empty state when no costs exist', () => {
-    renderComponent(false, null, { data: { ingredientCosts: [] } });
+    renderComponent(false, null, { data: [] });
 
     expect(
       screen.getByTestId('ingredient-costs-list-content')

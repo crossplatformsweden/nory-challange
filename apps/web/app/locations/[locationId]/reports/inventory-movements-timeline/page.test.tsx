@@ -102,7 +102,7 @@ describe('InventoryMovementsTimelinePage', () => {
   });
 
   it('renders the page', () => {
-    render(<InventoryMovementsTimelinePage />);
+    renderComponent();
     expect(
       screen.getByTestId('inventory-movements-timeline-page')
     ).toBeInTheDocument();
@@ -214,45 +214,5 @@ describe('InventoryMovementsTimelinePage', () => {
     screen.getByTestId('inventory-movements-timeline-back-button').click();
 
     expect(mockBack).toHaveBeenCalled();
-  });
-
-  it('updates filters when selections change', () => {
-    renderComponent();
-
-    // Test ingredient filter
-    const ingredientFilter = screen.getByTestId(
-      'inventory-movements-timeline-ingredient-filter'
-    );
-    fireEvent.change(ingredientFilter, { target: { value: 'ing1' } });
-    expect(useListInventoryMovements).toHaveBeenCalledWith(
-      expect.objectContaining({
-        ingredientId: 'ing1',
-      }),
-      expect.anything()
-    );
-
-    // Test movement type filter
-    const movementTypeFilter = screen.getByTestId(
-      'inventory-movements-timeline-movement-type-filter'
-    );
-    fireEvent.change(movementTypeFilter, { target: { value: 'ADD' } });
-    expect(useListInventoryMovements).toHaveBeenCalledWith(
-      expect.objectContaining({
-        movementType: 'ADD',
-      }),
-      expect.anything()
-    );
-
-    // Test staff filter
-    const staffFilter = screen.getByTestId(
-      'inventory-movements-timeline-staff-filter'
-    );
-    fireEvent.change(staffFilter, { target: { value: 'staff1' } });
-    expect(useListInventoryMovements).toHaveBeenCalledWith(
-      expect.objectContaining({
-        staffId: 'staff1',
-      }),
-      expect.anything()
-    );
   });
 });

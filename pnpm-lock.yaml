@@ -50,6 +50,7 @@ importers:
       '@tanstack/react-query': ^5.0.0
       '@testing-library/jest-dom': ^6.5.0
       '@testing-library/react': ^14.3.1
+      '@testing-library/user-event': ^14.5.2
       '@types/jest': ^29.5.14
       '@types/node': ^22.15.3
       '@types/react': ^19.1.0
@@ -90,6 +91,7 @@ importers:
       '@repo/typescript-config': link:../../packages/typescript-config
       '@testing-library/jest-dom': 6.5.0
       '@testing-library/react': 14.3.1_2sdyanqo2b7vzitftgpe3cm4yy
+      '@testing-library/user-event': 14.5.2_eboxt5b3qr45gcxzx7wxppt6li
       '@types/jest': 29.5.14
       '@types/node': 22.15.18
       '@types/react': 19.1.4

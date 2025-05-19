@@ -3,6 +3,7 @@
 import { FC, useState } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useListInventoryMovements } from '@nory/api-client';
+import type { ListInventoryMovementsType } from '@nory/api-client';
 
 /**
  * // Update this page and corresponding test files. Make sure to use testId. And DaisyUI. Look in  utils/nextjsroutes.md To see what hook to use for this page. Source that hook and visualize/use it with daisyUI. Also look for the fakerjs implementation of that hook tanstack by genertaion orval noryApiClient. We will use the faker version in all tests. So all data coming will be random. So just test testId and hasValue() or similar. Use NextJS best practive for routing images etc. Not actual values. Use best pracitce for visualizing forms with use react-hook-form make sure check package.json with available libraries. Dont install any other libraries. For this File make sure you only change the page.tsx page.test.tsx and page.test.e2e.tsx. Verify using gh cli that its only max this 3 files changed. NO OTHER FILE. LEAVE THIS COMMENT IN THE FILE DO NOT REMOVE.
@@ -77,24 +78,6 @@ const InventoryMovementsTimelinePage: FC<
     searchParams.get('staffId') || ''
   );
 
-  const { data, isLoading, error } = useListInventoryMovements({
-    locationId: locationId as string,
-    startTime: searchParams.get('startTime') || undefined,
-    endTime: searchParams.get('endTime') || undefined,
-    ingredientId: searchParams.get('ingredientId') || undefined,
-    type: searchParams.get('movementType') as
-      | 'waste'
-      | 'restock'
-      | 'sale'
-      | 'adjustment'
-      | 'transfer_in'
-      | 'transfer_out',
-  });
-
-  const handleGoBack = () => {
-    router.back();
-  };
-
   const handleFilterChange = (filter: string, value: string) => {
     switch (filter) {
       case 'ingredient':
@@ -107,6 +90,21 @@ const InventoryMovementsTimelinePage: FC<
         setSelectedStaff(value);
         break;
     }
+  };
+
+  const { data, isLoading, error } = useListInventoryMovements({
+    locationId: locationId as string,
+    startTime: searchParams.get('startTime') || undefined,
+    endTime: searchParams.get('endTime') || undefined,
+    ingredientId: selectedIngredient === '' ? undefined : selectedIngredient,
+    type:
+      selectedMovementType === ''
+        ? undefined
+        : (selectedMovementType as ListInventoryMovementsType),
+  });
+
+  const handleGoBack = () => {
+    router.back();
   };
 
   return (
