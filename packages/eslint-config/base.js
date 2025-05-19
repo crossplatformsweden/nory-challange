@@ -36,7 +36,7 @@ const config = [
       'only-warn': onlyWarn,
     },
     rules: {
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'no-console': 'off',
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['error'],
       '@typescript-eslint/no-var-requires': 'off',

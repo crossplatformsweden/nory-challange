@@ -4,6 +4,8 @@ export default [
   ...base,
   {
     files: ['**/*.ts'],
-    rules: {},
+    rules: {
+      'no-console': 'off',
+    },
   },
 ];
