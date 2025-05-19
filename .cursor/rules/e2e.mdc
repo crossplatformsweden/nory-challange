@@ -1,0 +1,11 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Remember in e2e testing we are using faker to get fake data in hooks. Dont test against values written by the hook. only test by looking at data-testid. 
+
+Never write e2e test that test navigation and goes to another page. Remove such test if they exist.
+
+make sure all timeouts waiting for element are 1.5 sec
+

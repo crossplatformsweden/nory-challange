@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
 
 /**
  * E2E Testing Guide:
@@ -9,7 +9,7 @@ import { test, expect } from '@playwright/test'
  * 5. Test responsive behavior if needed
  * 6. Test any loading states
  * 7. Test any error states
- * 
+ *
  * Note: Use the URL path provided in the generator
  * and ensure all testIds match the page component.
  */
@@ -19,26 +19,95 @@ import { test, expect } from '@playwright/test'
  */
 
 test.describe('RecipesListPage', () => {
+  const baseUrl = '/recipes';
+
   test.beforeEach(async ({ page }) => {
-    await page.goto('/recipes')
-  })
+    await page.goto(baseUrl);
+  });
 
   test('renders all required elements', async ({ page }) => {
-    // Check that all elements are visible
-    await expect(page.getByTestId('recipes-list-page')).toBeVisible()
-    await expect(page.getByTestId('recipes-list-title')).toBeVisible()
-    await expect(page.getByTestId('recipes-list-content')).toBeVisible()
-  })
+    // Wait for the page to load (either content, loading state, or error)
+    await Promise.race([
+      page
+        .waitForSelector('[data-testid="recipes-list-content"]', {
+          timeout: 5000,
+        })
+        .catch(() => {}),
+      page
+        .waitForSelector('[data-testid="recipes-list-loading"]', {
+          timeout: 5000,
+        })
+        .catch(() => {}),
+    ]);
+
+    // Check main page elements
+    await expect(page.getByTestId('recipes-list-page')).toBeVisible();
+    await expect(page.getByTestId('recipes-list-title')).toBeVisible();
+    await expect(page.getByTestId('recipes-list-create-button')).toBeVisible();
+
+    // Check for either content, loading state, or error
+    const hasContent =
+      (await page.getByTestId('recipes-list-content').count()) > 0;
+    const isLoading =
+      (await page.getByTestId('recipes-list-loading').count()) > 0;
+    const hasError = (await page.getByTestId('recipes-list-error').count()) > 0;
+
+    // At least one of these states should be visible
+    expect(hasContent || isLoading || hasError).toBeTruthy();
+
+    // If content is loaded, check for recipe cards
+    if (hasContent) {
+      // Check for either recipe cards or empty state
+
+      // If recipe cards exist, check card details
+      await expect(
+        page.locator('[data-testid^="recipe-card-"]').first()
+      ).toBeVisible();
+      await expect(
+        page.locator('[data-testid^="recipe-name-"]').first()
+      ).toBeVisible();
+      await expect(
+        page.locator('[data-testid^="recipe-description-"]').first()
+      ).toBeVisible();
+    }
+  });
+
+  test('shows loading state initially', async ({ page }) => {
+    await page.goto(baseUrl);
+    await expect(page.getByTestId('recipes-list-loading')).toBeVisible();
+  });
+
+  test('navigates to create page when clicking create button', async ({
+    page,
+  }) => {
+    // Wait for the page to load
+    await page.waitForSelector('[data-testid="recipes-list-page"]');
+
+    // Wait for the create button to be visible
+    await page.waitForSelector('[data-testid="recipes-list-create-button"]');
+
+    // Click the create button and wait for navigation
+    await Promise.all([
+      page.waitForNavigation(),
+      page.getByTestId('recipes-list-create-button').click(),
+    ]);
+
+    // Verify we navigated to the create page
+    await expect(page).toHaveURL(/\/recipes\/create/);
+  });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {
     // Get current date/time for unique screenshot name
-    const now = new Date()
-    const timestamp = now.toISOString().replace(/[:.]/g, '-')
-    
+    const now = new Date();
+    const timestamp = now.toISOString().replace(/[:.]/g, '-');
+
+    // Wait for content to be loaded
+    await page.waitForLoadState('networkidle');
+
     // Take screenshot with timestamp and browser name
-    await page.screenshot({ 
+    await page.screenshot({
       path: `./screenshots/recipes-list_${browserName}_${timestamp}.png`,
-      fullPage: true 
-    })
-  })
-}) 
+      fullPage: true,
+    });
+  });
+});

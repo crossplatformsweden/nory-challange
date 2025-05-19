@@ -5,7 +5,9 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-import { z as zod } from 'zod';
+import {
+  z as zod
+} from 'zod'
 
 /**
  * Retrieve a list of all locations managed in the inventory system.
@@ -14,12 +16,13 @@ import { z as zod } from 'zod';
 export const listLocationsResponseNameMax = 255;
 export const listLocationsResponseAddressMax = 500;
 
+
 export const listLocationsResponseItem = zod.object({
-  id: zod.string(),
-  name: zod.string().min(1).max(listLocationsResponseNameMax),
-  address: zod.string().min(1).max(listLocationsResponseAddressMax).nullish(),
-});
-export const listLocationsResponse = zod.array(listLocationsResponseItem);
+  "id": zod.string(),
+  "name": zod.string().min(1).max(listLocationsResponseNameMax),
+  "address": zod.string().min(1).max(listLocationsResponseAddressMax).nullish()
+})
+export const listLocationsResponse = zod.array(listLocationsResponseItem)
 
 /**
  * Add a new location to the inventory system.
@@ -28,10 +31,11 @@ export const listLocationsResponse = zod.array(listLocationsResponseItem);
 export const createLocationBodyNameMax = 255;
 export const createLocationBodyAddressMax = 500;
 
+
 export const createLocationBody = zod.object({
-  name: zod.string().min(1).max(createLocationBodyNameMax),
-  address: zod.string().min(1).max(createLocationBodyAddressMax).nullish(),
-});
+  "name": zod.string().min(1).max(createLocationBodyNameMax),
+  "address": zod.string().min(1).max(createLocationBodyAddressMax).nullish()
+})
 
 /**
  * Retrieve a specific location using its unique ID.
@@ -40,11 +44,12 @@ export const createLocationBody = zod.object({
 export const getLocationByIdResponseNameMax = 255;
 export const getLocationByIdResponseAddressMax = 500;
 
+
 export const getLocationByIdResponse = zod.object({
-  id: zod.string(),
-  name: zod.string().min(1).max(getLocationByIdResponseNameMax),
-  address: zod.string().min(1).max(getLocationByIdResponseAddressMax).nullish(),
-});
+  "id": zod.string(),
+  "name": zod.string().min(1).max(getLocationByIdResponseNameMax),
+  "address": zod.string().min(1).max(getLocationByIdResponseAddressMax).nullish()
+})
 
 /**
  * Update details of an existing location.
@@ -53,16 +58,19 @@ export const getLocationByIdResponse = zod.object({
 export const updateLocationBodyNameMax = 255;
 export const updateLocationBodyAddressMax = 500;
 
+
 export const updateLocationBody = zod.object({
-  name: zod.string().min(1).max(updateLocationBodyNameMax).optional(),
-  address: zod.string().min(1).max(updateLocationBodyAddressMax).nullish(),
-});
+  "name": zod.string().min(1).max(updateLocationBodyNameMax).optional(),
+  "address": zod.string().min(1).max(updateLocationBodyAddressMax).nullish()
+})
 
 export const updateLocationResponseNameMax = 255;
 export const updateLocationResponseAddressMax = 500;
 
+
 export const updateLocationResponse = zod.object({
-  id: zod.string(),
-  name: zod.string().min(1).max(updateLocationResponseNameMax),
-  address: zod.string().min(1).max(updateLocationResponseAddressMax).nullish(),
-});
+  "id": zod.string(),
+  "name": zod.string().min(1).max(updateLocationResponseNameMax),
+  "address": zod.string().min(1).max(updateLocationResponseAddressMax).nullish()
+})
+

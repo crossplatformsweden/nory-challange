@@ -5,7 +5,9 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-import { z as zod } from 'zod';
+import {
+  z as zod
+} from 'zod'
 
 /**
  * Retrieve a list of all defined modifier groups (e.g., "Milk Options").
@@ -13,11 +15,12 @@ import { z as zod } from 'zod';
  */
 export const listModifiersResponseNameMax = 255;
 
+
 export const listModifiersResponseItem = zod.object({
-  id: zod.string(),
-  name: zod.string().min(1).max(listModifiersResponseNameMax),
-});
-export const listModifiersResponse = zod.array(listModifiersResponseItem);
+  "id": zod.string(),
+  "name": zod.string().min(1).max(listModifiersResponseNameMax)
+})
+export const listModifiersResponse = zod.array(listModifiersResponseItem)
 
 /**
  * Add a new modifier group definition.
@@ -25,9 +28,10 @@ export const listModifiersResponse = zod.array(listModifiersResponseItem);
  */
 export const createModifierBodyNameMax = 255;
 
+
 export const createModifierBody = zod.object({
-  name: zod.string().min(1).max(createModifierBodyNameMax),
-});
+  "name": zod.string().min(1).max(createModifierBodyNameMax)
+})
 
 /**
  * Retrieve a specific modifier group using its unique ID.
@@ -35,10 +39,11 @@ export const createModifierBody = zod.object({
  */
 export const getModifierByIdResponseNameMax = 255;
 
+
 export const getModifierByIdResponse = zod.object({
-  id: zod.string(),
-  name: zod.string().min(1).max(getModifierByIdResponseNameMax),
-});
+  "id": zod.string(),
+  "name": zod.string().min(1).max(getModifierByIdResponseNameMax)
+})
 
 /**
  * Update details of an existing modifier group definition.
@@ -46,13 +51,16 @@ export const getModifierByIdResponse = zod.object({
  */
 export const updateModifierBodyNameMax = 255;
 
+
 export const updateModifierBody = zod.object({
-  name: zod.string().min(1).max(updateModifierBodyNameMax).optional(),
-});
+  "name": zod.string().min(1).max(updateModifierBodyNameMax).optional()
+})
 
 export const updateModifierResponseNameMax = 255;
 
+
 export const updateModifierResponse = zod.object({
-  id: zod.string(),
-  name: zod.string().min(1).max(updateModifierResponseNameMax),
-});
+  "id": zod.string(),
+  "name": zod.string().min(1).max(updateModifierResponseNameMax)
+})
+

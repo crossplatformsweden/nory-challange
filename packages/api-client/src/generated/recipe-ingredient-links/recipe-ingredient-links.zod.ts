@@ -5,7 +5,9 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-import { z as zod } from 'zod';
+import {
+  z as zod
+} from 'zod'
 
 /**
  * Retrieve a list of all ingredients required for the specified recipe, including their quantities.
@@ -13,15 +15,14 @@ import { z as zod } from 'zod';
  */
 export const listRecipeIngredientLinksResponseQuantityMin = 0;
 
+
 export const listRecipeIngredientLinksResponseItem = zod.object({
-  id: zod.string(),
-  recipeId: zod.string(),
-  ingredientId: zod.string(),
-  quantity: zod.number().min(listRecipeIngredientLinksResponseQuantityMin),
-});
-export const listRecipeIngredientLinksResponse = zod.array(
-  listRecipeIngredientLinksResponseItem
-);
+  "id": zod.string(),
+  "recipeId": zod.string(),
+  "ingredientId": zod.string(),
+  "quantity": zod.number().min(listRecipeIngredientLinksResponseQuantityMin)
+})
+export const listRecipeIngredientLinksResponse = zod.array(listRecipeIngredientLinksResponseItem)
 
 /**
  * Link an ingredient to a recipe with a specific required quantity.
@@ -29,7 +30,9 @@ export const listRecipeIngredientLinksResponse = zod.array(
  */
 export const createRecipeIngredientLinkBodyQuantityMin = 0;
 
+
 export const createRecipeIngredientLinkBody = zod.object({
-  ingredientId: zod.string(),
-  quantity: zod.number().min(createRecipeIngredientLinkBodyQuantityMin),
-});
+  "ingredientId": zod.string(),
+  "quantity": zod.number().min(createRecipeIngredientLinkBodyQuantityMin)
+})
+

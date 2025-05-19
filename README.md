@@ -275,7 +275,6 @@ Run the generation script with:
 
 The repository is configured with GitHub Actions to automate checks:
 
-- [`develop.yml`](./.github/workflows/develop.yml): Triggers on pushes to `develop`. Runs linting, type checking, building, unit tests, E2E tests, and builds Storybook.
 - [`feature-branch.yml`](./.github/workflows/feature-branch.yml): Triggers on pushes to `feature/*` and `improvement/*` branches, and on pull requests targeting `develop`. Runs linting, type checking, building, and unit/E2E tests. Uploads test artifacts.
 - [`test-visualization.yml`](./.github/workflows/test-visualization.yml): Triggers on completion of `feature-branch.yml` workflow. Downloads test artifacts and posts a summary comment to the relevant Pull Request.
 

@@ -9,9 +9,10 @@
 /**
  * The type of inventory movement.
  */
-export type InventoryMovementCreateType =
-  (typeof InventoryMovementCreateType)[keyof typeof InventoryMovementCreateType];
+export type InventoryMovementCreateType = typeof InventoryMovementCreateType[keyof typeof InventoryMovementCreateType];
 
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const InventoryMovementCreateType = {
   waste: 'waste',
   restock: 'restock',

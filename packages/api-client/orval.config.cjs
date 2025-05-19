@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   noryApiClient: {
     input: {
       target: '../../utils/salad.yml',

@@ -5,7 +5,9 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-import { z as zod } from 'zod';
+import {
+  z as zod
+} from 'zod'
 
 /**
  * Retrieve a list of location-specific costs for ingredients.
@@ -13,18 +15,15 @@ import { z as zod } from 'zod';
  */
 export const listLocationIngredientCostsResponseCostPerUnitMin = 0;
 
+
 export const listLocationIngredientCostsResponseItem = zod.object({
-  id: zod.string(),
-  locationId: zod.string(),
-  ingredientId: zod.string(),
-  costPerUnit: zod
-    .number()
-    .min(listLocationIngredientCostsResponseCostPerUnitMin),
-  updatedAt: zod.string().datetime().optional(),
-});
-export const listLocationIngredientCostsResponse = zod.array(
-  listLocationIngredientCostsResponseItem
-);
+  "id": zod.string(),
+  "locationId": zod.string(),
+  "ingredientId": zod.string(),
+  "costPerUnit": zod.number().min(listLocationIngredientCostsResponseCostPerUnitMin),
+  "updatedAt": zod.string().datetime().optional()
+})
+export const listLocationIngredientCostsResponse = zod.array(listLocationIngredientCostsResponseItem)
 
 /**
  * Define the cost of an ingredient specifically for a location.
@@ -32,10 +31,11 @@ export const listLocationIngredientCostsResponse = zod.array(
  */
 export const createLocationIngredientCostBodyCostPerUnitMin = 0;
 
+
 export const createLocationIngredientCostBody = zod.object({
-  ingredientId: zod.string(),
-  costPerUnit: zod.number().min(createLocationIngredientCostBodyCostPerUnitMin),
-});
+  "ingredientId": zod.string(),
+  "costPerUnit": zod.number().min(createLocationIngredientCostBodyCostPerUnitMin)
+})
 
 /**
  * Retrieve a specific ingredient cost record for a location using its unique ID.
@@ -43,15 +43,14 @@ export const createLocationIngredientCostBody = zod.object({
  */
 export const getLocationIngredientCostByIdResponseCostPerUnitMin = 0;
 
+
 export const getLocationIngredientCostByIdResponse = zod.object({
-  id: zod.string(),
-  locationId: zod.string(),
-  ingredientId: zod.string(),
-  costPerUnit: zod
-    .number()
-    .min(getLocationIngredientCostByIdResponseCostPerUnitMin),
-  updatedAt: zod.string().datetime().optional(),
-});
+  "id": zod.string(),
+  "locationId": zod.string(),
+  "ingredientId": zod.string(),
+  "costPerUnit": zod.number().min(getLocationIngredientCostByIdResponseCostPerUnitMin),
+  "updatedAt": zod.string().datetime().optional()
+})
 
 /**
  * Update the cost value for an existing ingredient cost record at a location.
@@ -59,18 +58,19 @@ export const getLocationIngredientCostByIdResponse = zod.object({
  */
 export const updateLocationIngredientCostBodyCostPerUnitMin = 0;
 
+
 export const updateLocationIngredientCostBody = zod.object({
-  costPerUnit: zod.number().min(updateLocationIngredientCostBodyCostPerUnitMin),
-});
+  "costPerUnit": zod.number().min(updateLocationIngredientCostBodyCostPerUnitMin)
+})
 
 export const updateLocationIngredientCostResponseCostPerUnitMin = 0;
 
+
 export const updateLocationIngredientCostResponse = zod.object({
-  id: zod.string(),
-  locationId: zod.string(),
-  ingredientId: zod.string(),
-  costPerUnit: zod
-    .number()
-    .min(updateLocationIngredientCostResponseCostPerUnitMin),
-  updatedAt: zod.string().datetime().optional(),
-});
+  "id": zod.string(),
+  "locationId": zod.string(),
+  "ingredientId": zod.string(),
+  "costPerUnit": zod.number().min(updateLocationIngredientCostResponseCostPerUnitMin),
+  "updatedAt": zod.string().datetime().optional()
+})
+

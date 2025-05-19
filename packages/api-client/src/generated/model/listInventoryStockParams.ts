@@ -7,12 +7,12 @@
  */
 
 export type ListInventoryStockParams = {
-  /**
-   * Optional, filter stock by location ID.
-   */
-  locationId?: string;
-  /**
-   * Optional, filter stock by ingredient ID.
-   */
-  ingredientId?: string;
+/**
+ * Optional, filter stock by location ID.
+ */
+locationId?: string;
+/**
+ * Optional, filter stock by ingredient ID.
+ */
+ingredientId?: string;
 };

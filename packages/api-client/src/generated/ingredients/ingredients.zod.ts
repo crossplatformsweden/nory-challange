@@ -5,7 +5,9 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-import { z as zod } from 'zod';
+import {
+  z as zod
+} from 'zod'
 
 /**
  * Retrieve a list of all defined inventory ingredients.
@@ -15,13 +17,14 @@ export const listIngredientsResponseNameMax = 255;
 export const listIngredientsResponseUnitMax = 50;
 export const listIngredientsResponseCostMin = 0;
 
+
 export const listIngredientsResponseItem = zod.object({
-  id: zod.string(),
-  name: zod.string().min(1).max(listIngredientsResponseNameMax),
-  unit: zod.string().min(1).max(listIngredientsResponseUnitMax),
-  cost: zod.number().min(listIngredientsResponseCostMin).nullish(),
-});
-export const listIngredientsResponse = zod.array(listIngredientsResponseItem);
+  "id": zod.string(),
+  "name": zod.string().min(1).max(listIngredientsResponseNameMax),
+  "unit": zod.string().min(1).max(listIngredientsResponseUnitMax),
+  "cost": zod.number().min(listIngredientsResponseCostMin).nullish()
+})
+export const listIngredientsResponse = zod.array(listIngredientsResponseItem)
 
 /**
  * Add a new ingredient definition to the inventory.
@@ -31,11 +34,12 @@ export const createIngredientBodyNameMax = 255;
 export const createIngredientBodyUnitMax = 50;
 export const createIngredientBodyCostMin = 0;
 
+
 export const createIngredientBody = zod.object({
-  name: zod.string().min(1).max(createIngredientBodyNameMax),
-  unit: zod.string().min(1).max(createIngredientBodyUnitMax),
-  cost: zod.number().min(createIngredientBodyCostMin).nullish(),
-});
+  "name": zod.string().min(1).max(createIngredientBodyNameMax),
+  "unit": zod.string().min(1).max(createIngredientBodyUnitMax),
+  "cost": zod.number().min(createIngredientBodyCostMin).nullish()
+})
 
 /**
  * Retrieve a specific ingredient definition using its unique ID.
@@ -45,12 +49,13 @@ export const getIngredientByIdResponseNameMax = 255;
 export const getIngredientByIdResponseUnitMax = 50;
 export const getIngredientByIdResponseCostMin = 0;
 
+
 export const getIngredientByIdResponse = zod.object({
-  id: zod.string(),
-  name: zod.string().min(1).max(getIngredientByIdResponseNameMax),
-  unit: zod.string().min(1).max(getIngredientByIdResponseUnitMax),
-  cost: zod.number().min(getIngredientByIdResponseCostMin).nullish(),
-});
+  "id": zod.string(),
+  "name": zod.string().min(1).max(getIngredientByIdResponseNameMax),
+  "unit": zod.string().min(1).max(getIngredientByIdResponseUnitMax),
+  "cost": zod.number().min(getIngredientByIdResponseCostMin).nullish()
+})
 
 /**
  * Update details of an existing ingredient definition.
@@ -60,19 +65,22 @@ export const updateIngredientBodyNameMax = 255;
 export const updateIngredientBodyUnitMax = 50;
 export const updateIngredientBodyCostMin = 0;
 
+
 export const updateIngredientBody = zod.object({
-  name: zod.string().min(1).max(updateIngredientBodyNameMax).optional(),
-  unit: zod.string().min(1).max(updateIngredientBodyUnitMax).optional(),
-  cost: zod.number().min(updateIngredientBodyCostMin).nullish(),
-});
+  "name": zod.string().min(1).max(updateIngredientBodyNameMax).optional(),
+  "unit": zod.string().min(1).max(updateIngredientBodyUnitMax).optional(),
+  "cost": zod.number().min(updateIngredientBodyCostMin).nullish()
+})
 
 export const updateIngredientResponseNameMax = 255;
 export const updateIngredientResponseUnitMax = 50;
 export const updateIngredientResponseCostMin = 0;
 
+
 export const updateIngredientResponse = zod.object({
-  id: zod.string(),
-  name: zod.string().min(1).max(updateIngredientResponseNameMax),
-  unit: zod.string().min(1).max(updateIngredientResponseUnitMax),
-  cost: zod.number().min(updateIngredientResponseCostMin).nullish(),
-});
+  "id": zod.string(),
+  "name": zod.string().min(1).max(updateIngredientResponseNameMax),
+  "unit": zod.string().min(1).max(updateIngredientResponseUnitMax),
+  "cost": zod.number().min(updateIngredientResponseCostMin).nullish()
+})
+

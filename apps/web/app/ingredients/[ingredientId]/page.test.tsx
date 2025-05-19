@@ -7,6 +7,9 @@ import { useGetIngredientById } from '@nory/api-client';
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
   useParams: jest.fn(),
+  useRouter: jest.fn(() => ({
+    back: jest.fn(),
+  })),
 }));
 
 // Mock the API client hook
@@ -37,21 +40,22 @@ describe('IngredientDetailPage', () => {
     },
   });
 
-  beforeEach(() => {
+  const mockIngredient = {
+    id: '123',
+    name: 'Test Ingredient',
+    unit: 'kg',
+    cost: 10.99,
+  };
+
+  const renderComponent = (loading = false, error: Error | null = null) => {
     // Mock useParams to return a test ingredientId
     (useParams as jest.Mock).mockReturnValue({ ingredientId: '123' });
 
     // Mock the API response
     (useGetIngredientById as jest.Mock).mockReturnValue({
-      data: {
-        data: {
-          name: 'Test Ingredient',
-          unit: 'kg',
-          cost: 10.99,
-        },
-      },
-      isLoading: false,
-      error: null,
+      data: loading ? null : { data: mockIngredient },
+      isLoading: loading,
+      error,
     });
 
     render(
@@ -59,17 +63,48 @@ describe('IngredientDetailPage', () => {
         <IngredientDetailPage />
       </QueryClientProvider>
     );
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('renders the page container', () => {
+  it('renders the page container, title, and back button', () => {
+    renderComponent();
     expect(screen.getByTestId('ingredient-detail-page')).toBeInTheDocument();
-  });
-
-  it('renders the page title', () => {
     expect(screen.getByTestId('ingredient-detail-title')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('ingredient-detail-back-button')
+    ).toBeInTheDocument();
   });
 
-  it('renders the page content', () => {
+  it('renders ingredient details when data is loaded', () => {
+    renderComponent();
     expect(screen.getByTestId('ingredient-detail-content')).toBeInTheDocument();
+    expect(screen.getByTestId('ingredient-detail-name')).toBeInTheDocument();
+    expect(screen.getByTestId('ingredient-detail-unit')).toBeInTheDocument();
+    expect(screen.getByTestId('ingredient-detail-cost')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('ingredient-detail-edit-button')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('ingredient-detail-delete-button')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('ingredient-detail-recipes-link')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('ingredient-detail-locations-link')
+    ).toBeInTheDocument();
+  });
+
+  it('renders loading state when data is loading', () => {
+    renderComponent(true);
+    expect(screen.getByTestId('ingredient-detail-loading')).toBeInTheDocument();
+  });
+
+  it('renders error state when there is an error', () => {
+    renderComponent(false, new Error('Failed to load ingredient'));
+    expect(screen.getByTestId('ingredient-detail-error')).toBeInTheDocument();
   });
 });

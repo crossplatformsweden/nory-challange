@@ -5,7 +5,9 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-import { z as zod } from 'zod';
+import {
+  z as zod
+} from 'zod'
 
 /**
  * Retrieve a list of all individual options within the specified modifier group.
@@ -14,15 +16,14 @@ import { z as zod } from 'zod';
 export const listModifierOptionsResponseNameMax = 255;
 export const listModifierOptionsResponsePriceMin = 0;
 
+
 export const listModifierOptionsResponseItem = zod.object({
-  id: zod.string(),
-  modifierId: zod.string(),
-  name: zod.string().min(1).max(listModifierOptionsResponseNameMax),
-  price: zod.number().min(listModifierOptionsResponsePriceMin),
-});
-export const listModifierOptionsResponse = zod.array(
-  listModifierOptionsResponseItem
-);
+  "id": zod.string(),
+  "modifierId": zod.string(),
+  "name": zod.string().min(1).max(listModifierOptionsResponseNameMax),
+  "price": zod.number().min(listModifierOptionsResponsePriceMin)
+})
+export const listModifierOptionsResponse = zod.array(listModifierOptionsResponseItem)
 
 /**
  * Add a new individual option to an existing modifier group.
@@ -31,10 +32,11 @@ export const listModifierOptionsResponse = zod.array(
 export const createModifierOptionBodyNameMax = 255;
 export const createModifierOptionBodyPriceMin = 0;
 
+
 export const createModifierOptionBody = zod.object({
-  name: zod.string().min(1).max(createModifierOptionBodyNameMax),
-  price: zod.number().min(createModifierOptionBodyPriceMin),
-});
+  "name": zod.string().min(1).max(createModifierOptionBodyNameMax),
+  "price": zod.number().min(createModifierOptionBodyPriceMin)
+})
 
 /**
  * Retrieve a specific modifier option using its unique ID within the context of a modifier group.
@@ -43,12 +45,13 @@ export const createModifierOptionBody = zod.object({
 export const getModifierOptionByIdResponseNameMax = 255;
 export const getModifierOptionByIdResponsePriceMin = 0;
 
+
 export const getModifierOptionByIdResponse = zod.object({
-  id: zod.string(),
-  modifierId: zod.string(),
-  name: zod.string().min(1).max(getModifierOptionByIdResponseNameMax),
-  price: zod.number().min(getModifierOptionByIdResponsePriceMin),
-});
+  "id": zod.string(),
+  "modifierId": zod.string(),
+  "name": zod.string().min(1).max(getModifierOptionByIdResponseNameMax),
+  "price": zod.number().min(getModifierOptionByIdResponsePriceMin)
+})
 
 /**
  * Update details of an existing modifier option within the specified modifier group.
@@ -57,17 +60,20 @@ export const getModifierOptionByIdResponse = zod.object({
 export const updateModifierOptionBodyNameMax = 255;
 export const updateModifierOptionBodyPriceMin = 0;
 
+
 export const updateModifierOptionBody = zod.object({
-  name: zod.string().min(1).max(updateModifierOptionBodyNameMax).optional(),
-  price: zod.number().min(updateModifierOptionBodyPriceMin).optional(),
-});
+  "name": zod.string().min(1).max(updateModifierOptionBodyNameMax).optional(),
+  "price": zod.number().min(updateModifierOptionBodyPriceMin).optional()
+})
 
 export const updateModifierOptionResponseNameMax = 255;
 export const updateModifierOptionResponsePriceMin = 0;
 
+
 export const updateModifierOptionResponse = zod.object({
-  id: zod.string(),
-  modifierId: zod.string(),
-  name: zod.string().min(1).max(updateModifierOptionResponseNameMax),
-  price: zod.number().min(updateModifierOptionResponsePriceMin),
-});
+  "id": zod.string(),
+  "modifierId": zod.string(),
+  "name": zod.string().min(1).max(updateModifierOptionResponseNameMax),
+  "price": zod.number().min(updateModifierOptionResponsePriceMin)
+})
+

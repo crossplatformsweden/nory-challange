@@ -5,7 +5,10 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQuery
+} from '@tanstack/react-query'
 import type {
   MutationFunction,
   QueryFunction,
@@ -13,398 +16,306 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult,
-} from '@tanstack/react-query';
-import axios from 'axios';
-import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+  UseQueryResult
+} from '@tanstack/react-query'
+import axios from 'axios'
+import type {
+  AxiosError,
+  AxiosRequestConfig,
+  AxiosResponse
+} from 'axios'
 import type {
   BadRequestResponse,
   InternalServerErrorResponse,
   Location,
   LocationCreate,
   LocationUpdate,
-  NotFoundResponse,
-} from '../noryInventoryAPI.schemas';
+  NotFoundResponse
+} from '../noryInventoryAPI.schemas'
+
+
 
 /**
  * Retrieve a list of all locations managed in the inventory system.
  * @summary List all locations
  */
 export const listLocations = (
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<Location[]>> => {
-  return axios.get(`/locations`, options);
-};
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<Location[]>> => {
+    
+    return axios.get(
+      `/locations`,options
+    );
+  }
+
 
 export const getListLocationsQueryKey = () => {
-  return [`/locations`] as const;
-};
+    return [`/locations`] as const;
+    }
 
-export const getListLocationsQueryOptions = <
-  TData = Awaited<ReturnType<typeof listLocations>>,
-  TError = AxiosError<InternalServerErrorResponse>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof listLocations>>, TError, TData>
-  >;
-  axios?: AxiosRequestConfig;
-}) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+    
+export const getListLocationsQueryOptions = <TData = Awaited<ReturnType<typeof listLocations>>, TError = AxiosError<InternalServerErrorResponse>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listLocations>>, TError, TData>>, axios?: AxiosRequestConfig}
+) => {
 
-  const queryKey = queryOptions?.queryKey ?? getListLocationsQueryKey();
+const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof listLocations>>> = ({
-    signal,
-  }) => listLocations({ signal, ...axiosOptions });
+  const queryKey =  queryOptions?.queryKey ?? getListLocationsQueryKey();
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof listLocations>>,
-    TError,
-    TData
-  > & { queryKey: QueryKey };
-};
+  
 
-export type ListLocationsQueryResult = NonNullable<
-  Awaited<ReturnType<typeof listLocations>>
->;
-export type ListLocationsQueryError = AxiosError<InternalServerErrorResponse>;
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listLocations>>> = ({ signal }) => listLocations({ signal, ...axiosOptions });
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listLocations>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type ListLocationsQueryResult = NonNullable<Awaited<ReturnType<typeof listLocations>>>
+export type ListLocationsQueryError = AxiosError<InternalServerErrorResponse>
 
 /**
  * @summary List all locations
  */
-export const useListLocations = <
-  TData = Awaited<ReturnType<typeof listLocations>>,
-  TError = AxiosError<InternalServerErrorResponse>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof listLocations>>, TError, TData>
-  >;
-  axios?: AxiosRequestConfig;
-}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const queryOptions = getListLocationsQueryOptions(options);
+export const useListLocations = <TData = Awaited<ReturnType<typeof listLocations>>, TError = AxiosError<InternalServerErrorResponse>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listLocations>>, TError, TData>>, axios?: AxiosRequestConfig}
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  query.queryKey = queryOptions.queryKey;
+  const queryOptions = getListLocationsQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
-};
+}
+
+
 
 /**
  * Add a new location to the inventory system.
  * @summary Create a new location
  */
 export const createLocation = (
-  locationCreate: LocationCreate,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<Location>> => {
-  return axios.post(`/locations`, locationCreate, options);
-};
+    locationCreate: LocationCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<Location>> => {
+    
+    return axios.post(
+      `/locations`,
+      locationCreate,options
+    );
+  }
 
-export const getCreateLocationMutationOptions = <
-  TError = AxiosError<BadRequestResponse | InternalServerErrorResponse>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof createLocation>>,
-    TError,
-    { data: LocationCreate },
-    TContext
-  >;
-  axios?: AxiosRequestConfig;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof createLocation>>,
-  TError,
-  { data: LocationCreate },
-  TContext
-> => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof createLocation>>,
-    { data: LocationCreate }
-  > = (props) => {
-    const { data } = props ?? {};
 
-    return createLocation(data, axiosOptions);
-  };
+export const getCreateLocationMutationOptions = <TError = AxiosError<BadRequestResponse | InternalServerErrorResponse>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createLocation>>, TError,{data: LocationCreate}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof createLocation>>, TError,{data: LocationCreate}, TContext> => {
+const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
 
-  return { mutationFn, ...mutationOptions };
-};
+      
 
-export type CreateLocationMutationResult = NonNullable<
-  Awaited<ReturnType<typeof createLocation>>
->;
-export type CreateLocationMutationBody = LocationCreate;
-export type CreateLocationMutationError = AxiosError<
-  BadRequestResponse | InternalServerErrorResponse
->;
 
-/**
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createLocation>>, {data: LocationCreate}> = (props) => {
+          const {data} = props ?? {};
+
+          return  createLocation(data,axiosOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateLocationMutationResult = NonNullable<Awaited<ReturnType<typeof createLocation>>>
+    export type CreateLocationMutationBody = LocationCreate
+    export type CreateLocationMutationError = AxiosError<BadRequestResponse | InternalServerErrorResponse>
+
+    /**
  * @summary Create a new location
  */
-export const useCreateLocation = <
-  TError = AxiosError<BadRequestResponse | InternalServerErrorResponse>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof createLocation>>,
-    TError,
-    { data: LocationCreate },
-    TContext
-  >;
-  axios?: AxiosRequestConfig;
-}): UseMutationResult<
-  Awaited<ReturnType<typeof createLocation>>,
-  TError,
-  { data: LocationCreate },
-  TContext
-> => {
-  const mutationOptions = getCreateLocationMutationOptions(options);
+export const useCreateLocation = <TError = AxiosError<BadRequestResponse | InternalServerErrorResponse>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createLocation>>, TError,{data: LocationCreate}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationResult<
+        Awaited<ReturnType<typeof createLocation>>,
+        TError,
+        {data: LocationCreate},
+        TContext
+      > => {
 
-  return useMutation(mutationOptions);
-};
-/**
+      const mutationOptions = getCreateLocationMutationOptions(options);
+
+      return useMutation(mutationOptions);
+    }
+    /**
  * Retrieve a specific location using its unique ID.
  * @summary Get a single location by ID
  */
 export const getLocationById = (
-  locationId: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<Location>> => {
-  return axios.get(`/locations/${locationId}`, options);
-};
-
-export const getGetLocationByIdQueryKey = (locationId: string) => {
-  return [`/locations/${locationId}`] as const;
-};
-
-export const getGetLocationByIdQueryOptions = <
-  TData = Awaited<ReturnType<typeof getLocationById>>,
-  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
->(
-  locationId: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getLocationById>>,
-        TError,
-        TData
-      >
-    >;
-    axios?: AxiosRequestConfig;
+    locationId: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<Location>> => {
+    
+    return axios.get(
+      `/locations/${locationId}`,options
+    );
   }
+
+
+export const getGetLocationByIdQueryKey = (locationId: string,) => {
+    return [`/locations/${locationId}`] as const;
+    }
+
+    
+export const getGetLocationByIdQueryOptions = <TData = Awaited<ReturnType<typeof getLocationById>>, TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>>(locationId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLocationById>>, TError, TData>>, axios?: AxiosRequestConfig}
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getGetLocationByIdQueryKey(locationId);
+const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getLocationById>>> = ({
-    signal,
-  }) => getLocationById(locationId, { signal, ...axiosOptions });
+  const queryKey =  queryOptions?.queryKey ?? getGetLocationByIdQueryKey(locationId);
 
-  return {
-    queryKey,
-    queryFn,
-    enabled: !!locationId,
-    ...queryOptions,
-  } as UseQueryOptions<
-    Awaited<ReturnType<typeof getLocationById>>,
-    TError,
-    TData
-  > & { queryKey: QueryKey };
-};
+  
 
-export type GetLocationByIdQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getLocationById>>
->;
-export type GetLocationByIdQueryError = AxiosError<
-  NotFoundResponse | InternalServerErrorResponse
->;
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getLocationById>>> = ({ signal }) => getLocationById(locationId, { signal, ...axiosOptions });
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(locationId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getLocationById>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetLocationByIdQueryResult = NonNullable<Awaited<ReturnType<typeof getLocationById>>>
+export type GetLocationByIdQueryError = AxiosError<NotFoundResponse | InternalServerErrorResponse>
 
 /**
  * @summary Get a single location by ID
  */
-export const useGetLocationById = <
-  TData = Awaited<ReturnType<typeof getLocationById>>,
-  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
->(
-  locationId: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getLocationById>>,
-        TError,
-        TData
-      >
-    >;
-    axios?: AxiosRequestConfig;
-  }
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const queryOptions = getGetLocationByIdQueryOptions(locationId, options);
+export const useGetLocationById = <TData = Awaited<ReturnType<typeof getLocationById>>, TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>>(
+ locationId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLocationById>>, TError, TData>>, axios?: AxiosRequestConfig}
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  query.queryKey = queryOptions.queryKey;
+  const queryOptions = getGetLocationByIdQueryOptions(locationId,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
-};
+}
+
+
 
 /**
  * Update details of an existing location.
  * @summary Update a location
  */
 export const updateLocation = (
-  locationId: string,
-  locationUpdate: LocationUpdate,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<Location>> => {
-  return axios.patch(`/locations/${locationId}`, locationUpdate, options);
-};
+    locationId: string,
+    locationUpdate: LocationUpdate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<Location>> => {
+    
+    return axios.patch(
+      `/locations/${locationId}`,
+      locationUpdate,options
+    );
+  }
 
-export const getUpdateLocationMutationOptions = <
-  TError = AxiosError<
-    BadRequestResponse | NotFoundResponse | InternalServerErrorResponse
-  >,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updateLocation>>,
-    TError,
-    { locationId: string; data: LocationUpdate },
-    TContext
-  >;
-  axios?: AxiosRequestConfig;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof updateLocation>>,
-  TError,
-  { locationId: string; data: LocationUpdate },
-  TContext
-> => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof updateLocation>>,
-    { locationId: string; data: LocationUpdate }
-  > = (props) => {
-    const { locationId, data } = props ?? {};
 
-    return updateLocation(locationId, data, axiosOptions);
-  };
+export const getUpdateLocationMutationOptions = <TError = AxiosError<BadRequestResponse | NotFoundResponse | InternalServerErrorResponse>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateLocation>>, TError,{locationId: string;data: LocationUpdate}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof updateLocation>>, TError,{locationId: string;data: LocationUpdate}, TContext> => {
+const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
 
-  return { mutationFn, ...mutationOptions };
-};
+      
 
-export type UpdateLocationMutationResult = NonNullable<
-  Awaited<ReturnType<typeof updateLocation>>
->;
-export type UpdateLocationMutationBody = LocationUpdate;
-export type UpdateLocationMutationError = AxiosError<
-  BadRequestResponse | NotFoundResponse | InternalServerErrorResponse
->;
 
-/**
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateLocation>>, {locationId: string;data: LocationUpdate}> = (props) => {
+          const {locationId,data} = props ?? {};
+
+          return  updateLocation(locationId,data,axiosOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateLocationMutationResult = NonNullable<Awaited<ReturnType<typeof updateLocation>>>
+    export type UpdateLocationMutationBody = LocationUpdate
+    export type UpdateLocationMutationError = AxiosError<BadRequestResponse | NotFoundResponse | InternalServerErrorResponse>
+
+    /**
  * @summary Update a location
  */
-export const useUpdateLocation = <
-  TError = AxiosError<
-    BadRequestResponse | NotFoundResponse | InternalServerErrorResponse
-  >,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updateLocation>>,
-    TError,
-    { locationId: string; data: LocationUpdate },
-    TContext
-  >;
-  axios?: AxiosRequestConfig;
-}): UseMutationResult<
-  Awaited<ReturnType<typeof updateLocation>>,
-  TError,
-  { locationId: string; data: LocationUpdate },
-  TContext
-> => {
-  const mutationOptions = getUpdateLocationMutationOptions(options);
+export const useUpdateLocation = <TError = AxiosError<BadRequestResponse | NotFoundResponse | InternalServerErrorResponse>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateLocation>>, TError,{locationId: string;data: LocationUpdate}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationResult<
+        Awaited<ReturnType<typeof updateLocation>>,
+        TError,
+        {locationId: string;data: LocationUpdate},
+        TContext
+      > => {
 
-  return useMutation(mutationOptions);
-};
-/**
+      const mutationOptions = getUpdateLocationMutationOptions(options);
+
+      return useMutation(mutationOptions);
+    }
+    /**
  * Remove a location from the system. This might also require handling related data (staff, inventory, menu items, etc.).
  * @summary Delete a location
  */
 export const deleteLocation = (
-  locationId: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<void>> => {
-  return axios.delete(`/locations/${locationId}`, options);
-};
+    locationId: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<void>> => {
+    
+    return axios.delete(
+      `/locations/${locationId}`,options
+    );
+  }
 
-export const getDeleteLocationMutationOptions = <
-  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof deleteLocation>>,
-    TError,
-    { locationId: string },
-    TContext
-  >;
-  axios?: AxiosRequestConfig;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof deleteLocation>>,
-  TError,
-  { locationId: string },
-  TContext
-> => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof deleteLocation>>,
-    { locationId: string }
-  > = (props) => {
-    const { locationId } = props ?? {};
 
-    return deleteLocation(locationId, axiosOptions);
-  };
+export const getDeleteLocationMutationOptions = <TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteLocation>>, TError,{locationId: string}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteLocation>>, TError,{locationId: string}, TContext> => {
+const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
 
-  return { mutationFn, ...mutationOptions };
-};
+      
 
-export type DeleteLocationMutationResult = NonNullable<
-  Awaited<ReturnType<typeof deleteLocation>>
->;
 
-export type DeleteLocationMutationError = AxiosError<
-  NotFoundResponse | InternalServerErrorResponse
->;
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteLocation>>, {locationId: string}> = (props) => {
+          const {locationId} = props ?? {};
 
-/**
+          return  deleteLocation(locationId,axiosOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteLocationMutationResult = NonNullable<Awaited<ReturnType<typeof deleteLocation>>>
+    
+    export type DeleteLocationMutationError = AxiosError<NotFoundResponse | InternalServerErrorResponse>
+
+    /**
  * @summary Delete a location
  */
-export const useDeleteLocation = <
-  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof deleteLocation>>,
-    TError,
-    { locationId: string },
-    TContext
-  >;
-  axios?: AxiosRequestConfig;
-}): UseMutationResult<
-  Awaited<ReturnType<typeof deleteLocation>>,
-  TError,
-  { locationId: string },
-  TContext
-> => {
-  const mutationOptions = getDeleteLocationMutationOptions(options);
+export const useDeleteLocation = <TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteLocation>>, TError,{locationId: string}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationResult<
+        Awaited<ReturnType<typeof deleteLocation>>,
+        TError,
+        {locationId: string},
+        TContext
+      > => {
 
-  return useMutation(mutationOptions);
-};
+      const mutationOptions = getDeleteLocationMutationOptions(options);
+
+      return useMutation(mutationOptions);
+    }
+    
