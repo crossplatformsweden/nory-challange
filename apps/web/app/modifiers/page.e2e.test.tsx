@@ -24,60 +24,45 @@ test.describe('ModifiersListPage', () => {
   });
 
   test('renders all required elements', async ({ page }) => {
-    // Wait for the page to load (either content, loading state, or error)
+    // Wait for either content, loading, or error state
     await Promise.race([
-      page
-        .waitForSelector('[data-testid="modifiers-list-content"]', {
-          timeout: 5000,
-        })
-        .catch(() => {}),
-      page
-        .waitForSelector('[data-testid="modifiers-list-loading"]', {
-          timeout: 5000,
-        })
-        .catch(() => {}),
-      page
-        .waitForSelector('[data-testid="modifiers-list-error"]', {
-          timeout: 5000,
-        })
-        .catch(() => {}),
+      page.waitForSelector('[data-testid="modifiers-list-content"]', {
+        timeout: 5000,
+      }),
+      page.waitForSelector('[data-testid="modifiers-list-loading"]', {
+        timeout: 5000,
+      }),
+      page.waitForSelector('[data-testid="modifiers-list-error"]', {
+        timeout: 5000,
+      }),
     ]);
 
-    // Check that main elements are visible
-    await expect(page.getByTestId('modifiers-list-page')).toBeVisible();
-    await expect(page.getByTestId('modifiers-list-title')).toBeVisible();
-    await expect(
-      page.getByTestId('modifiers-list-create-button')
-    ).toBeVisible();
+    // Check that at least one state is visible
+    const hasContent = await page
+      .getByTestId('modifiers-list-content')
+      .isVisible();
+    const hasLoading = await page
+      .getByTestId('modifiers-list-loading')
+      .isVisible();
+    const hasError = await page.getByTestId('modifiers-list-error').isVisible();
+    expect(hasContent || hasLoading || hasError).toBeTruthy();
 
-    // Check for either content, loading state, or error
-    const hasContent =
-      (await page.getByTestId('modifiers-list-content').count()) > 0;
-    const isLoading =
-      (await page.getByTestId('modifiers-list-loading').count()) > 0;
-    const hasError =
-      (await page.getByTestId('modifiers-list-error').count()) > 0;
-
-    // At least one of these states should be visible
-    expect(hasContent || isLoading || hasError).toBeTruthy();
-
-    // If content is loaded, check for either modifier cards or empty state
+    // If content is loaded, check for either empty state or modifier cards
     if (hasContent) {
-      const hasEmptyState =
-        (await page.getByTestId('modifiers-list-empty').count()) > 0;
+      const hasEmptyState = await page
+        .getByTestId('modifiers-list-empty')
+        .isVisible();
       const hasModifierCards =
         (await page.locator('[data-testid^="modifier-card-"]').count()) > 0;
-
       expect(hasEmptyState || hasModifierCards).toBeTruthy();
 
       // If modifier cards exist, check details
       if (hasModifierCards) {
+        await expect(page.getByTestId('modifier-card-name')).toBeVisible();
         await expect(
-          page.locator('[data-testid^="modifier-name-"]').first()
+          page.getByTestId('modifier-card-view-button')
         ).toBeVisible();
-        await expect(
-          page.locator('[data-testid^="modifier-view-"]').first()
-        ).toBeVisible();
+        await expect(page.getByTestId('modifier-card-options')).toBeVisible();
       }
     }
   });

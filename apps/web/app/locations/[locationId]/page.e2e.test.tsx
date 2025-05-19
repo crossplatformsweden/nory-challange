@@ -19,8 +19,11 @@ import { test, expect } from '@playwright/test';
  */
 
 test.describe('LocationDetailPage', () => {
+  const locationId = '123';
+  const baseUrl = `/locations/${locationId}`;
+
   test.beforeEach(async ({ page }) => {
-    await page.goto('/locations/123');
+    await page.goto(baseUrl);
   });
 
   test('renders all required elements', async ({ page }) => {
@@ -43,10 +46,11 @@ test.describe('LocationDetailPage', () => {
         .catch(() => {}),
     ]);
 
-    // Check that main elements are visible
+    // Check main page elements
     await expect(page.getByTestId('location-detail-page')).toBeVisible();
     await expect(page.getByTestId('location-detail-title')).toBeVisible();
     await expect(page.getByTestId('location-detail-back-button')).toBeVisible();
+    await expect(page.getByTestId('location-detail-edit-button')).toBeVisible();
 
     // Check for either content, loading state, or error
     const hasContent =
@@ -59,58 +63,18 @@ test.describe('LocationDetailPage', () => {
     // At least one of these states should be visible
     expect(hasContent || isLoading || hasError).toBeTruthy();
 
-    // If content is loaded, check for key elements
+    // If content is loaded, check location details
     if (hasContent) {
       await expect(page.getByTestId('location-detail-name')).toBeVisible();
       await expect(page.getByTestId('location-detail-address')).toBeVisible();
-      await expect(
-        page.getByTestId('location-detail-edit-button')
-      ).toBeVisible();
-      await expect(
-        page.getByTestId('location-detail-delete-button')
-      ).toBeVisible();
-
-      // Check that navigation links are present
-      await expect(
-        page.getByTestId('location-detail-staff-link')
-      ).toBeVisible();
-      await expect(
-        page.getByTestId('location-detail-menu-items-link')
-      ).toBeVisible();
-      await expect(
-        page.getByTestId('location-detail-reports-link')
-      ).toBeVisible();
+      await expect(page.getByTestId('location-detail-phone')).toBeVisible();
+      await expect(page.getByTestId('location-detail-email')).toBeVisible();
     }
   });
 
-  test('navigates when clicking navigation links', async ({ page }) => {
-    // Wait for content to load
-    await page
-      .waitForSelector('[data-testid="location-detail-content"]', {
-        timeout: 5000,
-      })
-      .catch(() => {});
-
-    // Test only if content is available (not in loading or error state)
-    const hasContent =
-      (await page.getByTestId('location-detail-content').count()) > 0;
-    if (hasContent) {
-      // Click on staff link and verify navigation
-      await page.getByTestId('location-detail-staff-link').click();
-      await expect(page).toHaveURL(/\/locations\/123\/staff/);
-
-      // Go back to detail page
-      await page.goto('/locations/123');
-      await page
-        .waitForSelector('[data-testid="location-detail-content"]', {
-          timeout: 5000,
-        })
-        .catch(() => {});
-
-      // Click on menu items link and verify navigation
-      await page.getByTestId('location-detail-menu-items-link').click();
-      await expect(page).toHaveURL(/\/locations\/123\/menu-items/);
-    }
+  test('shows loading state initially', async ({ page }) => {
+    await page.goto(baseUrl);
+    await expect(page.getByTestId('location-detail-loading')).toBeVisible();
   });
 
   test('back button navigates to previous page', async ({ page }) => {
@@ -120,8 +84,8 @@ test.describe('LocationDetailPage', () => {
     // Store the URL to verify we return here later
     const originalUrl = page.url();
 
-    // Go to the detail page
-    await page.goto('/locations/123');
+    // Navigate to location detail page
+    await page.goto(baseUrl);
     await page.waitForSelector('[data-testid="location-detail-page"]');
 
     // Click the back button

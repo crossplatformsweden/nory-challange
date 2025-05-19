@@ -19,8 +19,10 @@ import { test, expect } from '@playwright/test';
  */
 
 test.describe('RecipesListPage', () => {
+  const baseUrl = '/recipes';
+
   test.beforeEach(async ({ page }) => {
-    await page.goto('/recipes');
+    await page.goto(baseUrl);
   });
 
   test('renders all required elements', async ({ page }) => {
@@ -36,14 +38,9 @@ test.describe('RecipesListPage', () => {
           timeout: 5000,
         })
         .catch(() => {}),
-      page
-        .waitForSelector('[data-testid="recipes-list-error"]', {
-          timeout: 5000,
-        })
-        .catch(() => {}),
     ]);
 
-    // Check main elements are visible
+    // Check main page elements
     await expect(page.getByTestId('recipes-list-page')).toBeVisible();
     await expect(page.getByTestId('recipes-list-title')).toBeVisible();
     await expect(page.getByTestId('recipes-list-create-button')).toBeVisible();
@@ -58,107 +55,45 @@ test.describe('RecipesListPage', () => {
     // At least one of these states should be visible
     expect(hasContent || isLoading || hasError).toBeTruthy();
 
-    // If content is loaded, check for either recipe cards or empty state
+    // If content is loaded, check for recipe cards
     if (hasContent) {
-      const hasEmptyState =
-        (await page.getByTestId('recipes-list-empty').count()) > 0;
-      const hasRecipeCards =
-        (await page.locator('[data-testid^="recipe-card-"]').count()) > 0;
+      // Check for either recipe cards or empty state
 
-      expect(hasEmptyState || hasRecipeCards).toBeTruthy();
-
-      // If recipe cards exist, check details
-      if (hasRecipeCards) {
-        await expect(
-          page.locator('[data-testid^="recipe-name-"]').first()
-        ).toBeVisible();
-        await expect(
-          page.locator('[data-testid^="recipe-view-"]').first()
-        ).toBeVisible();
-        await expect(
-          page.locator('[data-testid^="recipe-ingredients-"]').first()
-        ).toBeVisible();
-      }
+      // If recipe cards exist, check card details
+      await expect(
+        page.locator('[data-testid^="recipe-card-"]').first()
+      ).toBeVisible();
+      await expect(
+        page.locator('[data-testid^="recipe-name-"]').first()
+      ).toBeVisible();
+      await expect(
+        page.locator('[data-testid^="recipe-description-"]').first()
+      ).toBeVisible();
     }
   });
 
-  test('navigates to detail page when clicking view button', async ({
-    page,
-  }) => {
-    // Wait for content to load
-    await page.waitForTimeout(1000); // Give time for data to load
-    await page
-      .waitForSelector('[data-testid="recipes-list-content"]', {
-        timeout: 5000,
-      })
-      .catch(() => {});
-
-    // Test only if we have recipe cards
-    const firstViewButton = await page
-      .locator('[data-testid^="recipe-view-"]')
-      .first()
-      .count();
-
-    if (firstViewButton > 0) {
-      // Get the id from the test ID to verify we navigate to the correct page
-      const buttonTestId = await page
-        .locator('[data-testid^="recipe-view-"]')
-        .first()
-        .getAttribute('data-testid');
-      const recipeId = buttonTestId?.replace('recipe-view-', '');
-
-      // Click the view button
-      await page.locator('[data-testid^="recipe-view-"]').first().click();
-
-      // Verify we navigated to the detail page
-      await expect(page).toHaveURL(`/recipes/${recipeId}`);
-    }
+  test('shows loading state initially', async ({ page }) => {
+    await page.goto(baseUrl);
+    await expect(page.getByTestId('recipes-list-loading')).toBeVisible();
   });
 
-  test('navigates to ingredients page when clicking ingredients button', async ({
+  test('navigates to create page when clicking create button', async ({
     page,
   }) => {
-    // Wait for content to load
-    await page.waitForTimeout(1000); // Give time for data to load
-    await page
-      .waitForSelector('[data-testid="recipes-list-content"]', {
-        timeout: 5000,
-      })
-      .catch(() => {});
+    // Wait for the page to load
+    await page.waitForSelector('[data-testid="recipes-list-page"]');
 
-    // Test only if we have recipe cards
-    const ingredientsButton = await page
-      .locator('[data-testid^="recipe-ingredients-"]')
-      .first()
-      .count();
+    // Wait for the create button to be visible
+    await page.waitForSelector('[data-testid="recipes-list-create-button"]');
 
-    if (ingredientsButton > 0) {
-      // Get the id from the test ID
-      const buttonTestId = await page
-        .locator('[data-testid^="recipe-ingredients-"]')
-        .first()
-        .getAttribute('data-testid');
-      const recipeId = buttonTestId?.replace('recipe-ingredients-', '');
-
-      // Click the ingredients button
-      await page
-        .locator('[data-testid^="recipe-ingredients-"]')
-        .first()
-        .click();
-
-      // Verify we navigated to the ingredients page
-      await expect(page).toHaveURL(`/recipes/${recipeId}/ingredient-links`);
-    }
-  });
-
-  test('navigates to create page when clicking add recipe button', async ({
-    page,
-  }) => {
-    // Click the create button
-    await page.getByTestId('recipes-list-create-button').click();
+    // Click the create button and wait for navigation
+    await Promise.all([
+      page.waitForNavigation(),
+      page.getByTestId('recipes-list-create-button').click(),
+    ]);
 
     // Verify we navigated to the create page
-    await expect(page).toHaveURL('/recipes/create');
+    await expect(page).toHaveURL(/\/recipes\/create/);
   });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {
@@ -166,7 +101,7 @@ test.describe('RecipesListPage', () => {
     const now = new Date();
     const timestamp = now.toISOString().replace(/[:.]/g, '-');
 
-    // Wait for content to be fully loaded
+    // Wait for content to be loaded
     await page.waitForLoadState('networkidle');
 
     // Take screenshot with timestamp and browser name

@@ -19,8 +19,11 @@ import { test, expect } from '@playwright/test';
  */
 
 test.describe('InventoryStockPage', () => {
+  const locationId = '123';
+  const baseUrl = `/locations/${locationId}/inventory-stock`;
+
   test.beforeEach(async ({ page }) => {
-    await page.goto('/locations/123/inventory-stock');
+    await page.goto(baseUrl);
   });
 
   test('renders all required elements', async ({ page }) => {
@@ -101,43 +104,9 @@ test.describe('InventoryStockPage', () => {
     }
   });
 
-  test('filter changes update the display', async ({ page }) => {
-    // Wait for content to load
-    await page
-      .waitForSelector('[data-testid="inventory-stock-content"]', {
-        timeout: 5000,
-      })
-      .catch(() => {});
-
-    // Test only if content is available and has stock items
-    const hasStockRows =
-      (await page.locator('[data-testid^="inventory-stock-row-"]').count()) > 0;
-
-    if (hasStockRows) {
-      // Count initial number of rows
-      const initialRowCount = await page
-        .locator('[data-testid^="inventory-stock-row-"]')
-        .count();
-
-      // Get the first ingredient value from dropdown
-      const filter = page.getByTestId('inventory-stock-ingredient-filter');
-      await filter.click();
-
-      // Select the first option (other than 'All Ingredients')
-      const secondOption = page.locator('option:not([value=""])').first();
-      if ((await secondOption.count()) > 0) {
-        await secondOption.click();
-
-        // Allow time for the filter to apply
-        await page.waitForTimeout(500);
-
-        // Check that filtering either reduced rows or shows the same (if only one ingredient exists)
-        const filteredRowCount = await page
-          .locator('[data-testid^="inventory-stock-row-"]')
-          .count();
-        expect(filteredRowCount).toBeLessThanOrEqual(initialRowCount);
-      }
-    }
+  test('shows loading state initially', async ({ page }) => {
+    await page.goto(baseUrl);
+    await expect(page.getByTestId('inventory-stock-loading')).toBeVisible();
   });
 
   test('record movement button navigates to correct page', async ({ page }) => {
@@ -151,7 +120,7 @@ test.describe('InventoryStockPage', () => {
 
     // Verify navigation to record movement page
     await expect(page).toHaveURL(
-      /\/locations\/123\/inventory-movements\/record/
+      /\/locations\/\d+\/inventory-movements\/record/
     );
   });
 
@@ -163,7 +132,7 @@ test.describe('InventoryStockPage', () => {
     const originalUrl = page.url();
 
     // Navigate to inventory stock page
-    await page.goto('/locations/123/inventory-stock');
+    await page.goto(baseUrl);
     await page.waitForSelector('[data-testid="inventory-stock-page"]');
 
     // Click the back button

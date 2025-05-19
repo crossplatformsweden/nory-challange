@@ -1,0 +1,8 @@
+---
+description: 
+globs: apps/web/app/**/*.tsx
+alwaysApply: false
+---
+always source the 3 files page.tsx, page.test.tsx page.e2e.test.tsx
+
+To get information about the setup.

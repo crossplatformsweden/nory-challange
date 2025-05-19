@@ -1,13 +1,12 @@
 'use client';
 
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import {
   useListRecipeIngredientLinks,
   useDeleteRecipeIngredientLink,
   useGetRecipeById,
-  useGetIngredientById,
 } from '@nory/api-client';
 
 /**
@@ -73,28 +72,59 @@ const RecipeIngredientLinksPage: FC<RecipeIngredientLinksPageProps> = () => {
   const [ingredients, setIngredients] = useState<
     Record<string, { name: string; unit: string }>
   >({});
+  const [error, setError] = useState<Error | null>(null);
 
+  // Get all unique ingredient IDs
+  const ingredientIds = useMemo(() => {
+    if (!ingredientLinksData?.data) return [];
+    return [
+      ...new Set(ingredientLinksData.data.map((link) => link.ingredientId)),
+    ];
+  }, [ingredientLinksData?.data]);
+
+  // Fetch all ingredients in parallel
   useEffect(() => {
     const fetchIngredients = async () => {
-      if (ingredientLinksData?.data) {
+      if (ingredientIds.length === 0) return;
+      setError(null);
+
+      try {
         const ingredientDetails: Record<
           string,
           { name: string; unit: string }
         > = {};
-        for (const link of ingredientLinksData.data) {
-          const { data } = await useGetIngredientById(link.ingredientId);
+
+        // Fetch all ingredients in parallel
+        const promises = ingredientIds.map(async (id) => {
+          const response = await fetch(`/api/ingredients/${id}`);
+          if (!response.ok) {
+            throw new Error(
+              `Failed to fetch ingredient ${id}: ${response.statusText}`
+            );
+          }
+          const data = await response.json();
           if (data?.data) {
-            ingredientDetails[link.ingredientId] = {
+            ingredientDetails[id] = {
               name: data.data.name,
               unit: data.data.unit,
             };
           }
-        }
+        });
+
+        await Promise.all(promises);
         setIngredients(ingredientDetails);
+      } catch (error) {
+        console.error('Error fetching ingredients:', error);
+        setError(
+          error instanceof Error
+            ? error
+            : new Error('Failed to fetch ingredients')
+        );
       }
     };
+
     fetchIngredients();
-  }, [ingredientLinksData]);
+  }, [ingredientIds]);
 
   const handleGoBack = () => {
     router.back();
@@ -146,9 +176,10 @@ const RecipeIngredientLinksPage: FC<RecipeIngredientLinksPageProps> = () => {
           className="text-3xl font-bold"
           data-testid="recipe-ingredient-links-title"
         >
-          {recipeData?.data?.name
-            ? `${recipeData.data.name} - Ingredients`
-            : 'Recipe Ingredients'}
+          <span data-testid="recipe-detail-name">
+            {recipeData?.data?.name || 'Recipe'}
+          </span>{' '}
+          - Ingredients
         </h1>
       </div>
 
@@ -163,7 +194,7 @@ const RecipeIngredientLinksPage: FC<RecipeIngredientLinksPageProps> = () => {
       )}
 
       {/* Error State */}
-      {ingredientLinksError && (
+      {(ingredientLinksError || error) && (
         <div
           className="alert alert-error"
           data-testid="recipe-ingredient-links-error"
@@ -183,15 +214,13 @@ const RecipeIngredientLinksPage: FC<RecipeIngredientLinksPageProps> = () => {
           </svg>
           <span>
             Error loading recipe ingredients:{' '}
-            {ingredientLinksError instanceof Error
-              ? ingredientLinksError.message
-              : 'Unknown error'}
+            {ingredientLinksError?.message || error?.message || 'Unknown error'}
           </span>
         </div>
       )}
 
       {/* Main Content */}
-      {!isLoading && !ingredientLinksError && (
+      {!isLoading && !ingredientLinksError && !error && (
         <div
           data-testid="recipe-ingredient-links-content"
           className="space-y-6"
@@ -239,8 +268,12 @@ const RecipeIngredientLinksPage: FC<RecipeIngredientLinksPageProps> = () => {
                 >
                   <thead>
                     <tr>
-                      <th>Ingredient</th>
-                      <th>Amount</th>
+                      <th data-testid="recipe-ingredient-links-table-header-ingredient">
+                        Ingredient
+                      </th>
+                      <th data-testid="recipe-ingredient-links-table-header-amount">
+                        Amount
+                      </th>
                       <th>Unit</th>
                       <th>Actions</th>
                     </tr>

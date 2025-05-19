@@ -7,8 +7,8 @@ export default defineConfig({
   testMatch: '**/*.e2e.test.{ts,tsx}', // Match your test file pattern
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: process.env.CI ? 'dot' : 'html',
+  workers: process.env.CI ? 1 : 2,
+  reporter: process.env.CI ? 'dot' : 'dot',
   outputDir: path.join(process.cwd(), 'test-results'),
   use: {
     baseURL: 'http://localhost:3001',
