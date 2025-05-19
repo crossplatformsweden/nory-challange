@@ -26,8 +26,8 @@ jobs:
       - name: 🔧 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
-          cache: "pnpm"
+          node-version: '18'
+          cache: 'pnpm'
 
       - name: 🧩 Install dependencies
         run: pnpm install --no-frozen-lockfile
@@ -41,8 +41,11 @@ jobs:
       - name: 📝 Type check
         run: pnpm check-types
 
+      - name: 🚀 Install Playwright
+        run: pnpm exec playwright install
+
       - name: 🚀 Install Playwright browsers
-        run: pnpm install:playwright
+        run: pnpm --filter web install:browsers
 
       - name: 🧪 Run tests
         run: pnpm test
@@ -73,8 +76,8 @@ jobs:
       - name: 🔧 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
-          cache: "pnpm"
+          node-version: '18'
+          cache: 'pnpm'
 
       - name: 🧩 Install dependencies
         run: pnpm install --no-frozen-lockfile

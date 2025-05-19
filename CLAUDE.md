@@ -11,7 +11,6 @@ This is a Turborepo monorepo with the following structure:
 - **packages/eslint-config** - ESLint configurations
 - **packages/typescript-config** - TypeScript configurations
 - **packages/tailwind-config** - Tailwind CSS configuration and shared styles
-- **packages/e2e-tests** - Playwright E2E testing setup for the web app
 - **packages/ui/.storybook** - Storybook configuration for the UI components
 
 ## Common Commands

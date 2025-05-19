@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["src/**/*.{js,ts,jsx,tsx}", "../../packages/ui/src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    'src/**/*.{js,ts,jsx,tsx}',
+    '../../packages/ui/src/**/*.{js,ts,jsx,tsx}',
+  ],
   theme: {
     extend: {
       colors: {
@@ -136,11 +139,17 @@ export default {
       animation: {
         shimmer: 'shimmer 2s linear infinite',
         'slide-up-fade': 'slideUpAndFade 200ms cubic-bezier(0.16, 1, 0.3, 1)',
-        'slide-down-fade': 'slideDownAndFade 200ms cubic-bezier(0.16, 1, 0.3, 1)',
-        'slide-left-fade': 'slideLeftAndFade 200ms cubic-bezier(0.16, 1, 0.3, 1)',
-        'slide-right-fade': 'slideRightAndFade 200ms cubic-bezier(0.16, 1, 0.3, 1)',
+        'slide-down-fade':
+          'slideDownAndFade 200ms cubic-bezier(0.16, 1, 0.3, 1)',
+        'slide-left-fade':
+          'slideLeftAndFade 200ms cubic-bezier(0.16, 1, 0.3, 1)',
+        'slide-right-fade':
+          'slideRightAndFade 200ms cubic-bezier(0.16, 1, 0.3, 1)',
       },
     },
   },
-  plugins: [],
+  plugins: [require('daisyui')],
+  daisyui: {
+    themes: ['light', 'dark'], // you can add more themes here
+  },
 };
