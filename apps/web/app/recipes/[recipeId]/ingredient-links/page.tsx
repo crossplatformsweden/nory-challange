@@ -1,12 +1,13 @@
 'use client';
 
-import { FC, useState, useEffect, useMemo } from 'react';
+import { FC, useState, useEffect, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import {
   useListRecipeIngredientLinks,
   useDeleteRecipeIngredientLink,
   useGetRecipeById,
+  useGetIngredientById,
 } from '@nory/api-client';
 
 /**
@@ -34,6 +35,108 @@ import {
  */
 
 interface RecipeIngredientLinksPageProps {}
+
+interface IngredientDetailsProps {
+  ingredientId: string;
+  onData: (data: { name: string; unit: string }) => void;
+  onError: (error: Error) => void;
+}
+
+const IngredientDetails: FC<IngredientDetailsProps> = ({
+  ingredientId,
+  onData,
+  onError,
+}) => {
+  const { data, error } = useGetIngredientById(ingredientId, {
+    query: {
+      enabled: !!ingredientId,
+    },
+  });
+
+  useEffect(() => {
+    if (data?.data) {
+      onData({
+        name: data.data.name,
+        unit: data.data.unit,
+      });
+    }
+    if (error) {
+      onError(
+        error instanceof Error ? error : new Error('Failed to fetch ingredient')
+      );
+    }
+  }, [data, error, onData, onError]);
+
+  return null;
+};
+
+interface IngredientRowProps {
+  ingredientId: string;
+  quantity: number;
+  onDelete: (id: string) => void;
+}
+
+const IngredientRow: FC<IngredientRowProps> = ({
+  ingredientId,
+  quantity,
+  onDelete,
+}) => {
+  const { data, isLoading } = useGetIngredientById(ingredientId, {
+    query: {
+      enabled: !!ingredientId,
+    },
+  });
+
+  if (isLoading) {
+    return (
+      <tr>
+        <td colSpan={4} className="text-center">
+          <span className="loading loading-spinner loading-sm"></span>
+        </td>
+      </tr>
+    );
+  }
+
+  if (!data?.data) {
+    return null;
+  }
+
+  return (
+    <tr data-testid={`recipe-ingredient-link-row-${ingredientId}`}>
+      <td data-testid={`recipe-ingredient-link-name-${ingredientId}`}>
+        {data.data.name}
+      </td>
+      <td data-testid={`recipe-ingredient-link-amount-${ingredientId}`}>
+        {quantity}
+      </td>
+      <td data-testid={`recipe-ingredient-link-unit-${ingredientId}`}>
+        {data.data.unit}
+      </td>
+      <td>
+        <button
+          onClick={() => onDelete(ingredientId)}
+          className="btn btn-error btn-sm"
+          data-testid={`recipe-ingredient-link-delete-${ingredientId}`}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+            />
+          </svg>
+        </button>
+      </td>
+    </tr>
+  );
+};
 
 const RecipeIngredientLinksPage: FC<RecipeIngredientLinksPageProps> = () => {
   const params = useParams();
@@ -82,66 +185,62 @@ const RecipeIngredientLinksPage: FC<RecipeIngredientLinksPageProps> = () => {
     ];
   }, [ingredientLinksData?.data]);
 
-  // Fetch all ingredients in parallel
-  useEffect(() => {
-    const fetchIngredients = async () => {
-      if (ingredientIds.length === 0) return;
-      setError(null);
-
-      try {
-        const ingredientDetails: Record<
-          string,
-          { name: string; unit: string }
-        > = {};
-
-        // Fetch all ingredients in parallel
-        const promises = ingredientIds.map(async (id) => {
-          const response = await fetch(`/api/ingredients/${id}`);
-          if (!response.ok) {
-            throw new Error(
-              `Failed to fetch ingredient ${id}: ${response.statusText}`
-            );
-          }
-          const data = await response.json();
-          if (data?.data) {
-            ingredientDetails[id] = {
-              name: data.data.name,
-              unit: data.data.unit,
-            };
-          }
-        });
-
-        await Promise.all(promises);
-        setIngredients(ingredientDetails);
-      } catch (error) {
-        console.error('Error fetching ingredients:', error);
-        setError(
-          error instanceof Error
-            ? error
-            : new Error('Failed to fetch ingredients')
-        );
-      }
-    };
-
-    fetchIngredients();
-  }, [ingredientIds]);
-
-  const handleGoBack = () => {
-    router.back();
-  };
-
-  const handleDeleteIngredientLink = async (ingredientLinkId: string) => {
-    try {
-      await deleteIngredientLinkMutation.mutateAsync({
-        recipeId,
-        recipeIngredientLinkId: ingredientLinkId,
+  const handleIngredientData = useCallback(
+    (id: string, data: { name: string; unit: string }) => {
+      setIngredients((prev) => {
+        // Only update if the data has changed
+        if (prev[id]?.name === data.name && prev[id]?.unit === data.unit) {
+          return prev;
+        }
+        return {
+          ...prev,
+          [id]: data,
+        };
       });
-      // Refetch ingredient links after successful deletion
-      refetch();
-    } catch (error) {
-      console.error('Error deleting ingredient link:', error);
-    }
-  };
+    },
+    []
+  );
+
+  const handleIngredientError = useCallback((error: Error) => {
+    setError((prev) => {
+      if (prev?.message === error.message) {
+        return prev;
+      }
+      return error;
+    });
+  }, []);
+
+  // Memoize the IngredientDetails components to prevent unnecessary re-renders
+  const ingredientDetailsComponents = useMemo(() => {
+    return ingredientIds.map((id) => (
+      <IngredientDetails
+        key={id}
+        ingredientId={id}
+        onData={(data) => handleIngredientData(id, data)}
+        onError={handleIngredientError}
+      />
+    ));
+  }, [ingredientIds, handleIngredientData, handleIngredientError]);
+
+  const handleGoBack = useCallback(() => {
+    router.back();
+  }, [router]);
+
+  const handleDeleteIngredientLink = useCallback(
+    async (ingredientLinkId: string) => {
+      try {
+        await deleteIngredientLinkMutation.mutateAsync({
+          recipeId,
+          recipeIngredientLinkId: ingredientLinkId,
+        });
+        // Refetch ingredient links after successful deletion
+        refetch();
+      } catch (error) {
+        console.error('Error deleting ingredient link:', error);
+      }
+    },
+    [recipeId, deleteIngredientLinkMutation, refetch]
+  );
 
   const isLoading = recipeLoading || ingredientLinksLoading;
 
@@ -281,52 +380,12 @@ const RecipeIngredientLinksPage: FC<RecipeIngredientLinksPageProps> = () => {
                   <tbody>
                     {ingredientLinksData?.data?.length ? (
                       ingredientLinksData.data.map((link) => (
-                        <tr
+                        <IngredientRow
                           key={link.id}
-                          data-testid={`recipe-ingredient-link-row-${link.id}`}
-                        >
-                          <td
-                            data-testid={`recipe-ingredient-link-name-${link.id}`}
-                          >
-                            {ingredients[link.ingredientId]?.name ||
-                              'Loading...'}
-                          </td>
-                          <td
-                            data-testid={`recipe-ingredient-link-amount-${link.id}`}
-                          >
-                            {link.quantity}
-                          </td>
-                          <td
-                            data-testid={`recipe-ingredient-link-unit-${link.id}`}
-                          >
-                            {ingredients[link.ingredientId]?.unit ||
-                              'Loading...'}
-                          </td>
-                          <td>
-                            <button
-                              onClick={() =>
-                                handleDeleteIngredientLink(link.id)
-                              }
-                              className="btn btn-error btn-sm"
-                              data-testid={`recipe-ingredient-link-delete-${link.id}`}
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-4 w-4"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                />
-                              </svg>
-                            </button>
-                          </td>
-                        </tr>
+                          ingredientId={link.ingredientId}
+                          quantity={link.quantity}
+                          onDelete={() => handleDeleteIngredientLink(link.id)}
+                        />
                       ))
                     ) : (
                       <tr>
@@ -394,6 +453,9 @@ const RecipeIngredientLinksPage: FC<RecipeIngredientLinksPageProps> = () => {
           </div>
         </div>
       )}
+
+      {/* Render IngredientDetails components */}
+      {ingredientDetailsComponents}
     </div>
   );
 };
