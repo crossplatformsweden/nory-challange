@@ -150,6 +150,22 @@ export default {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ['light', 'dark'], // you can add more themes here
+    themes: [
+      {
+        nory: {
+          "primary": "#5B21B6",
+          "secondary": "#F59E0B",
+          "accent": "#10B981",
+          "neutral": "#1F2937",
+          "base-100": "#FFFFFF",
+          "info": "#3B82F6",
+          "success": "#22C55E",
+          "warning": "#F59E0B",
+          "error": "#EF4444",
+        },
+      },
+      'light',
+      'dark',
+    ],
   },
 };
