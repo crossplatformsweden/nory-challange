@@ -1,8 +1,12 @@
 'use client';
 
 import { FC } from 'react';
-import { useGetRecipeById } from '@nory/api-client';
-import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import {
+  useGetRecipeById,
+  useListRecipeIngredientLinks,
+} from '@nory/api-client';
+import { useParams, useRouter } from 'next/navigation';
 
 /**
  * // Update this page and corresponding test files. Make sure to use testId. And DaisyUI. Look in  utils/nextjsroutes.md To see what hook to use for this page. Source that hook and visualize/use it with daisyUI. Also look for the fakerjs implementation of that hook tanstack by genertaion orval noryApiClient. We will use the faker version in all tests. So all data coming will be random. So just test testId and hasValue() or similar. Use NextJS best practive for routing images etc. Not actual values. Use best pracitce for visualizing forms with use react-hook-form make sure check package.json with available libraries. Dont install any other libraries. For this File make sure you only change the page.tsx page.test.tsx and page.test.e2e.tsx. Verify using gh cli that its only max this 3 files changed. NO OTHER FILE. LEAVE THIS COMMENT IN THE FILE DO NOT REMOVE.
@@ -63,8 +67,10 @@ interface RecipeDetailPageProps {}
 
 const RecipeDetailPage: FC<RecipeDetailPageProps> = () => {
   const params = useParams();
+  const router = useRouter();
   const recipeId = params.recipeId as string;
 
+  // Using the hook as specified in nextjsroutes.md
   const { data, isLoading, error } = useGetRecipeById(recipeId, {
     query: {
       refetchOnMount: true,
@@ -73,79 +79,217 @@ const RecipeDetailPage: FC<RecipeDetailPageProps> = () => {
     },
   });
 
-  if (isLoading) {
+  const { data: ingredientLinksData } = useListRecipeIngredientLinks(recipeId, {
+    query: {
+      refetchOnMount: true,
+      refetchOnWindowFocus: false,
+      retry: false,
+    },
+  });
+
+  const handleGoBack = () => {
+    router.back();
+  };
+
+  if (!data?.data) {
     return (
-      <div className="container mx-auto px-4" data-testid="recipe-detail-page">
-        <div className="flex justify-center items-center min-h-[60vh]">
-          <span className="loading loading-spinner loading-lg" data-testid="recipe-detail-loading"></span>
+      <div
+        className="container mx-auto px-4 py-8"
+        data-testid="recipe-detail-page"
+      >
+        {/* Page Header */}
+        <div className="mb-6 flex items-center">
+          <button
+            onClick={handleGoBack}
+            className="btn btn-circle btn-ghost mr-4"
+            data-testid="recipe-detail-back-button"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+          <h1 className="text-3xl font-bold" data-testid="recipe-detail-title">
+            Loading...
+          </h1>
+        </div>
+
+        {/* Loading State */}
+        <div
+          className="my-8 flex justify-center"
+          data-testid="recipe-detail-loading"
+        >
+          <span className="loading loading-spinner loading-lg"></span>
         </div>
       </div>
     );
   }
 
-  if (error) {
-    return (
-      <div className="container mx-auto px-4" data-testid="recipe-detail-page">
-        <div className="alert alert-error">
-          <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span>Error loading recipe: {error.message}</span>
-        </div>
-      </div>
-    );
-  }
-
-  const recipe = data?.data;
+  const recipe = data.data;
 
   return (
-    <div className="container mx-auto px-4" data-testid="recipe-detail-page">
-      <div className="flex justify-between items-center my-8">
-        <h1 className="text-4xl font-bold" data-testid="recipe-detail-title">
-          {recipe?.name}
-        </h1>
-        <div className="flex gap-4">
-          <a
-            href={`/recipes/${recipeId}/ingredient-links`}
-            className="btn btn-primary"
-            data-testid="recipe-detail-ingredients-link"
+    <div
+      className="container mx-auto px-4 py-8"
+      data-testid="recipe-detail-page"
+    >
+      {/* Page Header */}
+      <div className="mb-6 flex items-center">
+        <button
+          onClick={handleGoBack}
+          className="btn btn-circle btn-ghost mr-4"
+          data-testid="recipe-detail-back-button"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
-            Manage Ingredients
-          </a>
-          <a href="/recipes" className="btn btn-outline" data-testid="recipe-detail-back-link">
-            Back to Recipes
-          </a>
-        </div>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </button>
+        <h1 className="text-3xl font-bold" data-testid="recipe-detail-title">
+          {recipe.name}
+        </h1>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8" data-testid="recipe-detail-content">
-        {/* Recipe Details */}
-        <div className="card bg-base-100 shadow-xl">
-          <div className="card-body">
-            <h2 className="card-title text-2xl mb-4" data-testid="recipe-detail-description-title">
-              Description
-            </h2>
-            <p data-testid="recipe-detail-description">
-              {recipe?.description}
-            </p>
-          </div>
+      {/* Loading State */}
+      {isLoading && (
+        <div
+          className="my-8 flex justify-center"
+          data-testid="recipe-detail-loading"
+        >
+          <span className="loading loading-spinner loading-lg"></span>
         </div>
+      )}
 
-        {/* Recipe Metadata */}
-        <div className="card bg-base-100 shadow-xl">
-          <div className="card-body">
-            <h2 className="card-title text-2xl mb-4" data-testid="recipe-detail-metadata-title">
-              Recipe Information
-            </h2>
-            <div className="stats shadow">
-              <div className="stat">
-                <div className="stat-title">ID</div>
-                <div className="stat-value text-sm" data-testid="recipe-detail-id">{recipe?.id}</div>
+      {/* Error State */}
+      {error && (
+        <div className="alert alert-error" data-testid="recipe-detail-error">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 shrink-0 stroke-current"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>
+            Error loading recipe:{' '}
+            {error instanceof Error ? error.message : 'Unknown error'}
+          </span>
+        </div>
+      )}
+
+      {/* Recipe Details */}
+      {!isLoading && !error && recipe && (
+        <div data-testid="recipe-detail-content">
+          <div className="grid gap-6">
+            {/* Recipe Details */}
+            <div className="card bg-base-100 shadow-xl">
+              <div className="card-body">
+                <div className="grid gap-6">
+                  <div>
+                    <h3 className="text-lg font-semibold">Description</h3>
+                    <p
+                      className="text-gray-600"
+                      data-testid="recipe-detail-description"
+                    >
+                      {recipe.description || 'No description provided'}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold">Details</h3>
+                    <p className="text-gray-600">
+                      No additional details available
+                    </p>
+                  </div>
+                </div>
+
+                <div className="card-actions mt-6 justify-end">
+                  <Link
+                    href={`/recipes/${recipe.id}/edit`}
+                    className="btn btn-primary"
+                    data-testid="recipe-detail-edit-button"
+                  >
+                    Edit Recipe
+                  </Link>
+                  <button
+                    className="btn btn-error"
+                    data-testid="recipe-detail-delete-button"
+                  >
+                    Delete Recipe
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Ingredient Links */}
+            <div className="card bg-base-100 shadow-xl">
+              <div className="card-body">
+                <h2 className="card-title">Ingredients</h2>
+                <div className="overflow-x-auto">
+                  <table className="table w-full">
+                    <thead>
+                      <tr>
+                        <th>Ingredient</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {ingredientLinksData?.data &&
+                      ingredientLinksData.data.length > 0 ? (
+                        ingredientLinksData.data.map((link) => (
+                          <tr key={link.id}>
+                            <td>{link.ingredientId}</td>
+                            <td>{link.quantity}</td>
+                            <td>Unit</td>
+                            <td>
+                              <button className="btn btn-sm btn-error">
+                                Remove
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={4} className="text-center">
+                            No ingredients added yet
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

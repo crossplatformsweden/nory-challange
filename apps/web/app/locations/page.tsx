@@ -1,7 +1,8 @@
 'use client';
 
 import { FC } from 'react';
-// TODO USE THIS HOOK
+import Link from 'next/link';
+// Using the hook as specified in nextjsroutes.md
 import { useListLocations } from '@nory/api-client';
 
 /**
@@ -62,20 +63,124 @@ import { useListLocations } from '@nory/api-client';
 interface LocationsListPageProps {}
 
 const LocationsListPage: FC<LocationsListPageProps> = () => {
+  // Using the hook as specified in nextjsroutes.md
+  const { data, isLoading, error } = useListLocations({
+    query: {
+      refetchOnMount: true,
+      refetchOnWindowFocus: false,
+      retry: false,
+    },
+  });
+
   return (
     <div
-      className="card bg-base-100 shadow-xl"
+      className="container mx-auto px-4 py-8"
       data-testid="locations-list-page"
     >
-      <div className="card-body">
-        <h1
-          className="card-title text-2xl font-bold"
-          data-testid="locations-list-title"
-        >
-          LocationsList Page
+      <div className="mb-6 flex items-center justify-between">
+        <h1 className="text-3xl font-bold" data-testid="locations-list-title">
+          Locations
         </h1>
+        <Link
+          href="/locations/create"
+          className="btn btn-primary"
+          data-testid="locations-list-create-button"
+        >
+          Add Location
+        </Link>
+      </div>
 
-        <div data-testid="locations-list-content">Add your content here</div>
+      {/* Loading State */}
+      {isLoading && (
+        <div
+          className="my-8 flex justify-center"
+          data-testid="locations-list-loading"
+        >
+          <span className="loading loading-spinner loading-lg"></span>
+        </div>
+      )}
+
+      {/* Error State */}
+      {error && (
+        <div className="alert alert-error" data-testid="locations-list-error">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 shrink-0 stroke-current"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>
+            Error loading locations:{' '}
+            {error instanceof Error ? error.message : 'Unknown error'}
+          </span>
+        </div>
+      )}
+
+      {/* Locations List */}
+      <div
+        className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+        data-testid="locations-list-content"
+      >
+        {data?.data?.map((location) => (
+          <div
+            key={location.id}
+            className="card bg-base-100 shadow-xl"
+            data-testid={`location-card-${location.id}`}
+          >
+            <div className="card-body">
+              <h2
+                className="card-title"
+                data-testid={`location-name-${location.id}`}
+              >
+                {location.name}
+              </h2>
+              <p data-testid={`location-address-${location.id}`}>
+                {location.address || 'No address provided'}
+              </p>
+              <div className="card-actions mt-4 justify-end">
+                <Link
+                  href={`/locations/${location.id}`}
+                  className="btn btn-primary btn-sm"
+                  data-testid={`location-view-${location.id}`}
+                >
+                  View Details
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Empty State */}
+        {!isLoading && data?.data?.length === 0 && (
+          <div
+            className="alert alert-info col-span-full"
+            data-testid="locations-list-empty"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              className="h-6 w-6 shrink-0 stroke-current"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>
+              No locations found. Click the "Add Location" button to create one.
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

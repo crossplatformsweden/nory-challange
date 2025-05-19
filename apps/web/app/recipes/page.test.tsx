@@ -16,7 +16,7 @@ jest.mock('@nory/api-client', () => ({
  * 5. Use the faker implementation from the hook for test data
  * 6. Mock the orval generated client responses
  * 7. Test any user interactions
- * 
+ *
  * Note: Only test the presence of elements and their states.
  * Do not test specific content as it will be random from faker.
  */
@@ -25,13 +25,17 @@ describe('RecipesListPage', () => {
   const mockRecipes = [
     {
       id: '1',
-      name: 'Recipe 1',
-      description: 'Description 1',
+      name: 'Basic Pasta Recipe',
+      description: 'Simple pasta recipe',
+      yield: '4 servings',
+      ingredientCount: 5,
     },
     {
       id: '2',
-      name: 'Recipe 2',
-      description: 'Description 2',
+      name: 'Grilled Chicken',
+      description: 'Juicy grilled chicken',
+      yield: '2 servings',
+      ingredientCount: 3,
     },
   ];
 
@@ -40,7 +44,25 @@ describe('RecipesListPage', () => {
     jest.clearAllMocks();
   });
 
-  it('shows loading state', () => {
+  it('renders the page container, title, and create button', () => {
+    // Mock empty data
+    (useListRecipes as jest.Mock).mockReturnValue({
+      isLoading: false,
+      error: null,
+      data: { data: [] },
+    });
+
+    render(<RecipesListPage />);
+
+    expect(screen.getByTestId('recipes-list-page')).toBeInTheDocument();
+    expect(screen.getByTestId('recipes-list-title')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('recipes-list-create-button')
+    ).toBeInTheDocument();
+    expect(screen.getByTestId('recipes-list-empty')).toBeInTheDocument();
+  });
+
+  it('shows loading state correctly', () => {
     (useListRecipes as jest.Mock).mockReturnValue({
       isLoading: true,
       error: null,
@@ -48,11 +70,12 @@ describe('RecipesListPage', () => {
     });
 
     render(<RecipesListPage />);
+
     expect(screen.getByTestId('recipes-list-page')).toBeInTheDocument();
     expect(screen.getByTestId('recipes-list-loading')).toBeInTheDocument();
   });
 
-  it('shows error state', () => {
+  it('shows error state correctly', () => {
     const errorMessage = 'Failed to load recipes';
     (useListRecipes as jest.Mock).mockReturnValue({
       isLoading: false,
@@ -61,11 +84,15 @@ describe('RecipesListPage', () => {
     });
 
     render(<RecipesListPage />);
+
     expect(screen.getByTestId('recipes-list-page')).toBeInTheDocument();
-    expect(screen.getByText(`Error loading recipes: ${errorMessage}`)).toBeInTheDocument();
+    expect(screen.getByTestId('recipes-list-error')).toBeInTheDocument();
+    expect(
+      screen.getByText(`Error loading recipes: ${errorMessage}`)
+    ).toBeInTheDocument();
   });
 
-  it('renders recipe list when data is loaded', async () => {
+  it('renders recipe cards correctly when data is loaded', async () => {
     (useListRecipes as jest.Mock).mockReturnValue({
       isLoading: false,
       error: null,
@@ -79,24 +106,59 @@ describe('RecipesListPage', () => {
     expect(screen.getByTestId('recipes-list-title')).toBeInTheDocument();
     expect(screen.getByTestId('recipes-list-content')).toBeInTheDocument();
 
-    // Check each recipe card is rendered
-    mockRecipes.forEach(recipe => {
-      expect(screen.getByTestId(`recipe-title-${recipe.id}`)).toBeInTheDocument();
-      expect(screen.getByTestId(`recipe-description-${recipe.id}`)).toBeInTheDocument();
-      expect(screen.getByTestId(`recipe-link-${recipe.id}`)).toBeInTheDocument();
+    // Check each recipe card is rendered with correct elements
+    mockRecipes.forEach((recipe) => {
+      expect(
+        screen.getByTestId(`recipe-card-${recipe.id}`)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByTestId(`recipe-name-${recipe.id}`)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByTestId(`recipe-description-${recipe.id}`)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByTestId(`recipe-yield-${recipe.id}`)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByTestId(`recipe-ingredients-count-${recipe.id}`)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByTestId(`recipe-ingredients-${recipe.id}`)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByTestId(`recipe-view-${recipe.id}`)
+      ).toBeInTheDocument();
     });
 
-    // Check recipe data is displayed
+    // Check recipe data is displayed correctly
     await waitFor(() => {
-      mockRecipes.forEach(recipe => {
-        expect(screen.getByTestId(`recipe-title-${recipe.id}`)).toHaveTextContent(recipe.name);
-        expect(screen.getByTestId(`recipe-description-${recipe.id}`)).toHaveTextContent(recipe.description);
+      mockRecipes.forEach((recipe) => {
+        expect(
+          screen.getByTestId(`recipe-name-${recipe.id}`)
+        ).toHaveTextContent(recipe.name);
+        expect(
+          screen.getByTestId(`recipe-description-${recipe.id}`)
+        ).toHaveTextContent(recipe.description);
+        expect(
+          screen.getByTestId(`recipe-yield-${recipe.id}`)
+        ).toHaveTextContent(`Yield: ${recipe.yield}`);
+        expect(
+          screen.getByTestId(`recipe-ingredients-count-${recipe.id}`)
+        ).toHaveTextContent(`${recipe.ingredientCount} ingredients`);
       });
     });
   });
 
   it('calls useListRecipes with correct parameters', () => {
+    (useListRecipes as jest.Mock).mockReturnValue({
+      isLoading: false,
+      error: null,
+      data: { data: [] },
+    });
+
     render(<RecipesListPage />);
+
     expect(useListRecipes).toHaveBeenCalledWith({
       query: {
         refetchOnMount: true,
@@ -105,4 +167,4 @@ describe('RecipesListPage', () => {
       },
     });
   });
-}); 
+});
