@@ -217,7 +217,7 @@ describe('CreateRecipeIngredientLinkPage', () => {
         recipeId: '123',
         data: {
           ingredientId: mockIngredients[0]?.id || '',
-          amount: 250,
+          quantity: '250',
         },
       });
     });

@@ -341,6 +341,12 @@ const CreateRecipeIngredientLinkPage: FC<
                     {recipeData?.data?.name || 'Loading...'}
                   </p>
                 </div>
+                <div>
+                  <span className="text-sm text-gray-500">Recipe Yield:</span>
+                  <p data-testid="create-recipe-ingredient-link-recipe-yield">
+                    {recipeData?.data?.id || 'Loading...'}
+                  </p>
+                </div>
               </div>
 
               {recipeData?.data?.description && (

@@ -36,6 +36,7 @@ describe('CreateLocationPage', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.useFakeTimers();
 
     // Mock router
     (useRouter as jest.Mock).mockReturnValue(mockRouter);
@@ -46,6 +47,10 @@ describe('CreateLocationPage', () => {
     });
 
     render(<CreateLocationPage />);
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
   });
 
   it('renders the page container, title, and form elements', () => {
