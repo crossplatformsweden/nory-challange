@@ -61,7 +61,7 @@ describe('InventoryStockPage', () => {
 
   const renderComponent = (
     loading = false,
-    error = null,
+    error: Error | null = null,
     data = mockStockItems
   ) => {
     // Mock useParams
@@ -71,7 +71,7 @@ describe('InventoryStockPage', () => {
     (useListInventoryStock as jest.Mock).mockReturnValue({
       data: loading ? null : { data },
       isLoading: loading,
-      error,
+      error: error || null,
     });
 
     render(<InventoryStockPage />);

@@ -40,7 +40,7 @@ describe('LocationDetailPage', () => {
     openingHours: 'Mon-Fri: 9am-5pm',
   };
 
-  const renderComponent = (loading = false, error = null) => {
+  const renderComponent = (loading = false, error: Error | null = null) => {
     // Mock useParams
     (useParams as jest.Mock).mockReturnValue({ locationId: '123' });
 
@@ -48,7 +48,7 @@ describe('LocationDetailPage', () => {
     (useGetLocationById as jest.Mock).mockReturnValue({
       data: loading ? null : { data: mockLocation },
       isLoading: loading,
-      error,
+      error: error || null,
     });
 
     render(<LocationDetailPage />);
