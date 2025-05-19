@@ -1,0 +1,14 @@
+import { render, screen } from '@testing-library/react';
+import {{pascalCase name}}Page from './page';
+
+describe('{{pascalCase name}}Page', () => {
+  it('renders the page title', () => {
+    render(<{{pascalCase name}}Page />);
+    expect(screen.getByTestId('{{kebabCase name}}-title')).toBeInTheDocument();
+  });
+
+  it('renders the page content', () => {
+    render(<{{pascalCase name}}Page />);
+    expect(screen.getByTestId('{{kebabCase name}}-content')).toBeInTheDocument();
+  });
+}); 

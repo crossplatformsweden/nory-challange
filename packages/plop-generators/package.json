@@ -6,11 +6,15 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp -r src/plop-templates dist/",
     "dev": "tsc -w",
     "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-    "plop": "plop",
+    "plop": "ts-node --esm --transpile-only node_modules/plop/src/plop.js --plopfile src/plopfile.ts",
+    "generate:page": "pnpm plop next-page",
+    "generate:page:force": "pnpm plop next-page -- --force",
+    "generate:page:cli": "ts-node --esm --transpile-only node_modules/plop/src/plop.js --plopfile src/plopfile.ts next-page",
+    "generate:direct": "node src/direct-generator.js",
     "check-types": "tsc --noEmit",
     "test": "echo 'Tests skipped for plop generators'",
     "test:watch": "echo 'Tests skipped for plop generators'",
@@ -18,7 +22,8 @@
   },
   "dependencies": {
     "plop": "^4.0.1",
-    "handlebars": "^4.7.8"
+    "handlebars": "^4.7.8",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",

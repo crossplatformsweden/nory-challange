@@ -9,9 +9,13 @@
     "start": "next start",
     "lint": "next lint --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "test": "jest --config jest.config.cjs",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test": "pnpm test:unit && pnpm test:e2e",
+    "test:unit": "jest --config jest.config.cjs",
+    "test:unit:watch": "jest --watch --config jest.config.cjs",
+    "test:unit:coverage": "jest --coverage --config jest.config.cjs",
+    "kill-port": "lsof -ti:3001 | xargs kill -9 2>/dev/null || true",
+    "test:e2e": "playwright test --config playwright.config.ts",
+    "test:e2e:ui": "playwright test --ui --config playwright.config.ts"
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
@@ -21,6 +25,7 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^15.3.0",
+    "@playwright/test": "^1.52.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/jest-config": "workspace:*",
     "@repo/tailwind-config": "workspace:*",

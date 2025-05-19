@@ -16,12 +16,16 @@
     "build-storybook": "turbo run build-storybook --filter=@repo/ui",
     "install:playwright": "turbo run install:browsers --filter=@repo/e2e-tests",
     "prepare": "husky",
+    "generate:page": "pnpm --filter @repo/plop-generators generate:page",
+    "generate:page:force": "pnpm --filter @repo/plop-generators generate:page:force",
+    "plop": "pnpm --filter @repo/plop-generators plop",
     "all": "pnpm build --filter=./packages/* && pnpm check-types --filter=./packages/* && pnpm lint --filter=./packages/* && pnpm test --filter=./packages/* --if-present || true && pnpm build --filter=./apps/* && pnpm check-types --filter=./apps/* && pnpm lint --filter=./apps/* && pnpm test --filter=./apps/* --if-present || true"
   },
   "devDependencies": {
     "@types/node": "^22.15.3",
     "husky": "^9.1.7",
     "lint-staged": "^16.0.0",
+    "plop": "^4.0.1",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "ts-node": "^10.9.2",
