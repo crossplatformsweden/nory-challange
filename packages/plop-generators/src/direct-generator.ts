@@ -19,11 +19,12 @@ async function generateNextPage() {
   // Parse command line arguments
   const args = process.argv.slice(2);
   const params: Record<string, string> = {};
-  
+
   for (let i = 0; i < args.length; i += 2) {
     const key = args[i]?.replace(/^--/, '') ?? '';
     const value = args[i + 1];
-    if (value) {  // Only add if value exists
+    if (value) {
+      // Only add if value exists
       params[key] = value;
     }
   }
@@ -32,11 +33,19 @@ async function generateNextPage() {
   console.log(params);
 
   // Validate required params
-  const requiredParams = ['rootPath', 'path', 'name', 'urlPath'] as const;
-  const missingParams = requiredParams.filter(param => !params[param]);
-  
+  const requiredParams = [
+    'rootPath',
+    'path',
+    'name',
+    'urlPath',
+    'hookName',
+  ] as const;
+  const missingParams = requiredParams.filter((param) => !params[param]);
+
   if (missingParams.length > 0) {
-    console.error(`❌ Error: Missing required parameters: ${missingParams.join(', ')}`);
+    console.error(
+      `❌ Error: Missing required parameters: ${missingParams.join(', ')}`
+    );
     process.exit(1);
   }
 
@@ -45,12 +54,14 @@ async function generateNextPage() {
   const pagePath = params.path!;
   const name = params.name!;
   const urlPath = params.urlPath!;
+  const hookName = params.hookName!;
 
   console.log('\n📋 Generating page with the following parameters:');
   console.log(`   Root path: ${rootPath}`);
   console.log(`   Page path: ${pagePath}`);
   console.log(`   Page name: ${name}`);
   console.log(`   URL path for tests: ${urlPath}`);
+  console.log(`   Hook name: ${hookName}`);
 
   // Validate that rootPath exists and is a Next.js app
   if (!fs.existsSync(rootPath)) {
@@ -60,7 +71,9 @@ async function generateNextPage() {
 
   const appDir = path.join(rootPath, 'app');
   if (!fs.existsSync(appDir)) {
-    console.error(`❌ Error: No 'app' directory found in ${rootPath}. Is this a Next.js app?`);
+    console.error(
+      `❌ Error: No 'app' directory found in ${rootPath}. Is this a Next.js app?`
+    );
     process.exit(1);
   }
 
@@ -104,7 +117,9 @@ async function generateNextPage() {
   const targetPath = path.join(appDir, pagePath);
   console.log('\n📂 Directory information:');
   console.log(`   Web app directory: ${appDir} (✅ exists)`);
-  console.log(`   Target directory: ${targetPath} (${fs.existsSync(targetPath) ? '⚠️ already exists' : '🆕 will be created'})`);
+  console.log(
+    `   Target directory: ${targetPath} (${fs.existsSync(targetPath) ? '⚠️ already exists' : '🆕 will be created'})`
+  );
 
   try {
     console.log(`\n📁 Creating directory: ${targetPath}`);
@@ -130,11 +145,19 @@ async function generateNextPage() {
   }
 
   // Simple template replacement (this is a basic version of what handlebars does)
-  pageContent = pageContent.replace(/{{name}}/g, name);
-  testContent = testContent.replace(/{{name}}/g, name);
+  pageContent = pageContent
+    .replace(/{{name}}/g, name)
+    .replace(/{{hookname}}/g, hookName)
+    .replace(/{{hookName}}/g, hookName);
+  testContent = testContent
+    .replace(/{{name}}/g, name)
+    .replace(/{{hookname}}/g, hookName)
+    .replace(/{{hookName}}/g, hookName);
   e2eTestContent = e2eTestContent
     .replace(/{{name}}/g, name)
-    .replace(/{{urlPath}}/g, urlPath);
+    .replace(/{{urlPath}}/g, urlPath)
+    .replace(/{{hookname}}/g, hookName)
+    .replace(/{{hookName}}/g, hookName);
 
   // Write files
   const pageFile = path.join(targetPath, 'page.tsx');
@@ -171,21 +194,33 @@ async function generateNextPage() {
 
   // Summary
   console.log('\n✅ File generation summary:');
-  console.log(`   📄 ${pageFile} (${pageSuccess ? '✅ created' : '❌ failed'})`);
-  console.log(`   🧪 ${testFile} (${testSuccess ? '✅ created' : '❌ failed'})`);
-  console.log(`   🧪 ${e2eTestFile} (${e2eTestSuccess ? '✅ created' : '❌ failed'})`);
+  console.log(
+    `   📄 ${pageFile} (${pageSuccess ? '✅ created' : '❌ failed'})`
+  );
+  console.log(
+    `   🧪 ${testFile} (${testSuccess ? '✅ created' : '❌ failed'})`
+  );
+  console.log(
+    `   🧪 ${e2eTestFile} (${e2eTestSuccess ? '✅ created' : '❌ failed'})`
+  );
 
   if (!pageSuccess || !testSuccess || !e2eTestSuccess) {
-    console.log('\n⚠️ Warning: Some files failed to generate. Check the paths and permissions.');
-    console.log(`\n⚠️ Generation partially complete! Some files may not have been created in: ${targetPath}`);
+    console.log(
+      '\n⚠️ Warning: Some files failed to generate. Check the paths and permissions.'
+    );
+    console.log(
+      `\n⚠️ Generation partially complete! Some files may not have been created in: ${targetPath}`
+    );
     process.exit(1);
   }
 
-  console.log(`\n✨ Generation complete! All files created successfully in: ${targetPath}`);
+  console.log(
+    `\n✨ Generation complete! All files created successfully in: ${targetPath}`
+  );
 }
 
 // Run the generator
-generateNextPage().catch(error => {
+generateNextPage().catch((error) => {
   console.error('❌ Unhandled error:', error);
   process.exit(1);
 });

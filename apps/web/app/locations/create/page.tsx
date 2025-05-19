@@ -1,6 +1,8 @@
 'use client';
 
 import { FC } from 'react';
+// TODO USE THIS HOOK
+import { useCreateLocation } from '@nory/api-client';
 
 /**
  * // Update this page and corresponding test files. Make sure to use testId. And DaisyUI. Look in  utils/nextjsroutes.md To see what hook to use for this page. Source that hook and visualize/use it with daisyUI. Also look for the fakerjs implementation of that hook tanstack by genertaion orval noryApiClient. We will use the faker version in all tests. So all data coming will be random. So just test testId and hasValue() or similar. Use NextJS best practive for routing images etc. Not actual values. Use best pracitce for visualizing forms with use react-hook-form make sure check package.json with available libraries. Dont install any other libraries. For this File make sure you only change the page.tsx page.test.tsx and page.test.e2e.tsx. Verify using gh cli that its only max this 3 files changed. NO OTHER FILE. LEAVE THIS COMMENT IN THE FILE DO NOT REMOVE.
@@ -26,22 +28,57 @@ import { FC } from 'react';
  * - font-bold: for bold text
  */
 
+/**
+ * Example implementation using React Query and generated hooks:
+ * 
+ * import React from 'react';
+ * import { useCreateLocation } from '@nory/api-client';
+ * 
+ * // Create a client
+ * const queryClient = new QueryClient();
+ * 
+ * export function LocationsList() {
+ *   // Use the generated hook
+ *   const { data, isLoading, error } = useCreateLocation();
+ * 
+ *   if (isLoading) return <div>Loading...</div>;
+ *   if (error) return <div>Error loading locations: {error.message}</div>;
+ * 
+ *   return (
+ *     <div className="card bg-base-100 shadow-xl">
+ *       <h1>Locations</h1>
+ *       <ul>
+ *         {data?.map((location) => (
+ *           <li key={location.id}>{location.name}</li>
+ *         ))}
+ *       </ul>
+ *     </div>
+ *   );
+ * }
+ * 
+ 
+ */
+
 interface CreateLocationPageProps {}
 
 const CreateLocationPage: FC<CreateLocationPageProps> = () => {
   return (
-    <div className="card bg-base-100 shadow-xl" data-testid="create-location-page">
+    <div
+      className="card bg-base-100 shadow-xl"
+      data-testid="create-location-page"
+    >
       <div className="card-body">
-        <h1 className="card-title text-2xl font-bold" data-testid="create-location-title">
+        <h1
+          className="card-title text-2xl font-bold"
+          data-testid="create-location-title"
+        >
           CreateLocation Page
         </h1>
-        
-        <div data-testid="create-location-content">
-           Add your content here
-        </div>
+
+        <div data-testid="create-location-content">Add your content here</div>
       </div>
     </div>
   );
 };
 
-export default CreateLocationPage; 
+export default CreateLocationPage;
