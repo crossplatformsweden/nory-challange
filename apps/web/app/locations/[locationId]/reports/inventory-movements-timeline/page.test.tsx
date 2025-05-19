@@ -33,50 +33,38 @@ jest.mock('@nory/api-client', () => ({
 
 describe('InventoryMovementsTimelinePage', () => {
   const mockData = {
-    data: {
-      movements: [
-        {
-          id: '1',
-          createdAt: '2024-01-01T00:00:00Z',
-          type: 'ADD',
-          quantity: 10,
-          notes: 'Initial stock',
-          ingredient: {
-            id: 'ing1',
-            name: 'Flour',
-            unit: 'kg',
-          },
-          staff: {
-            id: 'staff1',
-            name: 'John Doe',
-          },
+    data: [
+      {
+        id: '1',
+        createdAt: '2024-01-01T00:00:00Z',
+        type: 'restock',
+        quantity: 10,
+        notes: 'Initial stock',
+        ingredient: {
+          id: 'ing1',
+          name: 'Flour',
+          unit: 'kg',
         },
-        {
-          id: '2',
-          createdAt: '2024-01-02T00:00:00Z',
-          type: 'REMOVE',
-          quantity: 5,
-          notes: 'Used in recipe',
-          ingredient: {
-            id: 'ing2',
-            name: 'Sugar',
-            unit: 'kg',
-          },
-          staff: {
-            id: 'staff2',
-            name: 'Jane Smith',
-          },
+        recordedByStaffId: 'staff1',
+        unit: 'kg',
+        costPerUnit: 1.5,
+      },
+      {
+        id: '2',
+        createdAt: '2024-01-02T00:00:00Z',
+        type: 'waste',
+        quantity: 5,
+        notes: 'Used in recipe',
+        ingredient: {
+          id: 'ing2',
+          name: 'Sugar',
+          unit: 'kg',
         },
-      ],
-      ingredients: [
-        { id: 'ing1', name: 'Flour' },
-        { id: 'ing2', name: 'Sugar' },
-      ],
-      staff: [
-        { id: 'staff1', name: 'John Doe' },
-        { id: 'staff2', name: 'Jane Smith' },
-      ],
-    },
+        recordedByStaffId: 'staff2',
+        unit: 'kg',
+        costPerUnit: 2.0,
+      },
+    ],
   };
 
   const renderComponent = (
@@ -195,7 +183,7 @@ describe('InventoryMovementsTimelinePage', () => {
 
   it('renders empty state when no movements exist', () => {
     renderComponent(false, null, {
-      data: { movements: [], ingredients: [], staff: [] },
+      data: [],
     });
 
     expect(
