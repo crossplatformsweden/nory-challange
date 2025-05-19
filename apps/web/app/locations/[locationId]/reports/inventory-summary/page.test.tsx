@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import InventorySummaryReportPage from './page';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { useListInventoryStock, useGetIngredientById } from '@nory/api-client';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 /**
  * Testing Guide:
@@ -16,6 +17,16 @@ import { useListInventoryStock, useGetIngredientById } from '@nory/api-client';
  * Note: Only test the presence of elements and their states.
  * Do not test specific content as it will be random from faker.
  */
+
+// Create a new QueryClient for each test
+const createTestQueryClient = () =>
+  new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
 
 // Mock the navigation hooks
 jest.mock('next/navigation', () => ({
@@ -33,15 +44,22 @@ jest.mock('@nory/api-client', () => ({
     isLoading: false,
     error: null,
   })),
-  useGetIngredientById: jest.fn(() => ({
+  useGetIngredientById: jest.fn().mockImplementation((ingredientId) => ({
     data: {
       data: {
-        cost: 0,
+        cost: 2.5,
       },
     },
     isLoading: false,
     error: null,
   })),
+  getIngredientById: jest.fn().mockImplementation((ingredientId) =>
+    Promise.resolve({
+      data: {
+        cost: 2.5,
+      },
+    })
+  ),
 }));
 
 describe('InventorySummaryReportPage', () => {
@@ -49,13 +67,24 @@ describe('InventorySummaryReportPage', () => {
     back: jest.fn(),
   };
 
+  let queryClient: QueryClient;
+
   beforeEach(() => {
+    queryClient = createTestQueryClient();
     (useRouter as jest.Mock).mockReturnValue(mockRouter);
     (useParams as jest.Mock).mockReturnValue({ locationId: '123' });
   });
 
+  afterEach(() => {
+    queryClient.clear();
+  });
+
   it('renders the page', () => {
-    render(<InventorySummaryReportPage />);
+    render(
+      <QueryClientProvider client={queryClient}>
+        <InventorySummaryReportPage />
+      </QueryClientProvider>
+    );
     expect(
       screen.getByTestId('inventory-summary-report-page')
     ).toBeInTheDocument();
@@ -109,7 +138,11 @@ describe('InventorySummaryReportPage', () => {
       error: null,
     });
 
-    render(<InventorySummaryReportPage />);
+    render(
+      <QueryClientProvider client={queryClient}>
+        <InventorySummaryReportPage />
+      </QueryClientProvider>
+    );
   };
 
   beforeEach(() => {
@@ -130,8 +163,11 @@ describe('InventorySummaryReportPage', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders the summary cards when data is loaded', () => {
+  it('renders the summary cards when data is loaded', async () => {
     renderComponent();
+
+    // Wait for loading state to complete
+    await screen.findByTestId('inventory-summary-report-content');
 
     // Check summary cards
     expect(
@@ -154,8 +190,11 @@ describe('InventorySummaryReportPage', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders the stock items table when data is loaded', () => {
+  it('renders the stock items table when data is loaded', async () => {
     renderComponent();
+
+    // Wait for loading state to complete
+    await screen.findByTestId('inventory-summary-report-content');
 
     // Check table headers
     expect(
