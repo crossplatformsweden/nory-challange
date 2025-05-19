@@ -5,9 +5,10 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-export type ListInventoryMovementsType =
-  (typeof ListInventoryMovementsType)[keyof typeof ListInventoryMovementsType];
+export type ListInventoryMovementsType = typeof ListInventoryMovementsType[keyof typeof ListInventoryMovementsType];
 
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ListInventoryMovementsType = {
   waste: 'waste',
   restock: 'restock',
@@ -18,37 +19,37 @@ export const ListInventoryMovementsType = {
 } as const;
 
 export type ListInventoryMovementsParams = {
-  /**
-   * Optional, filter movements by location ID.
-   */
-  locationId?: string;
-  /**
-   * Optional, filter movements by ingredient ID.
-   */
-  ingredientId?: string;
-  /**
-   * Optional, filter movements by type.
-   */
-  type?: ListInventoryMovementsType;
-  /**
-   * Optional, filter movements from this timestamp onwards.
-   */
-  startTime?: string;
-  /**
-   * Optional, filter movements up to this timestamp.
-   */
-  endTime?: string;
+/**
+ * Optional, filter movements by location ID.
+ */
+locationId?: string;
+/**
+ * Optional, filter movements by ingredient ID.
+ */
+ingredientId?: string;
+/**
+ * Optional, filter movements by type.
+ */
+type?: ListInventoryMovementsType;
+/**
+ * Optional, filter movements from this timestamp onwards.
+ */
+startTime?: string;
+/**
+ * Optional, filter movements up to this timestamp.
+ */
+endTime?: string;
 };
 
 export type ListInventoryStockParams = {
-  /**
-   * Optional, filter stock by location ID.
-   */
-  locationId?: string;
-  /**
-   * Optional, filter stock by ingredient ID.
-   */
-  ingredientId?: string;
+/**
+ * Optional, filter stock by location ID.
+ */
+locationId?: string;
+/**
+ * Optional, filter stock by ingredient ID.
+ */
+ingredientId?: string;
 };
 
 /**
@@ -74,9 +75,10 @@ export type NotFoundResponse = ErrorResponse;
 /**
  * The type of inventory movement.
  */
-export type InventoryMovementCreateType =
-  (typeof InventoryMovementCreateType)[keyof typeof InventoryMovementCreateType];
+export type InventoryMovementCreateType = typeof InventoryMovementCreateType[keyof typeof InventoryMovementCreateType];
 
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const InventoryMovementCreateType = {
   waste: 'waste',
   restock: 'restock',
@@ -113,9 +115,10 @@ export interface InventoryMovementCreate {
 /**
  * The type of inventory movement.
  */
-export type InventoryMovementType =
-  (typeof InventoryMovementType)[keyof typeof InventoryMovementType];
+export type InventoryMovementType = typeof InventoryMovementType[keyof typeof InventoryMovementType];
 
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const InventoryMovementType = {
   waste: 'waste',
   restock: 'restock',
@@ -776,7 +779,7 @@ export interface LocationSummary {
  * Optional field-specific validation errors.
  * @nullable
  */
-export type ErrorResponseErrors = { [key: string]: string[] } | null;
+export type ErrorResponseErrors = {[key: string]: string[]} | null;
 
 /**
  * Standard error response structure.
@@ -811,3 +814,4 @@ export interface ErrorResponse {
   /** A URI reference that identifies the problem type. */
   type: string;
 }
+

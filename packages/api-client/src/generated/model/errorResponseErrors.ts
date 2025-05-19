@@ -10,4 +10,4 @@
  * Optional field-specific validation errors.
  * @nullable
  */
-export type ErrorResponseErrors = { [key: string]: string[] } | null;
+export type ErrorResponseErrors = {[key: string]: string[]} | null;

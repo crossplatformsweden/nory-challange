@@ -5,7 +5,9 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-import { z as zod } from 'zod';
+import {
+  z as zod
+} from 'zod'
 
 /**
  * Retrieve a list of all staff members working at the specified location.
@@ -14,18 +16,17 @@ import { z as zod } from 'zod';
 export const listStaffByLocationResponseNameMax = 255;
 export const listStaffByLocationResponseRoleMax = 100;
 
+
 export const listStaffByLocationResponseItem = zod.object({
-  id: zod.string(),
-  name: zod.string().min(1).max(listStaffByLocationResponseNameMax),
-  dob: zod.string().date().nullish(),
-  role: zod.string().min(1).max(listStaffByLocationResponseRoleMax).nullish(),
-  iban: zod.string().nullish(),
-  bic: zod.string().nullish(),
-  locationId: zod.string(),
-});
-export const listStaffByLocationResponse = zod.array(
-  listStaffByLocationResponseItem
-);
+  "id": zod.string(),
+  "name": zod.string().min(1).max(listStaffByLocationResponseNameMax),
+  "dob": zod.string().date().nullish(),
+  "role": zod.string().min(1).max(listStaffByLocationResponseRoleMax).nullish(),
+  "iban": zod.string().nullish(),
+  "bic": zod.string().nullish(),
+  "locationId": zod.string()
+})
+export const listStaffByLocationResponse = zod.array(listStaffByLocationResponseItem)
 
 /**
  * Add a new staff member associated with the specified location.
@@ -34,13 +35,14 @@ export const listStaffByLocationResponse = zod.array(
 export const createStaffAtLocationBodyNameMax = 255;
 export const createStaffAtLocationBodyRoleMax = 100;
 
+
 export const createStaffAtLocationBody = zod.object({
-  name: zod.string().min(1).max(createStaffAtLocationBodyNameMax),
-  dob: zod.string().date().nullish(),
-  role: zod.string().min(1).max(createStaffAtLocationBodyRoleMax).nullish(),
-  iban: zod.string().nullish(),
-  bic: zod.string().nullish(),
-});
+  "name": zod.string().min(1).max(createStaffAtLocationBodyNameMax),
+  "dob": zod.string().date().nullish(),
+  "role": zod.string().min(1).max(createStaffAtLocationBodyRoleMax).nullish(),
+  "iban": zod.string().nullish(),
+  "bic": zod.string().nullish()
+})
 
 /**
  * Retrieve a specific staff member using their unique ID within the context of a location.
@@ -49,19 +51,16 @@ export const createStaffAtLocationBody = zod.object({
 export const getStaffByLocationAndIdResponseNameMax = 255;
 export const getStaffByLocationAndIdResponseRoleMax = 100;
 
+
 export const getStaffByLocationAndIdResponse = zod.object({
-  id: zod.string(),
-  name: zod.string().min(1).max(getStaffByLocationAndIdResponseNameMax),
-  dob: zod.string().date().nullish(),
-  role: zod
-    .string()
-    .min(1)
-    .max(getStaffByLocationAndIdResponseRoleMax)
-    .nullish(),
-  iban: zod.string().nullish(),
-  bic: zod.string().nullish(),
-  locationId: zod.string(),
-});
+  "id": zod.string(),
+  "name": zod.string().min(1).max(getStaffByLocationAndIdResponseNameMax),
+  "dob": zod.string().date().nullish(),
+  "role": zod.string().min(1).max(getStaffByLocationAndIdResponseRoleMax).nullish(),
+  "iban": zod.string().nullish(),
+  "bic": zod.string().nullish(),
+  "locationId": zod.string()
+})
 
 /**
  * Update details of an existing staff member associated with the specified location.
@@ -70,23 +69,26 @@ export const getStaffByLocationAndIdResponse = zod.object({
 export const updateStaffAtLocationBodyNameMax = 255;
 export const updateStaffAtLocationBodyRoleMax = 100;
 
+
 export const updateStaffAtLocationBody = zod.object({
-  name: zod.string().min(1).max(updateStaffAtLocationBodyNameMax).optional(),
-  dob: zod.string().date().nullish(),
-  role: zod.string().min(1).max(updateStaffAtLocationBodyRoleMax).nullish(),
-  iban: zod.string().nullish(),
-  bic: zod.string().nullish(),
-});
+  "name": zod.string().min(1).max(updateStaffAtLocationBodyNameMax).optional(),
+  "dob": zod.string().date().nullish(),
+  "role": zod.string().min(1).max(updateStaffAtLocationBodyRoleMax).nullish(),
+  "iban": zod.string().nullish(),
+  "bic": zod.string().nullish()
+})
 
 export const updateStaffAtLocationResponseNameMax = 255;
 export const updateStaffAtLocationResponseRoleMax = 100;
 
+
 export const updateStaffAtLocationResponse = zod.object({
-  id: zod.string(),
-  name: zod.string().min(1).max(updateStaffAtLocationResponseNameMax),
-  dob: zod.string().date().nullish(),
-  role: zod.string().min(1).max(updateStaffAtLocationResponseRoleMax).nullish(),
-  iban: zod.string().nullish(),
-  bic: zod.string().nullish(),
-  locationId: zod.string(),
-});
+  "id": zod.string(),
+  "name": zod.string().min(1).max(updateStaffAtLocationResponseNameMax),
+  "dob": zod.string().date().nullish(),
+  "role": zod.string().min(1).max(updateStaffAtLocationResponseRoleMax).nullish(),
+  "iban": zod.string().nullish(),
+  "bic": zod.string().nullish(),
+  "locationId": zod.string()
+})
+

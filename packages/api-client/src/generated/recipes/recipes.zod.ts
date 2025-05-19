@@ -5,7 +5,9 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-import { z as zod } from 'zod';
+import {
+  z as zod
+} from 'zod'
 
 /**
  * Retrieve a list of all defined recipes.
@@ -14,16 +16,13 @@ import { z as zod } from 'zod';
 export const listRecipesResponseNameMax = 255;
 export const listRecipesResponseDescriptionMax = 1000;
 
+
 export const listRecipesResponseItem = zod.object({
-  id: zod.string(),
-  name: zod.string().min(1).max(listRecipesResponseNameMax),
-  description: zod
-    .string()
-    .min(1)
-    .max(listRecipesResponseDescriptionMax)
-    .nullish(),
-});
-export const listRecipesResponse = zod.array(listRecipesResponseItem);
+  "id": zod.string(),
+  "name": zod.string().min(1).max(listRecipesResponseNameMax),
+  "description": zod.string().min(1).max(listRecipesResponseDescriptionMax).nullish()
+})
+export const listRecipesResponse = zod.array(listRecipesResponseItem)
 
 /**
  * Add a new recipe definition.
@@ -32,14 +31,11 @@ export const listRecipesResponse = zod.array(listRecipesResponseItem);
 export const createRecipeBodyNameMax = 255;
 export const createRecipeBodyDescriptionMax = 1000;
 
+
 export const createRecipeBody = zod.object({
-  name: zod.string().min(1).max(createRecipeBodyNameMax),
-  description: zod
-    .string()
-    .min(1)
-    .max(createRecipeBodyDescriptionMax)
-    .nullish(),
-});
+  "name": zod.string().min(1).max(createRecipeBodyNameMax),
+  "description": zod.string().min(1).max(createRecipeBodyDescriptionMax).nullish()
+})
 
 /**
  * Retrieve a specific recipe using its unique ID.
@@ -48,15 +44,12 @@ export const createRecipeBody = zod.object({
 export const getRecipeByIdResponseNameMax = 255;
 export const getRecipeByIdResponseDescriptionMax = 1000;
 
+
 export const getRecipeByIdResponse = zod.object({
-  id: zod.string(),
-  name: zod.string().min(1).max(getRecipeByIdResponseNameMax),
-  description: zod
-    .string()
-    .min(1)
-    .max(getRecipeByIdResponseDescriptionMax)
-    .nullish(),
-});
+  "id": zod.string(),
+  "name": zod.string().min(1).max(getRecipeByIdResponseNameMax),
+  "description": zod.string().min(1).max(getRecipeByIdResponseDescriptionMax).nullish()
+})
 
 /**
  * Update details of an existing recipe definition.
@@ -65,24 +58,19 @@ export const getRecipeByIdResponse = zod.object({
 export const updateRecipeBodyNameMax = 255;
 export const updateRecipeBodyDescriptionMax = 1000;
 
+
 export const updateRecipeBody = zod.object({
-  name: zod.string().min(1).max(updateRecipeBodyNameMax).optional(),
-  description: zod
-    .string()
-    .min(1)
-    .max(updateRecipeBodyDescriptionMax)
-    .nullish(),
-});
+  "name": zod.string().min(1).max(updateRecipeBodyNameMax).optional(),
+  "description": zod.string().min(1).max(updateRecipeBodyDescriptionMax).nullish()
+})
 
 export const updateRecipeResponseNameMax = 255;
 export const updateRecipeResponseDescriptionMax = 1000;
 
+
 export const updateRecipeResponse = zod.object({
-  id: zod.string(),
-  name: zod.string().min(1).max(updateRecipeResponseNameMax),
-  description: zod
-    .string()
-    .min(1)
-    .max(updateRecipeResponseDescriptionMax)
-    .nullish(),
-});
+  "id": zod.string(),
+  "name": zod.string().min(1).max(updateRecipeResponseNameMax),
+  "description": zod.string().min(1).max(updateRecipeResponseDescriptionMax).nullish()
+})
+

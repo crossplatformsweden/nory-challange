@@ -5,41 +5,42 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-import { z as zod } from 'zod';
+import {
+  z as zod
+} from 'zod'
 
 /**
  * Retrieve current inventory stock levels, optionally filtered by location or ingredient. Includes embedded location and ingredient summaries.
  * @summary List inventory stock levels
  */
 export const listInventoryStockQueryParams = zod.object({
-  locationId: zod.string().optional(),
-  ingredientId: zod.string().optional(),
-});
+  "locationId": zod.string().optional(),
+  "ingredientId": zod.string().optional()
+})
 
 export const listInventoryStockResponseQuantityMin = 0;
 export const listInventoryStockResponseIngredientNameMax = 255;
 export const listInventoryStockResponseIngredientUnitMax = 50;
 export const listInventoryStockResponseLocationNameMax = 255;
 
+
 export const listInventoryStockResponseItem = zod.object({
-  id: zod.string(),
-  locationId: zod.string(),
-  ingredientId: zod.string(),
-  quantity: zod.number().min(listInventoryStockResponseQuantityMin),
-  updatedAt: zod.string().datetime(),
-  ingredient: zod.object({
-    id: zod.string(),
-    name: zod.string().min(1).max(listInventoryStockResponseIngredientNameMax),
-    unit: zod.string().min(1).max(listInventoryStockResponseIngredientUnitMax),
-  }),
-  location: zod.object({
-    id: zod.string(),
-    name: zod.string().min(1).max(listInventoryStockResponseLocationNameMax),
-  }),
-});
-export const listInventoryStockResponse = zod.array(
-  listInventoryStockResponseItem
-);
+  "id": zod.string(),
+  "locationId": zod.string(),
+  "ingredientId": zod.string(),
+  "quantity": zod.number().min(listInventoryStockResponseQuantityMin),
+  "updatedAt": zod.string().datetime(),
+  "ingredient": zod.object({
+  "id": zod.string(),
+  "name": zod.string().min(1).max(listInventoryStockResponseIngredientNameMax),
+  "unit": zod.string().min(1).max(listInventoryStockResponseIngredientUnitMax)
+}),
+  "location": zod.object({
+  "id": zod.string(),
+  "name": zod.string().min(1).max(listInventoryStockResponseLocationNameMax)
+})
+})
+export const listInventoryStockResponse = zod.array(listInventoryStockResponseItem)
 
 /**
  * Create a record for an ingredient's stock level at a specific location. This is typically for initial setup or adding an item to a location for the first time. Subsequent changes should use movements.
@@ -47,11 +48,12 @@ export const listInventoryStockResponse = zod.array(
  */
 export const createInventoryStockBodyQuantityMin = 0;
 
+
 export const createInventoryStockBody = zod.object({
-  locationId: zod.string(),
-  ingredientId: zod.string(),
-  quantity: zod.number().min(createInventoryStockBodyQuantityMin),
-});
+  "locationId": zod.string(),
+  "ingredientId": zod.string(),
+  "quantity": zod.number().min(createInventoryStockBodyQuantityMin)
+})
 
 /**
  * Retrieve a specific inventory stock record. Includes embedded location and ingredient summaries.
@@ -62,28 +64,23 @@ export const getInventoryStockByIdResponseIngredientNameMax = 255;
 export const getInventoryStockByIdResponseIngredientUnitMax = 50;
 export const getInventoryStockByIdResponseLocationNameMax = 255;
 
+
 export const getInventoryStockByIdResponse = zod.object({
-  id: zod.string(),
-  locationId: zod.string(),
-  ingredientId: zod.string(),
-  quantity: zod.number().min(getInventoryStockByIdResponseQuantityMin),
-  updatedAt: zod.string().datetime(),
-  ingredient: zod.object({
-    id: zod.string(),
-    name: zod
-      .string()
-      .min(1)
-      .max(getInventoryStockByIdResponseIngredientNameMax),
-    unit: zod
-      .string()
-      .min(1)
-      .max(getInventoryStockByIdResponseIngredientUnitMax),
-  }),
-  location: zod.object({
-    id: zod.string(),
-    name: zod.string().min(1).max(getInventoryStockByIdResponseLocationNameMax),
-  }),
-});
+  "id": zod.string(),
+  "locationId": zod.string(),
+  "ingredientId": zod.string(),
+  "quantity": zod.number().min(getInventoryStockByIdResponseQuantityMin),
+  "updatedAt": zod.string().datetime(),
+  "ingredient": zod.object({
+  "id": zod.string(),
+  "name": zod.string().min(1).max(getInventoryStockByIdResponseIngredientNameMax),
+  "unit": zod.string().min(1).max(getInventoryStockByIdResponseIngredientUnitMax)
+}),
+  "location": zod.object({
+  "id": zod.string(),
+  "name": zod.string().min(1).max(getInventoryStockByIdResponseLocationNameMax)
+})
+})
 
 /**
  * Directly adjust the quantity of a specific ingredient at a location. Consider using Inventory Movements for auditable changes.
@@ -91,34 +88,31 @@ export const getInventoryStockByIdResponse = zod.object({
  */
 export const updateInventoryStockBodyQuantityMin = 0;
 
+
 export const updateInventoryStockBody = zod.object({
-  quantity: zod.number().min(updateInventoryStockBodyQuantityMin),
-});
+  "quantity": zod.number().min(updateInventoryStockBodyQuantityMin)
+})
 
 export const updateInventoryStockResponseQuantityMin = 0;
 export const updateInventoryStockResponseIngredientNameMax = 255;
 export const updateInventoryStockResponseIngredientUnitMax = 50;
 export const updateInventoryStockResponseLocationNameMax = 255;
 
+
 export const updateInventoryStockResponse = zod.object({
-  id: zod.string(),
-  locationId: zod.string(),
-  ingredientId: zod.string(),
-  quantity: zod.number().min(updateInventoryStockResponseQuantityMin),
-  updatedAt: zod.string().datetime(),
-  ingredient: zod.object({
-    id: zod.string(),
-    name: zod
-      .string()
-      .min(1)
-      .max(updateInventoryStockResponseIngredientNameMax),
-    unit: zod
-      .string()
-      .min(1)
-      .max(updateInventoryStockResponseIngredientUnitMax),
-  }),
-  location: zod.object({
-    id: zod.string(),
-    name: zod.string().min(1).max(updateInventoryStockResponseLocationNameMax),
-  }),
-});
+  "id": zod.string(),
+  "locationId": zod.string(),
+  "ingredientId": zod.string(),
+  "quantity": zod.number().min(updateInventoryStockResponseQuantityMin),
+  "updatedAt": zod.string().datetime(),
+  "ingredient": zod.object({
+  "id": zod.string(),
+  "name": zod.string().min(1).max(updateInventoryStockResponseIngredientNameMax),
+  "unit": zod.string().min(1).max(updateInventoryStockResponseIngredientUnitMax)
+}),
+  "location": zod.object({
+  "id": zod.string(),
+  "name": zod.string().min(1).max(updateInventoryStockResponseLocationNameMax)
+})
+})
+

@@ -1,5 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import RecipesListPage from './page';
+import { useListRecipes } from '@nory/api-client';
+
+// Mock the API client hook
+jest.mock('@nory/api-client', () => ({
+  useListRecipes: jest.fn(),
+}));
 
 /**
  * Testing Guide:
@@ -16,19 +22,87 @@ import RecipesListPage from './page';
  */
 
 describe('RecipesListPage', () => {
+  const mockRecipes = [
+    {
+      id: '1',
+      name: 'Recipe 1',
+      description: 'Description 1',
+    },
+    {
+      id: '2',
+      name: 'Recipe 2',
+      description: 'Description 2',
+    },
+  ];
+
   beforeEach(() => {
+    // Reset all mocks before each test
+    jest.clearAllMocks();
+  });
+
+  it('shows loading state', () => {
+    (useListRecipes as jest.Mock).mockReturnValue({
+      isLoading: true,
+      error: null,
+      data: null,
+    });
+
     render(<RecipesListPage />);
-  });
-
-  it('renders the page container', () => {
     expect(screen.getByTestId('recipes-list-page')).toBeInTheDocument();
+    expect(screen.getByTestId('recipes-list-loading')).toBeInTheDocument();
   });
 
-  it('renders the page title', () => {
+  it('shows error state', () => {
+    const errorMessage = 'Failed to load recipes';
+    (useListRecipes as jest.Mock).mockReturnValue({
+      isLoading: false,
+      error: new Error(errorMessage),
+      data: null,
+    });
+
+    render(<RecipesListPage />);
+    expect(screen.getByTestId('recipes-list-page')).toBeInTheDocument();
+    expect(screen.getByText(`Error loading recipes: ${errorMessage}`)).toBeInTheDocument();
+  });
+
+  it('renders recipe list when data is loaded', async () => {
+    (useListRecipes as jest.Mock).mockReturnValue({
+      isLoading: false,
+      error: null,
+      data: { data: mockRecipes },
+    });
+
+    render(<RecipesListPage />);
+
+    // Check main elements are present
+    expect(screen.getByTestId('recipes-list-page')).toBeInTheDocument();
     expect(screen.getByTestId('recipes-list-title')).toBeInTheDocument();
+    expect(screen.getByTestId('recipes-list-content')).toBeInTheDocument();
+
+    // Check each recipe card is rendered
+    mockRecipes.forEach(recipe => {
+      expect(screen.getByTestId(`recipe-title-${recipe.id}`)).toBeInTheDocument();
+      expect(screen.getByTestId(`recipe-description-${recipe.id}`)).toBeInTheDocument();
+      expect(screen.getByTestId(`recipe-link-${recipe.id}`)).toBeInTheDocument();
+    });
+
+    // Check recipe data is displayed
+    await waitFor(() => {
+      mockRecipes.forEach(recipe => {
+        expect(screen.getByTestId(`recipe-title-${recipe.id}`)).toHaveTextContent(recipe.name);
+        expect(screen.getByTestId(`recipe-description-${recipe.id}`)).toHaveTextContent(recipe.description);
+      });
+    });
   });
 
-  it('renders the page content', () => {
-    expect(screen.getByTestId('recipes-list-content')).toBeInTheDocument();
+  it('calls useListRecipes with correct parameters', () => {
+    render(<RecipesListPage />);
+    expect(useListRecipes).toHaveBeenCalledWith({
+      query: {
+        refetchOnMount: true,
+        refetchOnWindowFocus: false,
+        retry: false,
+      },
+    });
   });
 }); 

@@ -8,24 +8,24 @@
 import type { ListInventoryMovementsType } from './listInventoryMovementsType';
 
 export type ListInventoryMovementsParams = {
-  /**
-   * Optional, filter movements by location ID.
-   */
-  locationId?: string;
-  /**
-   * Optional, filter movements by ingredient ID.
-   */
-  ingredientId?: string;
-  /**
-   * Optional, filter movements by type.
-   */
-  type?: ListInventoryMovementsType;
-  /**
-   * Optional, filter movements from this timestamp onwards.
-   */
-  startTime?: string;
-  /**
-   * Optional, filter movements up to this timestamp.
-   */
-  endTime?: string;
+/**
+ * Optional, filter movements by location ID.
+ */
+locationId?: string;
+/**
+ * Optional, filter movements by ingredient ID.
+ */
+ingredientId?: string;
+/**
+ * Optional, filter movements by type.
+ */
+type?: ListInventoryMovementsType;
+/**
+ * Optional, filter movements from this timestamp onwards.
+ */
+startTime?: string;
+/**
+ * Optional, filter movements up to this timestamp.
+ */
+endTime?: string;
 };

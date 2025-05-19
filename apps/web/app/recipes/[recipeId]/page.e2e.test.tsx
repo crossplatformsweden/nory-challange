@@ -23,14 +23,68 @@ test.describe('RecipeDetailPage', () => {
     await page.goto('/recipes/123')
   })
 
-  test('renders all required elements', async ({ page }) => {
-    // Check that all elements are visible
+  test('shows loading state initially', async ({ page }) => {
+    // Check loading spinner is visible
+    await expect(page.getByRole('status')).toBeVisible()
+  })
+
+  test('renders all required elements after loading', async ({ page }) => {
+    // Wait for loading to complete
+    await page.waitForSelector('[data-testid="recipe-detail-title"]')
+    
+    // Check main elements are visible
     await expect(page.getByTestId('recipe-detail-page')).toBeVisible()
     await expect(page.getByTestId('recipe-detail-title')).toBeVisible()
     await expect(page.getByTestId('recipe-detail-content')).toBeVisible()
+    await expect(page.getByTestId('recipe-detail-description-title')).toBeVisible()
+    await expect(page.getByTestId('recipe-detail-description')).toBeVisible()
+    await expect(page.getByTestId('recipe-detail-metadata-title')).toBeVisible()
+    await expect(page.getByTestId('recipe-detail-id')).toBeVisible()
+
+    // Check navigation elements
+    await expect(page.getByTestId('recipe-detail-back-link')).toBeVisible()
+    await expect(page.getByTestId('recipe-detail-ingredients-link')).toBeVisible()
+
+    // Check that elements have content
+    await expect(page.getByTestId('recipe-detail-title')).not.toBeEmpty()
+    await expect(page.getByTestId('recipe-detail-description')).not.toBeEmpty()
+    await expect(page.getByTestId('recipe-detail-id')).not.toBeEmpty()
+  })
+
+  test('navigation links work correctly', async ({ page }) => {
+    // Wait for loading to complete
+    await page.waitForSelector('[data-testid="recipe-detail-title"]')
+
+    // Test back link
+    const backLink = page.getByTestId('recipe-detail-back-link')
+    await expect(backLink).toHaveAttribute('href', '/recipes')
+    await backLink.click()
+    await expect(page).toHaveURL('/recipes')
+
+    // Go back to recipe detail
+    await page.goto('/recipes/123')
+    await page.waitForSelector('[data-testid="recipe-detail-title"]')
+
+    // Test ingredients link
+    const ingredientsLink = page.getByTestId('recipe-detail-ingredients-link')
+    await expect(ingredientsLink).toHaveAttribute('href', '/recipes/123/ingredient-links')
+    await ingredientsLink.click()
+    await expect(page).toHaveURL('/recipes/123/ingredient-links')
+  })
+
+  test('handles error state', async ({ page }) => {
+    // Mock API error by navigating to a non-existent endpoint
+    await page.route('**/recipes/*', route => route.fulfill({ status: 500 }))
+    await page.reload()
+    
+    // Check error message is displayed
+    await expect(page.getByText(/Error loading recipe/)).toBeVisible()
   })
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {
+    // Wait for loading to complete
+    await page.waitForSelector('[data-testid="recipe-detail-title"]')
+    
     // Get current date/time for unique screenshot name
     const now = new Date()
     const timestamp = now.toISOString().replace(/[:.]/g, '-')

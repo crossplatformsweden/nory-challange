@@ -5,7 +5,9 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-import { z as zod } from 'zod';
+import {
+  z as zod
+} from 'zod'
 
 /**
  * Retrieve a list of all menu items available at the specified location, including prices and enabled modifiers.
@@ -13,16 +15,15 @@ import { z as zod } from 'zod';
  */
 export const listLocationMenuItemsResponsePriceMin = 0;
 
+
 export const listLocationMenuItemsResponseItem = zod.object({
-  id: zod.string(),
-  locationId: zod.string(),
-  recipeId: zod.string(),
-  price: zod.number().min(listLocationMenuItemsResponsePriceMin),
-  modifierIds: zod.array(zod.string()).nullish(),
-});
-export const listLocationMenuItemsResponse = zod.array(
-  listLocationMenuItemsResponseItem
-);
+  "id": zod.string(),
+  "locationId": zod.string(),
+  "recipeId": zod.string(),
+  "price": zod.number().min(listLocationMenuItemsResponsePriceMin),
+  "modifierIds": zod.array(zod.string()).nullish()
+})
+export const listLocationMenuItemsResponse = zod.array(listLocationMenuItemsResponseItem)
 
 /**
  * Create a link between a recipe and a location, defining its price and available modifiers as a menu item.
@@ -30,11 +31,12 @@ export const listLocationMenuItemsResponse = zod.array(
  */
 export const createLocationMenuItemBodyPriceMin = 0;
 
+
 export const createLocationMenuItemBody = zod.object({
-  recipeId: zod.string(),
-  price: zod.number().min(createLocationMenuItemBodyPriceMin),
-  modifierIds: zod.array(zod.string()).nullish(),
-});
+  "recipeId": zod.string(),
+  "price": zod.number().min(createLocationMenuItemBodyPriceMin),
+  "modifierIds": zod.array(zod.string()).nullish()
+})
 
 /**
  * Retrieve a specific menu item using its unique ID within the context of a location.
@@ -42,13 +44,14 @@ export const createLocationMenuItemBody = zod.object({
  */
 export const getLocationMenuItemByIdResponsePriceMin = 0;
 
+
 export const getLocationMenuItemByIdResponse = zod.object({
-  id: zod.string(),
-  locationId: zod.string(),
-  recipeId: zod.string(),
-  price: zod.number().min(getLocationMenuItemByIdResponsePriceMin),
-  modifierIds: zod.array(zod.string()).nullish(),
-});
+  "id": zod.string(),
+  "locationId": zod.string(),
+  "recipeId": zod.string(),
+  "price": zod.number().min(getLocationMenuItemByIdResponsePriceMin),
+  "modifierIds": zod.array(zod.string()).nullish()
+})
 
 /**
  * Update details (like price or modifiers) of an existing menu item at the specified location.
@@ -56,18 +59,21 @@ export const getLocationMenuItemByIdResponse = zod.object({
  */
 export const updateLocationMenuItemBodyPriceMin = 0;
 
+
 export const updateLocationMenuItemBody = zod.object({
-  recipeId: zod.string().optional(),
-  price: zod.number().min(updateLocationMenuItemBodyPriceMin).optional(),
-  modifierIds: zod.array(zod.string()).nullish(),
-});
+  "recipeId": zod.string().optional(),
+  "price": zod.number().min(updateLocationMenuItemBodyPriceMin).optional(),
+  "modifierIds": zod.array(zod.string()).nullish()
+})
 
 export const updateLocationMenuItemResponsePriceMin = 0;
 
+
 export const updateLocationMenuItemResponse = zod.object({
-  id: zod.string(),
-  locationId: zod.string(),
-  recipeId: zod.string(),
-  price: zod.number().min(updateLocationMenuItemResponsePriceMin),
-  modifierIds: zod.array(zod.string()).nullish(),
-});
+  "id": zod.string(),
+  "locationId": zod.string(),
+  "recipeId": zod.string(),
+  "price": zod.number().min(updateLocationMenuItemResponsePriceMin),
+  "modifierIds": zod.array(zod.string()).nullish()
+})
+

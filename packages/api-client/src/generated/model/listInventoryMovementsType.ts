@@ -6,9 +6,10 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type ListInventoryMovementsType =
-  (typeof ListInventoryMovementsType)[keyof typeof ListInventoryMovementsType];
+export type ListInventoryMovementsType = typeof ListInventoryMovementsType[keyof typeof ListInventoryMovementsType];
 
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ListInventoryMovementsType = {
   waste: 'waste',
   restock: 'restock',
