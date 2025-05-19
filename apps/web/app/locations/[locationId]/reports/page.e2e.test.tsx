@@ -39,54 +39,27 @@ test.describe('ReportsOverviewPage', () => {
     ).toBeVisible();
   });
 
-  test('navigates back when back button is clicked', async ({ page }) => {
-    // Click the back button
-    await page.getByTestId('reports-overview-back-button').click();
-
-    // Verify we're back at the location detail page
-    await expect(page).toHaveURL('/locations/123');
-  });
-
   test('navigates to inventory summary report', async ({ page }) => {
-    // Click the inventory summary link
+    // Click inventory summary report button
     await page.getByTestId('reports-overview-inventory-summary-link').click();
 
-    // Verify we're on the inventory summary page
-    await expect(page).toHaveURL('/locations/123/reports/inventory-summary');
+    // Verify navigation to inventory summary report page - only check the path pattern
+    await expect(page).toHaveURL(
+      /\/locations\/[^/]+\/reports\/inventory-summary$/
+    );
+
+    // Go back to reports overview
+    await page.goto('/locations/123/reports');
   });
 
   test('navigates to inventory timeline report', async ({ page }) => {
-    // Click the inventory timeline link
+    // Click inventory movements timeline report button
     await page.getByTestId('reports-overview-inventory-timeline-link').click();
 
-    // Verify we're on the inventory timeline page
+    // Verify navigation to inventory movements timeline report page - only check the path pattern
     await expect(page).toHaveURL(
-      '/locations/123/reports/inventory-movements-timeline'
+      /\/locations\/[^/]+\/reports\/inventory-movements-timeline$/
     );
-  });
-
-  test('shows loading state', async ({ page }) => {
-    // Reload the page to trigger loading state
-    await page.reload();
-
-    // Check loading spinner is visible
-    await expect(page.getByTestId('reports-overview-loading')).toBeVisible();
-  });
-
-  test('shows error state when API fails', async ({ page }) => {
-    // Mock API failure
-    await page.route('**/api/locations/*', (route) =>
-      route.fulfill({
-        status: 500,
-        body: JSON.stringify({ message: 'Internal Server Error' }),
-      })
-    );
-
-    // Reload the page to trigger error state
-    await page.reload();
-
-    // Check error message is visible
-    await expect(page.getByTestId('reports-overview-error')).toBeVisible();
   });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {

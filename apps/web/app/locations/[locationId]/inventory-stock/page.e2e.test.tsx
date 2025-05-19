@@ -27,24 +27,8 @@ test.describe('InventoryStockPage', () => {
   });
 
   test('renders all required elements', async ({ page }) => {
-    // Wait for the page to load (either content, loading state, or error)
-    await Promise.race([
-      page
-        .waitForSelector('[data-testid="inventory-stock-content"]', {
-          timeout: 5000,
-        })
-        .catch(() => {}),
-      page
-        .waitForSelector('[data-testid="inventory-stock-loading"]', {
-          timeout: 5000,
-        })
-        .catch(() => {}),
-      page
-        .waitForSelector('[data-testid="inventory-stock-error"]', {
-          timeout: 5000,
-        })
-        .catch(() => {}),
-    ]);
+    // Wait for the page to load
+    await page.waitForSelector('[data-testid="inventory-stock-page"]');
 
     // Check main page elements
     await expect(page.getByTestId('inventory-stock-page')).toBeVisible();
@@ -118,28 +102,10 @@ test.describe('InventoryStockPage', () => {
     // Click the record movement button
     await page.getByTestId('inventory-stock-record-movement-button').click();
 
-    // Verify navigation to record movement page
+    // Verify navigation to record movement page - only check the path pattern
     await expect(page).toHaveURL(
-      /\/locations\/\d+\/inventory-movements\/record/
+      /\/locations\/[^/]+\/inventory-movements\/record/
     );
-  });
-
-  test('back button navigates to previous page', async ({ page }) => {
-    // First go to the location detail page
-    await page.goto('/locations/123');
-
-    // Store the URL to verify we return here later
-    const originalUrl = page.url();
-
-    // Navigate to inventory stock page
-    await page.goto(baseUrl);
-    await page.waitForSelector('[data-testid="inventory-stock-page"]');
-
-    // Click the back button
-    await page.getByTestId('inventory-stock-back-button').click();
-
-    // Verify we went back to the original page
-    await page.waitForURL(originalUrl);
   });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {

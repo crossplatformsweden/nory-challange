@@ -1,9 +1,16 @@
 'use client';
 
-import { FC } from 'react';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { useListInventoryStock, useGetIngredientById } from '@nory/api-client';
+import { FC, useMemo, useCallback } from 'react';
+import { useParams, useRouter } from 'next/navigation'; // Removed useSearchParams as it's not used
+// Import generated hooks and types
+import { useListInventoryStock } from '@nory/api-client';
 import type { InventoryStock } from '@nory/api-client';
+
+// Import useQueries from React Query
+// Assuming @tanstack/react-query is a dependency and the generated client works with it
+import { useQueries } from '@tanstack/react-query';
+// Assuming the fetcher function for useGetIngredientById is exposed
+import { getIngredientById } from '@nory/api-client';
 
 /**
  * // Update this page and corresponding test files. Make sure to use testId. And DaisyUI. Look in  utils/nextjsroutes.md To see what hook to use for this page. Source that hook and visualize/use it with daisyUI. Also look for the fakerjs implementation of that hook tanstack by genertaion orval noryApiClient. We will use the faker version in all tests. So all data coming will be random. So just test testId and hasValue() or similar. Use NextJS best practive for routing images etc. Not actual values. Use best pracitce for visualizing forms with use react-hook-form make sure check package.json with available libraries. Dont install any other libraries. For this File make sure you only change the page.tsx page.test.tsx and page.test.e2e.tsx. Verify using gh cli that its only max this 3 files changed. NO OTHER FILE. LEAVE THIS COMMENT IN THE FILE DO NOT REMOVE.
@@ -11,12 +18,12 @@ import type { InventoryStock } from '@nory/api-client';
 
 /**
  * Implementation Guide:
- * 1. Use the hook from utils/nextjsroutes.md for data fetching
+ * 1. Use the hook from utils/nextjsroutes.md for data fetching (Interpreted as Next.js routing hooks for locationId and generated api client hooks)
  * 2. Implement the UI using DaisyUI components
  * 3. Add proper testIds to all interactive elements
- * 4. Use react-hook-form for any forms
- * 5. Use NextJS Image component for images
- * 6. Use the orval generated client for API calls
+ * 4. Use react-hook-form for any forms (N/A, no forms here)
+ * 5. Use NextJS Image component for images (N/A, no images here)
+ * 6. Use the orval generated client for API calls (`useListInventoryStock` and fetcher for `useGetIngredientById` via `useQueries`)
  * 7. Keep the testIds consistent with the test files
  */
 
@@ -29,114 +36,146 @@ import type { InventoryStock } from '@nory/api-client';
  * - font-bold: for bold text
  */
 
-/**
- * Example implementation using React Query and generated hooks:
- * 
- * import React from 'react';
- * import { None } from '@nory/api-client';
- * 
- * // Create a client
- * const queryClient = new QueryClient();
- * 
- * export function LocationsList() {
- *   // Use the generated hook
- *   const { data, isLoading, error } = None();
- * 
- *   if (isLoading) return <div>Loading...</div>;
- *   if (error) return <div>Error loading locations: {error.message}</div>;
- * 
- *   return (
- *     <div className="card bg-base-100 shadow-xl">
- *       <h1>Locations</h1>
- *       <ul>
- *         {data?.map((location) => (
- *           <li key={location.id}>{location.name}</li>
- *         ))}
- *       </ul>
- *     </div>
- *   );
- * }
- * 
- 
- */
-
-interface InventoryItem {
-  id: string;
-  name: string;
-  quantity: number;
-  unit: string;
-  costPerUnit: number;
-  totalCost: number;
-  isLoading: boolean;
-}
-
-// Custom hook for ingredient queries
-const useIngredientQueries = (inventoryItems: InventoryStock[] | undefined) => {
-  return (
-    inventoryItems?.map((item) => {
-      const { data: ingredientData, isLoading: isIngredientLoading } =
-        useGetIngredientById(item.ingredient.id);
-      return {
-        id: item.ingredient.id,
-        data: ingredientData,
-        isLoading: isIngredientLoading,
-      };
-    }) || []
-  );
-};
+// Define a sensible low stock threshold (e.g., 10 units or maybe 10% of expected usage?)
+// The original code's condition `item.quantity <= item.quantity * 0.1` effectively checks `item.quantity <= 0`.
+// Let's use a simple constant threshold for demonstration. Adjust as per business logic.
+const LOW_STOCK_THRESHOLD = 10;
 
 interface InventorySummaryReportPageProps {}
 
 const InventorySummaryReportPage: FC<InventorySummaryReportPageProps> = () => {
   const { locationId } = useParams();
   const router = useRouter();
-  const searchParams = useSearchParams();
+  // useSearchParams was unused, removed.
 
-  const { data, isLoading, error } = useListInventoryStock({
-    locationId: locationId as string,
-  });
+  // 1. Fetch the list of inventory stock items for the location
+  const {
+    data: inventoryData, // Renamed data to avoid conflict
+    isLoading: isInventoryListLoading, // Renamed isLoading
+    error: inventoryListError, // Renamed error
+  } = useListInventoryStock(
+    {
+      locationId: locationId as string, // Ensure locationId is treated as string
+    },
+    {
+      query: {
+        enabled: !!locationId, // Only run this query if locationId is available
+        // Add retry or other options as needed
+      },
+    }
+  );
 
-  // Use the custom hook
-  const ingredientQueries = useIngredientQueries(data?.data);
+  const inventoryItems = inventoryData?.data; // Get the actual array of items
 
-  const handleGoBack = () => {
-    router.back();
-  };
-
-  // Calculate summary values
-  const totalValue =
-    data?.data?.reduce((sum, item) => {
-      const ingredientQuery = ingredientQueries.find(
-        (q) => q.id === item.ingredient.id
-      );
-      const cost = ingredientQuery?.data?.data?.cost || 0;
-      return sum + item.quantity * cost;
-    }, 0) || 0;
-
-  const totalItems = data?.data?.length || 0;
-
-  // Default minimum quantity is 10% of the current stock
-  const lowStockItems =
-    data?.data?.filter((item) => {
-      const minQuantity = item.quantity * 0.1;
-      return item.quantity <= minQuantity;
-    }).length || 0;
-
-  const inventoryItems = data?.data?.map((item: InventoryStock) => {
-    const ingredientQuery = ingredientQueries.find(
-      (q) => q.id === item.ingredient.id
+  // 2. Extract unique ingredient IDs from the fetched inventory items
+  // Use useMemo to ensure this list is only recomputed when inventoryItems changes
+  const uniqueIngredientIds = useMemo(() => {
+    if (!inventoryItems) return [];
+    return Array.from(
+      new Set(inventoryItems.map((item) => item.ingredient.id))
     );
-    const cost = ingredientQuery?.data?.data?.cost || 0;
-    return {
-      id: item.id,
-      name: item.ingredient.name,
-      quantity: item.quantity,
-      unit: item.ingredient.unit,
-      costPerUnit: cost,
-      totalCost: item.quantity * cost,
-      isLoading: ingredientQuery?.isLoading,
-    };
+  }, [inventoryItems]); // Dependency array includes inventoryItems
+
+  // 3. Use useQueries to fetch details for all unique ingredients in parallel
+  // This is the correct way to fetch multiple related items based on a list from another query,
+  // ensuring hooks are called at the top level based on a stable structure (the unique IDs array).
+  const ingredientQueryResults = useQueries({
+    queries: uniqueIngredientIds.map((id) => ({
+      queryKey: ['ingredient', id], // Unique query key for each ingredient
+      // Assuming getIngredientById is the fetcher function exported by @nory/api-client
+      // It should return a Promise that resolves to the data shape expected by the generated hook.
+      // Based on the original code's access `ingredientData?.data?.cost`,
+      // we assume the fetcher returns an object like `{ data: { cost: number, ... } }`.
+      queryFn: () => getIngredientById(id),
+      enabled: !!id && !!inventoryItems, // Only run if ID is valid and we have inventory data
+      staleTime: Infinity, // Ingredient data likely doesn't change often
+      // Add error handling or other options as needed per ingredient query
+    })),
   });
+
+  // 4. Create a map from the ingredient query results for efficient lookup
+  // Use useMemo to avoid recreating the map on every render if the results haven't changed
+  const ingredientQueryResultMap = useMemo(() => {
+    const map = new Map<string, (typeof ingredientQueryResults)[0]>();
+    uniqueIngredientIds.forEach((id, index) => {
+      // Map the ingredient ID to its corresponding result object from useQueries
+      // Ensure index is within bounds, though useQueries should match uniqueIngredientIds length
+      if (ingredientQueryResults[index]) {
+        map.set(id, ingredientQueryResults[index]);
+      }
+    });
+    return map;
+  }, [uniqueIngredientIds, ingredientQueryResults]); // Dependencies: the list of IDs and the query results array
+
+  // Handle navigation back using useCallback for stability
+  const handleGoBack = useCallback(() => {
+    router.back();
+  }, [router]); // Dependency on router object
+
+  // 5. Calculate summary values using useMemo, looking up ingredient data from the map
+  const totalValue = useMemo(() => {
+    if (!inventoryItems) return 0;
+    return inventoryItems.reduce((sum, item) => {
+      // Look up the ingredient query result for the current item's ingredient ID using the map
+      const ingredientQueryResult = ingredientQueryResultMap.get(
+        item.ingredient.id
+      );
+      // Access the ingredient data and cost, defaulting to 0 if data is missing or loading
+      // Access using ?.data?.data based on the assumed fetcher return structure
+      const cost = ingredientQueryResult?.data?.data?.cost ?? 0;
+      return sum + item.quantity * cost;
+    }, 0);
+  }, [inventoryItems, ingredientQueryResultMap]); // Dependencies on inventory items and the lookup map
+
+  const totalItems = useMemo(
+    () => inventoryItems?.length ?? 0,
+    [inventoryItems]
+  );
+
+  // Calculate low stock items count using useMemo based on the defined threshold
+  const lowStockItems = useMemo(() => {
+    if (!inventoryItems) return 0;
+    // Filter items where quantity is positive but below or equal to the threshold
+    return inventoryItems.filter(
+      (item) => item.quantity > 0 && item.quantity <= LOW_STOCK_THRESHOLD
+    ).length;
+  }, [inventoryItems]); // Dependency on inventory items
+
+  // 6. Determine overall loading and error states
+  // We are loading if the inventory list is loading OR any of the ingredient queries are loading
+  const isLoading =
+    isInventoryListLoading || ingredientQueryResults.some((q) => q.isLoading);
+  // Report an error if the inventory list errored OR any of the ingredient queries errored
+  const error =
+    inventoryListError || ingredientQueryResults.find((q) => q.error)?.error;
+
+  // 7. Prepare the data structure for displaying in the table using useMemo
+  // This combines inventory item data with the fetched ingredient cost and loading state
+  const displayedInventoryItems = useMemo(() => {
+    if (!inventoryItems) return [];
+    return inventoryItems.map((item: InventoryStock) => {
+      // Look up the corresponding ingredient query result using the map
+      const ingredientQueryResult = ingredientQueryResultMap.get(
+        item.ingredient.id
+      );
+      // Access ingredient data assuming the structure { data: Ingredient }
+      const ingredientData = ingredientQueryResult?.data?.data;
+      const cost = ingredientData?.cost ?? 0; // Default cost to 0 if data missing
+      const isIngredientLoading = ingredientQueryResult?.isLoading ?? true; // Default loading to true if result missing
+
+      return {
+        // Use the unique inventory stock item ID as the primary key for the table row
+        id: item.id,
+        ingredientId: item.ingredient.id, // Keep ingredient ID for reference if needed
+        name: item.ingredient.name, // Get name from inventory list (already available)
+        quantity: item.quantity,
+        unit: item.ingredient.unit, // Get unit from inventory list (already available)
+        costPerUnit: cost,
+        totalCost: item.quantity * cost,
+        isIngredientLoading: isIngredientLoading, // Pass loading state for this specific ingredient
+      };
+    });
+  }, [inventoryItems, ingredientQueryResultMap]); // Dependencies on inventory items and the lookup map
 
   return (
     <div
@@ -299,64 +338,70 @@ const InventorySummaryReportPage: FC<InventorySummaryReportPageProps> = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {data?.data?.length === 0 && (
-                      <tr>
-                        <td
-                          colSpan={4}
-                          className="py-4 text-center"
-                          data-testid="inventory-summary-report-empty"
-                        >
-                          No inventory items found for the selected period.
-                        </td>
-                      </tr>
-                    )}
+                    {/* Display message if no items and not loading/error */}
+                    {displayedInventoryItems.length === 0 &&
+                      !isInventoryListLoading &&
+                      !inventoryListError && (
+                        <tr>
+                          <td
+                            colSpan={4}
+                            className="py-4 text-center"
+                            data-testid="inventory-summary-report-empty"
+                          >
+                            No inventory items found.
+                          </td>
+                        </tr>
+                      )}
 
-                    {data?.data?.map((item: InventoryStock) => {
-                      const ingredientQuery = ingredientQueries.find(
-                        (q) => q.id === item.ingredient.id
-                      );
-                      const cost = ingredientQuery?.data?.data?.cost || 0;
+                    {/* Map over the prepared list of inventory items for the table rows */}
+                    {displayedInventoryItems.map((item) => {
+                      // Determine status based on the item's quantity and threshold
+                      const status =
+                        item.quantity <= 0
+                          ? 'Out of Stock'
+                          : item.quantity > 0 &&
+                              item.quantity <= LOW_STOCK_THRESHOLD
+                            ? 'Low Stock'
+                            : 'In Stock'; // Quantity > LOW_STOCK_THRESHOLD
+
+                      const badgeClass =
+                        status === 'Out of Stock'
+                          ? 'badge-error'
+                          : status === 'Low Stock'
+                            ? 'badge-warning'
+                            : 'badge-success';
+
                       return (
                         <tr
-                          key={item.id}
+                          key={item.id} // Use the unique inventory item ID as the key
                           data-testid={`inventory-summary-report-item-${item.id}`}
                         >
                           <td
                             data-testid={`inventory-summary-report-ingredient-${item.id}`}
                           >
-                            {item.ingredient.name}
+                            {item.name}
                           </td>
                           <td
                             data-testid={`inventory-summary-report-quantity-${item.id}`}
                           >
-                            {item.quantity} {item.ingredient.unit}
+                            {item.quantity} {item.unit}
                           </td>
                           <td
                             data-testid={`inventory-summary-report-value-${item.id}`}
                           >
-                            {ingredientQuery?.isLoading ? (
+                            {/* Show spinner if ingredient cost is still loading for this specific row */}
+                            {item.isIngredientLoading ? (
                               <span className="loading loading-spinner loading-sm"></span>
                             ) : (
-                              `$${(item.quantity * cost).toFixed(2)}`
+                              // Display the calculated total cost for the item
+                              `$${item.totalCost.toFixed(2)}`
                             )}
                           </td>
                           <td
                             data-testid={`inventory-summary-report-status-${item.id}`}
                           >
-                            <span
-                              className={`badge ${
-                                item.quantity <= 0
-                                  ? 'badge-error'
-                                  : item.quantity <= item.quantity * 0.1
-                                    ? 'badge-warning'
-                                    : 'badge-success'
-                              }`}
-                            >
-                              {item.quantity <= 0
-                                ? 'Out of Stock'
-                                : item.quantity <= item.quantity * 0.1
-                                  ? 'Low Stock'
-                                  : 'In Stock'}
+                            <span className={`badge ${badgeClass}`}>
+                              {status}
                             </span>
                           </td>
                         </tr>

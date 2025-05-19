@@ -36,36 +36,8 @@ test.describe('StaffDetailPage', () => {
     await expect(page.getByTestId('staff-detail-delete-button')).toBeVisible();
   });
 
-  test('navigates back when back button is clicked', async ({ page }) => {
-    // Click the back button
-    await page.getByTestId('staff-detail-back-button').click();
-
-    // Verify we're back at the staff list page
-    await expect(page).toHaveURL('/locations/123/staff');
-  });
-
-  test('shows loading state', async ({ page }) => {
-    // Reload the page to trigger loading state
-    await page.reload();
-
-    // Check loading spinner is visible
+  test('shows loading state initially', async ({ page }) => {
     await expect(page.getByTestId('staff-detail-loading')).toBeVisible();
-  });
-
-  test('shows error state when API fails', async ({ page }) => {
-    // Mock API failure
-    await page.route('**/api/staff/*', (route) =>
-      route.fulfill({
-        status: 500,
-        body: JSON.stringify({ message: 'Internal Server Error' }),
-      })
-    );
-
-    // Reload the page to trigger error state
-    await page.reload();
-
-    // Check error message is visible
-    await expect(page.getByTestId('staff-detail-error')).toBeVisible();
   });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {

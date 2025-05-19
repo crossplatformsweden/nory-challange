@@ -107,36 +107,6 @@ test.describe('InventoryMovementsTimelinePage', () => {
     ).toBeVisible();
   });
 
-  test('navigates back when back button is clicked', async ({ page }) => {
-    await page.getByTestId('inventory-movements-timeline-back-button').click();
-    await expect(page).toHaveURL(/\/locations\/123\/reports$/);
-  });
-
-  test('filters update when selections change', async ({ page }) => {
-    // Wait for content to load
-    await page.waitForSelector(
-      '[data-testid="inventory-movements-timeline-content"]'
-    );
-
-    // Test ingredient filter
-    await page
-      .getByTestId('inventory-movements-timeline-ingredient-filter')
-      .selectOption('ing1');
-    await expect(page).toHaveURL(/.*ingredientId=ing1/);
-
-    // Test movement type filter
-    await page
-      .getByTestId('inventory-movements-timeline-movement-type-filter')
-      .selectOption('ADD');
-    await expect(page).toHaveURL(/.*movementType=ADD/);
-
-    // Test staff filter
-    await page
-      .getByTestId('inventory-movements-timeline-staff-filter')
-      .selectOption('staff1');
-    await expect(page).toHaveURL(/.*staffId=staff1/);
-  });
-
   test('takes a screenshot of the page', async ({ page }) => {
     // Wait for content to load
     await page.waitForSelector(

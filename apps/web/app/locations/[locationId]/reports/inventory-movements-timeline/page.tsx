@@ -79,17 +79,37 @@ const InventoryMovementsTimelinePage: FC<
   );
 
   const handleFilterChange = (filter: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+
     switch (filter) {
       case 'ingredient':
         setSelectedIngredient(value);
+        if (value) {
+          params.set('ingredientId', value);
+        } else {
+          params.delete('ingredientId');
+        }
         break;
       case 'movementType':
         setSelectedMovementType(value);
+        if (value) {
+          params.set('movementType', value);
+        } else {
+          params.delete('movementType');
+        }
         break;
       case 'staff':
         setSelectedStaff(value);
+        if (value) {
+          params.set('staffId', value);
+        } else {
+          params.delete('staffId');
+        }
         break;
     }
+
+    // Update the URL with the new parameters
+    router.push(`?${params.toString()}`);
   };
 
   const { data, isLoading, error } = useListInventoryMovements({

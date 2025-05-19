@@ -92,8 +92,8 @@ test.describe('RecipesListPage', () => {
       page.getByTestId('recipes-list-create-button').click(),
     ]);
 
-    // Verify we navigated to the create page
-    await expect(page).toHaveURL(/\/recipes\/create/);
+    // Verify navigation to create recipe page - only check the path pattern
+    await expect(page).toHaveURL(/\/recipes\/create$/);
   });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {
