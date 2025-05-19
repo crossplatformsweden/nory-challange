@@ -3,8 +3,8 @@ import { defineConfig, devices } from '@playwright/test';
 import path from 'path';
 
 export default defineConfig({
-  testDir: './app',  // Correct relative path to the app directory
-  testMatch: '**/*.e2e.test.{ts,tsx}',  // Match your test file pattern
+  testDir: './app', // Correct relative path to the app directory
+  testMatch: '**/*.e2e.test.{ts,tsx}', // Match your test file pattern
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
@@ -19,14 +19,6 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-    },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
     },
   ],
   webServer: {

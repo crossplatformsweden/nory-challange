@@ -177,3 +177,35 @@ This Turborepo uses:
 The UI components package (`@repo/ui`) is configured to be consumed directly by Next.js applications. The component `.tsx` files are consumed directly using `transpilePackages` in `next.config.ts`.
 
 The repository appears to be a starting point for building an inventory management system with specific requirements around inventory tracking, sales, waste management, and reporting. The README outlines detailed backend logic for inventory movements, sales processing, and report generation.
+
+## Git Commit Rules
+
+### Prohibited Practices
+
+- **Never use `--no-verify`**: The use of `--no-verify` flag with git commands is strictly prohibited. This flag bypasses pre-commit and pre-push hooks, which are essential for maintaining code quality. All commits must go through the standard verification process to ensure:
+  - Code is properly formatted
+  - Linting rules are followed
+  - Type checking passes
+  - Tests are successful
+
+### Commit Message Format
+
+Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification for commit messages:
+
+```
+<type>(<scope>): <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+Common types include:
+
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Documentation changes
+- `style`: Code style changes (formatting, etc.)
+- `refactor`: Code changes that neither fix bugs nor add features
+- `test`: Adding or modifying tests
+- `chore`: Changes to the build process or auxiliary tools
