@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test.describe('HomePage', () => {
   test('renders the page and takes screenshot', async ({ page }) => {
-    await page.goto('//')
+    await page.goto('/')
     
     // Check that the page has loaded
     await expect(page.getByTestId('home-page')).toBeVisible()
