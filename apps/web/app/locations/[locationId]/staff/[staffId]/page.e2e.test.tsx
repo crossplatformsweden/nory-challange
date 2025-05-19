@@ -30,14 +30,14 @@ test.describe('StaffDetailPage', () => {
     await expect(page.getByTestId('staff-detail-content')).toBeVisible()
   })
 
-  test('takes a screenshot of the page', async ({ page }) => {
+  test('takes a screenshot of the page', async ({ page, browserName }) => {
     // Get current date/time for unique screenshot name
     const now = new Date()
     const timestamp = now.toISOString().replace(/[:.]/g, '-')
     
-    // Take screenshot with timestamp
+    // Take screenshot with timestamp and browser name
     await page.screenshot({ 
-      path: `./screenshots/staff-detail_${timestamp}.png`,
+      path: `./screenshots/staff-detail_${browserName}_${timestamp}.png`,
       fullPage: true 
     })
   })

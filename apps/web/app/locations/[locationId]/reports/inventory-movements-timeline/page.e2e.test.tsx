@@ -30,14 +30,14 @@ test.describe('InventoryMovementsTimelinePage', () => {
     await expect(page.getByTestId('inventory-movements-timeline-content')).toBeVisible()
   })
 
-  test('takes a screenshot of the page', async ({ page }) => {
+  test('takes a screenshot of the page', async ({ page, browserName }) => {
     // Get current date/time for unique screenshot name
     const now = new Date()
     const timestamp = now.toISOString().replace(/[:.]/g, '-')
     
-    // Take screenshot with timestamp
+    // Take screenshot with timestamp and browser name
     await page.screenshot({ 
-      path: `./screenshots/inventory-movements-timeline_${timestamp}.png`,
+      path: `./screenshots/inventory-movements-timeline_${browserName}_${timestamp}.png`,
       fullPage: true 
     })
   })

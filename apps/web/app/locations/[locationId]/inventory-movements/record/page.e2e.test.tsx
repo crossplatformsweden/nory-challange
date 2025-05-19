@@ -30,14 +30,14 @@ test.describe('RecordInventoryMovementPage', () => {
     await expect(page.getByTestId('record-inventory-movement-content')).toBeVisible()
   })
 
-  test('takes a screenshot of the page', async ({ page }) => {
+  test('takes a screenshot of the page', async ({ page, browserName }) => {
     // Get current date/time for unique screenshot name
     const now = new Date()
     const timestamp = now.toISOString().replace(/[:.]/g, '-')
     
-    // Take screenshot with timestamp
+    // Take screenshot with timestamp and browser name
     await page.screenshot({ 
-      path: `./screenshots/record-inventory-movement_${timestamp}.png`,
+      path: `./screenshots/record-inventory-movement_${browserName}_${timestamp}.png`,
       fullPage: true 
     })
   })
