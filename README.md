@@ -1,7 +1,7 @@
 # Nory Challenge Monorepo
 
-[![CI Status - Develop](https://github.com/your-org/your-repo/actions/workflows/develop.yml/badge.svg?branch=develop)](https://github.com/your-org/your-repo/actions/workflows/develop.yml)
-[![CI Status - Feature](https://github.com/your-org/your-repo/actions/workflows/feature-branch.yml/badge.svg)](https://github.com/your-org/your-repo/actions/workflows/feature-branch.yml)
+[![CI Status - Develop](https://github.com/crossplatformsweden/nory-challange/actions/workflows/develop.yml/badge.svg?branch=develop)](https://github.com/crossplatformsweden/nory-challange/actions/workflows/develop.yml)
+[![CI Status - Feature](https://github.com/crossplatformsweden/nory-challange/actions/workflows/feature-branch.yml/badge.svg)](https://github.com/crossplatformsweden/nory-challange/actions/workflows/feature-branch.yml)
 [![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://prettier.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![OpenAPI Spec](https://img.shields.io/badge/OpenAPI-Spec-blue.svg?style=flat-square)](https://editor.swagger.io/?url=https://raw.githubusercontent.com/crossplatformsweden/nory-challange/main/utils/salad.yml)
