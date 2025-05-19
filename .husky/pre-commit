@@ -3,10 +3,16 @@
 
 # Run lint-staged (ESLint --fix, Prettier, and Jest)
 echo "🧹 Running lint-staged (linting & formatting)..."
-pnpm lint-staged || { echo "❌ lint-staged failed. Please fix the issues and try again."; exit 1; }
+pnpm lint-staged || {
+    echo "❌ lint-staged failed. Please fix the issues and try again."
+    exit 1
+}
 
 # Run type-checking
 echo "🔎 Running type checking..."
-pnpm check-types || { echo "❌ Type checking failed. Please fix the type errors and try again."; exit 1; }
+pnpm check-types || {
+    echo "❌ Type checking failed. Please fix the type errors and try again."
+    exit 1
+}
 
 echo "✅ Pre-commit checks passed!"

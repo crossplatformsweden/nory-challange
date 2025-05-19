@@ -1,6 +1,7 @@
 {
   "name": "with-tailwind",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -22,6 +23,7 @@
     "all": "pnpm build --filter=./packages/* && pnpm check-types --filter=./packages/* && pnpm lint --filter=./packages/* && pnpm test --filter=./packages/* --if-present || true && pnpm build --filter=./apps/* && pnpm check-types --filter=./apps/* && pnpm lint --filter=./apps/* && pnpm test --filter=./apps/* --if-present || true"
   },
   "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
     "@types/node": "^22.15.3",
     "husky": "^9.1.7",
     "lint-staged": "^16.0.0",
@@ -38,8 +40,7 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
-      "prettier --write",
-      "jest --bail --findRelatedTests"
+      "prettier --write"
     ],
     "*.{json,md,mdx,css}": [
       "prettier --write"

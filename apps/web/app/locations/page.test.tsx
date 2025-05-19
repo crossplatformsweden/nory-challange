@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import LocationsPage from './page';
+import LocationsListPage from './page';
 
 /**
  * Testing Guide:
@@ -10,25 +10,25 @@ import LocationsPage from './page';
  * 5. Use the faker implementation from the hook for test data
  * 6. Mock the orval generated client responses
  * 7. Test any user interactions
- * 
+ *
  * Note: Only test the presence of elements and their states.
  * Do not test specific content as it will be random from faker.
  */
 
-describe('LocationsPage', () => {
+describe('LocationsListPage', () => {
   beforeEach(() => {
-    render(<LocationsPage />);
+    render(<LocationsListPage />);
   });
 
   it('renders the page container', () => {
-    expect(screen.getByTestId('locations-page')).toBeInTheDocument();
+    expect(screen.getByTestId('locations-list-page')).toBeInTheDocument();
   });
 
   it('renders the page title', () => {
-    expect(screen.getByTestId('locations-title')).toBeInTheDocument();
+    expect(screen.getByTestId('locations-list-title')).toBeInTheDocument();
   });
 
   it('renders the page content', () => {
-    expect(screen.getByTestId('locations-content')).toBeInTheDocument();
+    expect(screen.getByTestId('locations-list-content')).toBeInTheDocument();
   });
-}); 
+});

@@ -1,11 +1,11 @@
 // @ts-check
 
-import globals from "globals";
-import { baseConfig } from "@repo/eslint-config";
+import globals from 'globals';
+import { base } from '@repo/eslint-config';
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
-  ...baseConfig,
+  ...base,
   {
     languageOptions: {
       globals: {
