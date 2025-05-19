@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
 
 /**
  * E2E Testing Guide:
@@ -9,7 +9,7 @@ import { test, expect } from '@playwright/test'
  * 5. Test responsive behavior if needed
  * 6. Test any loading states
  * 7. Test any error states
- * 
+ *
  * Note: Use the URL path provided in the generator
  * and ensure all testIds match the page component.
  */
@@ -20,25 +20,63 @@ import { test, expect } from '@playwright/test'
 
 test.describe('StaffDetailPage', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/locations/123/staff/456')
-  })
+    await page.goto('/locations/123/staff/456');
+  });
 
   test('renders all required elements', async ({ page }) => {
     // Check that all elements are visible
-    await expect(page.getByTestId('staff-detail-page')).toBeVisible()
-    await expect(page.getByTestId('staff-detail-title')).toBeVisible()
-    await expect(page.getByTestId('staff-detail-content')).toBeVisible()
-  })
+    await expect(page.getByTestId('staff-detail-page')).toBeVisible();
+    await expect(page.getByTestId('staff-detail-title')).toBeVisible();
+    await expect(page.getByTestId('staff-detail-back-button')).toBeVisible();
+    await expect(page.getByTestId('staff-detail-content')).toBeVisible();
+    await expect(page.getByTestId('staff-detail-name')).toBeVisible();
+    await expect(page.getByTestId('staff-detail-email')).toBeVisible();
+    await expect(page.getByTestId('staff-detail-role')).toBeVisible();
+    await expect(page.getByTestId('staff-detail-edit-button')).toBeVisible();
+    await expect(page.getByTestId('staff-detail-delete-button')).toBeVisible();
+  });
+
+  test('navigates back when back button is clicked', async ({ page }) => {
+    // Click the back button
+    await page.getByTestId('staff-detail-back-button').click();
+
+    // Verify we're back at the staff list page
+    await expect(page).toHaveURL('/locations/123/staff');
+  });
+
+  test('shows loading state', async ({ page }) => {
+    // Reload the page to trigger loading state
+    await page.reload();
+
+    // Check loading spinner is visible
+    await expect(page.getByTestId('staff-detail-loading')).toBeVisible();
+  });
+
+  test('shows error state when API fails', async ({ page }) => {
+    // Mock API failure
+    await page.route('**/api/staff/*', (route) =>
+      route.fulfill({
+        status: 500,
+        body: JSON.stringify({ message: 'Internal Server Error' }),
+      })
+    );
+
+    // Reload the page to trigger error state
+    await page.reload();
+
+    // Check error message is visible
+    await expect(page.getByTestId('staff-detail-error')).toBeVisible();
+  });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {
     // Get current date/time for unique screenshot name
-    const now = new Date()
-    const timestamp = now.toISOString().replace(/[:.]/g, '-')
-    
+    const now = new Date();
+    const timestamp = now.toISOString().replace(/[:.]/g, '-');
+
     // Take screenshot with timestamp and browser name
-    await page.screenshot({ 
+    await page.screenshot({
       path: `./screenshots/staff-detail_${browserName}_${timestamp}.png`,
-      fullPage: true 
-    })
-  })
-}) 
+      fullPage: true,
+    });
+  });
+});

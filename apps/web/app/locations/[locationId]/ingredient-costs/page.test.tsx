@@ -1,5 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import IngredientCostsListPage from './page';
+import { useParams, useRouter } from 'next/navigation';
+import { useListLocationIngredientCosts } from '@nory/api-client';
 
 /**
  * Testing Guide:
@@ -10,25 +12,194 @@ import IngredientCostsListPage from './page';
  * 5. Use the faker implementation from the hook for test data
  * 6. Mock the orval generated client responses
  * 7. Test any user interactions
- * 
+ *
  * Note: Only test the presence of elements and their states.
  * Do not test specific content as it will be random from faker.
  */
 
+// Mock the navigation hooks
+jest.mock('next/navigation', () => ({
+  useParams: jest.fn(),
+  useRouter: jest.fn(() => ({
+    back: jest.fn(),
+    push: jest.fn(),
+  })),
+}));
+
+// Mock the API hook
+jest.mock('@nory/api-client', () => ({
+  useListLocationIngredientCosts: jest.fn(),
+}));
+
 describe('IngredientCostsListPage', () => {
-  beforeEach(() => {
+  const mockData = {
+    data: {
+      ingredientCosts: [
+        {
+          id: '1',
+          cost: 10.99,
+          ingredient: {
+            id: 'ing1',
+            name: 'Flour',
+            unit: 'kg',
+          },
+        },
+        {
+          id: '2',
+          cost: 5.99,
+          ingredient: {
+            id: 'ing2',
+            name: 'Sugar',
+            unit: 'kg',
+          },
+        },
+      ],
+    },
+  };
+
+  const renderComponent = (
+    loading = false,
+    error: Error | null = null,
+    data = mockData
+  ) => {
+    // Mock useParams
+    (useParams as jest.Mock).mockReturnValue({ locationId: '123' });
+
+    // Mock the API hook response
+    (useListLocationIngredientCosts as jest.Mock).mockReturnValue({
+      data: loading ? null : data,
+      isLoading: loading,
+      error: error || null,
+    });
+
     render(<IngredientCostsListPage />);
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('renders the page container', () => {
-    expect(screen.getByTestId('ingredient-costs-list-page')).toBeInTheDocument();
+  it('renders the page', () => {
+    render(<IngredientCostsListPage />);
+    expect(
+      screen.getByTestId('ingredient-costs-list-page')
+    ).toBeInTheDocument();
   });
 
-  it('renders the page title', () => {
-    expect(screen.getByTestId('ingredient-costs-list-title')).toBeInTheDocument();
+  it('renders the page container, title, and navigation elements', () => {
+    renderComponent();
+
+    expect(
+      screen.getByTestId('ingredient-costs-list-page')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('ingredient-costs-list-title')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('ingredient-costs-list-back-button')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('ingredient-costs-list-create-button')
+    ).toBeInTheDocument();
   });
 
-  it('renders the page content', () => {
-    expect(screen.getByTestId('ingredient-costs-list-content')).toBeInTheDocument();
+  it('renders the table when data is loaded', () => {
+    renderComponent();
+
+    // Check table headers
+    expect(
+      screen.getByTestId('ingredient-costs-list-table-header-ingredient')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('ingredient-costs-list-table-header-cost')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('ingredient-costs-list-table-header-unit')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('ingredient-costs-list-table-header-actions')
+    ).toBeInTheDocument();
+
+    // Check table rows
+    expect(
+      screen.getByTestId('ingredient-costs-list-item-1')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('ingredient-costs-list-item-2')
+    ).toBeInTheDocument();
   });
-}); 
+
+  it('renders loading state correctly', () => {
+    renderComponent(true);
+
+    expect(
+      screen.getByTestId('ingredient-costs-list-loading')
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByTestId('ingredient-costs-list-content')
+    ).not.toBeInTheDocument();
+  });
+
+  it('renders error state correctly', () => {
+    renderComponent(false, new Error('Failed to load ingredient costs'));
+
+    expect(
+      screen.getByTestId('ingredient-costs-list-error')
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByTestId('ingredient-costs-list-content')
+    ).not.toBeInTheDocument();
+  });
+
+  it('renders empty state when no costs exist', () => {
+    renderComponent(false, null, { data: { ingredientCosts: [] } });
+
+    expect(
+      screen.getByTestId('ingredient-costs-list-content')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('ingredient-costs-list-empty')
+    ).toBeInTheDocument();
+  });
+
+  it('navigates back when back button is clicked', () => {
+    const mockBack = jest.fn();
+    (useRouter as jest.Mock).mockReturnValue({
+      back: mockBack,
+      push: jest.fn(),
+    });
+
+    renderComponent();
+    screen.getByTestId('ingredient-costs-list-back-button').click();
+
+    expect(mockBack).toHaveBeenCalled();
+  });
+
+  it('navigates to create page when create button is clicked', () => {
+    const mockPush = jest.fn();
+    (useRouter as jest.Mock).mockReturnValue({
+      back: jest.fn(),
+      push: mockPush,
+    });
+
+    renderComponent();
+    screen.getByTestId('ingredient-costs-list-create-button').click();
+
+    expect(mockPush).toHaveBeenCalledWith(
+      '/locations/123/ingredient-costs/create'
+    );
+  });
+
+  it('navigates to detail page when view button is clicked', () => {
+    const mockPush = jest.fn();
+    (useRouter as jest.Mock).mockReturnValue({
+      back: jest.fn(),
+      push: mockPush,
+    });
+
+    renderComponent();
+    screen.getByTestId('ingredient-costs-list-view-button-1').click();
+
+    expect(mockPush).toHaveBeenCalledWith('/locations/123/ingredient-costs/1');
+  });
+});

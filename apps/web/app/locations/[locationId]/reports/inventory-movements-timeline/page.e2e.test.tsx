@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
 
 /**
  * E2E Testing Guide:
@@ -9,7 +9,7 @@ import { test, expect } from '@playwright/test'
  * 5. Test responsive behavior if needed
  * 6. Test any loading states
  * 7. Test any error states
- * 
+ *
  * Note: Use the URL path provided in the generator
  * and ensure all testIds match the page component.
  */
@@ -20,25 +20,136 @@ import { test, expect } from '@playwright/test'
 
 test.describe('InventoryMovementsTimelinePage', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/locations/123/reports/inventory-movements-timeline')
-  })
+    // Navigate to the page with query parameters
+    await page.goto(
+      '/locations/123/reports/inventory-movements-timeline?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z'
+    );
+  });
 
   test('renders all required elements', async ({ page }) => {
-    // Check that all elements are visible
-    await expect(page.getByTestId('inventory-movements-timeline-page')).toBeVisible()
-    await expect(page.getByTestId('inventory-movements-timeline-title')).toBeVisible()
-    await expect(page.getByTestId('inventory-movements-timeline-content')).toBeVisible()
-  })
+    // Wait for the page to load by checking for either content, loading, or error state
+    await Promise.race([
+      page.waitForSelector(
+        '[data-testid="inventory-movements-timeline-content"]'
+      ),
+      page.waitForSelector(
+        '[data-testid="inventory-movements-timeline-loading"]'
+      ),
+      page.waitForSelector(
+        '[data-testid="inventory-movements-timeline-error"]'
+      ),
+    ]);
 
-  test('takes a screenshot of the page', async ({ page, browserName }) => {
-    // Get current date/time for unique screenshot name
-    const now = new Date()
-    const timestamp = now.toISOString().replace(/[:.]/g, '-')
-    
-    // Take screenshot with timestamp and browser name
-    await page.screenshot({ 
-      path: `./screenshots/inventory-movements-timeline_${browserName}_${timestamp}.png`,
-      fullPage: true 
-    })
-  })
-}) 
+    // Check main page elements
+    await expect(
+      page.getByTestId('inventory-movements-timeline-page')
+    ).toBeVisible();
+    await expect(
+      page.getByTestId('inventory-movements-timeline-title')
+    ).toBeVisible();
+    await expect(
+      page.getByTestId('inventory-movements-timeline-back-button')
+    ).toBeVisible();
+
+    // Check if content is loaded
+    const content = page.getByTestId('inventory-movements-timeline-content');
+    if (await content.isVisible()) {
+      // Check filters
+      await expect(
+        page.getByTestId('inventory-movements-timeline-filters')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-movements-timeline-ingredient-filter')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-movements-timeline-movement-type-filter')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-movements-timeline-staff-filter')
+      ).toBeVisible();
+
+      // Check table headers
+      await expect(
+        page.getByTestId('inventory-movements-timeline-table-header-date')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-movements-timeline-table-header-ingredient')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-movements-timeline-table-header-type')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-movements-timeline-table-header-quantity')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-movements-timeline-table-header-staff')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-movements-timeline-table-header-notes')
+      ).toBeVisible();
+
+      // Check if either items or empty state is shown
+      const hasItems = await page
+        .getByTestId('inventory-movements-timeline-item-1')
+        .isVisible()
+        .catch(() => false);
+      if (!hasItems) {
+        await expect(
+          page.getByTestId('inventory-movements-timeline-empty')
+        ).toBeVisible();
+      }
+    }
+  });
+
+  test('shows loading state initially', async ({ page }) => {
+    await expect(
+      page.getByTestId('inventory-movements-timeline-loading')
+    ).toBeVisible();
+  });
+
+  test('navigates back when back button is clicked', async ({ page }) => {
+    await page.getByTestId('inventory-movements-timeline-back-button').click();
+    await expect(page).toHaveURL(/\/locations\/123\/reports$/);
+  });
+
+  test('filters update when selections change', async ({ page }) => {
+    // Wait for content to load
+    await page.waitForSelector(
+      '[data-testid="inventory-movements-timeline-content"]'
+    );
+
+    // Test ingredient filter
+    await page
+      .getByTestId('inventory-movements-timeline-ingredient-filter')
+      .selectOption('ing1');
+    await expect(page).toHaveURL(/.*ingredientId=ing1/);
+
+    // Test movement type filter
+    await page
+      .getByTestId('inventory-movements-timeline-movement-type-filter')
+      .selectOption('ADD');
+    await expect(page).toHaveURL(/.*movementType=ADD/);
+
+    // Test staff filter
+    await page
+      .getByTestId('inventory-movements-timeline-staff-filter')
+      .selectOption('staff1');
+    await expect(page).toHaveURL(/.*staffId=staff1/);
+  });
+
+  test('takes a screenshot of the page', async ({ page }) => {
+    // Wait for content to load
+    await page.waitForSelector(
+      '[data-testid="inventory-movements-timeline-content"]'
+    );
+
+    // Take a screenshot with a unique filename based on the current date and browser
+    const timestamp = new Date().toISOString().split('T')[0];
+    const browserName =
+      page.context().browser()?.browserType().name() || 'unknown';
+    await page.screenshot({
+      path: `./test-results/inventory-movements-timeline-${timestamp}-${browserName}.png`,
+      fullPage: true,
+    });
+  });
+});

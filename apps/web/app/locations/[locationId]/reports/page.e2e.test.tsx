@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
 
 /**
  * E2E Testing Guide:
@@ -9,7 +9,7 @@ import { test, expect } from '@playwright/test'
  * 5. Test responsive behavior if needed
  * 6. Test any loading states
  * 7. Test any error states
- * 
+ *
  * Note: Use the URL path provided in the generator
  * and ensure all testIds match the page component.
  */
@@ -20,25 +20,84 @@ import { test, expect } from '@playwright/test'
 
 test.describe('ReportsOverviewPage', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/locations/123/reports')
-  })
+    await page.goto('/locations/123/reports');
+  });
 
   test('renders all required elements', async ({ page }) => {
     // Check that all elements are visible
-    await expect(page.getByTestId('reports-overview-page')).toBeVisible()
-    await expect(page.getByTestId('reports-overview-title')).toBeVisible()
-    await expect(page.getByTestId('reports-overview-content')).toBeVisible()
-  })
+    await expect(page.getByTestId('reports-overview-page')).toBeVisible();
+    await expect(page.getByTestId('reports-overview-title')).toBeVisible();
+    await expect(
+      page.getByTestId('reports-overview-back-button')
+    ).toBeVisible();
+    await expect(page.getByTestId('reports-overview-content')).toBeVisible();
+    await expect(
+      page.getByTestId('reports-overview-inventory-summary-link')
+    ).toBeVisible();
+    await expect(
+      page.getByTestId('reports-overview-inventory-timeline-link')
+    ).toBeVisible();
+  });
+
+  test('navigates back when back button is clicked', async ({ page }) => {
+    // Click the back button
+    await page.getByTestId('reports-overview-back-button').click();
+
+    // Verify we're back at the location detail page
+    await expect(page).toHaveURL('/locations/123');
+  });
+
+  test('navigates to inventory summary report', async ({ page }) => {
+    // Click the inventory summary link
+    await page.getByTestId('reports-overview-inventory-summary-link').click();
+
+    // Verify we're on the inventory summary page
+    await expect(page).toHaveURL('/locations/123/reports/inventory-summary');
+  });
+
+  test('navigates to inventory timeline report', async ({ page }) => {
+    // Click the inventory timeline link
+    await page.getByTestId('reports-overview-inventory-timeline-link').click();
+
+    // Verify we're on the inventory timeline page
+    await expect(page).toHaveURL(
+      '/locations/123/reports/inventory-movements-timeline'
+    );
+  });
+
+  test('shows loading state', async ({ page }) => {
+    // Reload the page to trigger loading state
+    await page.reload();
+
+    // Check loading spinner is visible
+    await expect(page.getByTestId('reports-overview-loading')).toBeVisible();
+  });
+
+  test('shows error state when API fails', async ({ page }) => {
+    // Mock API failure
+    await page.route('**/api/locations/*', (route) =>
+      route.fulfill({
+        status: 500,
+        body: JSON.stringify({ message: 'Internal Server Error' }),
+      })
+    );
+
+    // Reload the page to trigger error state
+    await page.reload();
+
+    // Check error message is visible
+    await expect(page.getByTestId('reports-overview-error')).toBeVisible();
+  });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {
     // Get current date/time for unique screenshot name
-    const now = new Date()
-    const timestamp = now.toISOString().replace(/[:.]/g, '-')
-    
+    const now = new Date();
+    const timestamp = now.toISOString().replace(/[:.]/g, '-');
+
     // Take screenshot with timestamp and browser name
-    await page.screenshot({ 
+    await page.screenshot({
       path: `./screenshots/reports-overview_${browserName}_${timestamp}.png`,
-      fullPage: true 
-    })
-  })
-}) 
+      fullPage: true,
+    });
+  });
+});

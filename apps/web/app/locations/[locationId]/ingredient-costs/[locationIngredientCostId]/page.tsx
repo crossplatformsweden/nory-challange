@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-// TODO USE THIS HOOK
+import { useParams, useRouter } from 'next/navigation';
 import { useGetLocationIngredientCostById } from '@nory/api-client';
 
 /**
@@ -59,26 +59,176 @@ import { useGetLocationIngredientCostById } from '@nory/api-client';
  
  */
 
-interface IngredientCostDetailPageProps {}
+const IngredientCostDetailPage: FC = () => {
+  const { locationId, locationIngredientCostId } = useParams();
+  const router = useRouter();
 
-const IngredientCostDetailPage: FC<IngredientCostDetailPageProps> = () => {
+  const { data, isLoading, error } = useGetLocationIngredientCostById(
+    locationId as string,
+    locationIngredientCostId as string
+  );
+
+  const handleGoBack = () => {
+    router.back();
+  };
+
   return (
     <div
-      className="card bg-base-100 shadow-xl"
+      className="container mx-auto px-4 py-8"
       data-testid="ingredient-cost-detail-page"
     >
-      <div className="card-body">
-        <h1
-          className="card-title text-2xl font-bold"
-          data-testid="ingredient-cost-detail-title"
-        >
-          IngredientCostDetail Page
-        </h1>
-
-        <div data-testid="ingredient-cost-detail-content">
-          Add your content here
+      {/* Page Header */}
+      <div className="mb-6 flex items-center justify-between">
+        <div className="flex items-center">
+          <button
+            onClick={handleGoBack}
+            className="btn btn-circle btn-ghost mr-4"
+            data-testid="ingredient-cost-detail-back-button"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+          <h1
+            className="text-3xl font-bold"
+            data-testid="ingredient-cost-detail-title"
+          >
+            Ingredient Cost Details
+          </h1>
         </div>
       </div>
+
+      {/* Loading State */}
+      {isLoading && (
+        <div
+          className="my-8 flex justify-center"
+          data-testid="ingredient-cost-detail-loading"
+        >
+          <span className="loading loading-spinner loading-lg"></span>
+        </div>
+      )}
+
+      {/* Error State */}
+      {error && (
+        <div
+          className="alert alert-error"
+          data-testid="ingredient-cost-detail-error"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 shrink-0 stroke-current"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>
+            Error loading ingredient cost:{' '}
+            {error instanceof Error ? error.message : 'Unknown error'}
+          </span>
+        </div>
+      )}
+
+      {/* Content */}
+      {!isLoading && !error && data?.data && (
+        <div
+          className="card bg-base-100 shadow-xl"
+          data-testid="ingredient-cost-detail-content"
+        >
+          <div className="card-body">
+            <div className="grid gap-6 md:grid-cols-2">
+              {/* Ingredient Information */}
+              <div className="card bg-base-200">
+                <div className="card-body">
+                  <h2
+                    className="card-title"
+                    data-testid="ingredient-cost-detail-ingredient-title"
+                  >
+                    Ingredient Information
+                  </h2>
+                  <div className="space-y-4">
+                    <div>
+                      <label
+                        className="text-sm font-semibold"
+                        data-testid="ingredient-cost-detail-ingredient-name-label"
+                      >
+                        Name
+                      </label>
+                      <p data-testid="ingredient-cost-detail-ingredient-name">
+                        {data.data.ingredientId}
+                      </p>
+                    </div>
+                    <div>
+                      <label
+                        className="text-sm font-semibold"
+                        data-testid="ingredient-cost-detail-ingredient-unit-label"
+                      >
+                        Unit
+                      </label>
+                      <p data-testid="ingredient-cost-detail-ingredient-unit">
+                        {data.data.ingredientId}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Cost Information */}
+              <div className="card bg-base-200">
+                <div className="card-body">
+                  <h2
+                    className="card-title"
+                    data-testid="ingredient-cost-detail-cost-title"
+                  >
+                    Cost Information
+                  </h2>
+                  <div className="space-y-4">
+                    <div>
+                      <label
+                        className="text-sm font-semibold"
+                        data-testid="ingredient-cost-detail-cost-value-label"
+                      >
+                        Cost
+                      </label>
+                      <p data-testid="ingredient-cost-detail-cost-value">
+                        ${data.data.costPerUnit.toFixed(2)}
+                      </p>
+                    </div>
+                    <div>
+                      <label
+                        className="text-sm font-semibold"
+                        data-testid="ingredient-cost-detail-cost-per-unit-label"
+                      >
+                        Cost per Unit
+                      </label>
+                      <p data-testid="ingredient-cost-detail-cost-per-unit">
+                        ${data.data.costPerUnit.toFixed(2)} per{' '}
+                        {data.data.ingredientId}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

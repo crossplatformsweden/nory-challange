@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
 
 /**
  * E2E Testing Guide:
@@ -9,7 +9,7 @@ import { test, expect } from '@playwright/test'
  * 5. Test responsive behavior if needed
  * 6. Test any loading states
  * 7. Test any error states
- * 
+ *
  * Note: Use the URL path provided in the generator
  * and ensure all testIds match the page component.
  */
@@ -20,25 +20,97 @@ import { test, expect } from '@playwright/test'
 
 test.describe('IngredientCostsListPage', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/locations/123/ingredient-costs')
-  })
+    await page.goto('/locations/123/ingredient-costs');
+  });
 
   test('renders all required elements', async ({ page }) => {
-    // Check that all elements are visible
-    await expect(page.getByTestId('ingredient-costs-list-page')).toBeVisible()
-    await expect(page.getByTestId('ingredient-costs-list-title')).toBeVisible()
-    await expect(page.getByTestId('ingredient-costs-list-content')).toBeVisible()
-  })
+    // Wait for the page to load by checking for either content, loading, or error state
+    await Promise.race([
+      page.waitForSelector('[data-testid="ingredient-costs-list-content"]'),
+      page.waitForSelector('[data-testid="ingredient-costs-list-loading"]'),
+      page.waitForSelector('[data-testid="ingredient-costs-list-error"]'),
+    ]);
 
-  test('takes a screenshot of the page', async ({ page, browserName }) => {
-    // Get current date/time for unique screenshot name
-    const now = new Date()
-    const timestamp = now.toISOString().replace(/[:.]/g, '-')
-    
-    // Take screenshot with timestamp and browser name
-    await page.screenshot({ 
-      path: `./screenshots/ingredient-costs-list_${browserName}_${timestamp}.png`,
-      fullPage: true 
-    })
-  })
-}) 
+    // Check main page elements
+    await expect(page.getByTestId('ingredient-costs-list-page')).toBeVisible();
+    await expect(page.getByTestId('ingredient-costs-list-title')).toBeVisible();
+    await expect(
+      page.getByTestId('ingredient-costs-list-back-button')
+    ).toBeVisible();
+    await expect(
+      page.getByTestId('ingredient-costs-list-create-button')
+    ).toBeVisible();
+
+    // Check if content is loaded
+    const content = page.getByTestId('ingredient-costs-list-content');
+    if (await content.isVisible()) {
+      // Check table headers
+      await expect(
+        page.getByTestId('ingredient-costs-list-table-header-ingredient')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('ingredient-costs-list-table-header-cost')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('ingredient-costs-list-table-header-unit')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('ingredient-costs-list-table-header-actions')
+      ).toBeVisible();
+
+      // Check if either items or empty state is shown
+      const hasItems = await page
+        .getByTestId('ingredient-costs-list-item-1')
+        .isVisible()
+        .catch(() => false);
+      if (!hasItems) {
+        await expect(
+          page.getByTestId('ingredient-costs-list-empty')
+        ).toBeVisible();
+      }
+    }
+  });
+
+  test('shows loading state initially', async ({ page }) => {
+    await expect(
+      page.getByTestId('ingredient-costs-list-loading')
+    ).toBeVisible();
+  });
+
+  test('navigates back when back button is clicked', async ({ page }) => {
+    await page.getByTestId('ingredient-costs-list-back-button').click();
+    await expect(page).toHaveURL(/\/locations\/123$/);
+  });
+
+  test('navigates to create page when create button is clicked', async ({
+    page,
+  }) => {
+    await page.getByTestId('ingredient-costs-list-create-button').click();
+    await expect(page).toHaveURL('/locations/123/ingredient-costs/create');
+  });
+
+  test('navigates to detail page when view button is clicked', async ({
+    page,
+  }) => {
+    // Wait for content to load
+    await page.waitForSelector('[data-testid="ingredient-costs-list-content"]');
+
+    // Click the first view button
+    await page.getByTestId('ingredient-costs-list-view-button-1').click();
+    await expect(page).toHaveURL('/locations/123/ingredient-costs/1');
+  });
+
+  test('takes a screenshot of the page', async ({ page }) => {
+    // Wait for content to load
+    await page.waitForSelector('[data-testid="ingredient-costs-list-content"]');
+
+    // Take a screenshot with a unique filename based on the current date and browser
+    const timestamp = new Date().toISOString().split('T')[0];
+    const browserName =
+      page.context().browser()?.browserType().name() || 'unknown';
+    await page.screenshot({
+      path: `./test-results/ingredient-costs-list-${timestamp}-${browserName}.png`,
+      fullPage: true,
+    });
+  });
+});

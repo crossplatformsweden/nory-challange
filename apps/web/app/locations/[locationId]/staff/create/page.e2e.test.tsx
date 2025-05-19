@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
 
 /**
  * E2E Testing Guide:
@@ -9,7 +9,7 @@ import { test, expect } from '@playwright/test'
  * 5. Test responsive behavior if needed
  * 6. Test any loading states
  * 7. Test any error states
- * 
+ *
  * Note: Use the URL path provided in the generator
  * and ensure all testIds match the page component.
  */
@@ -20,25 +20,79 @@ import { test, expect } from '@playwright/test'
 
 test.describe('CreateStaffPage', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/locations/123/staff/create')
-  })
+    await page.goto('/locations/123/staff/create');
+  });
 
   test('renders all required elements', async ({ page }) => {
     // Check that all elements are visible
-    await expect(page.getByTestId('create-staff-page')).toBeVisible()
-    await expect(page.getByTestId('create-staff-title')).toBeVisible()
-    await expect(page.getByTestId('create-staff-content')).toBeVisible()
-  })
+    await expect(page.getByTestId('create-staff-page')).toBeVisible();
+    await expect(page.getByTestId('create-staff-title')).toBeVisible();
+    await expect(page.getByTestId('create-staff-cancel-button')).toBeVisible();
+    await expect(page.getByTestId('create-staff-content')).toBeVisible();
+    await expect(page.getByTestId('create-staff-name-input')).toBeVisible();
+    await expect(page.getByTestId('create-staff-email-input')).toBeVisible();
+    await expect(page.getByTestId('create-staff-role-select')).toBeVisible();
+    await expect(page.getByTestId('create-staff-submit-button')).toBeVisible();
+  });
+
+  test('shows validation errors for empty form submission', async ({
+    page,
+  }) => {
+    // Click submit without filling form
+    await page.getByTestId('create-staff-submit-button').click();
+
+    // Check for validation errors
+    await expect(page.getByTestId('create-staff-name-error')).toBeVisible();
+    await expect(page.getByTestId('create-staff-email-error')).toBeVisible();
+    await expect(page.getByTestId('create-staff-role-error')).toBeVisible();
+  });
+
+  test('shows validation error for invalid email', async ({ page }) => {
+    // Fill form with invalid email
+    await page.getByTestId('create-staff-name-input').fill('John Doe');
+    await page.getByTestId('create-staff-email-input').fill('invalid-email');
+    await page.getByTestId('create-staff-role-select').selectOption('STAFF');
+
+    // Submit form
+    await page.getByTestId('create-staff-submit-button').click();
+
+    // Check for email validation error
+    await expect(page.getByTestId('create-staff-email-error')).toBeVisible();
+  });
+
+  test('submits form with valid data', async ({ page }) => {
+    // Fill form with valid data
+    await page.getByTestId('create-staff-name-input').fill('John Doe');
+    await page.getByTestId('create-staff-email-input').fill('john@example.com');
+    await page.getByTestId('create-staff-role-select').selectOption('STAFF');
+
+    // Submit form
+    await page.getByTestId('create-staff-submit-button').click();
+
+    // Check for success message
+    await expect(page.getByTestId('create-staff-success')).toBeVisible();
+
+    // Check that we're redirected to staff list page
+    await expect(page).toHaveURL('/locations/123/staff');
+  });
+
+  test('navigates back when cancel button is clicked', async ({ page }) => {
+    // Click cancel button
+    await page.getByTestId('create-staff-cancel-button').click();
+
+    // Check that we're back at the staff list page
+    await expect(page).toHaveURL('/locations/123/staff');
+  });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {
     // Get current date/time for unique screenshot name
-    const now = new Date()
-    const timestamp = now.toISOString().replace(/[:.]/g, '-')
-    
+    const now = new Date();
+    const timestamp = now.toISOString().replace(/[:.]/g, '-');
+
     // Take screenshot with timestamp and browser name
-    await page.screenshot({ 
+    await page.screenshot({
       path: `./screenshots/create-staff_${browserName}_${timestamp}.png`,
-      fullPage: true 
-    })
-  })
-}) 
+      fullPage: true,
+    });
+  });
+});

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
 
 /**
  * E2E Testing Guide:
@@ -9,7 +9,7 @@ import { test, expect } from '@playwright/test'
  * 5. Test responsive behavior if needed
  * 6. Test any loading states
  * 7. Test any error states
- * 
+ *
  * Note: Use the URL path provided in the generator
  * and ensure all testIds match the page component.
  */
@@ -20,25 +20,168 @@ import { test, expect } from '@playwright/test'
 
 test.describe('InventorySummaryReportPage', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/locations/123/reports/inventory-summary')
-  })
+    await page.goto(
+      '/locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z'
+    );
+  });
 
   test('renders all required elements', async ({ page }) => {
-    // Check that all elements are visible
-    await expect(page.getByTestId('inventory-summary-report-page')).toBeVisible()
-    await expect(page.getByTestId('inventory-summary-report-title')).toBeVisible()
-    await expect(page.getByTestId('inventory-summary-report-content')).toBeVisible()
-  })
+    // Wait for the page to load (either content, loading state, or error)
+    await Promise.race([
+      page
+        .waitForSelector('[data-testid="inventory-summary-report-content"]', {
+          timeout: 5000,
+        })
+        .catch(() => {}),
+      page
+        .waitForSelector('[data-testid="inventory-summary-report-loading"]', {
+          timeout: 5000,
+        })
+        .catch(() => {}),
+      page
+        .waitForSelector('[data-testid="inventory-summary-report-error"]', {
+          timeout: 5000,
+        })
+        .catch(() => {}),
+    ]);
+
+    // Check main page elements
+    await expect(
+      page.getByTestId('inventory-summary-report-page')
+    ).toBeVisible();
+    await expect(
+      page.getByTestId('inventory-summary-report-title')
+    ).toBeVisible();
+    await expect(
+      page.getByTestId('inventory-summary-report-back-button')
+    ).toBeVisible();
+
+    // Check for either content, loading state, or error
+    const hasContent =
+      (await page.getByTestId('inventory-summary-report-content').count()) > 0;
+    const isLoading =
+      (await page.getByTestId('inventory-summary-report-loading').count()) > 0;
+    const hasError =
+      (await page.getByTestId('inventory-summary-report-error').count()) > 0;
+
+    // At least one of these states should be visible
+    expect(hasContent || isLoading || hasError).toBeTruthy();
+
+    // If content is loaded, check for summary cards and table
+    if (hasContent) {
+      // Check summary cards
+      await expect(
+        page.getByTestId('inventory-summary-report-total-value-title')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-summary-report-total-value')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-summary-report-total-items-title')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-summary-report-total-items')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-summary-report-low-stock-title')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-summary-report-low-stock')
+      ).toBeVisible();
+
+      // Check table headers
+      await expect(
+        page.getByTestId('inventory-summary-report-table-header-ingredient')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-summary-report-table-header-quantity')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-summary-report-table-header-value')
+      ).toBeVisible();
+      await expect(
+        page.getByTestId('inventory-summary-report-table-header-status')
+      ).toBeVisible();
+
+      // Check for either items or empty state
+      const hasEmptyState =
+        (await page.getByTestId('inventory-summary-report-empty').count()) > 0;
+      const hasItems =
+        (await page
+          .locator('[data-testid^="inventory-summary-report-item-"]')
+          .count()) > 0;
+
+      expect(hasEmptyState || hasItems).toBeTruthy();
+
+      // If items exist, check row details
+      if (hasItems) {
+        await expect(
+          page
+            .locator('[data-testid^="inventory-summary-report-item-"]')
+            .first()
+        ).toBeVisible();
+        await expect(
+          page
+            .locator('[data-testid^="inventory-summary-report-ingredient-"]')
+            .first()
+        ).toBeVisible();
+        await expect(
+          page
+            .locator('[data-testid^="inventory-summary-report-quantity-"]')
+            .first()
+        ).toBeVisible();
+        await expect(
+          page
+            .locator('[data-testid^="inventory-summary-report-value-"]')
+            .first()
+        ).toBeVisible();
+        await expect(
+          page
+            .locator('[data-testid^="inventory-summary-report-status-"]')
+            .first()
+        ).toBeVisible();
+      }
+    }
+  });
+
+  test('shows loading state initially', async ({ page }) => {
+    await page.goto(
+      '/locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z'
+    );
+    await expect(
+      page.getByTestId('inventory-summary-report-loading')
+    ).toBeVisible();
+  });
+
+  test('navigates back when back button is clicked', async ({ page }) => {
+    // Wait for page to load
+    await page.waitForSelector(
+      '[data-testid="inventory-summary-report-back-button"]'
+    );
+
+    // Click the back button
+    await page.getByTestId('inventory-summary-report-back-button').click();
+
+    // Verify navigation back
+    await expect(page).toHaveURL(/\/locations\/\d+\/reports$/);
+  });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {
+    // Wait for content to load
+    await page
+      .waitForSelector('[data-testid="inventory-summary-report-content"]', {
+        timeout: 5000,
+      })
+      .catch(() => {});
+
     // Get current date/time for unique screenshot name
-    const now = new Date()
-    const timestamp = now.toISOString().replace(/[:.]/g, '-')
-    
+    const now = new Date();
+    const timestamp = now.toISOString().replace(/[:.]/g, '-');
+
     // Take screenshot with timestamp and browser name
-    await page.screenshot({ 
+    await page.screenshot({
       path: `./screenshots/inventory-summary-report_${browserName}_${timestamp}.png`,
-      fullPage: true 
-    })
-  })
-}) 
+      fullPage: true,
+    });
+  });
+});

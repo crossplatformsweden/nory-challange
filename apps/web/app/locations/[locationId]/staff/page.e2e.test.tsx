@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
 
 /**
  * E2E Testing Guide:
@@ -9,7 +9,7 @@ import { test, expect } from '@playwright/test'
  * 5. Test responsive behavior if needed
  * 6. Test any loading states
  * 7. Test any error states
- * 
+ *
  * Note: Use the URL path provided in the generator
  * and ensure all testIds match the page component.
  */
@@ -20,25 +20,44 @@ import { test, expect } from '@playwright/test'
 
 test.describe('StaffListPage', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/locations/123/staff')
-  })
+    await page.goto('/locations/123/staff');
+  });
 
   test('renders all required elements', async ({ page }) => {
     // Check that all elements are visible
-    await expect(page.getByTestId('staff-list-page')).toBeVisible()
-    await expect(page.getByTestId('staff-list-title')).toBeVisible()
-    await expect(page.getByTestId('staff-list-content')).toBeVisible()
-  })
+    await expect(page.getByTestId('staff-list-page')).toBeVisible();
+    await expect(page.getByTestId('staff-list-title')).toBeVisible();
+    await expect(page.getByTestId('staff-list-content')).toBeVisible();
+    await expect(page.getByTestId('staff-list-create-button')).toBeVisible();
+  });
+
+  test('navigates to create staff page when clicking add button', async ({
+    page,
+  }) => {
+    await page.getByTestId('staff-list-create-button').click();
+    await expect(page).toHaveURL('/locations/123/staff/create');
+  });
+
+  test('navigates to staff detail page when clicking view details', async ({
+    page,
+  }) => {
+    // Wait for staff cards to be visible
+    await page.waitForSelector('[data-testid^="staff-card-"]');
+
+    // Click the first staff card's view details button
+    await page.getByTestId('staff-view-1').click();
+    await expect(page).toHaveURL('/locations/123/staff/1');
+  });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {
     // Get current date/time for unique screenshot name
-    const now = new Date()
-    const timestamp = now.toISOString().replace(/[:.]/g, '-')
-    
+    const now = new Date();
+    const timestamp = now.toISOString().replace(/[:.]/g, '-');
+
     // Take screenshot with timestamp and browser name
-    await page.screenshot({ 
+    await page.screenshot({
       path: `./screenshots/staff-list_${browserName}_${timestamp}.png`,
-      fullPage: true 
-    })
-  })
-}) 
+      fullPage: true,
+    });
+  });
+});
