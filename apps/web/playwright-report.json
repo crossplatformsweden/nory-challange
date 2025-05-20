@@ -87,7 +87,7 @@
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
-                  "projectName": "chromium",
+                  "projectName": "chrsomium",
                   "results": [
                     {
                       "workerIndex": 0,
