@@ -15,7 +15,7 @@ describe('StaffService', () => {
         bic: 'BIC123',
       },
     });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   it('deleteStaffAtLocation should return a success response for valid input', async () => {
@@ -23,7 +23,7 @@ describe('StaffService', () => {
       locationId: 'loc-1',
       staffId: 'staff-1',
     });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   it('getStaffByLocationAndId should return a success response for valid input', async () => {
@@ -31,14 +31,14 @@ describe('StaffService', () => {
       locationId: 'loc-1',
       staffId: 'staff-1',
     });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   it('listStaffByLocation should return a success response for valid input', async () => {
     const result = await StaffService.listStaffByLocation({
       locationId: 'loc-1',
     });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   it('updateStaffAtLocation should return a success response for valid input', async () => {
@@ -53,7 +53,7 @@ describe('StaffService', () => {
         bic: 'BIC456',
       },
     });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   // Add more tests for error cases, edge cases, etc. to reach 50+ lines

@@ -13,7 +13,7 @@ describe('RecipeIngredientLinksService', () => {
           quantity: 2,
         },
       });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   it('deleteRecipeIngredientLink should return a success response for valid input', async () => {
@@ -22,7 +22,7 @@ describe('RecipeIngredientLinksService', () => {
         recipeId: 'recipe-1',
         linkId: 'link-1',
       });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   it('listRecipeIngredientLinks should return a success response for valid input', async () => {
@@ -31,7 +31,7 @@ describe('RecipeIngredientLinksService', () => {
         recipeId: 'recipe-1',
       }
     );
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   it('getRecipeIngredientLinkById should return a success response for valid input', async () => {
@@ -40,7 +40,7 @@ describe('RecipeIngredientLinksService', () => {
         recipeId: 'recipe-1',
         linkId: 'link-1',
       });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   // Add more tests for error cases, edge cases, etc. to reach 50+ lines

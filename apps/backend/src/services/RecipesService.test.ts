@@ -8,26 +8,26 @@ describe('RecipesService', () => {
     const result = await RecipesService.createRecipe({
       recipeCreate: { name: 'Pizza', description: 'Delicious' },
     });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   it('deleteRecipe should return a success response for valid input', async () => {
     const result = await RecipesService.deleteRecipe({
       recipeId: 'recipe-1',
     });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   it('getRecipeById should return a success response for valid input', async () => {
     const result = await RecipesService.getRecipeById({
       recipeId: 'recipe-1',
     });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   it('listRecipes should return a success response', async () => {
     const result = await RecipesService.listRecipes();
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   it('updateRecipe should return a success response for valid input', async () => {
@@ -35,7 +35,7 @@ describe('RecipesService', () => {
       recipeId: 'recipe-1',
       recipeUpdate: { name: 'Updated Pizza', description: 'Even better' },
     });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   // Add more tests for error cases, edge cases, etc. to reach 50+ lines

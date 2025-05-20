@@ -8,26 +8,26 @@ describe('ModifiersService', () => {
     const result = await ModifiersService.createModifier({
       modifierCreate: { name: 'Test Modifier' },
     });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   it('deleteModifier should return a success response for valid input', async () => {
     const result = await ModifiersService.deleteModifier({
       modifierId: 'mod-1',
     });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   it('getModifierById should return a success response for valid input', async () => {
     const result = await ModifiersService.getModifierById({
       modifierId: 'mod-1',
     });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   it('listModifiers should return a success response', async () => {
     const result = await ModifiersService.listModifiers();
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   it('updateModifier should return a success response for valid input', async () => {
@@ -35,7 +35,7 @@ describe('ModifiersService', () => {
       modifierId: 'mod-1',
       modifierUpdate: { name: 'Updated Modifier' },
     });
-    expect(result).toHaveProperty('status');
+    expect(result).toHaveProperty('code');
   });
 
   // Add more tests for error cases, edge cases, etc. to reach 50+ lines
