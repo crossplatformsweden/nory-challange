@@ -28,20 +28,19 @@ Examine existing tests before writing a new test! Always source the file to test
 
 Verify end of file for latest test result. build-test-result.txt
 
-| Service File | Test File Exists? |
-| ------------ | ----------------- |
+Command.ts index.ts etc
 
 All required tests are present and passing. ✅
 
 ## TODOs
 
-- [ ] Implement missing test files for:
+- [x] Implement missing test files for:
   - ModifierOptionsService.ts
   - ModifiersService.ts
   - RecipeIngredientLinksService.ts
   - RecipesService.ts
   - StaffService.ts
-- [ ] Commit the new/updated test files.
+- [x] Commit the new/updated test files.
 
 Make sure all files are commited and pushed.
 
