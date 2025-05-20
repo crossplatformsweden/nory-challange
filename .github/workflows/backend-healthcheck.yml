@@ -1,0 +1,91 @@
+name: Backend Health Check
+
+on:
+  schedule:
+    # Run daily at midnight UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  health-check:
+    name: Backend API Health Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+          run_install: false
+          
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      
+      - name: Install dependencies
+        run: pnpm install
+      
+      - name: Build dependencies
+        run: pnpm --filter @repo/zod-clients build
+      
+      - name: Build backend
+        run: pnpm --filter backend build
+      
+      - name: Start backend server
+        run: |
+          pnpm --filter backend start &
+          # Save PID to kill it later
+          echo "SERVER_PID=$!" >> $GITHUB_ENV
+          # Wait for server to start
+          sleep 5
+      
+      - name: Check API Health
+        run: |
+          # Check if server is responding
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/api-docs/)
+          if [ "$response" -ne 200 ]; then
+            echo "API documentation is not available (status: $response)"
+            exit 1
+          fi
+          
+          # Check OpenAPI spec availability
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/openapi)
+          if [ "$response" -ne 200 ]; then
+            echo "OpenAPI spec is not available (status: $response)"
+            exit 1
+          fi
+          
+          # Check basic endpoints
+          for endpoint in "/api/v1/locations" "/api/v1/ingredients" "/api/v1/recipes"; do
+            response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080$endpoint)
+            if [ "$response" -ne 200 ]; then
+              echo "Endpoint $endpoint is not working (status: $response)"
+              exit 1
+            fi
+          done
+          
+          echo "✅ All health checks passed!"
+      
+      - name: Stop backend server
+        if: always()
+        run: |
+          if [ -n "$SERVER_PID" ]; then
+            kill $SERVER_PID || true
+          fi

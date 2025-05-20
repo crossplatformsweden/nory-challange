@@ -1,3 +1,3 @@
-import { nextJsConfig } from "@repo/eslint-config/next.js";
+import { supabaseConfig } from '@repo/eslint-config/supabase.js';
 
-export default nextJsConfig;
+export default supabaseConfig;

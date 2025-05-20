@@ -2,14 +2,19 @@
   "name": "nory-inventory-api",
   "version": "1.0.0",
   "description": "API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "type": "module",
   "scripts": {
-    "prestart": "npm install",
-    "start": "node index.js",
-    "dev": "node index.js",
-    "build": "echo 'No build step required'",
-    "lint": "eslint .",
-    "check-types": "echo 'No type checking required'"
+    "prestart": "pnpm install",
+    "start": "node dist/index.js",
+    "dev": "nodemon --watch src --ext ts,js,json --exec \"pnpm run build && pnpm run start\"",
+    "dev:ts": "node --loader ts-node/esm src/index.ts",
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "prebuild": "pnpm run clean",
+    "lint": "eslint src || true",
+    "check-types": "tsc --noEmit",
+    "test": "mocha --require ts-node/register src/**/*.test.ts"
   },
   "keywords": [
     "openapi-generator",
@@ -29,15 +34,29 @@
     "ono": "^5.0.1",
     "openapi-sampler": "^1.0.0-beta.15",
     "swagger-ui-express": "^4.0.2",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.19.5",
+    "@types/camelcase": "^5.2.0",
+    "@types/cookie-parser": "^1.4.7",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/js-yaml": "^3.12.10",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.25",
+    "@types/swagger-ui-express": "^4.1.6",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.17.2",
-    "mocha": "^7.1.1"
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "mocha": "^10.2.0",
+    "nodemon": "^3.1.0",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
   },
   "eslintConfig": {
     "env": {

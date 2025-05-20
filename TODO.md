@@ -264,3 +264,69 @@ Make 1 test at a time work. Make sure all test mockData is typed
    - Keep tests up to date with code changes
    - Remove obsolete tests
    - Update test documentation
+
+# JavaScript to TypeScript Conversion Plan for Backend
+
+## Setup Phase
+
+- [x] Create `tsconfig.json`
+- [x] Update `package.json` with TypeScript dependencies and scripts
+- [x] Setup build scripts and TypeScript configurations
+
+## Core Conversion Phase
+
+### Base Files
+
+- [x] Convert `config.js` → `config.ts`
+- [x] Convert `logger.js` → `logger.ts`
+- [x] Convert `index.js` → `index.ts`
+- [x] Convert `expressServer.js` → `expressServer.ts`
+
+### Utils
+
+- [x] Convert `utils/openapiRouter.js` → `utils/openapiRouter.ts`
+
+### Service Layer
+
+- [x] Convert `services/Service.js` → `services/Service.ts`
+- [x] Convert `services/index.js` → `services/index.ts`
+- [x] Convert `services/IngredientsService.js` → `services/IngredientsService.ts`
+- [x] Convert `services/InventoryMovementsService.js` → `services/InventoryMovementsService.ts`
+- [x] Convert `services/InventoryStockService.js` → `services/InventoryStockService.ts`
+- [x] Convert `services/LocationIngredientCostsService.js` → `services/LocationIngredientCostsService.ts`
+- [x] Convert `services/LocationMenuItemsService.js` → `services/LocationMenuItemsService.ts`
+- [x] Convert `services/LocationsService.js` → `services/LocationsService.ts`
+- [x] Convert `services/ModifierOptionsService.js` → `services/ModifierOptionsService.ts`
+- [x] Convert `services/ModifiersService.js` → `services/ModifiersService.ts`
+- [x] Convert `services/RecipeIngredientLinksService.js` → `services/RecipeIngredientLinksService.ts`
+- [x] Convert `services/RecipesService.js` → `services/RecipesService.ts`
+- [x] Convert `services/StaffService.js` → `services/StaffService.ts`
+
+### Controller Layer
+
+- [x] Convert `controllers/Controller.js` → `controllers/Controller.ts`
+- [x] Convert `controllers/index.js` → `controllers/index.ts`
+- [x] Convert `controllers/IngredientsController.js` → `controllers/IngredientsController.ts`
+- [x] Convert `controllers/InventoryMovementsController.js` → `controllers/InventoryMovementsController.ts`
+- [x] Convert `controllers/InventoryStockController.js` → `controllers/InventoryStockController.ts`
+- [x] Convert `controllers/LocationIngredientCostsController.js` → `controllers/LocationIngredientCostsController.ts`
+- [x] Convert `controllers/LocationMenuItemsController.js` → `controllers/LocationMenuItemsController.ts`
+- [x] Convert `controllers/LocationsController.js` → `controllers/LocationsController.ts`
+- [x] Convert `controllers/ModifierOptionsController.js` → `controllers/ModifierOptionsController.ts`
+- [x] Convert `controllers/ModifiersController.js` → `controllers/ModifiersController.ts`
+- [x] Convert `controllers/RecipeIngredientLinksController.js` → `controllers/RecipeIngredientLinksController.ts`
+- [x] Convert `controllers/RecipesController.js` → `controllers/RecipesController.ts`
+- [x] Convert `controllers/StaffController.js` → `controllers/StaffController.ts`
+
+## Testing
+
+- [x] Test with existing routes
+- [x] Validate request validation using Zod schemas
+- [x] Add GitHub Actions workflows for CI/CD
+
+## Future Improvements
+
+- [ ] Add integration tests
+- [ ] Add proper error handling for Zod validation
+- [ ] Add custom response types
+- [ ] Add comprehensive type documentation

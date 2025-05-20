@@ -1,6 +1,7 @@
 export * from './generated/ingredients/ingredients.zod';
 export * from './generated/locations/locations.zod';
 export * from './generated/modifiers/modifiers.zod';
+export * from './generated/modifier-options/modifier-options.zod';
 export * from './generated/recipe-ingredient-links/recipe-ingredient-links.zod';
 export * from './generated/recipes/recipes.zod';
 export * from './generated/staff/staff.zod';

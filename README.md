@@ -142,17 +142,29 @@ pnpm dev
 ```
 
 - The `web` application will be available at `http://localhost:3001`.
+- The `backend` application will be available at `http://localhost:8080`.
 - Storybook for the `ui` package will be available at `http://localhost:6006`.
 
 You can also run individual apps or packages:
 
 ```bash
-pnpm --filter web dev       # Start only the web app
-pnpm --filter @repo/ui dev  # Start only the ui package (watch mode for build)
-pnpm storybook             # Start only Storybook
+pnpm --filter web dev           # Start only the web app
+pnpm --filter backend dev       # Start only the backend with auto-restart
+pnpm --filter backend dev:ts    # Start only the backend using ts-node (faster)
+pnpm --filter @repo/ui dev      # Start only the ui package (watch mode for build)
+pnpm storybook                  # Start only Storybook
 ```
 
-The `web` application is configured to use [Mock Service Worker (MSW)](https://mswjs.io/) in development mode (controlled by `NEXT_PUBLIC_API_MOCKING=enabled` in `apps/web/.env.local`) and testing environments.
+#### Backend API Documentation
+
+The backend API documentation is accessible at:
+
+- API Documentation: `http://localhost:8080/api-docs/`
+- API Specification: `http://localhost:8080/openapi`
+
+The backend is built with Express.js, using an OpenAPI generated server structure that has been converted to TypeScript. It implements controllers and services that manage data for locations, inventory, menu items, and other entities.
+
+The `web` application is configured to use [Mock Service Worker (MSW)](https://mswjs.io/) in development mode (controlled by `NEXT_PUBLIC_API_MOCKING=enabled` in `apps/web/.env.local`) and testing environments. You can disable this to use the actual backend API instead.
 
 ## 📦 Available Scripts
 
