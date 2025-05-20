@@ -1,0 +1,3225 @@
+openapi: 3.0.0
+info:
+  description: "API for managing inventory, staff, locations, recipes, menu items,\
+    \ and related data for Nory."
+  title: Nory Inventory API
+  version: 1.0.0
+servers:
+- description: Production server
+  url: https://api.nory.example.com/api
+- description: Local development server
+  url: http://localhost:8080/api
+tags:
+- description: "Operations related to locations (restaurants, etc.)"
+  name: Locations
+- description: Operations related to staff members at specific locations
+  name: Staff
+- description: Operations related to core inventory item definitions
+  name: Ingredients
+- description: Operations related to global recipe definitions
+  name: Recipes
+- description: Operations linking recipes to ingredients and specifying quantities
+    required per recipe unit.
+  name: Recipe Ingredient Links
+- description: Operations related to global recipe modifier groups
+  name: Modifiers
+- description: Operations related to individual options within modifier groups.
+  name: Modifier Options
+- description: "Operations linking recipes to locations as menu items, with location-specific\
+    \ details like price and available modifiers."
+  name: Location Menu Items
+- description: Operations for managing location-specific costs for ingredients.
+  name: Location Ingredient Costs
+- description: Operations related to current inventory stock levels at locations.
+  name: Inventory Stock
+- description: "Operations logging changes in inventory stock (waste, restock, sales,\
+    \ transfers, etc.)."
+  name: Inventory Movements
+paths:
+  /locations:
+    get:
+      description: Retrieve a list of all locations managed in the inventory system.
+      operationId: listLocations
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Location'
+                type: array
+          description: A list of locations.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: List all locations
+      tags:
+      - Locations
+      x-eov-operation-handler: controllers/LocationsController
+    post:
+      description: Add a new location to the inventory system.
+      operationId: createLocation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationCreate'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: The newly created location.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Create a new location
+      tags:
+      - Locations
+      x-eov-operation-handler: controllers/LocationsController
+  /locations/{locationId}:
+    delete:
+      description: "Remove a location from the system. This might also require handling\
+        \ related data (staff, inventory, menu items, etc.)."
+      operationId: deleteLocation
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Location successfully deleted. (No content)
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Delete a location
+      tags:
+      - Locations
+      x-eov-operation-handler: controllers/LocationsController
+    get:
+      description: Retrieve a specific location using its unique ID.
+      operationId: getLocationById
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: The location details.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Get a single location by ID
+      tags:
+      - Locations
+      x-eov-operation-handler: controllers/LocationsController
+    patch:
+      description: Update details of an existing location.
+      operationId: updateLocation
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationUpdate'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: The updated location details.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Update a location
+      tags:
+      - Locations
+      x-eov-operation-handler: controllers/LocationsController
+  /locations/{locationId}/staff:
+    get:
+      description: Retrieve a list of all staff members working at the specified location.
+      operationId: listStaffByLocation
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Staff'
+                type: array
+          description: A list of staff members.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: List staff for a specific location
+      tags:
+      - Staff
+      x-eov-operation-handler: controllers/StaffController
+    post:
+      description: Add a new staff member associated with the specified location.
+      operationId: createStaffAtLocation
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StaffCreate'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Staff'
+          description: The newly created staff member.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Create a new staff member for a location
+      tags:
+      - Staff
+      x-eov-operation-handler: controllers/StaffController
+  /locations/{locationId}/staff/{staffId}:
+    delete:
+      description: Remove a staff member association with the specified location.
+      operationId: deleteStaffAtLocation
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: staffId
+        required: true
+        schema:
+          description: The unique identifier of the staff member.
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Staff member successfully deleted from location.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Delete a staff member from a location
+      tags:
+      - Staff
+      x-eov-operation-handler: controllers/StaffController
+    get:
+      description: Retrieve a specific staff member using their unique ID within the
+        context of a location.
+      operationId: getStaffByLocationAndId
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: staffId
+        required: true
+        schema:
+          description: The unique identifier of the staff member.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Staff'
+          description: The staff member details.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Get a staff member by ID for a specific location
+      tags:
+      - Staff
+      x-eov-operation-handler: controllers/StaffController
+    patch:
+      description: Update details of an existing staff member associated with the
+        specified location.
+      operationId: updateStaffAtLocation
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: staffId
+        required: true
+        schema:
+          description: The unique identifier of the staff member.
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StaffUpdate'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Staff'
+          description: The updated staff member details.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Update a staff member for a location
+      tags:
+      - Staff
+      x-eov-operation-handler: controllers/StaffController
+  /ingredients:
+    get:
+      description: Retrieve a list of all defined inventory ingredients.
+      operationId: listIngredients
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Ingredient'
+                type: array
+          description: A list of ingredients.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: List all ingredients
+      tags:
+      - Ingredients
+      x-eov-operation-handler: controllers/IngredientsController
+    post:
+      description: Add a new ingredient definition to the inventory.
+      operationId: createIngredient
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IngredientCreate'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingredient'
+          description: The newly created ingredient.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Create a new ingredient
+      tags:
+      - Ingredients
+      x-eov-operation-handler: controllers/IngredientsController
+  /ingredients/{ingredientId}:
+    delete:
+      description: Remove an ingredient definition from the system. This might require
+        checks for existing stock or recipe links.
+      operationId: deleteIngredient
+      parameters:
+      - explode: false
+        in: path
+        name: ingredientId
+        required: true
+        schema:
+          description: The unique identifier of the ingredient.
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Ingredient successfully deleted.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Delete an ingredient
+      tags:
+      - Ingredients
+      x-eov-operation-handler: controllers/IngredientsController
+    get:
+      description: Retrieve a specific ingredient definition using its unique ID.
+      operationId: getIngredientById
+      parameters:
+      - explode: false
+        in: path
+        name: ingredientId
+        required: true
+        schema:
+          description: The unique identifier of the ingredient.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingredient'
+          description: The ingredient details.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Get an ingredient by ID
+      tags:
+      - Ingredients
+      x-eov-operation-handler: controllers/IngredientsController
+    patch:
+      description: Update details of an existing ingredient definition.
+      operationId: updateIngredient
+      parameters:
+      - explode: false
+        in: path
+        name: ingredientId
+        required: true
+        schema:
+          description: The unique identifier of the ingredient.
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IngredientUpdate'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingredient'
+          description: The updated ingredient details.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Update an ingredient
+      tags:
+      - Ingredients
+      x-eov-operation-handler: controllers/IngredientsController
+  /recipes:
+    get:
+      description: Retrieve a list of all defined recipes.
+      operationId: listRecipes
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Recipe'
+                type: array
+          description: A list of recipes.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: List all recipes
+      tags:
+      - Recipes
+      x-eov-operation-handler: controllers/RecipesController
+    post:
+      description: Add a new recipe definition.
+      operationId: createRecipe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeCreate'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+          description: The newly created recipe.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Create a new recipe
+      tags:
+      - Recipes
+      x-eov-operation-handler: controllers/RecipesController
+  /recipes/{recipeId}:
+    delete:
+      description: Remove a recipe definition. This might require checks for existing
+        ingredient links or menu item links.
+      operationId: deleteRecipe
+      parameters:
+      - explode: false
+        in: path
+        name: recipeId
+        required: true
+        schema:
+          description: The unique identifier of the recipe.
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Recipe successfully deleted.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Delete a recipe
+      tags:
+      - Recipes
+      x-eov-operation-handler: controllers/RecipesController
+    get:
+      description: Retrieve a specific recipe using its unique ID.
+      operationId: getRecipeById
+      parameters:
+      - explode: false
+        in: path
+        name: recipeId
+        required: true
+        schema:
+          description: The unique identifier of the recipe.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+          description: The recipe details.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Get a recipe by ID
+      tags:
+      - Recipes
+      x-eov-operation-handler: controllers/RecipesController
+    patch:
+      description: Update details of an existing recipe definition.
+      operationId: updateRecipe
+      parameters:
+      - explode: false
+        in: path
+        name: recipeId
+        required: true
+        schema:
+          description: The unique identifier of the recipe.
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeUpdate'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+          description: The updated recipe details.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Update a recipe
+      tags:
+      - Recipes
+      x-eov-operation-handler: controllers/RecipesController
+  /recipes/{recipeId}/ingredientLinks:
+    get:
+      description: "Retrieve a list of all ingredients required for the specified\
+        \ recipe, including their quantities."
+      operationId: listRecipeIngredientLinks
+      parameters:
+      - explode: false
+        in: path
+        name: recipeId
+        required: true
+        schema:
+          description: The unique identifier of the recipe.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/RecipeIngredientLink'
+                type: array
+          description: A list of recipe ingredient links.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: List ingredient links for a recipe
+      tags:
+      - Recipe Ingredient Links
+      x-eov-operation-handler: controllers/RecipeIngredientLinksController
+    post:
+      description: Link an ingredient to a recipe with a specific required quantity.
+      operationId: createRecipeIngredientLink
+      parameters:
+      - explode: false
+        in: path
+        name: recipeId
+        required: true
+        schema:
+          description: The unique identifier of the recipe.
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeIngredientLinkCreate'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeIngredientLink'
+          description: The newly created recipe-ingredient link.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request could not be completed due to a conflict with the
+            current state of the resource.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Add an ingredient to a recipe
+      tags:
+      - Recipe Ingredient Links
+      x-eov-operation-handler: controllers/RecipeIngredientLinksController
+  /recipes/{recipeId}/ingredientLinks/{recipeIngredientLinkId}:
+    delete:
+      description: Remove a specific ingredient requirement from a recipe.
+      operationId: deleteRecipeIngredientLink
+      parameters:
+      - explode: false
+        in: path
+        name: recipeId
+        required: true
+        schema:
+          description: The unique identifier of the recipe.
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: recipeIngredientLinkId
+        required: true
+        schema:
+          description: The unique identifier of the recipe-ingredient link.
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Recipe ingredient link successfully removed.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Remove a recipe ingredient link
+      tags:
+      - Recipe Ingredient Links
+      x-eov-operation-handler: controllers/RecipeIngredientLinksController
+  /modifiers:
+    get:
+      description: "Retrieve a list of all defined modifier groups (e.g., \"Milk Options\"\
+        )."
+      operationId: listModifiers
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Modifier'
+                type: array
+          description: A list of modifiers.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: List all modifiers
+      tags:
+      - Modifiers
+      x-eov-operation-handler: controllers/ModifiersController
+    post:
+      description: Add a new modifier group definition.
+      operationId: createModifier
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifierCreate'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Modifier'
+          description: The newly created modifier.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Create a new modifier group
+      tags:
+      - Modifiers
+      x-eov-operation-handler: controllers/ModifiersController
+  /modifiers/{modifierId}:
+    delete:
+      description: Remove a modifier group definition. This might require checks for
+        existing options or menu item links.
+      operationId: deleteModifier
+      parameters:
+      - explode: false
+        in: path
+        name: modifierId
+        required: true
+        schema:
+          description: The unique identifier of the modifier group.
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Modifier group successfully deleted.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Delete a modifier group
+      tags:
+      - Modifiers
+      x-eov-operation-handler: controllers/ModifiersController
+    get:
+      description: Retrieve a specific modifier group using its unique ID.
+      operationId: getModifierById
+      parameters:
+      - explode: false
+        in: path
+        name: modifierId
+        required: true
+        schema:
+          description: The unique identifier of the modifier group.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Modifier'
+          description: The modifier details.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Get a modifier by ID
+      tags:
+      - Modifiers
+      x-eov-operation-handler: controllers/ModifiersController
+    patch:
+      description: Update details of an existing modifier group definition.
+      operationId: updateModifier
+      parameters:
+      - explode: false
+        in: path
+        name: modifierId
+        required: true
+        schema:
+          description: The unique identifier of the modifier group.
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifierUpdate'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Modifier'
+          description: The updated modifier details.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Update a modifier group
+      tags:
+      - Modifiers
+      x-eov-operation-handler: controllers/ModifiersController
+  /modifiers/{modifierId}/options:
+    get:
+      description: Retrieve a list of all individual options within the specified
+        modifier group.
+      operationId: listModifierOptions
+      parameters:
+      - explode: false
+        in: path
+        name: modifierId
+        required: true
+        schema:
+          description: The unique identifier of the modifier group.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ModifierOption'
+                type: array
+          description: A list of modifier options.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: List options for a modifier group
+      tags:
+      - Modifier Options
+      x-eov-operation-handler: controllers/ModifierOptionsController
+    post:
+      description: Add a new individual option to an existing modifier group.
+      operationId: createModifierOption
+      parameters:
+      - explode: false
+        in: path
+        name: modifierId
+        required: true
+        schema:
+          description: The unique identifier of the modifier group.
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifierOptionCreate'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModifierOption'
+          description: The newly created modifier option.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Create a new modifier option for a group
+      tags:
+      - Modifier Options
+      x-eov-operation-handler: controllers/ModifierOptionsController
+  /modifiers/{modifierId}/options/{modifierOptionId}:
+    delete:
+      description: Remove a specific modifier option from the specified modifier group.
+      operationId: deleteModifierOption
+      parameters:
+      - explode: false
+        in: path
+        name: modifierId
+        required: true
+        schema:
+          description: The unique identifier of the modifier group.
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: modifierOptionId
+        required: true
+        schema:
+          description: The unique identifier of the modifier option.
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Modifier option successfully deleted.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Delete a modifier option from a group
+      tags:
+      - Modifier Options
+      x-eov-operation-handler: controllers/ModifierOptionsController
+    get:
+      description: Retrieve a specific modifier option using its unique ID within
+        the context of a modifier group.
+      operationId: getModifierOptionById
+      parameters:
+      - explode: false
+        in: path
+        name: modifierId
+        required: true
+        schema:
+          description: The unique identifier of the modifier group.
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: modifierOptionId
+        required: true
+        schema:
+          description: The unique identifier of the modifier option.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModifierOption'
+          description: The modifier option details.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Get a modifier option by ID for a group
+      tags:
+      - Modifier Options
+      x-eov-operation-handler: controllers/ModifierOptionsController
+    patch:
+      description: Update details of an existing modifier option within the specified
+        modifier group.
+      operationId: updateModifierOption
+      parameters:
+      - explode: false
+        in: path
+        name: modifierId
+        required: true
+        schema:
+          description: The unique identifier of the modifier group.
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: modifierOptionId
+        required: true
+        schema:
+          description: The unique identifier of the modifier option.
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifierOptionUpdate'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModifierOption'
+          description: The updated modifier option details.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Update a modifier option for a group
+      tags:
+      - Modifier Options
+      x-eov-operation-handler: controllers/ModifierOptionsController
+  /locations/{locationId}/menuItems:
+    get:
+      description: "Retrieve a list of all menu items available at the specified location,\
+        \ including prices and enabled modifiers."
+      operationId: listLocationMenuItems
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/LocationMenuItem'
+                type: array
+          description: A list of menu items for the location.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: List menu items for a specific location
+      tags:
+      - Location Menu Items
+      x-eov-operation-handler: controllers/LocationMenuItemsController
+    post:
+      description: "Create a link between a recipe and a location, defining its price\
+        \ and available modifiers as a menu item."
+      operationId: createLocationMenuItem
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationMenuItemCreate'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationMenuItem'
+          description: The newly created location menu item.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request could not be completed due to a conflict with the
+            current state of the resource.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Add a recipe as a menu item to a location
+      tags:
+      - Location Menu Items
+      x-eov-operation-handler: controllers/LocationMenuItemsController
+  /locations/{locationId}/menuItems/{menuItemId}:
+    delete:
+      description: Make a menu item unavailable at a specific location.
+      operationId: deleteLocationMenuItem
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: menuItemId
+        required: true
+        schema:
+          description: The unique identifier of the menu item for this location.
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Menu item successfully removed from location.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Remove a menu item from a location
+      tags:
+      - Location Menu Items
+      x-eov-operation-handler: controllers/LocationMenuItemsController
+    get:
+      description: Retrieve a specific menu item using its unique ID within the context
+        of a location.
+      operationId: getLocationMenuItemById
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: menuItemId
+        required: true
+        schema:
+          description: The unique identifier of the menu item for this location.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationMenuItem'
+          description: The menu item details.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Get a menu item by ID for a location
+      tags:
+      - Location Menu Items
+      x-eov-operation-handler: controllers/LocationMenuItemsController
+    patch:
+      description: Update details (like price or modifiers) of an existing menu item
+        at the specified location.
+      operationId: updateLocationMenuItem
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: menuItemId
+        required: true
+        schema:
+          description: The unique identifier of the menu item for this location.
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationMenuItemUpdate'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationMenuItem'
+          description: The updated menu item details.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Update a menu item for a location
+      tags:
+      - Location Menu Items
+      x-eov-operation-handler: controllers/LocationMenuItemsController
+  /locations/{locationId}/ingredientCosts:
+    get:
+      description: Retrieve a list of location-specific costs for ingredients.
+      operationId: listLocationIngredientCosts
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/LocationIngredientCost'
+                type: array
+          description: A list of location ingredient cost records.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: List ingredient costs for a specific location
+      tags:
+      - Location Ingredient Costs
+      x-eov-operation-handler: controllers/LocationIngredientCostsController
+    post:
+      description: Define the cost of an ingredient specifically for a location.
+      operationId: createLocationIngredientCost
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationIngredientCostCreate'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationIngredientCost'
+          description: The newly created location ingredient cost record.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request could not be completed due to a conflict with the
+            current state of the resource.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Create a location-specific ingredient cost record
+      tags:
+      - Location Ingredient Costs
+      x-eov-operation-handler: controllers/LocationIngredientCostsController
+  /locations/{locationId}/ingredientCosts/{locationIngredientCostId}:
+    delete:
+      description: Remove a specific ingredient cost record for a location.
+      operationId: deleteLocationIngredientCost
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: locationIngredientCostId
+        required: true
+        schema:
+          description: The unique identifier of the location ingredient cost record.
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Location ingredient cost record successfully deleted.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Delete a location-specific ingredient cost record
+      tags:
+      - Location Ingredient Costs
+      x-eov-operation-handler: controllers/LocationIngredientCostsController
+    get:
+      description: Retrieve a specific ingredient cost record for a location using
+        its unique ID.
+      operationId: getLocationIngredientCostById
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: locationIngredientCostId
+        required: true
+        schema:
+          description: The unique identifier of the location ingredient cost record.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationIngredientCost'
+          description: The location ingredient cost details.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Get a location-specific ingredient cost by ID
+      tags:
+      - Location Ingredient Costs
+      x-eov-operation-handler: controllers/LocationIngredientCostsController
+    patch:
+      description: Update the cost value for an existing ingredient cost record at
+        a location.
+      operationId: updateLocationIngredientCost
+      parameters:
+      - explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          description: The unique identifier of the location.
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: locationIngredientCostId
+        required: true
+        schema:
+          description: The unique identifier of the location ingredient cost record.
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationIngredientCostUpdate'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationIngredientCost'
+          description: The updated location ingredient cost record.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Update a location-specific ingredient cost
+      tags:
+      - Location Ingredient Costs
+      x-eov-operation-handler: controllers/LocationIngredientCostsController
+  /inventory_stock:
+    get:
+      description: "Retrieve current inventory stock levels, optionally filtered by\
+        \ location or ingredient. Includes embedded location and ingredient summaries."
+      operationId: listInventoryStock
+      parameters:
+      - description: "Optional, filter stock by location ID."
+        explode: true
+        in: query
+        name: locationId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Optional, filter stock by ingredient ID."
+        explode: true
+        in: query
+        name: ingredientId
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/InventoryStock'
+                type: array
+          description: A list of inventory stock records.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: List inventory stock levels
+      tags:
+      - Inventory Stock
+      x-eov-operation-handler: controllers/InventoryStockController
+    post:
+      description: Create a record for an ingredient's stock level at a specific location.
+        This is typically for initial setup or adding an item to a location for the
+        first time. Subsequent changes should use movements.
+      operationId: createInventoryStock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryStockCreate'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryStock'
+          description: The newly created inventory stock record.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request could not be completed due to a conflict with the
+            current state of the resource.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Create a new inventory stock record
+      tags:
+      - Inventory Stock
+      x-eov-operation-handler: controllers/InventoryStockController
+  /inventory_stock/{stockId}:
+    delete:
+      description: Remove a specific ingredient's stock record for a location. Use
+        with caution as this removes the historical link.
+      operationId: deleteInventoryStock
+      parameters:
+      - explode: false
+        in: path
+        name: stockId
+        required: true
+        schema:
+          description: The unique identifier of the inventory stock record (the link
+            between ingredient and location).
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Inventory stock record successfully deleted.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Delete an inventory stock record
+      tags:
+      - Inventory Stock
+      x-eov-operation-handler: controllers/InventoryStockController
+    get:
+      description: Retrieve a specific inventory stock record. Includes embedded location
+        and ingredient summaries.
+      operationId: getInventoryStockById
+      parameters:
+      - explode: false
+        in: path
+        name: stockId
+        required: true
+        schema:
+          description: The unique identifier of the inventory stock record (the link
+            between ingredient and location).
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryStock'
+          description: The inventory stock record.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: Get an inventory stock record by ID
+      tags:
+      - Inventory Stock
+      x-eov-operation-handler: controllers/InventoryStockController
+    patch:
+      description: Directly adjust the quantity of a specific ingredient at a location.
+        Consider using Inventory Movements for auditable changes.
+      operationId: updateInventoryStock
+      parameters:
+      - explode: false
+        in: path
+        name: stockId
+        required: true
+        schema:
+          description: The unique identifier of the inventory stock record (the link
+            between ingredient and location).
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryStockUpdate'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryStock'
+          description: The updated inventory stock record.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: "Update an inventory stock entry (e.g., adjust quantity)"
+      tags:
+      - Inventory Stock
+      x-eov-operation-handler: controllers/InventoryStockController
+  /inventory_movements:
+    get:
+      description: "Retrieve a history of inventory stock changes (movements), useful\
+        \ for tracking usage, waste, and restocking. Includes embedded ingredient\
+        \ summaries."
+      operationId: listInventoryMovements
+      parameters:
+      - description: "Optional, filter movements by location ID."
+        explode: true
+        in: query
+        name: locationId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Optional, filter movements by ingredient ID."
+        explode: true
+        in: query
+        name: ingredientId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Optional, filter movements by type."
+        explode: true
+        in: query
+        name: type
+        required: false
+        schema:
+          enum:
+          - waste
+          - restock
+          - sale
+          - adjustment
+          - transfer_in
+          - transfer_out
+          type: string
+        style: form
+      - description: "Optional, filter movements from this timestamp onwards."
+        explode: true
+        in: query
+        name: startTime
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "Optional, filter movements up to this timestamp."
+        explode: true
+        in: query
+        name: endTime
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/InventoryMovement'
+                type: array
+          description: A list of inventory movements.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: List inventory movements (stock changes)
+      tags:
+      - Inventory Movements
+      x-eov-operation-handler: controllers/InventoryMovementsController
+    post:
+      description: Record a change in stock for a specific ingredient at a location.
+        This is the preferred way to track stock changes over direct stock updates.
+      operationId: createInventoryMovement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryMovementCreate'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryMovement'
+          description: The newly created inventory movement record.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The request was malformed or invalid.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error occurred on the server.
+      summary: "Create a new inventory movement (e.g., log waste or restock)"
+      tags:
+      - Inventory Movements
+      x-eov-operation-handler: controllers/InventoryMovementsController
+components:
+  responses:
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: The specified resource was not found.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: The request was malformed or invalid.
+    Conflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: The request could not be completed due to a conflict with the current
+        state of the resource.
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: An unexpected error occurred on the server.
+  schemas:
+    ErrorResponse:
+      description: Standard error response structure.
+      example:
+        instance: /api/locations
+        detail: The 'name' field is required.
+        type: https://example.com/problems/invalid-request
+        title: Invalid Request Parameters
+        errors:
+          name:
+          - Name cannot be empty
+          quantity:
+          - Quantity must be a positive number
+        status: 400
+      properties:
+        type:
+          description: A URI reference that identifies the problem type.
+          example: https://example.com/problems/invalid-request
+          format: url
+          type: string
+        title:
+          description: "A short, human-readable summary of the problem type."
+          example: Invalid Request Parameters
+          minLength: 1
+          type: string
+        status:
+          description: The HTTP status code generated by the origin server.
+          example: 400
+          maximum: 599
+          minimum: 100
+          type: integer
+        detail:
+          description: A human-readable explanation specific to this occurrence of
+            the problem.
+          example: The 'name' field is required.
+          minLength: 1
+          type: string
+        instance:
+          description: A URI reference that identifies the specific occurrence of
+            the problem.
+          example: /api/locations
+          format: uri
+          nullable: true
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              minLength: 1
+              type: string
+            type: array
+          description: Optional field-specific validation errors.
+          example:
+            name:
+            - Name cannot be empty
+            quantity:
+            - Quantity must be a positive number
+          nullable: true
+          type: object
+      required:
+      - detail
+      - status
+      - title
+      - type
+      type: object
+    LocationSummary:
+      description: A summary of location information for embedding.
+      example:
+        name: Central Kitchen
+        id: location1
+      properties:
+        id:
+          description: Unique identifier for the location.
+          example: location1
+          readOnly: true
+          type: string
+        name:
+          description: The name of the location.
+          example: Central Kitchen
+          maxLength: 255
+          minLength: 1
+          readOnly: true
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    IngredientSummary:
+      description: A summary of ingredient information for embedding.
+      example:
+        unit: kg
+        name: Coffee Beans
+        id: ingredient1
+      properties:
+        id:
+          description: Unique identifier for the ingredient definition.
+          example: ingredient1
+          readOnly: true
+          type: string
+        name:
+          description: The name of the ingredient.
+          example: Coffee Beans
+          maxLength: 255
+          minLength: 1
+          readOnly: true
+          type: string
+        unit:
+          description: The standard unit of measurement for this item.
+          example: kg
+          maxLength: 50
+          minLength: 1
+          readOnly: true
+          type: string
+      required:
+      - id
+      - name
+      - unit
+      type: object
+    Location:
+      description: "Represents a physical location (restaurant, etc.)."
+      example:
+        address: 123 Main St
+        name: Central Kitchen
+        id: location1
+      properties:
+        id:
+          description: Unique identifier for the location.
+          example: location1
+          readOnly: true
+          type: string
+        name:
+          description: The name of the location.
+          example: Central Kitchen
+          maxLength: 255
+          minLength: 1
+          type: string
+        address:
+          description: The physical address of the location.
+          example: 123 Main St
+          maxLength: 500
+          minLength: 1
+          nullable: true
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    LocationCreate:
+      description: Data required to create a new location.
+      example:
+        address: 789 Oak Ave
+        name: Uptown Branch
+      properties:
+        name:
+          description: The name of the location.
+          example: Uptown Branch
+          maxLength: 255
+          minLength: 1
+          type: string
+        address:
+          description: The physical address of the location.
+          example: 789 Oak Ave
+          maxLength: 500
+          minLength: 1
+          nullable: true
+          type: string
+      required:
+      - name
+      type: object
+    LocationUpdate:
+      description: Data for updating an existing location. All fields are optional.
+      example:
+        address: New 123 Main St
+        name: Central Commissary
+      properties:
+        name:
+          description: The updated name of the location.
+          example: Central Commissary
+          maxLength: 255
+          minLength: 1
+          type: string
+        address:
+          description: The updated physical address of the location.
+          example: New 123 Main St
+          maxLength: 500
+          minLength: 1
+          nullable: true
+          type: string
+      type: object
+    Staff:
+      description: Represents a staff member associated with a location.
+      example:
+        role: Manager
+        dob: 1990-01-30
+        locationId: location1
+        iban: NL91ABNA0417164300
+        name: Alice Smith
+        id: staff1
+        bic: ABNANL2A
+      properties:
+        id:
+          description: Unique identifier for the staff member.
+          example: staff1
+          readOnly: true
+          type: string
+        name:
+          description: The full name of the staff member.
+          example: Alice Smith
+          maxLength: 255
+          minLength: 1
+          type: string
+        dob:
+          description: Date of birth.
+          example: 1990-01-30
+          format: date
+          nullable: true
+          type: string
+        role:
+          description: "The role or position of the staff member (e.g., Manager, Chef)."
+          example: Manager
+          maxLength: 100
+          minLength: 1
+          nullable: true
+          type: string
+        iban:
+          description: Staff member's IBAN for payroll.
+          example: NL91ABNA0417164300
+          nullable: true
+          type: string
+        bic:
+          description: Staff member's BIC/SWIFT code.
+          example: ABNANL2A
+          nullable: true
+          type: string
+        locationId:
+          description: The ID of the location where the staff member primarily works.
+          example: location1
+          readOnly: true
+          type: string
+      required:
+      - id
+      - locationId
+      - name
+      type: object
+    StaffCreate:
+      description: Data required to create a new staff member.
+      example:
+        role: Barista
+        dob: 1995-05-15
+        iban: DE89370400400619322000
+        name: Charlie Brown
+        bic: COBADEFFXXX
+      properties:
+        name:
+          description: The full name of the staff member.
+          example: Charlie Brown
+          maxLength: 255
+          minLength: 1
+          type: string
+        dob:
+          description: Date of birth.
+          example: 1995-05-15
+          format: date
+          nullable: true
+          type: string
+        role:
+          description: The role or position.
+          example: Barista
+          maxLength: 100
+          minLength: 1
+          nullable: true
+          type: string
+        iban:
+          description: Staff member's IBAN for payroll.
+          example: DE89370400400619322000
+          nullable: true
+          type: string
+        bic:
+          description: Staff member's BIC/SWIFT code.
+          example: COBADEFFXXX
+          nullable: true
+          type: string
+      required:
+      - name
+      type: object
+    StaffUpdate:
+      description: Data for updating an existing staff member. All fields are optional.
+      example:
+        role: Senior Manager
+        dob: 1990-01-30
+        iban: GB29NWBK60161331926819
+        name: Alice A. Smith
+        bic: NWBKGB2L
+      properties:
+        name:
+          description: The updated full name.
+          example: Alice A. Smith
+          maxLength: 255
+          minLength: 1
+          type: string
+        dob:
+          description: Updated date of birth.
+          example: 1990-01-30
+          format: date
+          nullable: true
+          type: string
+        role:
+          description: The updated role or position.
+          example: Senior Manager
+          maxLength: 100
+          minLength: 1
+          nullable: true
+          type: string
+        iban:
+          description: Updated IBAN.
+          example: GB29NWBK60161331926819
+          nullable: true
+          type: string
+        bic:
+          description: Updated BIC/SWIFT code.
+          example: NWBKGB2L
+          nullable: true
+          type: string
+      type: object
+    Ingredient:
+      description: "Represents a definition of an item that can be stocked (e.g.,\
+        \ \"Coffee Beans\", \"Milk\")."
+      example:
+        unit: kg
+        cost: 12.5
+        name: Coffee Beans
+        id: ingredient1
+      properties:
+        id:
+          description: Unique identifier for the ingredient definition.
+          example: ingredient1
+          readOnly: true
+          type: string
+        name:
+          description: The name of the ingredient.
+          example: Coffee Beans
+          maxLength: 255
+          minLength: 1
+          type: string
+        unit:
+          description: "The standard unit of measurement for this item (e.g., kg,\
+            \ liter, pieces)."
+          example: kg
+          maxLength: 50
+          minLength: 1
+          type: string
+        cost:
+          description: The average cost per unit of the ingredient globally or default
+            if location-specific cost not set.
+          example: 12.5
+          format: float
+          minimum: 0
+          nullable: true
+          type: number
+      required:
+      - id
+      - name
+      - unit
+      type: object
+    IngredientCreate:
+      description: Data required to create a new ingredient definition.
+      example:
+        unit: kg
+        cost: 1.8
+        name: Flour
+      properties:
+        name:
+          description: The name of the ingredient.
+          example: Flour
+          maxLength: 255
+          minLength: 1
+          type: string
+        unit:
+          description: The standard unit of measurement.
+          example: kg
+          maxLength: 50
+          minLength: 1
+          type: string
+        cost:
+          description: The average cost per unit of the ingredient.
+          example: 1.8
+          format: float
+          minimum: 0
+          nullable: true
+          type: number
+      required:
+      - name
+      - unit
+      type: object
+    IngredientUpdate:
+      description: Data for updating an existing ingredient definition. All fields
+        are optional.
+      example:
+        unit: grams
+        cost: 13.0
+        name: Premium Coffee Beans
+      properties:
+        name:
+          description: The updated name.
+          example: Premium Coffee Beans
+          maxLength: 255
+          minLength: 1
+          type: string
+        unit:
+          description: The updated standard unit of measurement.
+          example: grams
+          maxLength: 50
+          minLength: 1
+          type: string
+        cost:
+          description: The updated average cost per unit.
+          example: 13.0
+          format: float
+          minimum: 0
+          nullable: true
+          type: number
+      type: object
+    Recipe:
+      description: Represents a definition of a menu item or product that uses ingredients.
+      example:
+        name: Espresso
+        description: Standard double shot espresso
+        id: recipe1
+      properties:
+        id:
+          description: Unique identifier for the recipe definition.
+          example: recipe1
+          readOnly: true
+          type: string
+        name:
+          description: "The name of the recipe (e.g., 'Espresso', 'Cappuccino')."
+          example: Espresso
+          maxLength: 255
+          minLength: 1
+          type: string
+        description:
+          description: A description of the recipe.
+          example: Standard double shot espresso
+          maxLength: 1000
+          minLength: 1
+          nullable: true
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    RecipeCreate:
+      description: Data required to create a new recipe definition.
+      example:
+        name: Latte
+        description: Espresso with steamed milk and thin foam
+      properties:
+        name:
+          description: The name of the recipe.
+          example: Latte
+          maxLength: 255
+          minLength: 1
+          type: string
+        description:
+          description: A description of the recipe.
+          example: Espresso with steamed milk and thin foam
+          maxLength: 1000
+          minLength: 1
+          nullable: true
+          type: string
+      required:
+      - name
+      type: object
+    RecipeUpdate:
+      description: Data for updating an existing recipe definition. All fields are
+        optional.
+      example:
+        name: Double Espresso
+        description: Standard double shot espresso
+      properties:
+        name:
+          description: The updated name.
+          example: Double Espresso
+          maxLength: 255
+          minLength: 1
+          type: string
+        description:
+          description: The updated description.
+          example: Standard double shot espresso
+          maxLength: 1000
+          minLength: 1
+          nullable: true
+          type: string
+      type: object
+    RecipeIngredientLink:
+      description: "Links a recipe to an ingredient, specifying the required quantity\
+        \ for one serving/unit of the recipe. Represents the association resource."
+      example:
+        ingredientId: ingredient1
+        quantity: 0.018
+        id: link1
+        recipeId: recipe1
+      properties:
+        id:
+          description: Unique identifier for the recipe-ingredient link.
+          example: link1
+          readOnly: true
+          type: string
+        recipeId:
+          description: The ID of the recipe this link belongs to.
+          example: recipe1
+          readOnly: true
+          type: string
+        ingredientId:
+          description: The ID of the required ingredient.
+          example: ingredient1
+          readOnly: true
+          type: string
+        quantity:
+          description: The quantity of the ingredient required per unit of the recipe
+            in the ingredient's standard unit.
+          example: 0.018
+          format: float
+          minimum: 0
+          type: number
+      required:
+      - id
+      - ingredientId
+      - quantity
+      - recipeId
+      type: object
+    RecipeIngredientLinkCreate:
+      description: Data required to create a new link between a recipe and an ingredient.
+      example:
+        ingredientId: ingredient2
+        quantity: 0.25
+      properties:
+        ingredientId:
+          description: The ID of the required ingredient.
+          example: ingredient2
+          type: string
+        quantity:
+          description: The quantity required.
+          example: 0.25
+          format: float
+          minimum: 0
+          type: number
+      required:
+      - ingredientId
+      - quantity
+      type: object
+    Modifier:
+      description: "Represents a group of recipe options (e.g., \"Milk Options\",\
+        \ \"Sweeteners\")."
+      example:
+        name: Milk Options
+        id: modifier1
+      properties:
+        id:
+          description: Unique identifier for the modifier group.
+          example: modifier1
+          readOnly: true
+          type: string
+        name:
+          description: The name of the modifier group.
+          example: Milk Options
+          maxLength: 255
+          minLength: 1
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    ModifierCreate:
+      description: Data required to create a new modifier group.
+      example:
+        name: Add-ins
+      properties:
+        name:
+          description: The name of the modifier group.
+          example: Add-ins
+          maxLength: 255
+          minLength: 1
+          type: string
+      required:
+      - name
+      type: object
+    ModifierUpdate:
+      description: Data for updating an existing modifier group. All fields are optional.
+      example:
+        name: Dairy Options
+      properties:
+        name:
+          description: The updated name.
+          example: Dairy Options
+          maxLength: 255
+          minLength: 1
+          type: string
+      type: object
+    ModifierOption:
+      description: "Represents a single choice within a modifier group (e.g., \"Oat\
+        \ Milk\" within \"Milk Options\")."
+      example:
+        price: 0.0
+        modifierId: modifier1
+        name: Whole Milk
+        id: option1
+      properties:
+        id:
+          description: Unique identifier for the modifier option.
+          example: option1
+          readOnly: true
+          type: string
+        modifierId:
+          description: The ID of the modifier group this option belongs to.
+          example: modifier1
+          readOnly: true
+          type: string
+        name:
+          description: The name of the modifier option.
+          example: Whole Milk
+          maxLength: 255
+          minLength: 1
+          type: string
+        price:
+          description: The additional cost associated with choosing this option.
+          example: 0.0
+          format: float
+          minimum: 0
+          type: number
+      required:
+      - id
+      - modifierId
+      - name
+      - price
+      type: object
+    ModifierOptionCreate:
+      description: Data required to create a new modifier option.
+      example:
+        price: 0.6
+        name: Almond Milk
+      properties:
+        name:
+          description: The name of the modifier option.
+          example: Almond Milk
+          maxLength: 255
+          minLength: 1
+          type: string
+        price:
+          description: The additional cost.
+          example: 0.6
+          format: float
+          minimum: 0
+          type: number
+      required:
+      - name
+      - price
+      type: object
+    ModifierOptionUpdate:
+      description: Data for updating an existing modifier option. All fields are optional.
+      example:
+        price: 0.0
+        name: Regular Milk
+      properties:
+        name:
+          description: The updated name.
+          example: Regular Milk
+          maxLength: 255
+          minLength: 1
+          type: string
+        price:
+          description: The updated additional cost.
+          example: 0.0
+          format: float
+          minimum: 0
+          type: number
+      type: object
+    LocationMenuItem:
+      description: "Links a specific recipe to a specific location as a menu item,\
+        \ indicating it is available there and defining its price and available modifiers.\
+        \ Represents the association resource."
+      example:
+        locationId: location1
+        price: 3.0
+        modifierIds:
+        - modifier1
+        - modifier2
+        id: menuItem1
+        recipeId: recipe1
+      properties:
+        id:
+          description: Unique identifier for the location menu item link.
+          example: menuItem1
+          readOnly: true
+          type: string
+        locationId:
+          description: The ID of the location where this menu item is available.
+          example: location1
+          readOnly: true
+          type: string
+        recipeId:
+          description: The ID of the recipe this menu item is based on.
+          example: recipe1
+          type: string
+        price:
+          description: The price of the menu item at this location.
+          example: 3.0
+          format: float
+          minimum: 0
+          type: number
+        modifierIds:
+          description: A list of Modifier IDs whose options are available for this
+            menu item at this location.
+          example:
+          - modifier1
+          - modifier2
+          items:
+            type: string
+          nullable: true
+          type: array
+      required:
+      - id
+      - locationId
+      - price
+      - recipeId
+      type: object
+    LocationMenuItemCreate:
+      description: Data required to link a recipe to a location as a menu item.
+      example:
+        price: 4.75
+        modifierIds:
+        - modifier1
+        recipeId: recipe2
+      properties:
+        recipeId:
+          description: The ID of the recipe this menu item is based on.
+          example: recipe2
+          type: string
+        price:
+          description: The price of the menu item at this location.
+          example: 4.75
+          format: float
+          minimum: 0
+          type: number
+        modifierIds:
+          description: A list of Modifier IDs to enable for this menu item at this
+            location.
+          example:
+          - modifier1
+          items:
+            type: string
+          nullable: true
+          type: array
+      required:
+      - price
+      - recipeId
+      type: object
+    LocationMenuItemUpdate:
+      description: "Data for updating an existing location menu item (e.g., changing\
+        \ price or available modifiers). All fields are optional."
+      example:
+        price: 4.9
+        modifierIds:
+        - modifier1
+        - modifier3
+        recipeId: recipe3
+      properties:
+        recipeId:
+          description: The updated ID of the recipe this menu item is based on.
+          example: recipe3
+          type: string
+        price:
+          description: The updated price of the menu item at this location.
+          example: 4.9
+          format: float
+          minimum: 0
+          type: number
+        modifierIds:
+          description: An updated list of Modifier IDs enabled for this menu item
+            at this location. Sends the complete list to replace the existing one.
+          example:
+          - modifier1
+          - modifier3
+          items:
+            type: string
+          nullable: true
+          type: array
+      type: object
+    LocationIngredientCost:
+      description: "Represents a location-specific cost for an ingredient, overriding\
+        \ the global ingredient cost."
+      example:
+        ingredientId: ingredient1
+        locationId: location1
+        id: locCost1
+        costPerUnit: 13.5
+        updatedAt: 2023-10-27T12:00:00Z
+      properties:
+        id:
+          description: Unique identifier for the location ingredient cost record.
+          example: locCost1
+          readOnly: true
+          type: string
+        locationId:
+          description: The ID of the location.
+          example: location1
+          readOnly: true
+          type: string
+        ingredientId:
+          description: The ID of the ingredient.
+          example: ingredient1
+          readOnly: true
+          type: string
+        costPerUnit:
+          description: The specific cost per unit of the ingredient at this location.
+          example: 13.5
+          format: float
+          minimum: 0
+          type: number
+        updatedAt:
+          description: Timestamp when the cost was last updated.
+          example: 2023-10-27T12:00:00Z
+          format: date-time
+          readOnly: true
+          type: string
+      required:
+      - costPerUnit
+      - id
+      - ingredientId
+      - locationId
+      type: object
+    LocationIngredientCostCreate:
+      description: Data required to create a location-specific ingredient cost record.
+      example:
+        ingredientId: ingredient2
+        costPerUnit: 2.0
+      properties:
+        ingredientId:
+          description: The ID of the ingredient.
+          example: ingredient2
+          type: string
+        costPerUnit:
+          description: The specific cost per unit of the ingredient at this location.
+          example: 2.0
+          format: float
+          minimum: 0
+          type: number
+      required:
+      - costPerUnit
+      - ingredientId
+      type: object
+    LocationIngredientCostUpdate:
+      description: Data for updating a location-specific ingredient cost record.
+      example:
+        costPerUnit: 14.0
+      properties:
+        costPerUnit:
+          description: The updated cost per unit.
+          example: 14.0
+          format: float
+          minimum: 0
+          type: number
+      required:
+      - costPerUnit
+      type: object
+    InventoryStock:
+      description: Represents the current quantity of a specific ingredient at a specific
+        location.
+      example:
+        ingredientId: ingredient1
+        quantity: 5.5
+        ingredient:
+          unit: kg
+          name: Coffee Beans
+          id: ingredient1
+        locationId: location1
+        location:
+          name: Central Kitchen
+          id: location1
+        id: stock1
+        updatedAt: 2023-10-27T10:00:00Z
+      properties:
+        id:
+          description: Unique identifier for the stock record.
+          example: stock1
+          readOnly: true
+          type: string
+        locationId:
+          description: The ID of the location where the stock is held.
+          example: location1
+          readOnly: true
+          type: string
+        ingredientId:
+          description: The ID of the ingredient.
+          example: ingredient1
+          readOnly: true
+          type: string
+        quantity:
+          description: The current quantity of the ingredient at this location in
+            its standard unit.
+          example: 5.5
+          format: float
+          minimum: 0
+          type: number
+        updatedAt:
+          description: Timestamp when the stock quantity was last updated.
+          example: 2023-10-27T10:00:00Z
+          format: date-time
+          readOnly: true
+          type: string
+        ingredient:
+          $ref: '#/components/schemas/IngredientSummary'
+        location:
+          $ref: '#/components/schemas/LocationSummary'
+      required:
+      - id
+      - ingredient
+      - ingredientId
+      - location
+      - locationId
+      - quantity
+      - updatedAt
+      type: object
+    InventoryStockCreate:
+      description: Data required to create an initial inventory stock record for an
+        ingredient at a location.
+      example:
+        ingredientId: ingredient3
+        quantity: 3.0
+        locationId: location1
+      properties:
+        locationId:
+          description: The ID of the location.
+          example: location1
+          type: string
+        ingredientId:
+          description: The ID of the ingredient.
+          example: ingredient3
+          type: string
+        quantity:
+          description: The initial quantity.
+          example: 3.0
+          format: float
+          minimum: 0
+          type: number
+      required:
+      - ingredientId
+      - locationId
+      - quantity
+      type: object
+    InventoryStockUpdate:
+      description: Data for updating an existing inventory stock record. Only quantity
+        is typically directly updated.
+      example:
+        quantity: 5.0
+      properties:
+        quantity:
+          description: The new quantity for the ingredient at this location.
+          example: 5.0
+          format: float
+          minimum: 0
+          type: number
+      required:
+      - quantity
+      type: object
+    InventoryMovement:
+      description: "Represents a log of changes to inventory stock (e.g., sale, waste,\
+        \ restock)."
+      example:
+        ingredientId: ingredient1
+        createdAt: 2023-10-27T11:06:00Z
+        unit: kg
+        quantity: -0.018
+        notes: notes
+        ingredient:
+          unit: kg
+          name: Coffee Beans
+          id: ingredient1
+        locationId: location1
+        id: movement1
+        recordedByStaffId: staff1
+        type: sale
+        costPerUnit: 13.5
+      properties:
+        id:
+          description: Unique identifier for the movement record.
+          example: movement1
+          readOnly: true
+          type: string
+        locationId:
+          description: The ID of the location where the movement occurred.
+          example: location1
+          type: string
+        ingredientId:
+          description: The ID of the ingredient affected.
+          example: ingredient1
+          type: string
+        quantity:
+          description: "The change in quantity in the ingredient's standard unit.\
+            \ Positive for additions (restock, transfer_in), negative for removals\
+            \ (waste, sale, transfer_out)."
+          example: -0.018
+          format: float
+          type: number
+        type:
+          description: The type of inventory movement.
+          enum:
+          - waste
+          - restock
+          - sale
+          - adjustment
+          - transfer_in
+          - transfer_out
+          example: sale
+          type: string
+        notes:
+          description: "Optional notes about the movement (e.g., reason for waste)."
+          nullable: true
+          type: string
+        createdAt:
+          description: Timestamp when the movement was recorded.
+          example: 2023-10-27T11:06:00Z
+          format: date-time
+          readOnly: true
+          type: string
+        recordedByStaffId:
+          description: "The ID of the staff member who recorded the movement, if applicable."
+          example: staff1
+          nullable: true
+          type: string
+        ingredient:
+          $ref: '#/components/schemas/IngredientSummary'
+        unit:
+          description: The unit of measurement for this movement's quantity.
+          example: kg
+          maxLength: 50
+          minLength: 1
+          readOnly: true
+          type: string
+        costPerUnit:
+          description: The cost per unit of the ingredient at the time of this movement.
+          example: 13.5
+          format: float
+          minimum: 0
+          nullable: true
+          readOnly: true
+          type: number
+      required:
+      - costPerUnit
+      - createdAt
+      - id
+      - ingredient
+      - ingredientId
+      - locationId
+      - quantity
+      - type
+      - unit
+      type: object
+    InventoryMovementCreate:
+      description: Data required to record a new inventory movement.
+      example:
+        ingredientId: ingredient1
+        quantity: 10.0
+        notes: Broken bag
+        locationId: location1
+        recordedByStaffId: recordedByStaffId
+        type: restock
+      properties:
+        locationId:
+          description: The ID of the location where the movement occurred.
+          example: location1
+          type: string
+        ingredientId:
+          description: The ID of the ingredient affected.
+          example: ingredient1
+          type: string
+        quantity:
+          description: "The change in quantity. Use positive for additions, negative\
+            \ for removals."
+          example: 10.0
+          format: float
+          type: number
+        type:
+          description: The type of inventory movement.
+          enum:
+          - waste
+          - restock
+          - sale
+          - adjustment
+          - transfer_in
+          - transfer_out
+          example: restock
+          type: string
+        notes:
+          description: Optional notes about the movement.
+          example: Broken bag
+          nullable: true
+          type: string
+        recordedByStaffId:
+          description: The ID of the staff member recording the movement.
+          nullable: true
+          type: string
+      required:
+      - ingredientId
+      - locationId
+      - quantity
+      - type
+      type: object
