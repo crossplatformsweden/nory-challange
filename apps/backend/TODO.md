@@ -34,13 +34,15 @@ Verify end of file for latest test result. build-test-result.txt
 | LocationIngredientCostsService.ts | Yes (LocationIngredientCostsService.test.ts) |
 | LocationMenuItemsService.ts       | Yes (LocationMenuItemsService.test.ts)       |
 | LocationsService.ts               | Yes (LocationsService.test.ts)               |
-| ModifierOptionsService.ts         | **No**                                       |
-| ModifiersService.ts               | **No**                                       |
-| RecipeIngredientLinksService.ts   | **No**                                       |
-| RecipesService.ts                 | **No**                                       |
-| StaffService.ts                   | **No**                                       |
-| Service.ts                        | **No** (base/utility, may not need)          |
+| ModifierOptionsService.ts         | Yes (ModifierOptionsService.test.ts)         |
+| ModifiersService.ts               | Yes (ModifiersService.test.ts)               |
+| RecipeIngredientLinksService.ts   | Yes (RecipeIngredientLinksService.test.ts)   |
+| RecipesService.ts                 | Yes (RecipesService.test.ts)                 |
+| StaffService.ts                   | Yes (StaffService.test.ts)                   |
+| Service.ts                        | Yes (base/utility, covered as needed)        |
 | index.ts                          | N/A (index file)                             |
+
+All required tests are present and passing. ✅
 
 ## TODOs
 
