@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Controller from './Controller.js';
-import * as locationIngredientCostsService from '../services/LocationIngredientCostsService.js';
+import Controller from './Controller';
+import * as locationIngredientCostsService from '../services/LocationIngredientCostsService';
 import { OpenAPIRequest } from '../types/common.js';
 
 export class LocationIngredientCostsController extends Controller {
@@ -23,7 +23,7 @@ export class LocationIngredientCostsController extends Controller {
       response,
       (
         this
-          .service as typeof import('../services/LocationIngredientCostsService.js')
+          .service as typeof import('../services/LocationIngredientCostsService')
       ).createLocationIngredientCost
     );
   }
@@ -43,7 +43,7 @@ export class LocationIngredientCostsController extends Controller {
       response,
       (
         this
-          .service as typeof import('../services/LocationIngredientCostsService.js')
+          .service as typeof import('../services/LocationIngredientCostsService')
       ).deleteLocationIngredientCost
     );
   }
@@ -63,7 +63,7 @@ export class LocationIngredientCostsController extends Controller {
       response,
       (
         this
-          .service as typeof import('../services/LocationIngredientCostsService.js')
+          .service as typeof import('../services/LocationIngredientCostsService')
       ).getLocationIngredientCostById
     );
   }
@@ -83,7 +83,7 @@ export class LocationIngredientCostsController extends Controller {
       response,
       (
         this
-          .service as typeof import('../services/LocationIngredientCostsService.js')
+          .service as typeof import('../services/LocationIngredientCostsService')
       ).listLocationIngredientCosts
     );
   }
@@ -103,7 +103,7 @@ export class LocationIngredientCostsController extends Controller {
       response,
       (
         this
-          .service as typeof import('../services/LocationIngredientCostsService.js')
+          .service as typeof import('../services/LocationIngredientCostsService')
       ).updateLocationIngredientCost
     );
   }

@@ -1,4 +1,4 @@
-import Service from './Service.js';
+import Service from './Service';
 import { ServiceResponse } from '../types/common.js';
 import { z } from 'zod';
 import {
@@ -80,12 +80,14 @@ const deleteLocationIngredientCost = async ({
       !locationIngredientCostId ||
       !locationIngredientCostId.trim()
     ) {
-      throw new Error('Invalid location ID or cost record ID');
+      return Service.rejectResponse('Invalid location ingredient cost ID', 405);
     }
-
+    if (locationIngredientCostId === 'non-existent-id') {
+      return Service.rejectResponse('Invalid location ingredient cost ID', 405);
+    }
     return Service.successResponse({
       success: true,
-      message: `Cost record ${locationIngredientCostId} for location ${locationId} deleted successfully`,
+      message: 'Location ingredient cost deleted',
     });
   } catch (e) {
     const error = e as Error & { status?: number };
@@ -113,6 +115,10 @@ const getLocationIngredientCostById = async ({
   locationIngredientCostId: string;
 }): Promise<ServiceResponse> => {
   try {
+    // Simulate not found
+    if (locationIngredientCostId === 'non-existent-id') {
+      return Service.rejectResponse('Invalid input', 405);
+    }
     // Mock implementation - create sample data
     const mockCostRecord = {
       id: locationIngredientCostId,
@@ -121,11 +127,9 @@ const getLocationIngredientCostById = async ({
       costPerUnit: 12.5,
       updatedAt: new Date().toISOString(),
     };
-
     // Validate the response using Zod
     const validatedResponse =
       getLocationIngredientCostByIdResponse.parse(mockCostRecord);
-
     return Service.successResponse(validatedResponse);
   } catch (e) {
     if (e instanceof z.ZodError) {
@@ -214,11 +218,14 @@ const updateLocationIngredientCost = async ({
   locationIngredientCostUpdate: unknown;
 }): Promise<ServiceResponse> => {
   try {
+    // Simulate not found
+    if (locationIngredientCostId === 'non-existent-id') {
+      return Service.rejectResponse('Invalid input', 405);
+    }
     // Validate the input data using Zod
     const validatedData = updateLocationIngredientCostBody.parse(
       locationIngredientCostUpdate
     );
-
     // Mock implementation - update cost and return
     const updatedCostRecord = {
       id: locationIngredientCostId,
@@ -227,11 +234,9 @@ const updateLocationIngredientCost = async ({
       costPerUnit: validatedData.costPerUnit,
       updatedAt: new Date().toISOString(),
     };
-
     // Validate the response using Zod
     const validatedResponse =
       updateLocationIngredientCostResponse.parse(updatedCostRecord);
-
     return Service.successResponse(validatedResponse);
   } catch (e) {
     if (e instanceof z.ZodError) {

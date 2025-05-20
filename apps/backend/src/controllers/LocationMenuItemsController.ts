@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Controller from './Controller.js';
-import * as locationMenuItemsService from '../services/LocationMenuItemsService.js';
+import Controller from './Controller';
+import * as locationMenuItemsService from '../services/LocationMenuItemsService';
 import { OpenAPIRequest } from '../types/common.js';
 
 export class LocationMenuItemsController extends Controller {
@@ -15,7 +15,7 @@ export class LocationMenuItemsController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/LocationMenuItemsService.js'))
+      (this.service as typeof import('../services/LocationMenuItemsService'))
         .createLocationMenuItem
     );
   }
@@ -27,7 +27,7 @@ export class LocationMenuItemsController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/LocationMenuItemsService.js'))
+      (this.service as typeof import('../services/LocationMenuItemsService'))
         .deleteLocationMenuItem
     );
   }
@@ -39,7 +39,7 @@ export class LocationMenuItemsController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/LocationMenuItemsService.js'))
+      (this.service as typeof import('../services/LocationMenuItemsService'))
         .getLocationMenuItemById
     );
   }
@@ -51,7 +51,7 @@ export class LocationMenuItemsController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/LocationMenuItemsService.js'))
+      (this.service as typeof import('../services/LocationMenuItemsService'))
         .listLocationMenuItems
     );
   }
@@ -63,7 +63,7 @@ export class LocationMenuItemsController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/LocationMenuItemsService.js'))
+      (this.service as typeof import('../services/LocationMenuItemsService'))
         .updateLocationMenuItem
     );
   }

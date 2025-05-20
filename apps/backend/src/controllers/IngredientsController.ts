@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Controller from './Controller.js';
-import * as ingredientsService from '../services/IngredientsService.js';
+import Controller from './Controller';
+import * as ingredientsService from '../services/IngredientsService';
 import { OpenAPIRequest } from '../types/common.js';
 
 export class IngredientsController extends Controller {

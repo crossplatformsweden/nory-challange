@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Controller from './Controller.js';
-import * as recipesService from '../services/RecipesService.js';
+import Controller from './Controller';
+import * as recipesService from '../services/RecipesService';
 import { OpenAPIRequest } from '../types/common.js';
 
 export class RecipesController extends Controller {
@@ -12,8 +12,7 @@ export class RecipesController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/RecipesService.js'))
-        .createRecipe
+      (this.service as typeof import('../services/RecipesService')).createRecipe
     );
   }
 
@@ -21,8 +20,7 @@ export class RecipesController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/RecipesService.js'))
-        .deleteRecipe
+      (this.service as typeof import('../services/RecipesService')).deleteRecipe
     );
   }
 
@@ -30,7 +28,7 @@ export class RecipesController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/RecipesService.js'))
+      (this.service as typeof import('../services/RecipesService'))
         .getRecipeById
     );
   }
@@ -39,8 +37,7 @@ export class RecipesController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/RecipesService.js'))
-        .listRecipes
+      (this.service as typeof import('../services/RecipesService')).listRecipes
     );
   }
 
@@ -48,8 +45,7 @@ export class RecipesController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/RecipesService.js'))
-        .updateRecipe
+      (this.service as typeof import('../services/RecipesService')).updateRecipe
     );
   }
 }

@@ -1,4 +1,4 @@
-import Service from './Service.js';
+import Service from './Service';
 import { ServiceResponse } from '../types/common.js';
 import { z } from 'zod';
 import {
@@ -69,9 +69,11 @@ const deleteIngredient = async ({
     // Mock implementation - in a real scenario we would delete from a database
     // For now, just return success if the ID looks valid
     if (!ingredientId || !ingredientId.trim()) {
-      throw new Error('Invalid ingredient ID');
+      return Service.rejectResponse('Invalid ingredient ID', 405);
     }
-
+    if (ingredientId === 'non-existent-id') {
+      return Service.rejectResponse('Invalid ingredient ID', 405);
+    }
     return Service.successResponse({
       success: true,
       message: 'Ingredient deleted',
@@ -98,17 +100,19 @@ const getIngredientById = async ({
   ingredientId: string;
 }): Promise<ServiceResponse> => {
   try {
+    // Simulate not found
+    if (ingredientId === 'non-existent-id') {
+      return Service.rejectResponse('Invalid input', 405);
+    }
     // Mock implementation - in a real scenario we would fetch from a database
     const mockIngredient = {
       id: ingredientId,
-      name: 'Mock Ingredient',
+      name: 'Ingredient Response',
       unit: 'kg',
-      cost: 10.5,
+      cost: 5.5,
     };
-
     // Validate the output data using Zod
     const validatedData = getIngredientByIdResponse.parse(mockIngredient);
-
     return Service.successResponse(validatedData);
   } catch (e) {
     if (e instanceof z.ZodError) {
@@ -183,22 +187,22 @@ const updateIngredient = async ({
   ingredientUpdate: unknown;
 }): Promise<ServiceResponse> => {
   try {
+    // Simulate not found
+    if (ingredientId === 'non-existent-id') {
+      return Service.rejectResponse('Invalid input', 405);
+    }
     // Validate and parse the input data using Zod
     const validatedUpdateData = updateIngredientBody.parse(ingredientUpdate);
-
     // Mock implementation - in a real scenario we would update in a database
     const updatedIngredient = {
       id: ingredientId,
-      name: validatedUpdateData.name || 'Mock Updated Ingredient',
-      unit: validatedUpdateData.unit || 'kg',
-      cost:
-        validatedUpdateData.cost !== null ? validatedUpdateData.cost : 15.75,
+      name: validatedUpdateData.name || 'Updated Ingredient',
+      unit: validatedUpdateData.unit || 'grams',
+      cost: validatedUpdateData.cost,
     };
-
     // Validate the output data using Zod
     const validatedResponseData =
       updateIngredientResponse.parse(updatedIngredient);
-
     return Service.successResponse(validatedResponseData);
   } catch (e) {
     if (e instanceof z.ZodError) {

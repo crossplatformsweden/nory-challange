@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Controller from './Controller.js';
-import * as staffService from '../services/StaffService.js';
+import Controller from './Controller';
+import * as staffService from '../services/StaffService';
 import { OpenAPIRequest } from '../types/common.js';
 
 export class StaffController extends Controller {
@@ -15,7 +15,7 @@ export class StaffController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/StaffService.js'))
+      (this.service as typeof import('../services/StaffService'))
         .createStaffAtLocation
     );
   }
@@ -27,7 +27,7 @@ export class StaffController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/StaffService.js'))
+      (this.service as typeof import('../services/StaffService'))
         .deleteStaffAtLocation
     );
   }
@@ -39,7 +39,7 @@ export class StaffController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/StaffService.js'))
+      (this.service as typeof import('../services/StaffService'))
         .getStaffByLocationAndId
     );
   }
@@ -51,7 +51,7 @@ export class StaffController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/StaffService.js'))
+      (this.service as typeof import('../services/StaffService'))
         .listStaffByLocation
     );
   }
@@ -63,7 +63,7 @@ export class StaffController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/StaffService.js'))
+      (this.service as typeof import('../services/StaffService'))
         .updateStaffAtLocation
     );
   }

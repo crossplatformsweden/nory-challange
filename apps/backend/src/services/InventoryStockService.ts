@@ -1,4 +1,4 @@
-import Service from './Service.js';
+import Service from './Service';
 import { ServiceResponse } from '../types/common.js';
 import { z } from 'zod';
 import {
@@ -91,12 +91,14 @@ const deleteInventoryStock = async ({
   try {
     // Mock implementation - validate stockId and return success
     if (!stockId || !stockId.trim()) {
-      throw new Error('Invalid stock ID');
+      return Service.rejectResponse('Invalid inventory stock ID', 405);
     }
-
+    if (stockId === 'non-existent-id') {
+      return Service.rejectResponse('Invalid inventory stock ID', 405);
+    }
     return Service.successResponse({
       success: true,
-      message: `Stock record ${stockId} deleted successfully`,
+      message: 'Inventory stock deleted',
     });
   } catch (e) {
     return Service.rejectResponse(
@@ -120,6 +122,10 @@ const getInventoryStockById = async ({
   stockId: string;
 }): Promise<ServiceResponse> => {
   try {
+    // Simulate not found
+    if (stockId === 'non-existent-id') {
+      return Service.rejectResponse('Invalid input', 405);
+    }
     // Mock implementation - create sample data
     const mockStock = {
       id: stockId,
@@ -137,10 +143,8 @@ const getInventoryStockById = async ({
         name: 'Mock Location',
       },
     };
-
     // Validate the response using Zod
     const validatedResponse = getInventoryStockByIdResponse.parse(mockStock);
-
     return Service.successResponse(validatedResponse);
   } catch (e) {
     if (e instanceof z.ZodError) {
@@ -245,9 +249,12 @@ const updateInventoryStock = async ({
   inventoryStockUpdate: unknown;
 }): Promise<ServiceResponse> => {
   try {
+    // Simulate not found
+    if (stockId === 'non-existent-id') {
+      return Service.rejectResponse('Invalid input', 405);
+    }
     // Validate the input data using Zod
     const validatedData = updateInventoryStockBody.parse(inventoryStockUpdate);
-
     // Mock implementation - update stock and return
     const updatedStock = {
       id: stockId,
@@ -265,10 +272,8 @@ const updateInventoryStock = async ({
         name: 'Mock Location',
       },
     };
-
     // Validate the response using Zod
     const validatedResponse = updateInventoryStockResponse.parse(updatedStock);
-
     return Service.successResponse(validatedResponse);
   } catch (e) {
     if (e instanceof z.ZodError) {

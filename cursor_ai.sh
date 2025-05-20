@@ -46,7 +46,7 @@ tell application "System Events"
         delay 1
         key code 36 -- press Enter
         delay 2
-        keystroke "read build-test-result.txt end of file for build result and fix all erros in sequentaial order package by package, dont ask just fix. if the result are not ready sleep for a minute.  Fix lint then build erros, then tests, then e2e test. For for any test fixes make sure you validate all test ids. Make sure you run the right pnpm command in right package or folder using the pnpm --filter for follow up fixes such as pnpm test:unit before e2e. Make sure the jest test works before the e2e tests. Write and read to TODO.MD with plan and progress and what pnpm command to run with correct filter flag in what folder recursively make sure to write there before you start. Read it before you start as well to get some background info. When build-test-result.txt is completed commit and push. Only commit and push if everything is working. do not use --verify-ignore"
+        keystroke "read Todo.me and do not use --verify-ignore in any commit if all tasks are complete commit and push using git or gh cli. Verify buildserver pullrequest if everything is complete and test is green. Plan and think then execute! Dont ask. Execute! Start with a task!"
         delay 0.5
         key code 36 -- press Enter
     end tell
@@ -66,7 +66,7 @@ tell application "System Events"
         delay 1
         key code 36 -- press Enter
         delay 1
-        keystroke "continue with the best approach, follow best practice"
+        keystroke "Read backend todo.md and continue with the best approach, follow best practice"
         delay 0.5
         key code 36 -- press Enter
     end tell
@@ -86,7 +86,7 @@ tell application "System Events"
         delay 1
         key code 36 -- press Enter
         delay 1
-        keystroke "continue with the best approach, follow best practice"
+        keystroke "Read todo.md and continue with the best approach, follow best practice"
         delay 0.5
         key code 36 -- press Enter
     end tell

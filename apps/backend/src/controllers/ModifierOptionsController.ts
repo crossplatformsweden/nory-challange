@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Controller from './Controller.js';
-import * as modifierOptionsService from '../services/ModifierOptionsService.js';
+import Controller from './Controller';
+import * as modifierOptionsService from '../services/ModifierOptionsService';
 import { OpenAPIRequest } from '../types/common.js';
 
 export class ModifierOptionsController extends Controller {

@@ -112,11 +112,26 @@ function openApiRouter(controllers: Controllers, services: Services) {
           );
           return;
         }
-        await (apiController as any)[controllerOperation](
-          request,
-          response,
-          next
-        );
+        // Use type assertion to Record<string, unknown> for property access
+        const handler = (apiController as Record<string, unknown>)[
+          controllerOperation
+        ];
+        if (typeof handler === 'function') {
+          await (
+            handler as (
+              req: Request,
+              res: Response,
+              next: NextFunction
+            ) => Promise<void>
+          )(request, response, next);
+        } else {
+          handleError(
+            `Controller method '${controllerOperation}' not found on controller '${controllerName}'`,
+            request,
+            response,
+            next
+          );
+        }
       }
     } catch (error) {
       logger.error(error);

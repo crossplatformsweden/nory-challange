@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import camelCase from 'camelcase';
 import { Response } from 'express';
-import config from '../config.js';
+import config from '../config';
 import {
   OpenAPIRequest,
   ServiceFunction,
@@ -65,7 +65,7 @@ class Controller {
   }
 
   /**
-   * Files have been uploaded to the directory defined by config.js as upload directory
+   * Files have been uploaded to the directory defined by config.ts as upload directory
    * Files have a temporary name, that was saved as 'filename' of the file object that is
    * referenced in request.files array.
    * This method finds the file and changes it to the file name that was originally called

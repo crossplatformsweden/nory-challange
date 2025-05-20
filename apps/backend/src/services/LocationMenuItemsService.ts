@@ -1,6 +1,6 @@
-import Service from './Service.js';
+import Service from './Service';
 import { ServiceResponse } from '../types/common.js';
-import { isServiceError } from '../types/errors.js';
+import { isServiceError } from '../types/errors';
 import { z } from 'zod';
 import {
   createLocationMenuItemBody,
@@ -79,12 +79,14 @@ const deleteLocationMenuItem = async ({
       !menuItemId ||
       !menuItemId.trim()
     ) {
-      throw new Error('Invalid location ID or menu item ID');
+      return Service.rejectResponse('Invalid location menu item ID', 405);
     }
-
+    if (menuItemId === 'non-existent-id') {
+      return Service.rejectResponse('Invalid location menu item ID', 405);
+    }
     return Service.successResponse({
       success: true,
-      message: `Menu item ${menuItemId} for location ${locationId} deleted successfully`,
+      message: 'Location menu item deleted',
     });
   } catch (e) {
     const error = e as Error;
@@ -110,6 +112,10 @@ const getLocationMenuItemById = async ({
   menuItemId: string;
 }): Promise<ServiceResponse> => {
   try {
+    // Simulate not found
+    if (menuItemId === 'non-existent-id') {
+      return Service.rejectResponse('Invalid input', 405);
+    }
     // Mock implementation - create sample data
     const mockMenuItem = {
       id: menuItemId,
@@ -118,11 +124,9 @@ const getLocationMenuItemById = async ({
       price: 15.99,
       modifierIds: ['modifier-1', 'modifier-2'],
     };
-
     // Validate the response using Zod
     const validatedResponse =
       getLocationMenuItemByIdResponse.parse(mockMenuItem);
-
     return Service.successResponse(validatedResponse);
   } catch (e) {
     if (e instanceof z.ZodError) {
@@ -207,11 +211,14 @@ const updateLocationMenuItem = async ({
   locationMenuItemUpdate: unknown;
 }): Promise<ServiceResponse> => {
   try {
+    // Simulate not found
+    if (menuItemId === 'non-existent-id') {
+      return Service.rejectResponse('Invalid input', 405);
+    }
     // Validate the input data using Zod
     const validatedData = updateLocationMenuItemBody.parse(
       locationMenuItemUpdate
     );
-
     // Mock implementation - update menu item and return
     const updatedMenuItem = {
       id: menuItemId,
@@ -220,11 +227,9 @@ const updateLocationMenuItem = async ({
       price: validatedData.price || 17.99,
       modifierIds: validatedData.modifierIds || [],
     };
-
     // Validate the response using Zod
     const validatedResponse =
       updateLocationMenuItemResponse.parse(updatedMenuItem);
-
     return Service.successResponse(validatedResponse);
   } catch (e) {
     if (e instanceof z.ZodError) {

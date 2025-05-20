@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Controller from './Controller.js';
-import * as locationsService from '../services/LocationsService.js';
+import Controller from './Controller';
+import * as locationsService from '../services/LocationsService';
 import { OpenAPIRequest } from '../types/common.js';
 
 export class LocationsController extends Controller {
@@ -18,7 +18,7 @@ export class LocationsController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/LocationsService.js'))
+      (this.service as typeof import('../services/LocationsService'))
         .createLocation
     );
   }
@@ -33,7 +33,7 @@ export class LocationsController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/LocationsService.js'))
+      (this.service as typeof import('../services/LocationsService'))
         .deleteLocation
     );
   }
@@ -48,7 +48,7 @@ export class LocationsController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/LocationsService.js'))
+      (this.service as typeof import('../services/LocationsService'))
         .getLocationById
     );
   }
@@ -63,7 +63,7 @@ export class LocationsController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/LocationsService.js'))
+      (this.service as typeof import('../services/LocationsService'))
         .listLocations
     );
   }
@@ -78,7 +78,7 @@ export class LocationsController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/LocationsService.js'))
+      (this.service as typeof import('../services/LocationsService'))
         .updateLocation
     );
   }

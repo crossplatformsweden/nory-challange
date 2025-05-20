@@ -1,4 +1,4 @@
-import Service from './Service.js';
+import Service from './Service';
 import { ServiceResponse } from '../types/common.js';
 import { z } from 'zod';
 import {
