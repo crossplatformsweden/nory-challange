@@ -29,13 +29,9 @@ describe('All controllers and services have corresponding test files (recursive)
       const testFile = file.replace(/\.ts$/, '.test.ts');
       it(`${path.relative(process.cwd(), file)} should have a corresponding test file`, () => {
         expect(fs.existsSync(testFile)).toBe(true);
-
-        if (fs.existsSync(testFile)) {
-          const lineCount = fs
-            .readFileSync(testFile, 'utf-8')
-            .split('\n').length;
-          expect(lineCount).toBeGreaterThanOrEqual(50);
-        }
+        // FILE SHOULD EXIST
+        const lineCount = fs.readFileSync(testFile, 'utf-8').split('\n').length;
+        expect(lineCount).toBeGreaterThanOrEqual(50);
       });
     });
   });
