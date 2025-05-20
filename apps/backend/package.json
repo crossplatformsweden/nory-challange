@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.",
   "main": "dist/index.js",
-  "type": "module",
   "scripts": {
     "prestart": "pnpm install",
     "start": "node dist/index.js",
@@ -14,7 +13,7 @@
     "prebuild": "pnpm run clean",
     "lint": "eslint src || true",
     "check-types": "tsc --noEmit",
-    "test": "jest --config ./jest.config.cjs --passWithNoTests"
+    "test": "jest --config ./jest.config.js --passWithNoTests"
   },
   "keywords": [
     "openapi-generator",

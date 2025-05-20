@@ -42,25 +42,10 @@ turbo 2.5.3
 @repo/zod-clients:build: DTS ⚡️ Build success in 1121ms
 @repo/zod-clients:build: DTS dist/index.d.ts  48.29 KB
 @repo/zod-clients:build: DTS dist/index.d.cts 48.29 KB
-@repo/ui:build:styles: cache hit, replaying logs 8bd5ebaeadeba955
-@repo/ui:build:styles: 
-@repo/ui:build:styles: > @repo/ui@0.1.0 build:styles /Users/xemil/Source/nory-challange/packages/ui
-@repo/ui:build:styles: > tailwindcss -i ./src/styles.css -o ./dist/index.css
-@repo/ui:build:styles: 
-@repo/ui:build:styles: 
-@repo/ui:build:styles: Rebuilding...
-@repo/ui:build:styles: 
-@repo/ui:build:styles: Done in 269ms.
-@repo/plop-generators:build: cache hit, replaying logs c6ec1dbb1dbe64d6
-@repo/plop-generators:build: 
-@repo/plop-generators:build: 
-@repo/plop-generators:build: > @repo/plop-generators@0.0.1 build /Users/xemil/Source/nory-challange/packages/plop-generators
-@repo/plop-generators:build: > tsc && cp -r src/plop-templates dist/
-@repo/plop-generators:build: 
-@repo/api-client:build: cache hit, replaying logs 0bd3a686f63771ac
+@repo/api-client:build: cache hit, replaying logs 5b46e224d5aa6373
 @repo/api-client:build: 
 @repo/api-client:build: 
-@repo/api-client:build: > @repo/api-client@0.1.0 build /Users/xemil/Source/nory-challange/packages/api-client
+@repo/api-client:build: > @repo/api-client@0.0.1 build /Users/xemil/Source/nory-challange/packages/api-client
 @repo/api-client:build: > tsup
 @repo/api-client:build: 
 @repo/api-client:build: [34mCLI[39m Building entry: src/index.ts
@@ -71,71 +56,90 @@ turbo 2.5.3
 @repo/api-client:build: [34mCLI[39m Cleaning output folder
 @repo/api-client:build: [34mCJS[39m Build start
 @repo/api-client:build: [34mESM[39m Build start
-@repo/api-client:build: [32mESM[39m [1mdist/index.js     [22m[32m210.92 KB[39m
-@repo/api-client:build: [32mESM[39m [1mdist/index.js.map [22m[32m512.52 KB[39m
-@repo/api-client:build: [32mESM[39m ⚡️ Build success in 80ms
-@repo/api-client:build: [32mCJS[39m [1mdist/index.cjs     [22m[32m235.96 KB[39m
-@repo/api-client:build: [32mCJS[39m [1mdist/index.cjs.map [22m[32m515.47 KB[39m
-@repo/api-client:build: [32mCJS[39m ⚡️ Build success in 81ms
+@repo/api-client:build: [32mCJS[39m [1mdist/index.cjs     [22m[32m132.06 KB[39m
+@repo/api-client:build: [32mCJS[39m [1mdist/index.cjs.map [22m[32m301.17 KB[39m
+@repo/api-client:build: [32mCJS[39m ⚡️ Build success in 43ms
+@repo/api-client:build: [32mESM[39m [1mdist/index.js     [22m[32m105.14 KB[39m
+@repo/api-client:build: [32mESM[39m [1mdist/index.js.map [22m[32m299.83 KB[39m
+@repo/api-client:build: [32mESM[39m ⚡️ Build success in 43ms
 @repo/api-client:build: DTS Build start
-@repo/api-client:build: DTS ⚡️ Build success in 1889ms
-@repo/api-client:build: DTS dist/index.d.cts 156.22 KB
-@repo/api-client:build: DTS dist/index.d.ts  156.22 KB
-@nory/backend-db:build: cache hit, replaying logs 30bf5ac3352d7828
+@repo/api-client:build: DTS ⚡️ Build success in 1715ms
+@repo/api-client:build: DTS dist/index.d.cts 157.53 KB
+@repo/api-client:build: DTS dist/index.d.ts  157.53 KB
+@repo/plop-generators:build: cache hit, replaying logs c6ec1dbb1dbe64d6
+@repo/plop-generators:build: 
+@repo/plop-generators:build: 
+@repo/plop-generators:build: > @repo/plop-generators@0.0.1 build /Users/xemil/Source/nory-challange/packages/plop-generators
+@repo/plop-generators:build: > tsc && cp -r src/plop-templates dist/
+@repo/plop-generators:build: 
+@nory/backend-db:build: cache hit, replaying logs a439465a8f618336
 @nory/backend-db:build: 
+@nory/backend-db:build: 
 @nory/backend-db:build: > @nory/backend-db@0.1.0 build /Users/xemil/Source/nory-challange/packages/backend-db
 @nory/backend-db:build: > tsup
 @nory/backend-db:build: 
-@nory/backend-db:build: CLI Building entry: src/index.ts
-@nory/backend-db:build: CLI Using tsconfig: tsconfig.json
-@nory/backend-db:build: CLI tsup v8.5.0
-@nory/backend-db:build: CLI Using tsup config: /Users/xemil/Source/nory-challange/packages/backend-db/tsup.config.ts
-@nory/backend-db:build: CLI Target: es2020
-@nory/backend-db:build: CLI Cleaning output folder
-@nory/backend-db:build: CJS Build start
-@nory/backend-db:build: ESM Build start
-@nory/backend-db:build: CJS dist/index.cjs     4.79 KB
-@nory/backend-db:build: CJS dist/index.cjs.map 17.43 KB
-@nory/backend-db:build: CJS ⚡️ Build success in 73ms
-@nory/backend-db:build: ESM dist/index.js     4.76 KB
-@nory/backend-db:build: ESM dist/index.js.map 17.43 KB
-@nory/backend-db:build: ESM ⚡️ Build success in 73ms
+@nory/backend-db:build: [34mCLI[39m Building entry: src/index.ts
+@nory/backend-db:build: [34mCLI[39m Using tsconfig: tsconfig.json
+@nory/backend-db:build: [34mCLI[39m tsup v8.5.0
+@nory/backend-db:build: [34mCLI[39m Using tsup config: /Users/xemil/Source/nory-challange/packages/backend-db/tsup.config.ts
+@nory/backend-db:build: [34mCLI[39m Target: es2020
+@nory/backend-db:build: [34mCLI[39m Cleaning output folder
+@nory/backend-db:build: [34mCJS[39m Build start
+@nory/backend-db:build: [34mESM[39m Build start
+@nory/backend-db:build: [32mESM[39m [1mdist/index.js     [22m[32m4.76 KB[39m
+@nory/backend-db:build: [32mESM[39m [1mdist/index.js.map [22m[32m17.47 KB[39m
+@nory/backend-db:build: [32mESM[39m ⚡️ Build success in 61ms
+@nory/backend-db:build: [32mCJS[39m [1mdist/index.cjs     [22m[32m4.79 KB[39m
+@nory/backend-db:build: [32mCJS[39m [1mdist/index.cjs.map [22m[32m17.48 KB[39m
+@nory/backend-db:build: [32mCJS[39m ⚡️ Build success in 61ms
 @nory/backend-db:build: DTS Build start
-@nory/backend-db:build: DTS ⚡️ Build success in 860ms
-@nory/backend-db:build: DTS dist/index.d.cts 32.37 KB
-@nory/backend-db:build: DTS dist/index.d.ts  32.37 KB
-@repo/ui:build:components: cache hit, replaying logs b305c81978e42737
+@nory/backend-db:build: DTS ⚡️ Build success in 857ms
+@nory/backend-db:build: DTS dist/index.d.cts 32.38 KB
+@nory/backend-db:build: DTS dist/index.d.ts  32.38 KB
+@repo/ui:build:components: cache hit, replaying logs 5360345fd47f1d07
 @repo/ui:build:components: 
+@repo/ui:build:components: 
 @repo/ui:build:components: > @repo/ui@0.1.0 build:components /Users/xemil/Source/nory-challange/packages/ui
 @repo/ui:build:components: > tsc && tsc-alias
 @repo/ui:build:components: 
-@repo/ui:build: cache hit, replaying logs ebd1dc38ecea8848
+@repo/ui:build:styles: cache hit, replaying logs d6a96c2b991afa92
+@repo/ui:build:styles: 
+@repo/ui:build:styles: 
+@repo/ui:build:styles: > @repo/ui@0.1.0 build:styles /Users/xemil/Source/nory-challange/packages/ui
+@repo/ui:build:styles: > tailwindcss -i ./src/styles.css -o ./dist/index.css
+@repo/ui:build:styles: 
+@repo/ui:build:styles: 
+@repo/ui:build:styles: Rebuilding...
+@repo/ui:build:styles: 
+@repo/ui:build:styles: Done in 266ms.
+@repo/ui:build: cache hit, replaying logs 4a94a0fe58bcde9c
 @repo/ui:build: 
+@repo/ui:build: 
 @repo/ui:build: > @repo/ui@0.1.0 build /Users/xemil/Source/nory-challange/packages/ui
 @repo/ui:build: > tsup
 @repo/ui:build: 
-@repo/ui:build: CLI Building entry: src/index.ts
-@repo/ui:build: CLI Using tsconfig: tsconfig.json
-@repo/ui:build: CLI tsup v8.5.0
-@repo/ui:build: CLI Using tsup config: /Users/xemil/Source/nory-challange/packages/ui/tsup.config.ts
-@repo/ui:build: CLI Target: es2022
-@repo/ui:build: CLI Cleaning output folder
-@repo/ui:build: ESM Build start
-@repo/ui:build: CJS Build start
-@repo/ui:build: ESM dist/index.js     133.97 KB
-@repo/ui:build: ESM dist/index.js.map 223.64 KB
-@repo/ui:build: ESM ⚡️ Build success in 34ms
-@repo/ui:build: CJS dist/index.cjs     155.37 KB
-@repo/ui:build: CJS dist/index.cjs.map 225.10 KB
-@repo/ui:build: CJS ⚡️ Build success in 34ms
+@repo/ui:build: [34mCLI[39m Building entry: src/index.ts
+@repo/ui:build: [34mCLI[39m Using tsconfig: tsconfig.json
+@repo/ui:build: [34mCLI[39m tsup v8.5.0
+@repo/ui:build: [34mCLI[39m Using tsup config: /Users/xemil/Source/nory-challange/packages/ui/tsup.config.ts
+@repo/ui:build: [34mCLI[39m Target: es2022
+@repo/ui:build: [34mCLI[39m Cleaning output folder
+@repo/ui:build: [34mESM[39m Build start
+@repo/ui:build: [34mCJS[39m Build start
+@repo/ui:build: [32mCJS[39m [1mdist/index.cjs     [22m[32m155.47 KB[39m
+@repo/ui:build: [32mCJS[39m [1mdist/index.cjs.map [22m[32m225.29 KB[39m
+@repo/ui:build: [32mCJS[39m ⚡️ Build success in 33ms
+@repo/ui:build: [32mESM[39m [1mdist/index.js     [22m[32m134.07 KB[39m
+@repo/ui:build: [32mESM[39m [1mdist/index.js.map [22m[32m223.83 KB[39m
+@repo/ui:build: [32mESM[39m ⚡️ Build success in 33ms
 @repo/ui:build: DTS Build start
-@repo/ui:build: DTS ⚡️ Build success in 2576ms
+@repo/ui:build: DTS ⚡️ Build success in 2302ms
 @repo/ui:build: DTS dist/index.d.ts  60.57 KB
 @repo/ui:build: DTS dist/index.d.cts 60.57 KB
 
  Tasks:    8 successful, 8 total
 Cached:    8 cached, 8 total
-  Time:    569ms >>> FULL TURBO
+  Time:    313ms >>> FULL TURBO
 
 
 > with-tailwind@ check-types /Users/xemil/Source/nory-challange
@@ -146,12 +150,13 @@ turbo 2.5.3
 • Packages in scope: @nory/backend-db, @repo/api-client, @repo/eslint-config, @repo/jest-config, @repo/plop-generators, @repo/tailwind-config, @repo/typescript-config, @repo/ui, @repo/zod-clients
 • Running check-types in 9 packages
 • Remote caching disabled
-@repo/ui:check-types: cache hit, replaying logs 376bfafbe0dc1b94
+@repo/ui:check-types: cache hit, replaying logs 6568dc8e0822619d
 @repo/ui:check-types: 
-@repo/plop-generators:check-types: cache hit, replaying logs a527ffb8c76f8cd5
+@repo/ui:check-types: 
 @repo/ui:check-types: > @repo/ui@0.1.0 check-types /Users/xemil/Source/nory-challange/packages/ui
 @repo/ui:check-types: > tsc --noEmit
 @repo/ui:check-types: 
+@repo/plop-generators:check-types: cache hit, replaying logs a527ffb8c76f8cd5
 @repo/plop-generators:check-types: 
 @repo/plop-generators:check-types: 
 @repo/plop-generators:check-types: > @repo/plop-generators@0.0.1 check-types /Users/xemil/Source/nory-challange/packages/plop-generators
@@ -160,5 +165,936 @@ turbo 2.5.3
 
  Tasks:    2 successful, 2 total
 Cached:    2 cached, 2 total
-  Time:    136ms >>> FULL TURBO
+  Time:    151ms >>> FULL TURBO
 
+
+> with-tailwind@ lint /Users/xemil/Source/nory-challange
+> turbo run lint "--filter=./packages/*"
+
+turbo 2.5.3
+
+• Packages in scope: @nory/backend-db, @repo/api-client, @repo/eslint-config, @repo/jest-config, @repo/plop-generators, @repo/tailwind-config, @repo/typescript-config, @repo/ui, @repo/zod-clients
+• Running lint in 9 packages
+• Remote caching disabled
+@repo/eslint-config:lint: cache hit, replaying logs 4e53903f07f6b8d0
+@repo/zod-clients:lint: cache hit, replaying logs 61b3a6f824234dbf
+@repo/eslint-config:lint: 
+@repo/eslint-config:lint: 
+@repo/eslint-config:lint: > @repo/eslint-config@0.0.0 lint /Users/xemil/Source/nory-challange/packages/eslint-config
+@repo/eslint-config:lint: > echo 'No linting needed for eslint config'
+@repo/eslint-config:lint: 
+@repo/eslint-config:lint: No linting needed for eslint config
+@repo/zod-clients:lint: 
+@repo/zod-clients:lint: 
+@repo/zod-clients:lint: > @repo/zod-clients@0.1.0 lint /Users/xemil/Source/nory-challange/packages/zod-clients
+@repo/zod-clients:lint: > eslint .
+@repo/zod-clients:lint: 
+@repo/ui:lint: cache hit, replaying logs 746829bb387b53f2
+@repo/ui:lint: 
+@repo/ui:lint: > @repo/ui@0.1.0 lint /Users/xemil/Source/nory-challange/packages/ui
+@repo/ui:lint: > eslint .
+@repo/ui:lint: 
+@repo/api-client:lint: cache hit, replaying logs 938f95bb70c7de29
+@repo/api-client:lint: 
+@repo/api-client:lint: 
+@repo/api-client:lint: > @repo/api-client@0.0.1 lint /Users/xemil/Source/nory-challange/packages/api-client
+@repo/api-client:lint: > eslint src/
+@repo/api-client:lint: 
+@repo/jest-config:lint: cache hit, replaying logs 5d51e14a7c1a31e4
+@repo/jest-config:lint: 
+@repo/jest-config:lint: 
+@repo/jest-config:lint: > @repo/jest-config@0.0.0 lint /Users/xemil/Source/nory-challange/packages/jest-config
+@repo/jest-config:lint: > exit 0
+@repo/jest-config:lint: 
+@repo/plop-generators:lint: cache hit, replaying logs 1038daa93244afcf
+@repo/plop-generators:lint: 
+@repo/plop-generators:lint: 
+@repo/plop-generators:lint: > @repo/plop-generators@0.0.1 lint /Users/xemil/Source/nory-challange/packages/plop-generators
+@repo/plop-generators:lint: > eslint "src/**/*.{ts,tsx,js,jsx}"
+@repo/plop-generators:lint: 
+@nory/backend-db:lint: cache hit, replaying logs 0502a5a68632df90
+@nory/backend-db:lint: 
+@nory/backend-db:lint: > @nory/backend-db@0.1.0 lint /Users/xemil/Source/nory-challange/packages/backend-db
+@nory/backend-db:lint: > eslint .
+@nory/backend-db:lint: 
+@nory/backend-db:lint: 
+@nory/backend-db:lint: /Users/xemil/Source/nory-challange/packages/backend-db/src/models/base.ts
+@nory/backend-db:lint:   44:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@nory/backend-db:lint:   61:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@nory/backend-db:lint:   76:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@nory/backend-db:lint:   77:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@nory/backend-db:lint:   90:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@nory/backend-db:lint: 
+@nory/backend-db:lint: ✖ 5 problems (0 errors, 5 warnings)
+@nory/backend-db:lint: 
+
+ Tasks:    7 successful, 7 total
+Cached:    7 cached, 7 total
+  Time:    146ms >>> FULL TURBO
+
+Scope: 9 of 12 workspace projects
+packages/plop-generators test$ echo 'Tests skipped for plop generators'
+packages/ui test$ jest --config=jest.config.cjs
+packages/plop-generators test: Tests skipped for plop generators
+packages/plop-generators test: Done
+packages/ui test: PASS src/components/collapsible/collapsible.test.tsx
+packages/ui test: PASS src/components/input-otp/input-otp.test.tsx
+packages/ui test: PASS src/components/drawer/drawer.test.tsx
+packages/ui test: PASS src/components/command/command.test.tsx
+packages/ui test: PASS src/components/dialog/dialog.test.tsx
+packages/ui test: PASS src/components/chart/chart.test.tsx
+packages/ui test:   ● Console
+packages/ui test:     console.warn
+packages/ui test:       The width(0) and height(0) of chart should be greater than 0,
+packages/ui test:              please check the style of container, or the props width(100%) and height(100%),
+packages/ui test:              or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+packages/ui test:              height and width.
+packages/ui test:       13 | describe('Chart', () => {
+packages/ui test:       14 |   it('renders without crashing', () => {
+packages/ui test:     > 15 |     render(
+packages/ui test:          |           ^
+packages/ui test:       16 |       <Chart config={{}}>
+packages/ui test:       17 |         <div>Chart Content</div>
+packages/ui test:       18 |       </Chart>
+packages/ui test:       at warn (../../node_modules/.pnpm/recharts@2.15.3_nnrd3gsncyragczmpvfhocinkq/node_modules/recharts/lib/util/LogUtils.js:22:17)
+packages/ui test:       at ../../node_modules/.pnpm/recharts@2.15.3_nnrd3gsncyragczmpvfhocinkq/node_modules/recharts/lib/component/ResponsiveContainer.js:136:24
+packages/ui test:       at updateMemo (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:16427:19)
+packages/ui test:       at Object.useMemo (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:17067:16)
+packages/ui test:       at useMemo (../../node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react.development.js:1650:21)
+packages/ui test:       at ../../node_modules/.pnpm/recharts@2.15.3_nnrd3gsncyragczmpvfhocinkq/node_modules/recharts/lib/component/ResponsiveContainer.js:111:41
+packages/ui test:       at renderWithHooks (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+packages/ui test:       at updateForwardRef (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:19245:20)
+packages/ui test:       at beginWork (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21675:16)
+packages/ui test:       at beginWork$1 (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27465:14)
+packages/ui test:       at performUnitOfWork (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12)
+packages/ui test:       at workLoopSync (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26505:5)
+packages/ui test:       at renderRootSync (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26473:7)
+packages/ui test:       at performConcurrentWorkOnRoot (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:25777:74)
+packages/ui test:       at flushActQueue (../../node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react.development.js:2667:24)
+packages/ui test:       at act (../../node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react.development.js:2582:11)
+packages/ui test:       at ../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/act-compat.js:47:25
+packages/ui test:       at renderRoot (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:180:26)
+packages/ui test:       at render (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:271:10)
+packages/ui test:       at Object.<anonymous> (src/components/chart/chart.test.tsx:15:11)
+packages/ui test: PASS src/components/popover/popover.test.tsx
+packages/ui test: PASS src/components/accordion/accordion.test.tsx
+packages/ui test: PASS src/components/dropdown-menu/dropdown-menu.test.tsx
+packages/ui test:   ● Console
+packages/ui test:     console.error
+packages/ui test:       Warning: React does not recognize the `sideOffset` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `sideoffset` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+packages/ui test:           at div
+packages/ui test:           at /Users/xemil/Source/nory-challange/packages/ui/src/components/dropdown-menu/dropdown-menu.test.tsx:72:39
+packages/ui test:           at div
+packages/ui test:           at Portal (/Users/xemil/Source/nory-challange/packages/ui/src/components/dropdown-menu/dropdown-menu.test.tsx:70:21)
+packages/ui test:           at /Users/xemil/Source/nory-challange/packages/ui/src/components/dropdown-menu/index.tsx:60:6
+packages/ui test:           at div
+packages/ui test:           at Root (/Users/xemil/Source/nory-challange/packages/ui/src/components/dropdown-menu/dropdown-menu.test.tsx:33:19)
+packages/ui test:       290 |     // Click to open dropdown
+packages/ui test:       291 |     const user = userEvent.setup();
+packages/ui test:     > 292 |     await user.click(trigger);
+packages/ui test:           |     ^
+packages/ui test:       293 |     
+packages/ui test:       294 |     // Content should now be visible
+packages/ui test:       295 |     const content = screen.getByTestId('dropdown-menu-content');
+packages/ui test:       at printWarning (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:86:30)
+packages/ui test:       at error (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:60:7)
+packages/ui test:       at validateProperty$1 (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:3757:7)
+packages/ui test:       at warnUnknownProperties (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+packages/ui test:       at validateProperties$2 (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+packages/ui test:       at validatePropertiesInDevelopment (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+packages/ui test:       at setInitialProperties (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+packages/ui test:       at finalizeInitialChildren (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+packages/ui test:       at completeWork (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:22232:17)
+packages/ui test:       at completeUnitOfWork (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26632:16)
+packages/ui test:       at performUnitOfWork (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26607:5)
+packages/ui test:       at workLoopSync (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26505:5)
+packages/ui test:       at renderRootSync (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26473:7)
+packages/ui test:       at performSyncWorkOnRoot (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26124:20)
+packages/ui test:       at flushSyncCallbacks (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+packages/ui test:       at flushActQueue (../../node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react.development.js:2667:24)
+packages/ui test:       at act (../../node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react.development.js:2582:11)
+packages/ui test:       at ../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/act-compat.js:47:25
+packages/ui test:       at Object.eventWrapper (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:107:28)
+packages/ui test:       at Object.wrapEvent (../../node_modules/.pnpm/@testing-library+user-event@14.5.2_eboxt5b3qr45gcxzx7wxppt6li/node_modules/@testing-library/user-event/dist/cjs/event/wrapEvent.js:6:28)
+packages/ui test:       at Object.dispatchEvent (../../node_modules/.pnpm/@testing-library+user-event@14.5.2_eboxt5b3qr45gcxzx7wxppt6li/node_modules/@testing-library/user-event/dist/cjs/event/dispatchEvent.js:45:22)
+packages/ui test:       at Object.dispatchUIEvent (../../node_modules/.pnpm/@testing-library+user-event@14.5.2_eboxt5b3qr45gcxzx7wxppt6li/node_modules/@testing-library/user-event/dist/cjs/event/dispatchEvent.js:22:26)
+packages/ui test:       at Mouse.up (../../node_modules/.pnpm/@testing-library+user-event@14.5.2_eboxt5b3qr45gcxzx7wxppt6li/node_modules/@testing-library/user-event/dist/cjs/system/pointer/mouse.js:100:30)
+packages/ui test:       at PointerHost.release (../../node_modules/.pnpm/@testing-library+user-event@14.5.2_eboxt5b3qr45gcxzx7wxppt6li/node_modules/@testing-library/user-event/dist/cjs/system/pointer/index.js:84:28)
+packages/ui test:       at pointerAction (../../node_modules/.pnpm/@testing-library+user-event@14.5.2_eboxt5b3qr45gcxzx7wxppt6li/node_modules/@testing-library/user-event/dist/cjs/pointer/index.js:59:47)
+packages/ui test:       at Object.pointer (../../node_modules/.pnpm/@testing-library+user-event@14.5.2_eboxt5b3qr45gcxzx7wxppt6li/node_modules/@testing-library/user-event/dist/cjs/pointer/index.js:32:9)
+packages/ui test:       at Object.asyncWrapper (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:88:22)
+packages/ui test:       at Object.<anonymous> (src/components/dropdown-menu/dropdown-menu.test.tsx:292:5)
+packages/ui test: PASS src/components/form/form.test.tsx
+packages/ui test: PASS src/components/calendar/calendar.test.tsx
+packages/ui test: PASS src/components/select/select.test.tsx
+packages/ui test: PASS src/components/menubar/menubar.test.tsx
+packages/ui test: PASS src/components/context-menu/context-menu.test.tsx
+packages/ui test: PASS src/components/button/button.test.tsx
+packages/ui test: PASS src/components/checkbox/checkbox.test.tsx
+packages/ui test: PASS src/components/carousel/carousel.test.tsx
+packages/ui test: PASS src/components/radio-group/radio-group.test.tsx
+packages/ui test: PASS src/components/pagination/pagination.test.tsx
+packages/ui test: PASS src/components/breadcrumb/breadcrumb.test.tsx
+packages/ui test: PASS src/components/progress/progress.test.tsx
+packages/ui test:   ● Console
+packages/ui test:     console.error
+packages/ui test:       Warning: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
+packages/ui test:       
+packages/ui test:       Check the render method of `ForwardRef`.
+packages/ui test:           at Root (/Users/xemil/Source/nory-challange/packages/ui/src/components/progress/progress.test.tsx:6:12)
+packages/ui test:           at /Users/xemil/Source/nory-challange/packages/ui/src/components/progress/index.tsx:9:6
+packages/ui test:       103 |   it("accepts ref forwarding", () => {
+packages/ui test:       104 |     const ref = jest.fn();
+packages/ui test:     > 105 |     render(<Progress ref={ref} />);
+packages/ui test:           |           ^
+packages/ui test:       106 |     
+packages/ui test:       107 |     // The ref is passed to the Radix UI Root component
+packages/ui test:       108 |     // This is more of a TypeScript check that the ref is forwarded correctly
+packages/ui test:       at printWarning (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:86:30)
+packages/ui test:       at error (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:60:7)
+packages/ui test:       at validateFunctionComponentInDev (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20222:9)
+packages/ui test:       at mountIndeterminateComponent (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20189:7)
+packages/ui test:       at beginWork (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+packages/ui test:       at beginWork$1 (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27465:14)
+packages/ui test:       at performUnitOfWork (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12)
+packages/ui test:       at workLoopSync (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26505:5)
+packages/ui test:       at renderRootSync (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26473:7)
+packages/ui test:       at performConcurrentWorkOnRoot (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:25777:74)
+packages/ui test:       at flushActQueue (../../node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react.development.js:2667:24)
+packages/ui test:       at act (../../node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react.development.js:2582:11)
+packages/ui test:       at ../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/act-compat.js:47:25
+packages/ui test:       at renderRoot (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:180:26)
+packages/ui test:       at render (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:271:10)
+packages/ui test:       at Object.<anonymous> (src/components/progress/progress.test.tsx:105:11)
+packages/ui test: PASS src/components/card/card.test.tsx
+packages/ui test: PASS src/components/input/input.test.tsx
+packages/ui test: PASS src/components/label/label.test.tsx
+packages/ui test: PASS src/components/resizable/resizable.test.tsx
+packages/ui test:   ● Console
+packages/ui test:     console.error
+packages/ui test:       Warning: React does not recognize the `defaultSize` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `defaultsize` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+packages/ui test:           at div
+packages/ui test:           at Panel (/Users/xemil/Source/nory-challange/packages/ui/src/components/resizable/resizable.test.tsx:15:13)
+packages/ui test:           at div
+packages/ui test:           at PanelGroup (/Users/xemil/Source/nory-challange/packages/ui/src/components/resizable/resizable.test.tsx:10:18)
+packages/ui test:           at ResizablePanelGroup (/Users/xemil/Source/nory-challange/packages/ui/src/components/resizable/index.tsx:8:3)
+packages/ui test:       129 |
+packages/ui test:       130 |   it("renders a complete resizable panel layout", () => {
+packages/ui test:     > 131 |     render(
+packages/ui test:           |           ^
+packages/ui test:       132 |       <ResizablePanelGroup direction="horizontal">
+packages/ui test:       133 |         <ResizablePanel defaultSize={25} minSize={20}>
+packages/ui test:       134 |           <div>Left Panel</div>
+packages/ui test:       at printWarning (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:86:30)
+packages/ui test:       at error (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:60:7)
+packages/ui test:       at validateProperty$1 (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:3757:7)
+packages/ui test:       at warnUnknownProperties (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+packages/ui test:       at validateProperties$2 (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+packages/ui test:       at validatePropertiesInDevelopment (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+packages/ui test:       at setInitialProperties (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+packages/ui test:       at finalizeInitialChildren (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+packages/ui test:       at completeWork (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:22232:17)
+packages/ui test:       at completeUnitOfWork (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26632:16)
+packages/ui test:       at performUnitOfWork (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26607:5)
+packages/ui test:       at workLoopSync (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26505:5)
+packages/ui test:       at renderRootSync (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26473:7)
+packages/ui test:       at performConcurrentWorkOnRoot (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:25777:74)
+packages/ui test:       at flushActQueue (../../node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react.development.js:2667:24)
+packages/ui test:       at act (../../node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react.development.js:2582:11)
+packages/ui test:       at ../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/act-compat.js:47:25
+packages/ui test:       at renderRoot (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:180:26)
+packages/ui test:       at render (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:271:10)
+packages/ui test:       at Object.<anonymous> (src/components/resizable/resizable.test.tsx:131:11)
+packages/ui test:     console.error
+packages/ui test:       Warning: React does not recognize the `minSize` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `minsize` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+packages/ui test:           at div
+packages/ui test:           at Panel (/Users/xemil/Source/nory-challange/packages/ui/src/components/resizable/resizable.test.tsx:15:13)
+packages/ui test:           at div
+packages/ui test:           at PanelGroup (/Users/xemil/Source/nory-challange/packages/ui/src/components/resizable/resizable.test.tsx:10:18)
+packages/ui test:           at ResizablePanelGroup (/Users/xemil/Source/nory-challange/packages/ui/src/components/resizable/index.tsx:8:3)
+packages/ui test:       129 |
+packages/ui test:       130 |   it("renders a complete resizable panel layout", () => {
+packages/ui test:     > 131 |     render(
+packages/ui test:           |           ^
+packages/ui test:       132 |       <ResizablePanelGroup direction="horizontal">
+packages/ui test:       133 |         <ResizablePanel defaultSize={25} minSize={20}>
+packages/ui test:       134 |           <div>Left Panel</div>
+packages/ui test:       at printWarning (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:86:30)
+packages/ui test:       at error (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:60:7)
+packages/ui test:       at validateProperty$1 (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:3757:7)
+packages/ui test:       at warnUnknownProperties (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:3803:21)
+packages/ui test:       at validateProperties$2 (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:3827:3)
+packages/ui test:       at validatePropertiesInDevelopment (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:9541:5)
+packages/ui test:       at setInitialProperties (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:9830:5)
+packages/ui test:       at finalizeInitialChildren (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:10950:3)
+packages/ui test:       at completeWork (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:22232:17)
+packages/ui test:       at completeUnitOfWork (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26632:16)
+packages/ui test:       at performUnitOfWork (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26607:5)
+packages/ui test:       at workLoopSync (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26505:5)
+packages/ui test:       at renderRootSync (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26473:7)
+packages/ui test:       at performConcurrentWorkOnRoot (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:25777:74)
+packages/ui test:       at flushActQueue (../../node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react.development.js:2667:24)
+packages/ui test:       at act (../../node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react.development.js:2582:11)
+packages/ui test:       at ../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/act-compat.js:47:25
+packages/ui test:       at renderRoot (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:180:26)
+packages/ui test:       at render (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:271:10)
+packages/ui test:       at Object.<anonymous> (src/components/resizable/resizable.test.tsx:131:11)
+packages/ui test: PASS src/components/navigation-menu/navigation-menu.test.tsx
+packages/ui test: PASS src/components/alert/alert.test.tsx
+packages/ui test: PASS src/components/badge/badge.test.tsx
+packages/ui test: PASS src/__tests__/dummy.test.ts
+packages/ui test: PASS src/components/aspect-ratio/aspect-ratio.test.tsx
+packages/ui test: PASS src/components/avatar/avatar.test.tsx
+packages/ui test: PASS src/components/hover-card/hover-card.test.tsx
+packages/ui test: Test Suites: 32 passed, 32 total
+packages/ui test: Tests:       214 passed, 214 total
+packages/ui test: Snapshots:   0 total
+packages/ui test: Time:        2.41 s
+packages/ui test: Ran all test suites.
+packages/ui test: Done
+packages/backend-db test$ jest --passWithNoTests
+packages/backend-db test: ts-jest[config] (WARN) 
+packages/backend-db test:     The "ts-jest" config option "isolatedModules" is deprecated and will be removed in v30.0.0. Please use "isolatedModules: true" in /Users/xemil/Source/nory-challange/packages/backend-db/tsconfig.json instead, see https://www.typescriptlang.org/tsconfig/#isolatedModules
+packages/backend-db test:   
+packages/backend-db test: PASS src/tests/dummy.test.ts
+packages/backend-db test:   Dummy test
+packages/backend-db test:     ✓ should pass (1 ms)
+packages/backend-db test: Test Suites: 1 passed, 1 total
+packages/backend-db test: Tests:       1 passed, 1 total
+packages/backend-db test: Snapshots:   0 total
+packages/backend-db test: Time:        0.269 s, estimated 1 s
+packages/backend-db test: Ran all test suites.
+packages/backend-db test: Done
+
+> with-tailwind@ build /Users/xemil/Source/nory-challange
+> turbo run build "--filter=./apps/*"
+
+turbo 2.5.3
+
+• Packages in scope: nory-inventory-api, web
+• Running build in 2 packages
+• Remote caching disabled
+@repo/eslint-config:build: cache hit, replaying logs a5811e2673995969
+@repo/eslint-config:build: 
+@repo/eslint-config:build: 
+@repo/eslint-config:build: > @repo/eslint-config@0.0.0 build /Users/xemil/Source/nory-challange/packages/eslint-config
+@repo/eslint-config:build: > echo 'No build needed for eslint config'
+@repo/eslint-config:build: 
+@repo/eslint-config:build: No build needed for eslint config
+@repo/zod-clients:build: cache hit, replaying logs 2f16eae6c9cdafbc
+@repo/zod-clients:build: 
+@repo/zod-clients:build: 
+@repo/zod-clients:build: > @repo/zod-clients@0.1.0 build /Users/xemil/Source/nory-challange/packages/zod-clients
+@repo/zod-clients:build: > tsup
+@repo/zod-clients:build: 
+@repo/zod-clients:build: [34mCLI[39m Building entry: src/index.ts
+@repo/zod-clients:build: [34mCLI[39m Using tsconfig: tsconfig.json
+@repo/zod-clients:build: [34mCLI[39m tsup v8.5.0
+@repo/zod-clients:build: [34mCLI[39m Using tsup config: /Users/xemil/Source/nory-challange/packages/zod-clients/tsup.config.ts
+@repo/zod-clients:build: [34mCLI[39m Target: es2022
+@repo/zod-clients:build: [34mCLI[39m Cleaning output folder
+@repo/zod-clients:build: [34mESM[39m Build start
+@repo/zod-clients:build: [34mCJS[39m Build start
+@repo/zod-clients:build: [32mCJS[39m [1mdist/index.cjs     [22m[32m38.49 KB[39m
+@repo/zod-clients:build: [32mCJS[39m [1mdist/index.cjs.map [22m[32m45.04 KB[39m
+@repo/zod-clients:build: [32mCJS[39m ⚡️ Build success in 13ms
+@repo/zod-clients:build: [32mESM[39m [1mdist/index.js     [22m[32m24.02 KB[39m
+@repo/zod-clients:build: [32mESM[39m [1mdist/index.js.map [22m[32m42.07 KB[39m
+@repo/zod-clients:build: [32mESM[39m ⚡️ Build success in 14ms
+@repo/zod-clients:build: DTS Build start
+@repo/zod-clients:build: DTS ⚡️ Build success in 1121ms
+@repo/zod-clients:build: DTS dist/index.d.ts  48.29 KB
+@repo/zod-clients:build: DTS dist/index.d.cts 48.29 KB
+@repo/api-client:build: cache hit, replaying logs 5b46e224d5aa6373
+@repo/api-client:build: 
+@repo/api-client:build: 
+@repo/api-client:build: > @repo/api-client@0.0.1 build /Users/xemil/Source/nory-challange/packages/api-client
+@repo/api-client:build: > tsup
+@repo/api-client:build: 
+@repo/api-client:build: [34mCLI[39m Building entry: src/index.ts
+@repo/api-client:build: [34mCLI[39m Using tsconfig: tsconfig.json
+@repo/api-client:build: [34mCLI[39m tsup v8.5.0
+@repo/api-client:build: [34mCLI[39m Using tsup config: /Users/xemil/Source/nory-challange/packages/api-client/tsup.config.ts
+@repo/api-client:build: [34mCLI[39m Target: es2022
+@repo/api-client:build: [34mCLI[39m Cleaning output folder
+@repo/api-client:build: [34mCJS[39m Build start
+@repo/api-client:build: [34mESM[39m Build start
+@repo/api-client:build: [32mCJS[39m [1mdist/index.cjs     [22m[32m132.06 KB[39m
+@repo/api-client:build: [32mCJS[39m [1mdist/index.cjs.map [22m[32m301.17 KB[39m
+@repo/api-client:build: [32mCJS[39m ⚡️ Build success in 43ms
+@repo/api-client:build: [32mESM[39m [1mdist/index.js     [22m[32m105.14 KB[39m
+@repo/api-client:build: [32mESM[39m [1mdist/index.js.map [22m[32m299.83 KB[39m
+@repo/api-client:build: [32mESM[39m ⚡️ Build success in 43ms
+@repo/api-client:build: DTS Build start
+@repo/api-client:build: DTS ⚡️ Build success in 1715ms
+@repo/api-client:build: DTS dist/index.d.cts 157.53 KB
+@repo/api-client:build: DTS dist/index.d.ts  157.53 KB
+nory-inventory-api:build: cache hit, replaying logs d53d306c9bf9d08d
+nory-inventory-api:build: 
+nory-inventory-api:build: > nory-inventory-api@1.0.0 build /Users/xemil/Source/nory-challange/apps/backend
+nory-inventory-api:build: > tsc
+nory-inventory-api:build: 
+@repo/ui:build:components: cache hit, replaying logs 5360345fd47f1d07
+@repo/ui:build:components: 
+@repo/ui:build:components: 
+@repo/ui:build:components: > @repo/ui@0.1.0 build:components /Users/xemil/Source/nory-challange/packages/ui
+@repo/ui:build:components: > tsc && tsc-alias
+@repo/ui:build:components: 
+@repo/ui:build:styles: cache hit, replaying logs d6a96c2b991afa92
+@repo/ui:build:styles: 
+@repo/ui:build:styles: 
+@repo/ui:build:styles: > @repo/ui@0.1.0 build:styles /Users/xemil/Source/nory-challange/packages/ui
+@repo/ui:build:styles: > tailwindcss -i ./src/styles.css -o ./dist/index.css
+@repo/ui:build:styles: 
+@repo/ui:build:styles: 
+@repo/ui:build:styles: Rebuilding...
+@repo/ui:build:styles: 
+@repo/ui:build:styles: Done in 266ms.
+@repo/ui:build: cache hit, replaying logs 4a94a0fe58bcde9c
+@repo/ui:build: 
+@repo/ui:build: 
+@repo/ui:build: > @repo/ui@0.1.0 build /Users/xemil/Source/nory-challange/packages/ui
+@repo/ui:build: > tsup
+@repo/ui:build: 
+@repo/ui:build: [34mCLI[39m Building entry: src/index.ts
+@repo/ui:build: [34mCLI[39m Using tsconfig: tsconfig.json
+@repo/ui:build: [34mCLI[39m tsup v8.5.0
+@repo/ui:build: [34mCLI[39m Using tsup config: /Users/xemil/Source/nory-challange/packages/ui/tsup.config.ts
+@repo/ui:build: [34mCLI[39m Target: es2022
+@repo/ui:build: [34mCLI[39m Cleaning output folder
+@repo/ui:build: [34mESM[39m Build start
+@repo/ui:build: [34mCJS[39m Build start
+@repo/ui:build: [32mCJS[39m [1mdist/index.cjs     [22m[32m155.47 KB[39m
+@repo/ui:build: [32mCJS[39m [1mdist/index.cjs.map [22m[32m225.29 KB[39m
+@repo/ui:build: [32mCJS[39m ⚡️ Build success in 33ms
+@repo/ui:build: [32mESM[39m [1mdist/index.js     [22m[32m134.07 KB[39m
+@repo/ui:build: [32mESM[39m [1mdist/index.js.map [22m[32m223.83 KB[39m
+@repo/ui:build: [32mESM[39m ⚡️ Build success in 33ms
+@repo/ui:build: DTS Build start
+@repo/ui:build: DTS ⚡️ Build success in 2302ms
+@repo/ui:build: DTS dist/index.d.ts  60.57 KB
+@repo/ui:build: DTS dist/index.d.cts 60.57 KB
+web:build: cache hit, replaying logs 09d3101817ae8b0d
+web:build: 
+web:build: > web@0.1.0 build /Users/xemil/Source/nory-challange/apps/web
+web:build: > next build
+web:build: 
+web:build:    ▲ Next.js 15.3.2
+web:build: 
+web:build:    Creating an optimized production build ...
+web:build: /*! 🌼 daisyUI 5.0.35 */
+web:build:  ✓ Compiled successfully in 2000ms
+web:build:    Skipping validation of types
+web:build:    Skipping linting
+web:build:    Collecting page data ...
+web:build:    Generating static pages (0/10) ...
+web:build:    Generating static pages (2/10) 
+web:build:    Generating static pages (4/10) 
+web:build:    Generating static pages (7/10) 
+web:build:  ✓ Generating static pages (10/10)
+web:build:    Finalizing page optimization ...
+web:build:    Collecting build traces ...
+web:build: 
+web:build: Route (app)                                                                 Size  First Load JS
+web:build: ┌ ○ /                                                                    1.73 kB         106 kB
+web:build: ├ ○ /_not-found                                                            984 B         102 kB
+web:build: ├ ○ /ingredients                                                         1.18 kB         1.1 MB
+web:build: ├ ƒ /ingredients/[ingredientId]                                          1.45 kB         1.1 MB
+web:build: ├ ○ /locations                                                           1.18 kB         1.1 MB
+web:build: ├ ƒ /locations/[locationId]                                              1.95 kB         1.1 MB
+web:build: ├ ƒ /locations/[locationId]/ingredient-costs                             1.38 kB         1.1 MB
+web:build: ├ ƒ /locations/[locationId]/ingredient-costs/[locationIngredientCostId]  1.28 kB         1.1 MB
+web:build: ├ ƒ /locations/[locationId]/ingredient-costs/create                      1.38 kB        1.11 MB
+web:build: ├ ƒ /locations/[locationId]/inventory-movements/record                     398 B         102 kB
+web:build: ├ ƒ /locations/[locationId]/inventory-stock                              1.82 kB         1.1 MB
+web:build: ├ ƒ /locations/[locationId]/menu-items                                   1.05 kB         1.1 MB
+web:build: ├ ƒ /locations/[locationId]/menu-items/[menuItemId]                      1.04 kB         1.1 MB
+web:build: ├ ƒ /locations/[locationId]/menu-items/create                             1.5 kB        1.11 MB
+web:build: ├ ƒ /locations/[locationId]/reports                                      1.29 kB         1.1 MB
+web:build: ├ ƒ /locations/[locationId]/reports/inventory-movements-timeline            2 kB         1.1 MB
+web:build: ├ ƒ /locations/[locationId]/reports/inventory-summary                    3.25 kB         1.1 MB
+web:build: ├ ƒ /locations/[locationId]/staff                                         1.3 kB         1.1 MB
+web:build: ├ ƒ /locations/[locationId]/staff/[staffId]                              1.23 kB         1.1 MB
+web:build: ├ ƒ /locations/[locationId]/staff/create                                 1.68 kB        1.11 MB
+web:build: ├ ○ /locations/create                                                    1.73 kB        1.11 MB
+web:build: ├ ○ /modifiers                                                           1.35 kB         1.1 MB
+web:build: ├ ƒ /modifiers/[modifierId]                                                382 B         102 kB
+web:build: ├ ƒ /modifiers/[modifierId]/options                                        393 B         102 kB
+web:build: ├ ƒ /modifiers/[modifierId]/options/[modifierOptionId]                     393 B         102 kB
+web:build: ├ ○ /recipes                                                             1.42 kB         1.1 MB
+web:build: ├ ƒ /recipes/[recipeId]                                                  1.66 kB         1.1 MB
+web:build: ├ ƒ /recipes/[recipeId]/ingredient-links                                 2.38 kB         1.1 MB
+web:build: └ ƒ /recipes/[recipeId]/ingredient-links/create                          2.06 kB        1.11 MB
+web:build: + First Load JS shared by all                                             101 kB
+web:build:   ├ chunks/5834-0bb801d015849a56.js                                      46.1 kB
+web:build:   ├ chunks/61d6f076-e6736b915a4c83b3.js                                  53.2 kB
+web:build:   └ other shared chunks (total)                                          1.91 kB
+web:build: 
+web:build: 
+web:build: ○  (Static)   prerendered as static content
+web:build: ƒ  (Dynamic)  server-rendered on demand
+web:build: 
+
+ Tasks:    8 successful, 8 total
+Cached:    8 cached, 8 total
+  Time:    622ms >>> FULL TURBO
+
+
+> with-tailwind@ check-types /Users/xemil/Source/nory-challange
+> turbo run check-types "--filter=./apps/*"
+
+turbo 2.5.3
+
+• Packages in scope: nory-inventory-api, web
+• Running check-types in 2 packages
+• Remote caching disabled
+@repo/ui:check-types: cache hit, replaying logs 6568dc8e0822619d
+@repo/ui:check-types: 
+@repo/ui:check-types: 
+@repo/ui:check-types: > @repo/ui@0.1.0 check-types /Users/xemil/Source/nory-challange/packages/ui
+@repo/ui:check-types: > tsc --noEmit
+@repo/ui:check-types: 
+web:check-types: cache hit, replaying logs e8fe96b0dd827a2d
+web:check-types: 
+web:check-types: 
+web:check-types: > web@0.1.0 check-types /Users/xemil/Source/nory-challange/apps/web
+web:check-types: > tsc --noEmit
+web:check-types: 
+nory-inventory-api:check-types: cache hit, replaying logs cc8e9a86439a3519
+nory-inventory-api:check-types: 
+nory-inventory-api:check-types: 
+nory-inventory-api:check-types: > nory-inventory-api@1.0.0 check-types /Users/xemil/Source/nory-challange/apps/backend
+nory-inventory-api:check-types: > tsc --noEmit
+nory-inventory-api:check-types: 
+
+ Tasks:    3 successful, 3 total
+Cached:    3 cached, 3 total
+  Time:    158ms >>> FULL TURBO
+
+
+> with-tailwind@ lint /Users/xemil/Source/nory-challange
+> turbo run lint "--filter=./apps/*"
+
+turbo 2.5.3
+
+• Packages in scope: nory-inventory-api, web
+• Running lint in 2 packages
+• Remote caching disabled
+@repo/eslint-config:lint: cache hit, replaying logs 4e53903f07f6b8d0
+@repo/eslint-config:lint: 
+@repo/eslint-config:lint: 
+@repo/eslint-config:lint: > @repo/eslint-config@0.0.0 lint /Users/xemil/Source/nory-challange/packages/eslint-config
+@repo/eslint-config:lint: > echo 'No linting needed for eslint config'
+@repo/eslint-config:lint: 
+@repo/eslint-config:lint: No linting needed for eslint config
+@repo/zod-clients:lint: cache hit, replaying logs 61b3a6f824234dbf
+@repo/zod-clients:lint: 
+@repo/zod-clients:lint: 
+@repo/zod-clients:lint: > @repo/zod-clients@0.1.0 lint /Users/xemil/Source/nory-challange/packages/zod-clients
+@repo/zod-clients:lint: > eslint .
+@repo/zod-clients:lint: 
+@repo/jest-config:lint: cache hit, replaying logs 5d51e14a7c1a31e4
+@repo/jest-config:lint: 
+@repo/jest-config:lint: 
+@repo/jest-config:lint: > @repo/jest-config@0.0.0 lint /Users/xemil/Source/nory-challange/packages/jest-config
+@repo/jest-config:lint: > exit 0
+@repo/jest-config:lint: 
+@repo/ui:lint: cache hit, replaying logs 746829bb387b53f2
+@repo/ui:lint: 
+@repo/ui:lint: > @repo/ui@0.1.0 lint /Users/xemil/Source/nory-challange/packages/ui
+@repo/ui:lint: > eslint .
+@repo/ui:lint: 
+@repo/api-client:lint: cache hit, replaying logs 938f95bb70c7de29
+@repo/api-client:lint: 
+@repo/api-client:lint: 
+@repo/api-client:lint: > @repo/api-client@0.0.1 lint /Users/xemil/Source/nory-challange/packages/api-client
+@repo/api-client:lint: > eslint src/
+@repo/api-client:lint: 
+nory-inventory-api:lint: cache hit, replaying logs 29f1f3356d9ea571
+nory-inventory-api:lint: 
+nory-inventory-api:lint: > nory-inventory-api@1.0.0 lint /Users/xemil/Source/nory-challange/apps/backend
+nory-inventory-api:lint: > eslint src || true
+nory-inventory-api:lint: 
+nory-inventory-api:lint: 
+nory-inventory-api:lint: /Users/xemil/Source/nory-challange/apps/backend/src/utils/openapiRouter.ts
+nory-inventory-api:lint:   115:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+nory-inventory-api:lint: 
+nory-inventory-api:lint: ✖ 1 problem (0 errors, 1 warning)
+nory-inventory-api:lint: 
+web:lint: cache hit, replaying logs 0ca391c980edacfa
+web:lint: 
+web:lint: > web@0.1.0 lint /Users/xemil/Source/nory-challange/apps/web
+web:lint: > eslint .
+web:lint: 
+
+ Tasks:    7 successful, 7 total
+Cached:    7 cached, 7 total
+  Time:    139ms >>> FULL TURBO
+
+Scope: 2 of 12 workspace projects
+apps/backend test$ jest --config ./jest.config.cjs --passWithNoTests
+apps/web test$ pnpm test:unit && pnpm test:e2e
+apps/web test: > web@0.1.0 test:unit /Users/xemil/Source/nory-challange/apps/web
+apps/web test: > jest --config jest.config.cjs
+apps/backend test: ts-jest[ts-jest-transformer] (WARN) Define `ts-jest` config under `globals` is deprecated. Please do
+apps/backend test: transform: {
+apps/backend test:     <transform_regex>: ['ts-jest', { /* ts-jest config goes here in Jest */ }],
+apps/backend test: },
+apps/backend test: See more at https://kulshekhar.github.io/ts-jest/docs/getting-started/presets#advanced
+apps/backend test: PASS src/tests/dummy.test.ts
+apps/backend test:   Dummy test
+apps/backend test:     ✓ should pass (1 ms)
+apps/web test: PASS app/locations/[locationId]/menu-items/create/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/inventory-movements/record/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/menu-items/[menuItemId]/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/reports/inventory-summary/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/ingredient-costs/page.test.tsx
+apps/web test: PASS app/recipes/[recipeId]/ingredient-links/create/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/staff/[staffId]/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/reports/inventory-movements-timeline/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/ingredient-costs/[locationIngredientCostId]/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/menu-items/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/inventory-stock/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/ingredient-costs/create/page.test.tsx
+apps/web test: PASS app/ingredients/[ingredientId]/page.test.tsx
+apps/web test: PASS app/modifiers/[modifierId]/options/[modifierOptionId]/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/staff/create/page.test.tsx
+apps/web test:   ● Console
+apps/web test:     console.error
+apps/web test:       Error creating staff: Error: Failed to create staff member
+apps/web test:           at Object.<anonymous> (/Users/xemil/Source/nory-challange/apps/web/app/locations/[locationId]/staff/create/page.test.tsx:147:43)
+apps/web test:           at Promise.then.completed (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/utils.js:298:28)
+apps/web test:           at new Promise (<anonymous>)
+apps/web test:           at callAsyncCircusFn (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/utils.js:231:10)
+apps/web test:           at _callCircusTest (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/run.js:316:40)
+apps/web test:           at _runTest (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/run.js:252:3)
+apps/web test:           at _runTestsForDescribeBlock (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/run.js:126:9)
+apps/web test:           at _runTestsForDescribeBlock (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/run.js:121:9)
+apps/web test:           at run (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/run.js:71:3)
+apps/web test:           at runAndTransformResultsToJestFormat (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+apps/web test:           at jestAdapter (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+apps/web test:           at runTestInternal (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-runner@29.7.0/node_modules/jest-runner/build/runTest.js:367:16)
+apps/web test:           at runTest (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-runner@29.7.0/node_modules/jest-runner/build/runTest.js:444:34)
+apps/web test:           at Object.worker (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-runner@29.7.0/node_modules/jest-runner/build/testWorker.js:106:12)
+apps/web test:       104 |           : 'An error occurred while creating the staff member'
+apps/web test:       105 |       );
+apps/web test:     > 106 |       console.error('Error creating staff:', error);
+apps/web test:           |               ^
+apps/web test:       107 |     }
+apps/web test:       108 |   };
+apps/web test:       109 |
+apps/web test:       at error (app/locations/[locationId]/staff/create/page.tsx:106:15)
+apps/web test:       at isSubmitted (../../node_modules/.pnpm/react-hook-form@7.56.4_react@19.1.0/node_modules/react-hook-form/src/logic/createFormControl.ts:1267:9)
+apps/web test: PASS app/locations/page.test.tsx
+apps/web test: PASS app/recipes/[recipeId]/ingredient-links/page.test.tsx
+apps/web test: PASS app/modifiers/[modifierId]/options/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/reports/page.test.tsx
+apps/web test: PASS app/ingredients/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/staff/page.test.tsx
+apps/web test: PASS app/modifiers/[modifierId]/page.test.tsx
+apps/web test: PASS app/recipes/[recipeId]/page.test.tsx
+apps/web test: PASS app/locations/create/page.test.tsx
+apps/web test:   ● Console
+apps/web test:     console.error
+apps/web test:       Error creating location: Error: Failed to create location
+apps/web test:           at Object.<anonymous> (/Users/xemil/Source/nory-challange/apps/web/app/locations/create/page.test.tsx:153:23)
+apps/web test:           at Promise.then.completed (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/utils.js:298:28)
+apps/web test:           at new Promise (<anonymous>)
+apps/web test:           at callAsyncCircusFn (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/utils.js:231:10)
+apps/web test:           at _callCircusTest (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/run.js:316:40)
+apps/web test:           at _runTest (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/run.js:252:3)
+apps/web test:           at _runTestsForDescribeBlock (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/run.js:126:9)
+apps/web test:           at _runTestsForDescribeBlock (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/run.js:121:9)
+apps/web test:           at run (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/run.js:71:3)
+apps/web test:           at runAndTransformResultsToJestFormat (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+apps/web test:           at jestAdapter (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-circus@29.7.0/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+apps/web test:           at runTestInternal (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-runner@29.7.0/node_modules/jest-runner/build/runTest.js:367:16)
+apps/web test:           at runTest (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-runner@29.7.0/node_modules/jest-runner/build/runTest.js:444:34)
+apps/web test:           at Object.worker (/Users/xemil/Source/nory-challange/node_modules/.pnpm/jest-runner@29.7.0/node_modules/jest-runner/build/testWorker.js:106:12)
+apps/web test:       102 |           : 'An error occurred while creating the location'
+apps/web test:       103 |       );
+apps/web test:     > 104 |       console.error('Error creating location:', error);
+apps/web test:           |               ^
+apps/web test:       105 |     }
+apps/web test:       106 |   };
+apps/web test:       107 |
+apps/web test:       at error (app/locations/create/page.tsx:104:15)
+apps/web test:       at isSubmitted (../../node_modules/.pnpm/react-hook-form@7.56.4_react@19.1.0/node_modules/react-hook-form/src/logic/createFormControl.ts:1267:9)
+apps/web test: PASS app/recipes/page.test.tsx
+apps/web test: PASS app/modifiers/page.test.tsx
+apps/backend test: Failed to collect coverage from /Users/xemil/Source/nory-challange/apps/backend/src/config.ts
+apps/backend test: ERROR: src/config.ts:4:34 - error TS1343: The 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', or 'nodenext'.
+apps/backend test: 4 const __filename = fileURLToPath(import.meta.url);
+apps/backend test:                                    ~~~~~~~~~~~
+apps/backend test: STACK: 
+apps/web test: PASS app/page.test.tsx
+apps/web test: Test Suites: 28 passed, 28 total
+apps/web test: Tests:       139 passed, 139 total
+apps/web test: Snapshots:   0 total
+apps/web test: Time:        3.752 s
+apps/web test: Ran all test suites.
+apps/backend test: ---------------------------------------|---------|----------|---------|---------|-------------------
+apps/backend test: File                                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+apps/backend test: ---------------------------------------|---------|----------|---------|---------|-------------------
+apps/backend test: All files                              |       0 |        0 |       0 |       0 |                   
+apps/backend test:  src                                   |       0 |        0 |       0 |       0 |                   
+apps/backend test:   expressServer.ts                     |       0 |        0 |       0 |       0 | 1-109             
+apps/backend test:   logger.ts                            |       0 |        0 |     100 |       0 | 1-21              
+apps/backend test:  src/controllers                       |       0 |        0 |       0 |       0 |                   
+apps/backend test:   Controller.ts                        |       0 |        0 |       0 |       0 | 1-175             
+apps/backend test:   IngredientsController.ts             |       0 |        0 |       0 |       0 | 2-74              
+apps/backend test:   InventoryMovementsController.ts      |       0 |        0 |       0 |       0 | 2-41              
+apps/backend test:   InventoryStockController.ts          |       0 |        0 |       0 |       0 | 2-93              
+apps/backend test:   LocationIngredientCostsController.ts |       0 |        0 |       0 |       0 | 2-101             
+apps/backend test:   LocationMenuItemsController.ts       |       0 |        0 |       0 |       0 | 2-63              
+apps/backend test:   LocationsController.ts               |       0 |        0 |       0 |       0 | 2-78              
+apps/backend test:   MenuItemsController.ts               |       0 |        0 |       0 |       0 | 2-78              
+apps/backend test:   ModifierOptionsController.ts         |       0 |        0 |       0 |       0 | 2-59              
+apps/backend test:   ModifiersController.ts               |       0 |        0 |       0 |       0 | 2-48              
+apps/backend test:   RecipeIngredientLinksController.ts   |       0 |        0 |       0 |       0 | 2-81              
+apps/backend test:   RecipesController.ts                 |       0 |        0 |       0 |       0 | 2-48              
+apps/backend test:   StaffController.ts                   |       0 |        0 |       0 |       0 | 2-63              
+apps/backend test:  src/services                          |       0 |        0 |       0 |       0 |                   
+apps/backend test:   IngredientsService.ts                |       0 |        0 |       0 |       0 | 1-222             
+apps/backend test:   InventoryMovementsService.ts         |       0 |        0 |       0 |       0 | 1-161             
+apps/backend test:   InventoryStockService.ts             |       0 |        0 |       0 |       0 | 1-292             
+apps/backend test:   LocationIngredientCostsService.ts    |       0 |        0 |       0 |       0 | 1-256             
+apps/backend test:   LocationMenuItemsService.ts          |       0 |        0 |       0 |       0 | 1-247             
+apps/backend test:   LocationsService.ts                  |       0 |        0 |       0 |       0 | 1-207             
+apps/backend test:   ModifierOptionsService.ts            |       0 |        0 |       0 |       0 | 1-238             
+apps/backend test:   ModifiersService.ts                  |       0 |        0 |       0 |       0 | 1-202             
+apps/backend test:   RecipeIngredientLinksService.ts      |       0 |        0 |       0 |       0 | 1-187             
+apps/backend test:   RecipesService.ts                    |       0 |        0 |       0 |       0 | 1-202             
+apps/backend test:   Service.ts                           |       0 |        0 |       0 |       0 | 5-13              
+apps/backend test:   StaffService.ts                      |       0 |        0 |       0 |       0 | 1-245             
+apps/backend test:  src/types                             |       0 |        0 |       0 |       0 |                   
+apps/backend test:   errors.ts                            |       0 |        0 |       0 |       0 | 6-7               
+apps/backend test:  src/utils                             |       0 |        0 |       0 |       0 |                   
+apps/backend test:   openapiRouter.ts                     |       0 |        0 |       0 |       0 | 2-132             
+apps/backend test: ---------------------------------------|---------|----------|---------|---------|-------------------
+apps/backend test: Test Suites: 1 passed, 1 total
+apps/backend test: Tests:       1 passed, 1 total
+apps/backend test: Snapshots:   0 total
+apps/backend test: Time:        4.707 s
+apps/backend test: Ran all test suites.
+apps/backend test: Done
+apps/web test: > web@0.1.0 test:e2e /Users/xemil/Source/nory-challange/apps/web
+apps/web test: > playwright test --config playwright.config.ts
+apps/web test: [WebServer] 
+apps/web test: [WebServer] > web@0.1.0 dev /Users/xemil/Source/nory-challange/apps/web
+apps/web test: [WebServer] > next dev --port 3001 --turbopack
+apps/web test: [WebServer] 
+apps/web test: [WebServer]    ▲ Next.js 15.3.2 (Turbopack)
+apps/web test: [WebServer]    - Local:        http://localhost:3001
+apps/web test: [WebServer]    - Network:      http://192.168.0.4:3001
+apps/web test: [WebServer] 
+apps/web test: [WebServer]  ✓ Starting...
+apps/web test: [WebServer]  ✓ Ready in 827ms
+apps/web test: [WebServer]  ○ Compiling / ...
+apps/web test: [WebServer] /*! 🌼 daisyUI 5.0.35 */
+apps/web test: [WebServer]  ✓ Compiled / in 1941ms
+apps/web test: [WebServer]  GET / 200 in 2273ms
+apps/web test: Running 94 tests using 2 workers
+apps/web test: [WebServer]  ○ Compiling /ingredients/[ingredientId] ...
+apps/web test: [WebServer]  ✓ Compiled /ingredients/[ingredientId] in 604ms
+apps/web test: [WebServer]  GET /ingredients/123 200 in 942ms
+apps/web test: [WebServer]  GET /ingredients/123 200 in 942ms
+apps/web test: [WebServer]  GET /ingredients/123 200 in 100ms
+apps/web test: ·[WebServer]  GET /ingredients/123 200 in 63ms
+apps/web test: [WebServer]  GET /ingredients/123 200 in 177ms
+apps/web test: ·[WebServer]  ○ Compiling /ingredients ...
+apps/web test: [WebServer]  ✓ Compiled /ingredients in 559ms
+apps/web test: [WebServer]  GET /ingredients 200 in 594ms
+apps/web test: ·[WebServer]  GET /ingredients 200 in 30ms
+apps/web test: [WebServer]  GET /ingredients 200 in 40ms
+apps/web test: [WebServer]  GET /ingredients 200 in 41ms
+apps/web test: ·[WebServer]  GET /ingredients 200 in 33ms
+apps/web test: [WebServer]  GET /ingredients/sparkle 200 in 46ms
+apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/ingredient-costs/[locationIngredientCostId] ...
+apps/web test: ·[WebServer]  ✓ Compiled /locations/[locationId]/ingredient-costs/[locationIngredientCostId] in 596ms
+apps/web test: [WebServer]  GET /locations/123/ingredient-costs/456 200 in 898ms
+apps/web test: [WebServer]  GET /locations/123/ingredient-costs/456 200 in 337ms
+apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/ingredient-costs/create ...
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/ingredient-costs/create in 558ms
+apps/web test: [WebServer]  GET /locations/123/ingredient-costs/create 200 in 848ms
+apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs/create 200 in 32ms
+apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs/create 200 in 31ms
+apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs/create 200 in 39ms
+apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs/create 200 in 35ms
+apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs/create 200 in 35ms
+apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/ingredient-costs ...
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/ingredient-costs in 569ms
+apps/web test: [WebServer]  GET /locations/123/ingredient-costs 200 in 638ms
+apps/web test: [WebServer]  GET /locations/123/ingredient-costs 200 in 858ms
+apps/web test: ··[WebServer]  GET /locations/123/ingredient-costs 200 in 49ms
+apps/web test: [WebServer]  GET /locations/123/ingredient-costs 200 in 110ms
+apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs 200 in 32ms
+apps/web test: [WebServer]  GET /locations/123/ingredient-costs/minus 200 in 25ms
+apps/web test: ··[WebServer]  ○ Compiling /locations/[locationId]/inventory-movements/record ...
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/inventory-movements/record in 612ms
+apps/web test: [WebServer]  GET /locations/123/inventory-movements/record 200 in 686ms
+apps/web test: [WebServer]  GET /locations/123/inventory-movements/record 200 in 908ms
+apps/web test: ··[WebServer]  ○ Compiling /locations/[locationId]/inventory-stock ...
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/inventory-stock in 592ms
+apps/web test: [WebServer]  GET /locations/123/inventory-stock 200 in 858ms
+apps/web test: [WebServer]  GET /locations/123/inventory-stock 200 in 891ms
+apps/web test: [WebServer]  GET /locations/123/inventory-stock 200 in 64ms
+apps/web test: ·[WebServer]  GET /locations/123/inventory-stock 200 in 56ms
+apps/web test: [WebServer]  GET /locations/123/inventory-stock 200 in 147ms
+apps/web test: [WebServer]  GET /locations/123/inventory-movements/record 200 in 57ms
+apps/web test: [WebServer]  ○ Compiling /_not-found/page ...
+apps/web test: ··[WebServer]  GET /locations/123/inventory-stock 200 in 97ms
+apps/web test: [WebServer]  ✓ Compiled /_not-found/page in 1370ms
+apps/web test: [WebServer]  GET /locations/123/menu-items/456 200 in 1028ms
+apps/web test: ·[WebServer]  GET /locations/123/menu-items/456 200 in 39ms
+apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/menu-items/create ...
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/menu-items/create in 550ms
+apps/web test: ·[WebServer]  GET /locations/location1/menu-items/create 200 in 849ms
+apps/web test: [WebServer]  GET /locations/location1/menu-items/create 200 in 73ms
+apps/web test: ··[WebServer]  GET /locations/location1/menu-items/create 200 in 64ms
+apps/web test: [WebServer]  GET /locations/location1/menu-items/create 200 in 119ms
+apps/web test: [WebServer]  ○ Compiling /locations/[locationId]/menu-items ...
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/menu-items in 706ms
+apps/web test: [WebServer]  GET /locations/location1/menu-items 200 in 979ms
+apps/web test: [WebServer]  GET /locations/location1/menu-items 200 in 51ms
+apps/web test: ·[WebServer]  GET /locations/location1/menu-items/create 200 in 31ms
+apps/web test: ·[WebServer]  GET /locations/location1/menu-items/create 200 in 41ms
+apps/web test: ··[WebServer]  GET /locations/123/menu-items 200 in 43ms
+apps/web test: [WebServer]  GET /locations/123/menu-items 200 in 51ms
+apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId] ...
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId] in 632ms
+apps/web test: [WebServer]  GET /locations/123 200 in 915ms
+apps/web test: ·[WebServer]  GET /locations/123 200 in 31ms
+apps/web test: [WebServer]  GET /locations/123 200 in 41ms
+apps/web test: [WebServer]  GET /locations/123 200 in 33ms
+apps/web test: ·[WebServer]  GET /locations/123 200 in 35ms
+apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/reports/inventory-movements-timeline ...
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/reports/inventory-movements-timeline in 688ms
+apps/web test: [WebServer]  GET /locations/123/reports/inventory-movements-timeline?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 970ms
+apps/web test: ·[WebServer]  GET /locations/123/reports/inventory-movements-timeline?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 32ms
+apps/web test: ··[WebServer]  GET /locations/123/reports/inventory-movements-timeline?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 54ms
+apps/web test: [WebServer]  ○ Compiling /locations/[locationId]/reports/inventory-summary ...
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/reports/inventory-summary in 650ms
+apps/web test: [WebServer]  GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 948ms
+apps/web test: ·[WebServer]  GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 34ms
+apps/web test: [WebServer]  GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 49ms
+apps/web test: ·[WebServer]  GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 54ms
+apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/reports ...
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/reports in 938ms
+apps/web test: [WebServer]  GET /locations/123/reports 200 in 1252ms
+apps/web test: [WebServer]  GET /locations/123/reports 200 in 731ms
+apps/web test: [WebServer]  GET /locations/blindly/reports/inventory-summary 200 in 52ms
+apps/web test: [WebServer]  GET /locations/123/reports 200 in 93ms
+apps/web test: ·[WebServer]  GET /locations/123/reports 200 in 40ms
+apps/web test: ·[WebServer]  GET /locations/123/reports 200 in 37ms
+apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/staff/[staffId] ...
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/staff/[staffId] in 784ms
+apps/web test: [WebServer]  GET /locations/wordy/reports/inventory-movements-timeline 200 in 22ms
+apps/web test: [WebServer]  GET /locations/123/staff/456 200 in 1070ms
+apps/web test: ·[WebServer]  GET /locations/123/staff/456 200 in 80ms
+apps/web test: ·[WebServer]  GET /locations/123/staff/456 200 in 31ms
+apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/staff/create ...
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/staff/create in 632ms
+apps/web test: [WebServer]  GET /locations/123/staff/create 200 in 913ms
+apps/web test: ··[WebServer]  GET /locations/123/staff/create 200 in 62ms
+apps/web test: [WebServer]  GET /locations/123/staff/create 200 in 65ms
+apps/web test: ·[WebServer]  GET /locations/123/staff/create 200 in 41ms
+apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/staff ...
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/staff in 621ms
+apps/web test: [WebServer]  GET /locations/123/staff 200 in 901ms
+apps/web test: ·[WebServer]  GET /locations/123/staff 200 in 48ms
+apps/web test: [WebServer]  GET /locations/123/staff 200 in 53ms
+apps/web test: ·[WebServer]  GET /locations/123/staff/create 200 in 57ms
+apps/web test: [WebServer]  GET /locations/123/staff 200 in 120ms
+apps/web test: ·[WebServer]  GET /locations/123/staff 200 in 50ms
+apps/web test: [WebServer]  ○ Compiling /locations/create ...
+apps/web test: [WebServer]  ✓ Compiled /locations/create in 1006ms
+apps/web test: [WebServer]  GET /locations/create 200 in 1050ms
+apps/web test: ·[WebServer]  GET /locations/create 200 in 47ms
+apps/web test: ·[WebServer]  GET /locations/create 200 in 29ms
+apps/web test: ·[WebServer]  GET /locations/create 200 in 29ms
+apps/web test: ·[WebServer]  GET /locations/create 200 in 33ms
+apps/web test: ·[WebServer]  GET /locations/123/staff/blah 200 in 53ms
+apps/web test: [WebServer]  ○ Compiling /locations ...
+apps/web test: [WebServer]  ✓ Compiled /locations in 879ms
+apps/web test: [WebServer]  GET /locations 200 in 920ms
+apps/web test: ·[WebServer]  GET /locations 200 in 41ms
+apps/web test: [WebServer]  GET /locations 200 in 55ms
+apps/web test: [WebServer]  GET /locations 200 in 31ms
+apps/web test: ·[WebServer]  GET /locations 200 in 42ms
+apps/web test: [WebServer]  GET /locations 200 in 51ms
+apps/web test: [WebServer]  GET /locations 200 in 35ms
+apps/web test: [WebServer]  GET /locations/tassel 200 in 44ms
+apps/web test: ·[WebServer]  GET /locations/create 200 in 44ms
+apps/web test: [WebServer]  GET /locations 200 in 53ms
+apps/web test: ·[WebServer]  ○ Compiling /modifiers/[modifierId]/options/[modifierOptionId] ...
+apps/web test: [WebServer]  ✓ Compiled /modifiers/[modifierId]/options/[modifierOptionId] in 781ms
+apps/web test: ·[WebServer]  GET /modifiers/123/options/456 200 in 74ms
+apps/web test: [WebServer]  GET /modifiers/123/options/456 200 in 1090ms
+apps/web test: ··[WebServer]  ○ Compiling /modifiers/[modifierId]/options ...
+apps/web test: [WebServer]  ✓ Compiled /modifiers/[modifierId]/options in 600ms
+apps/web test: [WebServer]  GET /modifiers/123/options 200 in 828ms
+apps/web test: [WebServer]  GET /modifiers/123/options 200 in 897ms
+apps/web test: ··[WebServer]  ○ Compiling /modifiers/[modifierId] ...
+apps/web test: [WebServer]  ✓ Compiled /modifiers/[modifierId] in 622ms
+apps/web test: [WebServer]  GET /modifiers/123 200 in 924ms
+apps/web test: [WebServer]  GET /modifiers/123 200 in 847ms
+apps/web test: ··[WebServer]  ○ Compiling /modifiers ...
+apps/web test: [WebServer]  ✓ Compiled /modifiers in 656ms
+apps/web test: [WebServer]  GET /modifiers 200 in 714ms
+apps/web test: [WebServer]  GET /modifiers 200 in 668ms
+apps/web test: ·[WebServer]  GET /modifiers 200 in 31ms
+apps/web test: [WebServer]  GET /modifiers/over 200 in 52ms
+apps/web test: [WebServer]  GET /modifiers/that/options 200 in 37ms
+apps/web test: ·[WebServer]  GET /modifiers 200 in 36ms
+apps/web test: ·[WebServer]  GET /modifiers 200 in 33ms
+apps/web test: [WebServer]  GET /modifiers/create 200 in 40ms
+apps/web test: ··[WebServer]  GET / 200 in 38ms
+apps/web test: [WebServer]  GET / 200 in 75ms
+apps/web test: ··[WebServer]  ○ Compiling /recipes/[recipeId]/ingredient-links/create ...
+apps/web test: [WebServer]  ✓ Compiled /recipes/[recipeId]/ingredient-links/create in 1443ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 1752ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 1789ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 103ms
+apps/web test: [WebServer]  GET /ingredients 200 in 49ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 77ms
+apps/web test: ·[WebServer]  ○ Compiling /recipes/[recipeId] ...
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 103ms
+apps/web test: [WebServer]  ✓ Compiled /recipes/[recipeId] in 1498ms
+apps/web test: ·[WebServer]  GET /recipes/123 200 in 992ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 80ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 69ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 305ms
+apps/web test: [WebServer]  GET /recipes/123 200 in 148ms
+apps/web test: [WebServer]  GET /ingredients 200 in 117ms
+apps/web test: [WebServer]  GET /recipes/123 200 in 115ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 186ms
+apps/web test: ·[WebServer]  GET /recipes/123/ingredient-links/create 200 in 59ms
+apps/web test: ··[WebServer]  ○ Compiling /recipes/[recipeId]/ingredient-links ...
+apps/web test: [WebServer]  ✓ Compiled /recipes/[recipeId]/ingredient-links in 762ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links 200 in 1070ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links 200 in 594ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links 200 in 85ms
+apps/web test: [WebServer]  GET /recipes/123 200 in 46ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links 200 in 76ms
+apps/web test: ·[WebServer]  GET /recipes/123/ingredient-links 200 in 35ms
+apps/web test: ·[WebServer]  GET /recipes/123/ingredient-links 200 in 32ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 28ms
+apps/web test: ·[WebServer]  GET /recipes/123 200 in 39ms
+apps/web test: ·[WebServer]  GET /recipes/123 200 in 31ms
+apps/web test: [WebServer]  GET /recipes/123 200 in 45ms
+apps/web test: [WebServer]  GET /recipes/123 200 in 58ms
+apps/web test: ·[WebServer]  GET /recipes/123 200 in 32ms
+apps/web test: ·[WebServer]  ○ Compiling /recipes ...
+apps/web test: ·[WebServer]  ✓ Compiled /recipes in 1288ms
+apps/web test: [WebServer]  GET /recipes 200 in 766ms
+apps/web test: [WebServer]  GET /recipes 200 in 1396ms
+apps/web test: [WebServer]  GET /recipes 200 in 73ms
+apps/web test: [WebServer]  GET /recipes 200 in 33ms
+apps/web test: ·[WebServer]  GET /recipes 200 in 29ms
+apps/web test: ·[WebServer]  GET /recipes/create 200 in 72ms
+apps/web test: [WebServer]  GET /recipes 200 in 145ms
+apps/web test: ··
+apps/web test:   94 passed (1.5m)
+apps/web test: Done
