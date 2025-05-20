@@ -1,5 +1,7 @@
 Write a unit test confirming all files under
 
+Write file path to test:
+
 apps/backend/src/services
 
 and
@@ -26,33 +28,19 @@ Examine existing tests before writing a new test! Always source the file to test
 
 Verify end of file for latest test result. build-test-result.txt
 
-| Service File                      | Test File Exists?                            |
-| --------------------------------- | -------------------------------------------- |
-| IngredientsService.ts             | Yes (IngredientsService.test.ts)             |
-| InventoryMovementsService.ts      | Yes (InventoryMovementsService.test.ts)      |
-| InventoryStockService.ts          | Yes (InventoryStockService.test.ts)          |
-| LocationIngredientCostsService.ts | Yes (LocationIngredientCostsService.test.ts) |
-| LocationMenuItemsService.ts       | Yes (LocationMenuItemsService.test.ts)       |
-| LocationsService.ts               | Yes (LocationsService.test.ts)               |
-| ModifierOptionsService.ts         | Yes (ModifierOptionsService.test.ts)         |
-| ModifiersService.ts               | Yes (ModifiersService.test.ts)               |
-| RecipeIngredientLinksService.ts   | Yes (RecipeIngredientLinksService.test.ts)   |
-| RecipesService.ts                 | Yes (RecipesService.test.ts)                 |
-| StaffService.ts                   | Yes (StaffService.test.ts)                   |
-| Service.ts                        | Yes (base/utility, covered as needed)        |
-| index.ts                          | N/A (index file)                             |
+Command.ts index.ts etc
 
 All required tests are present and passing. ✅
 
 ## TODOs
 
-- [ ] Implement missing test files for:
+- [x] Implement missing test files for:
   - ModifierOptionsService.ts
   - ModifiersService.ts
   - RecipeIngredientLinksService.ts
   - RecipesService.ts
   - StaffService.ts
-- [ ] Commit the new/updated test files.
+- [x] Commit the new/updated test files.
 
 Make sure all files are commited and pushed.
 
