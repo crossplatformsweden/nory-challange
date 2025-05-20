@@ -76,13 +76,6 @@ test.describe('LocationsListPage', () => {
       .count();
 
     if (firstViewButton > 0) {
-      // Get the id from the test ID to verify we navigate to the correct page
-      const buttonTestId = await page
-        .locator('[data-testid^="location-view-"]')
-        .first()
-        .getAttribute('data-testid');
-      const locationId = buttonTestId?.replace('location-view-', '');
-
       // Click the view button
       await page.locator('[data-testid^="location-view-"]').first().click();
 

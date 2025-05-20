@@ -7,6 +7,18 @@ type RecipeRow = Database['public']['Tables']['recipes']['Row'];
 type LocationRow = Database['public']['Tables']['locations']['Row'];
 type InventoryMovementRow =
   Database['public']['Tables']['inventory_movements']['Row'];
+type RecipeIngredientLinkRow =
+  Database['public']['Tables']['recipe_ingredient_links']['Row'];
+type LocationIngredientCostRow =
+  Database['public']['Tables']['location_ingredient_costs']['Row'];
+
+interface RecipeLink extends RecipeIngredientLinkRow {
+  recipe: RecipeRow;
+}
+
+interface LocationCost extends LocationIngredientCostRow {
+  location: LocationRow;
+}
 
 export class Ingredient extends BaseModel<'ingredients'> {
   constructor(supabase: SupabaseClient<Database>) {
@@ -45,7 +57,9 @@ export class Ingredient extends BaseModel<'ingredients'> {
 
     return {
       ...data,
-      recipes: data.recipe_ingredient_links.map((link: any) => link.recipe),
+      recipes: (data.recipe_ingredient_links as RecipeLink[]).map(
+        (link) => link.recipe
+      ),
     };
   }
 
@@ -70,8 +84,8 @@ export class Ingredient extends BaseModel<'ingredients'> {
 
     return {
       ...data,
-      locations: data.location_ingredient_costs.map(
-        (cost: any) => cost.location
+      locations: (data.location_ingredient_costs as LocationCost[]).map(
+        (cost) => cost.location
       ),
     };
   }

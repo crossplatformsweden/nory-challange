@@ -3,95 +3,98 @@ import Controller from './Controller.js';
 import * as inventoryStockService from '../services/InventoryStockService.js';
 import { OpenAPIRequest } from '../types/common.js';
 
-/**
- * Create a new inventory stock record
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const createInventoryStock = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    inventoryStockService.createInventoryStock
-  );
-};
+export class InventoryStockController extends Controller {
+  constructor(service?: unknown) {
+    super(service || inventoryStockService);
+  }
 
-/**
- * Delete an inventory stock record
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const deleteInventoryStock = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    inventoryStockService.deleteInventoryStock
-  );
-};
+  /**
+   * Create a new inventory stock entry
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async createInventoryStock(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/InventoryStockService.js'))
+        .createInventoryStock
+    );
+  }
 
-/**
- * Get an inventory stock record by ID
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const getInventoryStockById = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    inventoryStockService.getInventoryStockById
-  );
-};
+  /**
+   * Delete an inventory stock entry
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async deleteInventoryStock(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/InventoryStockService.js'))
+        .deleteInventoryStock
+    );
+  }
 
-/**
- * List inventory stock levels
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const listInventoryStock = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    inventoryStockService.listInventoryStock
-  );
-};
+  /**
+   * Get an inventory stock entry by its ID
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async getInventoryStockById(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/InventoryStockService.js'))
+        .getInventoryStockById
+    );
+  }
 
-/**
- * Update an inventory stock entry
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const updateInventoryStock = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    inventoryStockService.updateInventoryStock
-  );
-};
+  /**
+   * List all inventory stock entries
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async listInventoryStock(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/InventoryStockService.js'))
+        .listInventoryStock
+    );
+  }
 
-export {
-  createInventoryStock,
-  deleteInventoryStock,
-  getInventoryStockById,
-  listInventoryStock,
-  updateInventoryStock,
-};
+  /**
+   * Update an inventory stock entry
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async updateInventoryStock(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/InventoryStockService.js'))
+        .updateInventoryStock
+    );
+  }
+}

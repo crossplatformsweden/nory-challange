@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import StaffDetailPage from './page';
 import { useRouter, useParams } from 'next/navigation';
-import { useGetStaffByLocationAndId } from '@nory/api-client';
+import { useGetStaffByLocationAndId } from '@repo/api-client';
 
 /**
  * Testing Guide:
@@ -24,7 +24,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock the API hook
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useGetStaffByLocationAndId: jest.fn(() => ({
     data: {
       data: {

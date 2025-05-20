@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react';
 import {
   ContextMenu,
   ContextMenuTrigger,
@@ -13,22 +13,22 @@ import {
   ContextMenuSubTrigger,
   ContextMenuSubContent,
   ContextMenuRadioGroup,
-} from "./index";
-import { useState } from "react";
+} from './index';
+import { useState } from 'react';
 
 const meta: Meta<typeof ContextMenu> = {
-  title: "Components/ContextMenu",
+  title: 'Components/ContextMenu',
   component: ContextMenu,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
 };
 
 export default meta;
 type Story = StoryObj<typeof ContextMenu>;
 
-const DefaultTemplate = (args: any) => (
+const DefaultTemplate = () => (
   <ContextMenu>
     <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
       Right click here
@@ -63,11 +63,11 @@ const DefaultTemplate = (args: any) => (
 );
 
 export const Default: Story = {
-  render: (args) => <DefaultTemplate {...args} />,
+  render: () => <DefaultTemplate />,
 };
 
 // Wrapper component to avoid rules-of-hooks ESLint errors
-const WithCheckboxItemsWrapper = (args: any) => {
+const WithCheckboxItemsWrapper = () => {
   const [checkedItems, setCheckedItems] = useState({
     toolbar: true,
     statusbar: false,
@@ -84,19 +84,25 @@ const WithCheckboxItemsWrapper = (args: any) => {
         <ContextMenuSeparator />
         <ContextMenuCheckboxItem
           checked={checkedItems.toolbar}
-          onCheckedChange={(checked) => setCheckedItems({ ...checkedItems, toolbar: checked ?? false })}
+          onCheckedChange={(checked) =>
+            setCheckedItems({ ...checkedItems, toolbar: checked ?? false })
+          }
         >
           Show Toolbar
         </ContextMenuCheckboxItem>
         <ContextMenuCheckboxItem
           checked={checkedItems.statusbar}
-          onCheckedChange={(checked) => setCheckedItems({ ...checkedItems, statusbar: checked ?? false })}
+          onCheckedChange={(checked) =>
+            setCheckedItems({ ...checkedItems, statusbar: checked ?? false })
+          }
         >
           Show Statusbar
         </ContextMenuCheckboxItem>
         <ContextMenuCheckboxItem
           checked={checkedItems.sidebar}
-          onCheckedChange={(checked) => setCheckedItems({ ...checkedItems, sidebar: checked ?? false })}
+          onCheckedChange={(checked) =>
+            setCheckedItems({ ...checkedItems, sidebar: checked ?? false })
+          }
         >
           Show Sidebar
         </ContextMenuCheckboxItem>
@@ -106,12 +112,12 @@ const WithCheckboxItemsWrapper = (args: any) => {
 };
 
 export const WithCheckboxItems: Story = {
-  render: (args) => <WithCheckboxItemsWrapper {...args} />,
+  render: () => <WithCheckboxItemsWrapper />,
 };
 
 // Wrapper component to avoid rules-of-hooks ESLint errors
-const WithRadioItemsWrapper = (args: any) => {
-  const [position, setPosition] = useState("bottom");
+const WithRadioItemsWrapper = () => {
+  const [position, setPosition] = useState('bottom');
 
   return (
     <ContextMenu>
@@ -135,10 +141,10 @@ const WithRadioItemsWrapper = (args: any) => {
 };
 
 export const WithRadioItems: Story = {
-  render: (args) => <WithRadioItemsWrapper {...args} />,
+  render: () => <WithRadioItemsWrapper />,
 };
 
-const WithSubmenuTemplate = (args: any) => (
+const WithSubmenuTemplate = () => (
   <ContextMenu>
     <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
       Right click here
@@ -179,10 +185,10 @@ const WithSubmenuTemplate = (args: any) => (
 );
 
 export const WithSubmenu: Story = {
-  render: (args) => <WithSubmenuTemplate {...args} />,
+  render: () => <WithSubmenuTemplate />,
 };
 
-const InsetItemsTemplate = (args: any) => (
+const InsetItemsTemplate = () => (
   <ContextMenu>
     <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
       Right click here
@@ -205,10 +211,10 @@ const InsetItemsTemplate = (args: any) => (
 );
 
 export const InsetItems: Story = {
-  render: (args) => <InsetItemsTemplate {...args} />,
+  render: () => <InsetItemsTemplate />,
 };
 
-const DisabledTemplate = (args: any) => (
+const DisabledTemplate = () => (
   <ContextMenu>
     <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
       Right click here
@@ -232,5 +238,5 @@ const DisabledTemplate = (args: any) => (
 );
 
 export const Disabled: Story = {
-  render: (args) => <DisabledTemplate {...args} />,
+  render: () => <DisabledTemplate />,
 };

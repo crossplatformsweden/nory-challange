@@ -10,6 +10,10 @@ import {
   updateInventoryStockResponse,
 } from '@repo/zod-clients';
 
+interface ServiceError extends Error {
+  status?: number;
+}
+
 /**
  * Interface for inventory stock list parameters
  */
@@ -65,7 +69,7 @@ const createInventoryStock = async ({
     }
     return Service.rejectResponse(
       (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      (e as ServiceError).status || 405
     );
   }
 };
@@ -97,7 +101,7 @@ const deleteInventoryStock = async ({
   } catch (e) {
     return Service.rejectResponse(
       (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      (e as ServiceError).status || 405
     );
   }
 };
@@ -147,7 +151,7 @@ const getInventoryStockById = async ({
     }
     return Service.rejectResponse(
       (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      (e as ServiceError).status || 405
     );
   }
 };
@@ -218,7 +222,7 @@ const listInventoryStock = async (
     }
     return Service.rejectResponse(
       (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      (e as ServiceError).status || 405
     );
   }
 };
@@ -275,7 +279,7 @@ const updateInventoryStock = async ({
     }
     return Service.rejectResponse(
       (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      (e as ServiceError).status || 405
     );
   }
 };

@@ -1,4 +1,6 @@
-module.exports = {
+import { defineConfig } from 'orval';
+
+export default defineConfig({
   noryApiClient: {
     input: {
       target: '../../utils/salad.yml',
@@ -10,16 +12,9 @@ module.exports = {
       clean: true,
       mode: 'split',
       mock: {
-        enabled: true,
-        format: 'msw',
-        output: './src/generated/msw.ts',
-        exportAll: true,
+        type: 'msw',
         delay: 1000,
-        formatOptions: {
-          exportAll: true,
-          exportHandlers: true,
-          mswVersion: 2,
-        },
+        useExamples: true,
       },
       override: {
         mutator: {
@@ -29,7 +24,6 @@ module.exports = {
       },
     },
   },
-
   noryApiHooks: {
     input: {
       target: '../../utils/salad.yml',
@@ -39,16 +33,14 @@ module.exports = {
       target: './src/generated/hooks',
       client: 'react-query',
       clean: true,
-      hooks: {
-        queries: true,
-        mutations: true,
-        reactQuery: {
-          version: 5,
-        },
+      prettier: true,
+      mock: {
+        type: 'msw',
+        delay: 1000,
+        useExamples: true,
       },
     },
   },
-
   noryApiZodSchemas: {
     input: {
       target: '../../utils/salad.yml',
@@ -61,4 +53,4 @@ module.exports = {
       clean: false,
     },
   },
-};
+}) as any;

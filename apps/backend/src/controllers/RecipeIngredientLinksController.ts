@@ -3,59 +3,88 @@ import Controller from './Controller.js';
 import * as recipeIngredientLinksService from '../services/RecipeIngredientLinksService.js';
 import { OpenAPIRequest } from '../types/common.js';
 
-/**
- * Add an ingredient to a recipe
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const createRecipeIngredientLink = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    recipeIngredientLinksService.createRecipeIngredientLink
-  );
-};
+export class RecipeIngredientLinksController extends Controller {
+  constructor(service?: unknown) {
+    super(service || recipeIngredientLinksService);
+  }
 
-/**
- * Remove a recipe ingredient link
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const deleteRecipeIngredientLink = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    recipeIngredientLinksService.deleteRecipeIngredientLink
-  );
-};
+  /**
+   * Create a new recipe ingredient link
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async createRecipeIngredientLink(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (
+        this
+          .service as typeof import('../services/RecipeIngredientLinksService.js')
+      ).createRecipeIngredientLink
+    );
+  }
 
-/**
- * List ingredient links for a recipe
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const listRecipeIngredientLinks = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    recipeIngredientLinksService.listRecipeIngredientLinks
-  );
-};
+  /**
+   * Delete a recipe ingredient link
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async deleteRecipeIngredientLink(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (
+        this
+          .service as typeof import('../services/RecipeIngredientLinksService.js')
+      ).deleteRecipeIngredientLink
+    );
+  }
 
-export {
-  createRecipeIngredientLink,
-  deleteRecipeIngredientLink,
-  listRecipeIngredientLinks,
-};
+  /**
+   * Get a recipe ingredient link by its ID
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async getRecipeIngredientLinkById(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (
+        this
+          .service as typeof import('../services/RecipeIngredientLinksService.js')
+      ).getRecipeIngredientLinkById
+    );
+  }
+
+  /**
+   * List all recipe ingredient links
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async listRecipeIngredientLinks(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (
+        this
+          .service as typeof import('../services/RecipeIngredientLinksService.js')
+      ).listRecipeIngredientLinks
+    );
+  }
+}

@@ -1,9 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import RecipesListPage from './page';
-import { useListRecipes } from '@nory/api-client';
+import { useListRecipes } from '@repo/api-client';
 
 // Mock the API client hook
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useListRecipes: jest.fn(),
 }));
 

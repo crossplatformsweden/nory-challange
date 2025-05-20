@@ -1,5 +1,6 @@
 import Service from './Service.js';
 import { ServiceResponse } from '../types/common.js';
+import { isServiceError } from '../types/errors.js';
 import { z } from 'zod';
 import {
   createModifierBody,
@@ -26,7 +27,7 @@ const createModifier = async ({
     // Validate the input data using Zod
     const validatedData = createModifierBody.parse(modifierCreate);
 
-    // Mock implementation - create a new modifier group
+    // Mock implementation - create a new modifier
     const newModifier = {
       id: `modifier-${Date.now()}`,
       name: validatedData.name,
@@ -40,10 +41,9 @@ const createModifier = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -68,13 +68,12 @@ const deleteModifier = async ({
 
     return Service.successResponse({
       success: true,
-      message: `Modifier group ${modifierId} deleted successfully`,
+      message: `Modifier ${modifierId} deleted successfully`,
     });
   } catch (e) {
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -95,7 +94,7 @@ const getModifierById = async ({
     // Mock implementation - create sample data
     const mockModifier = {
       id: modifierId,
-      name: 'Toppings',
+      name: 'Sample Modifier',
     };
 
     // Validate the response using Zod
@@ -109,10 +108,9 @@ const getModifierById = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -128,11 +126,11 @@ const listModifiers = async (): Promise<ServiceResponse> => {
     const mockModifiers = [
       {
         id: 'modifier-1',
-        name: 'Toppings',
+        name: 'Size Options',
       },
       {
         id: 'modifier-2',
-        name: 'Milk Options',
+        name: 'Extra Toppings',
       },
     ];
 
@@ -147,10 +145,9 @@ const listModifiers = async (): Promise<ServiceResponse> => {
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -191,10 +188,9 @@ const updateModifier = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 

@@ -3,95 +3,83 @@ import Controller from './Controller.js';
 import * as locationsService from '../services/LocationsService.js';
 import { OpenAPIRequest } from '../types/common.js';
 
-/**
- * Create a new location
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const createLocation = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    locationsService.createLocation
-  );
-};
+export class LocationsController extends Controller {
+  constructor(service?: unknown) {
+    super(service || locationsService);
+  }
 
-/**
- * Delete a location
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const deleteLocation = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    locationsService.deleteLocation
-  );
-};
+  /**
+   * Create a new location
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async createLocation(request: Request, response: Response): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/LocationsService.js'))
+        .createLocation
+    );
+  }
 
-/**
- * Get a single location by ID
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const getLocationById = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    locationsService.getLocationById
-  );
-};
+  /**
+   * Delete a location
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async deleteLocation(request: Request, response: Response): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/LocationsService.js'))
+        .deleteLocation
+    );
+  }
 
-/**
- * List all locations
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const listLocations = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    locationsService.listLocations
-  );
-};
+  /**
+   * Get a location by its ID
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async getLocationById(request: Request, response: Response): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/LocationsService.js'))
+        .getLocationById
+    );
+  }
 
-/**
- * Update a location
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const updateLocation = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    locationsService.updateLocation
-  );
-};
+  /**
+   * List all locations
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async listLocations(request: Request, response: Response): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/LocationsService.js'))
+        .listLocations
+    );
+  }
 
-export {
-  createLocation,
-  deleteLocation,
-  getLocationById,
-  listLocations,
-  updateLocation,
-};
+  /**
+   * Update a location
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async updateLocation(request: Request, response: Response): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/LocationsService.js'))
+        .updateLocation
+    );
+  }
+}

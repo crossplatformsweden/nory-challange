@@ -5,11 +5,11 @@ import {
   useListRecipeIngredientLinks,
   Recipe,
   RecipeIngredientLink,
-} from '@nory/api-client';
+} from '@repo/api-client';
 import { useParams, useRouter } from 'next/navigation';
 
 // Mock the API client hook
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useGetRecipeById: jest.fn(),
   useListRecipeIngredientLinks: jest.fn(),
 }));

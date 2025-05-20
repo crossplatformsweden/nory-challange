@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-import { useGetIngredientById } from '@nory/api-client';
+import { useGetIngredientById } from '@repo/api-client';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -33,7 +33,7 @@ import Link from 'next/link';
  * Example implementation using React Query and generated hooks:
  * 
  * import React from 'react';
- * import { useGetIngredientById } from '@nory/api-client';
+ * import { useGetIngredientById } from '@repo/api-client';
  * 
  * // Create a client
  * const queryClient = new QueryClient();

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import IngredientCostDetailPage from './page';
 import { useParams, useRouter } from 'next/navigation';
-import { useGetLocationIngredientCostById } from '@nory/api-client';
+import { useGetLocationIngredientCostById } from '@repo/api-client';
 
 // THIS IS A TEMPLATE FOR TESTING A PAGE COMPONENT IN A NEXT.JS APPLICATION
 
@@ -26,7 +26,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock the API hook
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useGetLocationIngredientCostById: jest.fn(),
 }));
 

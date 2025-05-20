@@ -5,10 +5,7 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type {
   MutationFunction,
   QueryFunction,
@@ -16,306 +13,398 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query'
-import axios from 'axios'
-import type {
-  AxiosError,
-  AxiosRequestConfig,
-  AxiosResponse
-} from 'axios'
+  UseQueryResult,
+} from '@tanstack/react-query';
+import axios from 'axios';
+import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import type {
   BadRequestResponse,
   InternalServerErrorResponse,
   Modifier,
   ModifierCreate,
   ModifierUpdate,
-  NotFoundResponse
-} from '../noryInventoryAPI.schemas'
-
-
+  NotFoundResponse,
+} from '../noryInventoryAPI.schemas';
 
 /**
  * Retrieve a list of all defined modifier groups (e.g., "Milk Options").
  * @summary List all modifiers
  */
 export const listModifiers = (
-     options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Modifier[]>> => {
-    
-    return axios.get(
-      `/modifiers`,options
-    );
-  }
-
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<Modifier[]>> => {
+  return axios.get(`/modifiers`, options);
+};
 
 export const getListModifiersQueryKey = () => {
-    return [`/modifiers`] as const;
-    }
+  return [`/modifiers`] as const;
+};
 
-    
-export const getListModifiersQueryOptions = <TData = Awaited<ReturnType<typeof listModifiers>>, TError = AxiosError<InternalServerErrorResponse>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listModifiers>>, TError, TData>>, axios?: AxiosRequestConfig}
-) => {
+export const getListModifiersQueryOptions = <
+  TData = Awaited<ReturnType<typeof listModifiers>>,
+  TError = AxiosError<InternalServerErrorResponse>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof listModifiers>>, TError, TData>
+  >;
+  axios?: AxiosRequestConfig;
+}) => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {};
 
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getListModifiersQueryKey();
 
-  const queryKey =  queryOptions?.queryKey ?? getListModifiersQueryKey();
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof listModifiers>>> = ({
+    signal,
+  }) => listModifiers({ signal, ...axiosOptions });
 
-  
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listModifiers>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listModifiers>>> = ({ signal }) => listModifiers({ signal, ...axiosOptions });
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listModifiers>>, TError, TData> & { queryKey: QueryKey }
-}
-
-export type ListModifiersQueryResult = NonNullable<Awaited<ReturnType<typeof listModifiers>>>
-export type ListModifiersQueryError = AxiosError<InternalServerErrorResponse>
+export type ListModifiersQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listModifiers>>
+>;
+export type ListModifiersQueryError = AxiosError<InternalServerErrorResponse>;
 
 /**
  * @summary List all modifiers
  */
-export const useListModifiers = <TData = Awaited<ReturnType<typeof listModifiers>>, TError = AxiosError<InternalServerErrorResponse>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listModifiers>>, TError, TData>>, axios?: AxiosRequestConfig}
+export const useListModifiers = <
+  TData = Awaited<ReturnType<typeof listModifiers>>,
+  TError = AxiosError<InternalServerErrorResponse>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof listModifiers>>, TError, TData>
+  >;
+  axios?: AxiosRequestConfig;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const queryOptions = getListModifiersQueryOptions(options);
 
-  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
 
-  const queryOptions = getListModifiersQueryOptions(options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
-}
-
-
+};
 
 /**
  * Add a new modifier group definition.
  * @summary Create a new modifier group
  */
 export const createModifier = (
-    modifierCreate: ModifierCreate, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Modifier>> => {
-    
-    return axios.post(
-      `/modifiers`,
-      modifierCreate,options
-    );
-  }
+  modifierCreate: ModifierCreate,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<Modifier>> => {
+  return axios.post(`/modifiers`, modifierCreate, options);
+};
 
+export const getCreateModifierMutationOptions = <
+  TError = AxiosError<BadRequestResponse | InternalServerErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createModifier>>,
+    TError,
+    { data: ModifierCreate },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createModifier>>,
+  TError,
+  { data: ModifierCreate },
+  TContext
+> => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createModifier>>,
+    { data: ModifierCreate }
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getCreateModifierMutationOptions = <TError = AxiosError<BadRequestResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createModifier>>, TError,{data: ModifierCreate}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof createModifier>>, TError,{data: ModifierCreate}, TContext> => {
-const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
+    return createModifier(data, axiosOptions);
+  };
 
-      
+  return { mutationFn, ...mutationOptions };
+};
 
+export type CreateModifierMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createModifier>>
+>;
+export type CreateModifierMutationBody = ModifierCreate;
+export type CreateModifierMutationError = AxiosError<
+  BadRequestResponse | InternalServerErrorResponse
+>;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createModifier>>, {data: ModifierCreate}> = (props) => {
-          const {data} = props ?? {};
-
-          return  createModifier(data,axiosOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateModifierMutationResult = NonNullable<Awaited<ReturnType<typeof createModifier>>>
-    export type CreateModifierMutationBody = ModifierCreate
-    export type CreateModifierMutationError = AxiosError<BadRequestResponse | InternalServerErrorResponse>
-
-    /**
+/**
  * @summary Create a new modifier group
  */
-export const useCreateModifier = <TError = AxiosError<BadRequestResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createModifier>>, TError,{data: ModifierCreate}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationResult<
-        Awaited<ReturnType<typeof createModifier>>,
-        TError,
-        {data: ModifierCreate},
-        TContext
-      > => {
+export const useCreateModifier = <
+  TError = AxiosError<BadRequestResponse | InternalServerErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createModifier>>,
+    TError,
+    { data: ModifierCreate },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof createModifier>>,
+  TError,
+  { data: ModifierCreate },
+  TContext
+> => {
+  const mutationOptions = getCreateModifierMutationOptions(options);
 
-      const mutationOptions = getCreateModifierMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    /**
+  return useMutation(mutationOptions);
+};
+/**
  * Retrieve a specific modifier group using its unique ID.
  * @summary Get a modifier by ID
  */
 export const getModifierById = (
-    modifierId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Modifier>> => {
-    
-    return axios.get(
-      `/modifiers/${modifierId}`,options
-    );
+  modifierId: string,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<Modifier>> => {
+  return axios.get(`/modifiers/${modifierId}`, options);
+};
+
+export const getGetModifierByIdQueryKey = (modifierId: string) => {
+  return [`/modifiers/${modifierId}`] as const;
+};
+
+export const getGetModifierByIdQueryOptions = <
+  TData = Awaited<ReturnType<typeof getModifierById>>,
+  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
+>(
+  modifierId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getModifierById>>,
+        TError,
+        TData
+      >
+    >;
+    axios?: AxiosRequestConfig;
   }
-
-
-export const getGetModifierByIdQueryKey = (modifierId: string,) => {
-    return [`/modifiers/${modifierId}`] as const;
-    }
-
-    
-export const getGetModifierByIdQueryOptions = <TData = Awaited<ReturnType<typeof getModifierById>>, TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>>(modifierId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getModifierById>>, TError, TData>>, axios?: AxiosRequestConfig}
 ) => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {};
 
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ?? getGetModifierByIdQueryKey(modifierId);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetModifierByIdQueryKey(modifierId);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getModifierById>>> = ({
+    signal,
+  }) => getModifierById(modifierId, { signal, ...axiosOptions });
 
-  
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!modifierId,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getModifierById>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getModifierById>>> = ({ signal }) => getModifierById(modifierId, { signal, ...axiosOptions });
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(modifierId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getModifierById>>, TError, TData> & { queryKey: QueryKey }
-}
-
-export type GetModifierByIdQueryResult = NonNullable<Awaited<ReturnType<typeof getModifierById>>>
-export type GetModifierByIdQueryError = AxiosError<NotFoundResponse | InternalServerErrorResponse>
+export type GetModifierByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getModifierById>>
+>;
+export type GetModifierByIdQueryError = AxiosError<
+  NotFoundResponse | InternalServerErrorResponse
+>;
 
 /**
  * @summary Get a modifier by ID
  */
-export const useGetModifierById = <TData = Awaited<ReturnType<typeof getModifierById>>, TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>>(
- modifierId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getModifierById>>, TError, TData>>, axios?: AxiosRequestConfig}
+export const useGetModifierById = <
+  TData = Awaited<ReturnType<typeof getModifierById>>,
+  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
+>(
+  modifierId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getModifierById>>,
+        TError,
+        TData
+      >
+    >;
+    axios?: AxiosRequestConfig;
+  }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const queryOptions = getGetModifierByIdQueryOptions(modifierId, options);
 
-  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
 
-  const queryOptions = getGetModifierByIdQueryOptions(modifierId,options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
-}
-
-
+};
 
 /**
  * Update details of an existing modifier group definition.
  * @summary Update a modifier group
  */
 export const updateModifier = (
-    modifierId: string,
-    modifierUpdate: ModifierUpdate, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Modifier>> => {
-    
-    return axios.patch(
-      `/modifiers/${modifierId}`,
-      modifierUpdate,options
-    );
-  }
+  modifierId: string,
+  modifierUpdate: ModifierUpdate,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<Modifier>> => {
+  return axios.patch(`/modifiers/${modifierId}`, modifierUpdate, options);
+};
 
+export const getUpdateModifierMutationOptions = <
+  TError = AxiosError<
+    BadRequestResponse | NotFoundResponse | InternalServerErrorResponse
+  >,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateModifier>>,
+    TError,
+    { modifierId: string; data: ModifierUpdate },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof updateModifier>>,
+  TError,
+  { modifierId: string; data: ModifierUpdate },
+  TContext
+> => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof updateModifier>>,
+    { modifierId: string; data: ModifierUpdate }
+  > = (props) => {
+    const { modifierId, data } = props ?? {};
 
-export const getUpdateModifierMutationOptions = <TError = AxiosError<BadRequestResponse | NotFoundResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateModifier>>, TError,{modifierId: string;data: ModifierUpdate}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof updateModifier>>, TError,{modifierId: string;data: ModifierUpdate}, TContext> => {
-const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
+    return updateModifier(modifierId, data, axiosOptions);
+  };
 
-      
+  return { mutationFn, ...mutationOptions };
+};
 
+export type UpdateModifierMutationResult = NonNullable<
+  Awaited<ReturnType<typeof updateModifier>>
+>;
+export type UpdateModifierMutationBody = ModifierUpdate;
+export type UpdateModifierMutationError = AxiosError<
+  BadRequestResponse | NotFoundResponse | InternalServerErrorResponse
+>;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateModifier>>, {modifierId: string;data: ModifierUpdate}> = (props) => {
-          const {modifierId,data} = props ?? {};
-
-          return  updateModifier(modifierId,data,axiosOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UpdateModifierMutationResult = NonNullable<Awaited<ReturnType<typeof updateModifier>>>
-    export type UpdateModifierMutationBody = ModifierUpdate
-    export type UpdateModifierMutationError = AxiosError<BadRequestResponse | NotFoundResponse | InternalServerErrorResponse>
-
-    /**
+/**
  * @summary Update a modifier group
  */
-export const useUpdateModifier = <TError = AxiosError<BadRequestResponse | NotFoundResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateModifier>>, TError,{modifierId: string;data: ModifierUpdate}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationResult<
-        Awaited<ReturnType<typeof updateModifier>>,
-        TError,
-        {modifierId: string;data: ModifierUpdate},
-        TContext
-      > => {
+export const useUpdateModifier = <
+  TError = AxiosError<
+    BadRequestResponse | NotFoundResponse | InternalServerErrorResponse
+  >,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateModifier>>,
+    TError,
+    { modifierId: string; data: ModifierUpdate },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof updateModifier>>,
+  TError,
+  { modifierId: string; data: ModifierUpdate },
+  TContext
+> => {
+  const mutationOptions = getUpdateModifierMutationOptions(options);
 
-      const mutationOptions = getUpdateModifierMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    /**
+  return useMutation(mutationOptions);
+};
+/**
  * Remove a modifier group definition. This might require checks for existing options or menu item links.
  * @summary Delete a modifier group
  */
 export const deleteModifier = (
-    modifierId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<void>> => {
-    
-    return axios.delete(
-      `/modifiers/${modifierId}`,options
-    );
-  }
+  modifierId: string,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
+  return axios.delete(`/modifiers/${modifierId}`, options);
+};
 
+export const getDeleteModifierMutationOptions = <
+  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteModifier>>,
+    TError,
+    { modifierId: string },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof deleteModifier>>,
+  TError,
+  { modifierId: string },
+  TContext
+> => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteModifier>>,
+    { modifierId: string }
+  > = (props) => {
+    const { modifierId } = props ?? {};
 
-export const getDeleteModifierMutationOptions = <TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteModifier>>, TError,{modifierId: string}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof deleteModifier>>, TError,{modifierId: string}, TContext> => {
-const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
+    return deleteModifier(modifierId, axiosOptions);
+  };
 
-      
+  return { mutationFn, ...mutationOptions };
+};
 
+export type DeleteModifierMutationResult = NonNullable<
+  Awaited<ReturnType<typeof deleteModifier>>
+>;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteModifier>>, {modifierId: string}> = (props) => {
-          const {modifierId} = props ?? {};
+export type DeleteModifierMutationError = AxiosError<
+  NotFoundResponse | InternalServerErrorResponse
+>;
 
-          return  deleteModifier(modifierId,axiosOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DeleteModifierMutationResult = NonNullable<Awaited<ReturnType<typeof deleteModifier>>>
-    
-    export type DeleteModifierMutationError = AxiosError<NotFoundResponse | InternalServerErrorResponse>
-
-    /**
+/**
  * @summary Delete a modifier group
  */
-export const useDeleteModifier = <TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteModifier>>, TError,{modifierId: string}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationResult<
-        Awaited<ReturnType<typeof deleteModifier>>,
-        TError,
-        {modifierId: string},
-        TContext
-      > => {
+export const useDeleteModifier = <
+  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteModifier>>,
+    TError,
+    { modifierId: string },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof deleteModifier>>,
+  TError,
+  { modifierId: string },
+  TContext
+> => {
+  const mutationOptions = getDeleteModifierMutationOptions(options);
 
-      const mutationOptions = getDeleteModifierMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    
+  return useMutation(mutationOptions);
+};

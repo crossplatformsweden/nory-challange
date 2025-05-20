@@ -3,95 +3,68 @@ import Controller from './Controller.js';
 import * as locationMenuItemsService from '../services/LocationMenuItemsService.js';
 import { OpenAPIRequest } from '../types/common.js';
 
-/**
- * Add a recipe as a menu item to a location
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const createLocationMenuItem = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    locationMenuItemsService.createLocationMenuItem
-  );
-};
+export class LocationMenuItemsController extends Controller {
+  constructor(service?: unknown) {
+    super(service || locationMenuItemsService);
+  }
 
-/**
- * Remove a menu item from a location
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const deleteLocationMenuItem = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    locationMenuItemsService.deleteLocationMenuItem
-  );
-};
+  async createLocationMenuItem(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/LocationMenuItemsService.js'))
+        .createLocationMenuItem
+    );
+  }
 
-/**
- * Get a menu item by ID for a location
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const getLocationMenuItemById = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    locationMenuItemsService.getLocationMenuItemById
-  );
-};
+  async deleteLocationMenuItem(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/LocationMenuItemsService.js'))
+        .deleteLocationMenuItem
+    );
+  }
 
-/**
- * List menu items for a specific location
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const listLocationMenuItems = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    locationMenuItemsService.listLocationMenuItems
-  );
-};
+  async getLocationMenuItemById(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/LocationMenuItemsService.js'))
+        .getLocationMenuItemById
+    );
+  }
 
-/**
- * Update a menu item for a location
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const updateLocationMenuItem = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    locationMenuItemsService.updateLocationMenuItem
-  );
-};
+  async listLocationMenuItems(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/LocationMenuItemsService.js'))
+        .listLocationMenuItems
+    );
+  }
 
-export {
-  createLocationMenuItem,
-  deleteLocationMenuItem,
-  getLocationMenuItemById,
-  listLocationMenuItems,
-  updateLocationMenuItem,
-};
+  async updateLocationMenuItem(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/LocationMenuItemsService.js'))
+        .updateLocationMenuItem
+    );
+  }
+}

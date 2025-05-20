@@ -85,7 +85,7 @@ test.describe('CreateIngredientCostPage', () => {
     ).toBeVisible();
   });
 
-  test('shows error state when API fails', async ({ page }) => {
+  test('shows error state when API fails', async () => {
     // ... existing code ...
   });
 

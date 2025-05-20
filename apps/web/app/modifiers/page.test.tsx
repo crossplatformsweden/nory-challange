@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import ModifiersListPage from './page';
-import { useListModifiers } from '@nory/api-client';
+import { useListModifiers } from '@repo/api-client';
 
 /**
  * Testing Guide:
@@ -17,7 +17,7 @@ import { useListModifiers } from '@nory/api-client';
  */
 
 // Mock the API client hook
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useListModifiers: jest.fn(),
 }));
 

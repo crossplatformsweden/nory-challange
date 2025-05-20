@@ -10,7 +10,13 @@ import {
 } from '../types/common.js';
 
 class Controller {
-  static sendResponse(
+  protected service: unknown;
+
+  constructor(service?: unknown) {
+    this.service = service;
+  }
+
+  protected sendResponse(
     response: Response,
     payload: ServiceResponse | unknown
   ): void {
@@ -33,14 +39,28 @@ class Controller {
     }
   }
 
-  static sendError(response: Response, error: ServiceResponse | Error): void {
-    response.status((error as ServiceResponse).code || 500);
-    if ((error as ServiceResponse).error instanceof Object) {
-      response.json((error as ServiceResponse).error);
+  protected sendError(
+    response: Response,
+    error: ServiceResponse | Error | unknown
+  ): void {
+    if (error instanceof Error) {
+      response.status(500);
+      response.end(error.message);
+    } else if (
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      'error' in error
+    ) {
+      response.status((error as ServiceResponse).code || 500);
+      if ((error as ServiceResponse).error instanceof Object) {
+        response.json((error as ServiceResponse).error);
+      } else {
+        response.end(((error as ServiceResponse).error as string) || '');
+      }
     } else {
-      response.end(
-        ((error as ServiceResponse).error as string) || (error as Error).message
-      );
+      response.status(500);
+      response.end('Unknown error');
     }
   }
 
@@ -55,7 +75,7 @@ class Controller {
    * @param fieldName
    * @returns {string}
    */
-  static collectFile(request: OpenAPIRequest, fieldName: string): string {
+  protected collectFile(request: OpenAPIRequest, fieldName: string): string {
     let uploadedFileName = '';
     if (request.files && request.files.length > 0) {
       const fileObject = request.files.find(
@@ -75,7 +95,7 @@ class Controller {
     return uploadedFileName;
   }
 
-  static getRequestBodyName(request: OpenAPIRequest): string {
+  protected getRequestBodyName(request: OpenAPIRequest): string {
     const codeGenDefinedBodyName =
       request.openapi.schema['x-codegen-request-body-name'];
     if (codeGenDefinedBodyName !== undefined) {
@@ -90,7 +110,7 @@ class Controller {
     return 'body';
   }
 
-  static collectRequestParams(
+  protected collectRequestParams(
     request: OpenAPIRequest
   ): Record<string, unknown> {
     const requestParams: Record<string, unknown> = {};
@@ -136,7 +156,7 @@ class Controller {
     return requestParams;
   }
 
-  static async handleRequest(
+  protected async handleRequest(
     request: OpenAPIRequest,
     response: Response,
     serviceOperation: ServiceFunction
@@ -145,9 +165,9 @@ class Controller {
       const serviceResponse = await serviceOperation(
         this.collectRequestParams(request)
       );
-      Controller.sendResponse(response, serviceResponse);
+      this.sendResponse(response, serviceResponse);
     } catch (error) {
-      Controller.sendError(response, error as Error);
+      this.sendError(response, error);
     }
   }
 }

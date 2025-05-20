@@ -3,95 +3,78 @@ import Controller from './Controller.js';
 import * as ingredientsService from '../services/IngredientsService.js';
 import { OpenAPIRequest } from '../types/common.js';
 
-/**
- * Create a new ingredient
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const createIngredient = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    ingredientsService.createIngredient
-  );
-};
+export class IngredientsController extends Controller {
+  constructor(service?: unknown) {
+    super(service || ingredientsService);
+  }
 
-/**
- * Delete an ingredient
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const deleteIngredient = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    ingredientsService.deleteIngredient
-  );
-};
+  /**
+   * Create a new ingredient
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async createIngredient(request: Request, response: Response): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof ingredientsService).createIngredient
+    );
+  }
 
-/**
- * Get an ingredient by its ID
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const getIngredientById = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    ingredientsService.getIngredientById
-  );
-};
+  /**
+   * Delete an ingredient
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async deleteIngredient(request: Request, response: Response): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof ingredientsService).deleteIngredient
+    );
+  }
 
-/**
- * List all ingredients
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const listIngredients = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    ingredientsService.listIngredients
-  );
-};
+  /**
+   * Get an ingredient by its ID
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async getIngredientById(request: Request, response: Response): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof ingredientsService).getIngredientById
+    );
+  }
 
-/**
- * Update an ingredient
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const updateIngredient = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    ingredientsService.updateIngredient
-  );
-};
+  /**
+   * List all ingredients
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async listIngredients(request: Request, response: Response): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof ingredientsService).listIngredients
+    );
+  }
 
-export {
-  createIngredient,
-  deleteIngredient,
-  getIngredientById,
-  listIngredients,
-  updateIngredient,
-};
+  /**
+   * Update an ingredient
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async updateIngredient(request: Request, response: Response): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof ingredientsService).updateIngredient
+    );
+  }
+}

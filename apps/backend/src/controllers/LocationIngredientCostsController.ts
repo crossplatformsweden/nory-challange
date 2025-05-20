@@ -3,95 +3,108 @@ import Controller from './Controller.js';
 import * as locationIngredientCostsService from '../services/LocationIngredientCostsService.js';
 import { OpenAPIRequest } from '../types/common.js';
 
-/**
- * Create a location-specific ingredient cost record
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const createLocationIngredientCost = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    locationIngredientCostsService.createLocationIngredientCost
-  );
-};
+export class LocationIngredientCostsController extends Controller {
+  constructor(service?: unknown) {
+    super(service || locationIngredientCostsService);
+  }
 
-/**
- * Delete a location-specific ingredient cost record
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const deleteLocationIngredientCost = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    locationIngredientCostsService.deleteLocationIngredientCost
-  );
-};
+  /**
+   * Create a new location ingredient cost
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async createLocationIngredientCost(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (
+        this
+          .service as typeof import('../services/LocationIngredientCostsService.js')
+      ).createLocationIngredientCost
+    );
+  }
 
-/**
- * Get a location-specific ingredient cost by ID
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const getLocationIngredientCostById = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    locationIngredientCostsService.getLocationIngredientCostById
-  );
-};
+  /**
+   * Delete a location ingredient cost
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async deleteLocationIngredientCost(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (
+        this
+          .service as typeof import('../services/LocationIngredientCostsService.js')
+      ).deleteLocationIngredientCost
+    );
+  }
 
-/**
- * List ingredient costs for a specific location
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const listLocationIngredientCosts = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    locationIngredientCostsService.listLocationIngredientCosts
-  );
-};
+  /**
+   * Get a location ingredient cost by its ID
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async getLocationIngredientCostById(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (
+        this
+          .service as typeof import('../services/LocationIngredientCostsService.js')
+      ).getLocationIngredientCostById
+    );
+  }
 
-/**
- * Update a location-specific ingredient cost
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const updateLocationIngredientCost = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    locationIngredientCostsService.updateLocationIngredientCost
-  );
-};
+  /**
+   * List all location ingredient costs
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async listLocationIngredientCosts(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (
+        this
+          .service as typeof import('../services/LocationIngredientCostsService.js')
+      ).listLocationIngredientCosts
+    );
+  }
 
-export {
-  createLocationIngredientCost,
-  deleteLocationIngredientCost,
-  getLocationIngredientCostById,
-  listLocationIngredientCosts,
-  updateLocationIngredientCost,
-};
+  /**
+   * Update a location ingredient cost
+   *
+   * @param request - The express request object
+   * @param response - The express response object
+   */
+  async updateLocationIngredientCost(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (
+        this
+          .service as typeof import('../services/LocationIngredientCostsService.js')
+      ).updateLocationIngredientCost
+    );
+  }
+}

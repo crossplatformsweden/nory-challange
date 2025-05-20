@@ -13,4 +13,15 @@ export default [
       },
     },
   },
+  {
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      'no-warning-comments': 'off',
+      'no-redeclare': 'off',
+      'no-console': 'off',
+      'no-var-require': 'off',
+      '@typescript-eslint/no-var-requires': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
 ];

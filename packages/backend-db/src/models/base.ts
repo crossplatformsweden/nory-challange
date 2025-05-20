@@ -1,14 +1,34 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 import { Database } from '../types/supabase';
 
-type TableName = keyof Database['public']['Tables'];
-type TableRow<T extends TableName> = Database['public']['Tables'][T]['Row'];
-type TableInsert<T extends TableName> =
+const TABLE_NAMES = [
+  'ingredients',
+  'inventory_movements',
+  'inventory_stock',
+  'location_ingredient_costs',
+  'location_menu_items',
+  'locations',
+  'modifier_options',
+  'modifiers',
+  'recipe_ingredient_links',
+  'recipes',
+  'staff',
+] as const;
+type TableNameWithId = {
+  [K in (typeof TABLE_NAMES)[number]]: Database['public']['Tables'][K]['Row'] extends {
+    id: string;
+  }
+    ? K
+    : never;
+}[(typeof TABLE_NAMES)[number]];
+type TableRow<T extends TableNameWithId> =
+  Database['public']['Tables'][T]['Row'] & { id: string };
+type TableInsert<T extends TableNameWithId> =
   Database['public']['Tables'][T]['Insert'];
-type TableUpdate<T extends TableName> =
+type TableUpdate<T extends TableNameWithId> =
   Database['public']['Tables'][T]['Update'];
 
-export class BaseModel<T extends TableName> {
+export class BaseModel<T extends TableNameWithId> {
   protected table: T;
   protected supabase: SupabaseClient<Database>;
 
@@ -25,22 +45,20 @@ export class BaseModel<T extends TableName> {
       .single();
 
     if (error) throw error;
-    if (!data) return null;
-    return data as unknown as TableRow<T>;
+    return data as unknown as TableRow<T> | null;
   }
 
   async findAll(): Promise<TableRow<T>[]> {
     const { data, error } = await this.supabase.from(this.table).select('*');
 
     if (error) throw error;
-    if (!data) return [];
-    return data as unknown as TableRow<T>[];
+    return (data ?? []) as unknown as TableRow<T>[];
   }
 
   async create(values: TableInsert<T>): Promise<TableRow<T>> {
     const { data, error } = await this.supabase
       .from(this.table)
-      .insert([values] as any)
+      .insert(values as any)
       .select()
       .single();
 
@@ -55,7 +73,7 @@ export class BaseModel<T extends TableName> {
   ): Promise<TableRow<T>> {
     const { data, error } = await this.supabase
       .from(this.table)
-      .update([values] as any)
+      .update(values as any)
       .eq('id' as any, id)
       .select()
       .single();

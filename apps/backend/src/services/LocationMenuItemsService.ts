@@ -1,5 +1,6 @@
 import Service from './Service.js';
 import { ServiceResponse } from '../types/common.js';
+import { isServiceError } from '../types/errors.js';
 import { z } from 'zod';
 import {
   createLocationMenuItemBody,
@@ -23,7 +24,7 @@ const createLocationMenuItem = async ({
   locationMenuItemCreate,
 }: {
   locationId: string;
-  locationMenuItemCreate: unknown;
+  locationMenuItemCreate: z.infer<typeof createLocationMenuItemBody>;
 }): Promise<ServiceResponse> => {
   try {
     // Validate the input data using Zod
@@ -48,10 +49,9 @@ const createLocationMenuItem = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -87,10 +87,9 @@ const deleteLocationMenuItem = async ({
       message: `Menu item ${menuItemId} for location ${locationId} deleted successfully`,
     });
   } catch (e) {
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -132,10 +131,9 @@ const getLocationMenuItemById = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -183,10 +181,9 @@ const listLocationMenuItems = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -236,10 +233,9 @@ const updateLocationMenuItem = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 

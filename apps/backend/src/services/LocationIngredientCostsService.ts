@@ -48,9 +48,10 @@ const createLocationIngredientCost = async ({
         400
       );
     }
+    const error = e as Error & { status?: number };
     return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      error.message || 'Invalid input',
+      error.status || 405
     );
   }
 };
@@ -87,9 +88,10 @@ const deleteLocationIngredientCost = async ({
       message: `Cost record ${locationIngredientCostId} for location ${locationId} deleted successfully`,
     });
   } catch (e) {
+    const error = e as Error & { status?: number };
     return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      error.message || 'Invalid input',
+      error.status || 405
     );
   }
 };
@@ -132,9 +134,10 @@ const getLocationIngredientCostById = async ({
         400
       );
     }
+    const error = e as Error & { status?: number };
     return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      error.message || 'Invalid input',
+      error.status || 405
     );
   }
 };
@@ -183,9 +186,10 @@ const listLocationIngredientCosts = async ({
         400
       );
     }
+    const error = e as Error & { status?: number };
     return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      error.message || 'Invalid input',
+      error.status || 405
     );
   }
 };
@@ -236,9 +240,10 @@ const updateLocationIngredientCost = async ({
         400
       );
     }
+    const error = e as Error & { status?: number };
     return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      error.message || 'Invalid input',
+      error.status || 405
     );
   }
 };

@@ -1,5 +1,6 @@
 import Service from './Service.js';
-import { ServiceResponse } from '../types/common.js';
+import { ServiceResponse, ServiceError } from '../types/common.js';
+import { isServiceError } from '../types/errors.js';
 import { z } from 'zod';
 import {
   createRecipeBody,
@@ -41,10 +42,9 @@ const createRecipe = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as ServiceError;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -72,10 +72,9 @@ const deleteRecipe = async ({
       message: `Recipe ${recipeId} deleted successfully`,
     });
   } catch (e) {
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as ServiceError;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -96,8 +95,8 @@ const getRecipeById = async ({
     // Mock implementation - create sample data
     const mockRecipe = {
       id: recipeId,
-      name: 'Mock Recipe',
-      description: 'This is a mock recipe description',
+      name: 'Sample Recipe',
+      description: 'A delicious sample recipe',
     };
 
     // Validate the response using Zod
@@ -111,10 +110,9 @@ const getRecipeById = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as ServiceError;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -130,13 +128,13 @@ const listRecipes = async (): Promise<ServiceResponse> => {
     const mockRecipes = [
       {
         id: 'recipe-1',
-        name: 'Chicken Soup',
-        description: 'A comforting chicken soup recipe',
+        name: 'Margherita Pizza',
+        description: 'Classic pizza with tomato sauce and mozzarella',
       },
       {
         id: 'recipe-2',
         name: 'Caesar Salad',
-        description: 'Classic Caesar salad with homemade dressing',
+        description: 'Fresh romaine lettuce with Caesar dressing',
       },
     ];
 
@@ -151,10 +149,9 @@ const listRecipes = async (): Promise<ServiceResponse> => {
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as ServiceError;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -196,10 +193,9 @@ const updateRecipe = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as ServiceError;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 

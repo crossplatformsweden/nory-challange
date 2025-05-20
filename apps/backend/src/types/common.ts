@@ -63,3 +63,7 @@ export interface OpenAPIRequest extends Omit<Request, 'files'> {
   };
   files?: OpenAPIFile[];
 }
+
+export interface ServiceError extends Error {
+  status?: number;
+}

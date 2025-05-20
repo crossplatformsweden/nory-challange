@@ -1,14 +1,14 @@
-import * as IngredientsController from './IngredientsController.js';
-import * as InventoryMovementsController from './InventoryMovementsController.js';
-import * as InventoryStockController from './InventoryStockController.js';
-import * as LocationIngredientCostsController from './LocationIngredientCostsController.js';
-import * as LocationMenuItemsController from './LocationMenuItemsController.js';
-import * as LocationsController from './LocationsController.js';
-import * as ModifierOptionsController from './ModifierOptionsController.js';
-import * as ModifiersController from './ModifiersController.js';
-import * as RecipeIngredientLinksController from './RecipeIngredientLinksController.js';
-import * as RecipesController from './RecipesController.js';
-import * as StaffController from './StaffController.js';
+import { IngredientsController } from './IngredientsController.js';
+import { InventoryMovementsController } from './InventoryMovementsController.js';
+import { InventoryStockController } from './InventoryStockController.js';
+import { LocationIngredientCostsController } from './LocationIngredientCostsController.js';
+import { LocationMenuItemsController } from './LocationMenuItemsController.js';
+import { LocationsController } from './LocationsController.js';
+import { ModifierOptionsController } from './ModifierOptionsController.js';
+import { ModifiersController } from './ModifiersController.js';
+import { RecipeIngredientLinksController } from './RecipeIngredientLinksController.js';
+import { RecipesController } from './RecipesController.js';
+import { StaffController } from './StaffController.js';
 
 export default {
   IngredientsController,

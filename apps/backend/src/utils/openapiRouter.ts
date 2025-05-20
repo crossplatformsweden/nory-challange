@@ -2,30 +2,46 @@ import { Request, Response, NextFunction } from 'express';
 import logger from '../logger.js';
 import { OpenAPIRequest } from '../types/common.js';
 
+interface BaseService {
+  [key: string]: unknown;
+}
+
 interface Controllers {
-  [key: string]: any;
+  [key: string]: new (service?: BaseService) => unknown;
 }
 
 interface Services {
-  [key: string]: any;
+  [key: string]: BaseService;
+}
+
+interface ErrorResponse {
+  code: number;
+  error: string;
 }
 
 function handleError(
-  err: any,
+  err: Error | string | ErrorResponse,
   request: Request,
   response: Response,
   next: NextFunction
 ): void {
   logger.error(err);
-  const code = err.code || 400;
-  response.status(code);
-  (response as any).error = err;
-  next(
-    JSON.stringify({
-      code,
-      error: err,
-    })
-  );
+  const errorResponse: ErrorResponse = {
+    code: typeof err === 'object' && 'code' in err ? err.code : 400,
+    error:
+      typeof err === 'string'
+        ? err
+        : typeof err === 'object' &&
+            'error' in err &&
+            typeof err.error === 'string'
+          ? err.error
+          : err instanceof Error && err.message
+            ? err.message
+            : 'Unknown error',
+  };
+  response.status(errorResponse.code);
+  response.json(errorResponse);
+  next();
 }
 
 /**
@@ -96,11 +112,18 @@ function openApiRouter(controllers: Controllers, services: Services) {
           );
           return;
         }
-        await apiController[controllerOperation](request, response, next);
+        await (apiController as any)[controllerOperation](
+          request,
+          response,
+          next
+        );
       }
     } catch (error) {
-      console.error(error);
-      const err = { code: 500, error: (error as Error).message };
+      logger.error(error);
+      const err: ErrorResponse = {
+        code: 500,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
       handleError(err, request, response, next);
     }
   };

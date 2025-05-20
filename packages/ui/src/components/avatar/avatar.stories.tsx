@@ -1,17 +1,17 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Avatar, AvatarImage, AvatarFallback } from "./index";
+import type { Meta, StoryObj } from '@storybook/react';
+import { Avatar, AvatarImage, AvatarFallback } from './index';
 
 const meta: Meta<typeof Avatar> = {
-  title: "Components/Avatar",
+  title: 'Components/Avatar',
   component: Avatar,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     className: {
-      control: "text",
-      description: "Additional CSS classes to apply to the avatar",
+      control: 'text',
+      description: 'Additional CSS classes to apply to the avatar',
     },
   },
 };
@@ -20,8 +20,8 @@ export default meta;
 type Story = StoryObj<typeof Avatar>;
 
 export const Default: Story = {
-  render: (args) => (
-    <Avatar {...args}>
+  render: () => (
+    <Avatar>
       <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
       <AvatarFallback>CN</AvatarFallback>
     </Avatar>
@@ -29,8 +29,8 @@ export const Default: Story = {
 };
 
 export const WithFallback: Story = {
-  render: (args) => (
-    <Avatar {...args}>
+  render: () => (
+    <Avatar>
       <AvatarImage src="/invalid-image.png" alt="@johndoe" />
       <AvatarFallback>JD</AvatarFallback>
     </Avatar>
@@ -38,15 +38,15 @@ export const WithFallback: Story = {
 };
 
 export const FallbackOnly: Story = {
-  render: (args) => (
-    <Avatar {...args}>
+  render: () => (
+    <Avatar>
       <AvatarFallback>JD</AvatarFallback>
     </Avatar>
   ),
 };
 
 export const CustomSize: Story = {
-  render: (args) => (
+  render: () => (
     <div className="flex items-center space-x-4">
       <Avatar className="h-6 w-6">
         <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
@@ -69,7 +69,7 @@ export const CustomSize: Story = {
 };
 
 export const FallbackInitials: Story = {
-  render: (args) => (
+  render: () => (
     <div className="flex items-center space-x-4">
       <Avatar>
         <AvatarFallback>CN</AvatarFallback>
@@ -88,14 +88,14 @@ export const FallbackInitials: Story = {
 };
 
 export const FallbackIcon: Story = {
-  render: (args) => (
+  render: () => (
     <Avatar>
       <AvatarFallback>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
-          className="w-6 h-6"
+          className="h-6 w-6"
         >
           <path
             fillRule="evenodd"

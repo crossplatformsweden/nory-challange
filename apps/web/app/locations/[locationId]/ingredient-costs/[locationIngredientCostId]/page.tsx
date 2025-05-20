@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { useGetLocationIngredientCostById } from '@nory/api-client';
+import { useGetLocationIngredientCostById } from '@repo/api-client';
 
 // THIS IS A TEMPLATE FOR A PAGE COMPONENT IN A NEXT.JS APPLICATION
 

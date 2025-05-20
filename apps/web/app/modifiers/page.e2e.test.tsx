@@ -85,11 +85,6 @@ test.describe('ModifiersListPage', () => {
 
     if (firstViewButton > 0) {
       // Get the id from the test ID to verify we navigate to the correct page
-      const buttonTestId = await page
-        .locator('[data-testid^="modifier-view-"]')
-        .first()
-        .getAttribute('data-testid');
-      const modifierId = buttonTestId?.replace('modifier-view-', '');
 
       // Click the view button
       await page.locator('[data-testid^="modifier-view-"]').first().click();
@@ -117,11 +112,6 @@ test.describe('ModifiersListPage', () => {
 
     if (optionsButton > 0) {
       // Get the id from the test ID
-      const buttonTestId = await page
-        .locator('[data-testid^="modifier-options-"]')
-        .first()
-        .getAttribute('data-testid');
-      const modifierId = buttonTestId?.replace('modifier-options-', '');
 
       // Click the options button
       await page.locator('[data-testid^="modifier-options-"]').first().click();

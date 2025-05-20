@@ -1,10 +1,25 @@
 import Service from './Service.js';
-import { ServiceResponse } from '../types/common.js';
+import { ServiceResponse, ServiceError } from '../types/common.js';
+import { isServiceError } from '../types/errors.js';
 import { z } from 'zod';
-import {
-  createRecipeIngredientLinkBody,
-  listRecipeIngredientLinksResponse,
-} from '@repo/zod-clients';
+import { createRecipeIngredientLinkBody } from '@repo/zod-clients';
+
+// Define the Zod schema for a single recipe ingredient link
+const recipeIngredientLinkSchema = z.object({
+  id: z.string(),
+  recipeId: z.string(),
+  ingredientId: z.string(),
+  quantity: z.number().positive(),
+});
+
+// Export the type for TypeScript usage and use it in our functions
+export type RecipeIngredientLink = z.infer<typeof recipeIngredientLinkSchema>;
+
+// Schema for responses
+export const getRecipeIngredientLinkByIdResponse = recipeIngredientLinkSchema;
+export const listRecipeIngredientLinksResponse = z.array(
+  recipeIngredientLinkSchema
+);
 
 /**
  * Add an ingredient to a recipe
@@ -44,10 +59,9 @@ const createRecipeIngredientLink = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as ServiceError;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -62,31 +76,25 @@ const createRecipeIngredientLink = async ({
  */
 const deleteRecipeIngredientLink = async ({
   recipeId,
-  recipeIngredientLinkId,
+  linkId,
 }: {
   recipeId: string;
-  recipeIngredientLinkId: string;
+  linkId: string;
 }): Promise<ServiceResponse> => {
   try {
     // Mock implementation - validate IDs and return success
-    if (
-      !recipeId ||
-      !recipeId.trim() ||
-      !recipeIngredientLinkId ||
-      !recipeIngredientLinkId.trim()
-    ) {
+    if (!recipeId || !recipeId.trim() || !linkId || !linkId.trim()) {
       throw new Error('Invalid recipe ID or link ID');
     }
 
     return Service.successResponse({
       success: true,
-      message: `Recipe-ingredient link ${recipeIngredientLinkId} for recipe ${recipeId} deleted successfully`,
+      message: `Recipe ingredient link ${linkId} for recipe ${recipeId} deleted successfully`,
     });
   } catch (e) {
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -132,10 +140,43 @@ const listRecipeIngredientLinks = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as ServiceError;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
+  }
+};
+
+const getRecipeIngredientLinkById = async ({
+  recipeId,
+  linkId,
+}: {
+  recipeId: string;
+  linkId: string;
+}): Promise<ServiceResponse> => {
+  try {
+    // Mock implementation - create sample data
+    const mockLink = {
+      id: linkId,
+      recipeId,
+      ingredientId: 'ingredient-1',
+      quantity: 2.5,
+    };
+
+    // Validate the response using Zod
+    const validatedResponse =
+      getRecipeIngredientLinkByIdResponse.parse(mockLink);
+
+    return Service.successResponse(validatedResponse);
+  } catch (e) {
+    if (e instanceof z.ZodError) {
+      return Service.rejectResponse(
+        { message: 'Validation error', details: e.errors },
+        400
+      );
+    }
+    const error = e as ServiceError;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -143,4 +184,5 @@ export {
   createRecipeIngredientLink,
   deleteRecipeIngredientLink,
   listRecipeIngredientLinks,
+  getRecipeIngredientLinkById,
 };

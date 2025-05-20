@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import IngredientsListPage from './page';
-import { useListIngredients } from '@nory/api-client';
+import { useListIngredients } from '@repo/api-client';
 
 /**
  * Testing Guide:
@@ -17,7 +17,7 @@ import { useListIngredients } from '@nory/api-client';
  */
 
 // Mock the hook
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useListIngredients: jest.fn(),
 }));
 

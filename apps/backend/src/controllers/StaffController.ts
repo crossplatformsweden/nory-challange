@@ -3,95 +3,68 @@ import Controller from './Controller.js';
 import * as staffService from '../services/StaffService.js';
 import { OpenAPIRequest } from '../types/common.js';
 
-/**
- * Create a new staff member for a location
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const createStaffAtLocation = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    staffService.createStaffAtLocation
-  );
-};
+export class StaffController extends Controller {
+  constructor(service?: unknown) {
+    super(service || staffService);
+  }
 
-/**
- * Delete a staff member from a location
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const deleteStaffAtLocation = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    staffService.deleteStaffAtLocation
-  );
-};
+  async createStaffAtLocation(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/StaffService.js'))
+        .createStaffAtLocation
+    );
+  }
 
-/**
- * Get a staff member by ID for a specific location
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const getStaffByLocationAndId = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    staffService.getStaffByLocationAndId
-  );
-};
+  async deleteStaffAtLocation(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/StaffService.js'))
+        .deleteStaffAtLocation
+    );
+  }
 
-/**
- * List staff for a specific location
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const listStaffByLocation = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    staffService.listStaffByLocation
-  );
-};
+  async getStaffByLocationAndId(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/StaffService.js'))
+        .getStaffByLocationAndId
+    );
+  }
 
-/**
- * Update a staff member for a location
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const updateStaffAtLocation = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    staffService.updateStaffAtLocation
-  );
-};
+  async listStaffByLocation(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/StaffService.js'))
+        .listStaffByLocation
+    );
+  }
 
-export {
-  createStaffAtLocation,
-  deleteStaffAtLocation,
-  getStaffByLocationAndId,
-  listStaffByLocation,
-  updateStaffAtLocation,
-};
+  async updateStaffAtLocation(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/StaffService.js'))
+        .updateStaffAtLocation
+    );
+  }
+}

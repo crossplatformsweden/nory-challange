@@ -8,6 +8,10 @@ import {
   listInventoryMovementsResponseItem,
 } from '@repo/zod-clients';
 
+interface ServiceError extends Error {
+  status?: number;
+}
+
 /**
  * Type for inventory movement parameters
  */
@@ -72,7 +76,7 @@ const createInventoryMovement = async ({
     }
     return Service.rejectResponse(
       (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      (e as ServiceError).status || 405
     );
   }
 };
@@ -149,7 +153,7 @@ const listInventoryMovements = async (
     }
     return Service.rejectResponse(
       (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      (e as ServiceError).status || 405
     );
   }
 };

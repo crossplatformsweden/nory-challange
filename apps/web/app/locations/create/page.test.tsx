@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import CreateLocationPage from './page';
-import { useCreateLocation } from '@nory/api-client';
+import { useCreateLocation } from '@repo/api-client';
 import { useRouter } from 'next/navigation';
 
 /**
@@ -18,7 +18,7 @@ import { useRouter } from 'next/navigation';
  */
 
 // Mock the hooks
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useCreateLocation: jest.fn(),
 }));
 

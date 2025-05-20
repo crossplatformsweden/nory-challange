@@ -3,95 +3,63 @@ import Controller from './Controller.js';
 import * as modifierOptionsService from '../services/ModifierOptionsService.js';
 import { OpenAPIRequest } from '../types/common.js';
 
-/**
- * Create a new modifier option for a group
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const createModifierOption = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    modifierOptionsService.createModifierOption
-  );
-};
+export class ModifierOptionsController extends Controller {
+  constructor(service?: unknown) {
+    super(service || modifierOptionsService);
+  }
 
-/**
- * Delete a modifier option from a group
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const deleteModifierOption = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    modifierOptionsService.deleteModifierOption
-  );
-};
+  async createModifierOption(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof modifierOptionsService).createModifierOption
+    );
+  }
 
-/**
- * Get a modifier option by ID for a group
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const getModifierOptionById = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    modifierOptionsService.getModifierOptionById
-  );
-};
+  async deleteModifierOption(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof modifierOptionsService).deleteModifierOption
+    );
+  }
 
-/**
- * List options for a modifier group
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const listModifierOptions = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    modifierOptionsService.listModifierOptions
-  );
-};
+  async getModifierOptionById(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof modifierOptionsService).getModifierOptionById
+    );
+  }
 
-/**
- * Update a modifier option for a group
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const updateModifierOption = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    modifierOptionsService.updateModifierOption
-  );
-};
+  async listModifierOptions(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof modifierOptionsService).listModifierOptions
+    );
+  }
 
-export {
-  createModifierOption,
-  deleteModifierOption,
-  getModifierOptionById,
-  listModifierOptions,
-  updateModifierOption,
-};
+  async updateModifierOption(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof modifierOptionsService).updateModifierOption
+    );
+  }
+}

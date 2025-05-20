@@ -1,22 +1,38 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
-  "globalEnv": ["CI", "NEXT_PUBLIC_API_URL"],
+  "globalEnv": [
+    "CI",
+    "NEXT_PUBLIC_API_URL",
+    "DATABASE_URL",
+    "SUPABASE_URL",
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*",
+        "src/**/*.{ts,tsx,js,jsx}",
+        "tsconfig.json",
+        "tsup.config.ts"
+      ],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "inputs": ["src/**/*.{ts,tsx,js,jsx}", ".eslintrc*", "eslint.config.js"]
     },
     "check-types": {
-      "dependsOn": ["^check-types"]
+      "dependsOn": ["^check-types"],
+      "inputs": ["src/**/*.{ts,tsx}", "tsconfig.json"]
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "dependsOn": ["^build"]
     },
     "dev:ts": {
       "cache": false,
@@ -102,6 +118,31 @@
         ".storybook/**/*"
       ],
       "outputs": ["storybook-static/**"]
+    },
+    "db:reset": {
+      "cache": false,
+      "env": ["DATABASE_URL", "SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY"]
+    },
+    "db:push": {
+      "cache": false,
+      "env": ["DATABASE_URL", "SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY"]
+    },
+    "db:diff": {
+      "cache": false,
+      "env": ["DATABASE_URL", "SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY"]
+    },
+    "db:start": {
+      "cache": false,
+      "persistent": true,
+      "env": ["DATABASE_URL", "SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY"]
+    },
+    "db:stop": {
+      "cache": false,
+      "env": ["DATABASE_URL", "SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY"]
+    },
+    "db:status": {
+      "cache": false,
+      "env": ["DATABASE_URL", "SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY"]
     }
   }
 }

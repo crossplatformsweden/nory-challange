@@ -1,5 +1,6 @@
 import Service from './Service.js';
-import { ServiceResponse } from '../types/common.js';
+import { ServiceResponse, ServiceError } from '../types/common.js';
+import { isServiceError } from '../types/errors.js';
 import { z } from 'zod';
 import {
   createStaffAtLocationBody,
@@ -48,10 +49,9 @@ const createStaffAtLocation = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as ServiceError;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -82,10 +82,9 @@ const deleteStaffAtLocation = async ({
       message: `Staff member ${staffId} at location ${locationId} deleted successfully`,
     });
   } catch (e) {
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as ServiceError;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -128,10 +127,9 @@ const getStaffByLocationAndId = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as ServiceError;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -182,10 +180,9 @@ const listStaffByLocation = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as ServiceError;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -234,10 +231,9 @@ const updateStaffAtLocation = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as ServiceError;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 

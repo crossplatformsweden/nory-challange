@@ -2,15 +2,16 @@
   "name": "@nory/backend-db",
   "version": "0.1.0",
   "private": true,
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "pnpm clean && tsup",
+    "build": "tsup",
     "dev": "tsup --watch",
-    "clean": "rimraf dist",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
     "type-check": "tsc --noEmit",
     "generate-types": "supabase gen types typescript --project-id your-project-id > src/types/supabase.ts",
-    "lint": "eslint src --ext .ts",
+    "lint": "eslint .",
     "lint:fix": "eslint src --ext .ts --fix",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
@@ -26,19 +27,20 @@
     "db:status": "supabase status"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.39.0"
+    "@repo/api-client": "workspace:*",
+    "@repo/zod-clients": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@supabase/supabase-js": "^2.39.7",
+    "drizzle-orm": "^0.29.3",
+    "pg": "^8.11.3",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@repo/typescript-config": "workspace:*",
-    "@types/jest": "^29.5.0",
-    "@types/node": "^20.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "eslint": "^8.0.0",
-    "jest": "^29.5.0",
-    "rimraf": "^5.0.0",
-    "ts-jest": "^29.1.0",
-    "tsup": "^8.0.0",
-    "typescript": "^5.0.0"
+    "@types/node": "^20.11.19",
+    "@types/pg": "^8.11.0",
+    "drizzle-kit": "^0.20.14",
+    "eslint": "^8.56.0",
+    "tsup": "^8.0.2",
+    "typescript": "5.5.3"
   }
 }

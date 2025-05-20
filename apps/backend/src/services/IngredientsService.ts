@@ -9,6 +9,10 @@ import {
   updateIngredientResponse,
 } from '@repo/zod-clients';
 
+interface ServiceError extends Error {
+  status?: number;
+}
+
 /**
  * Create a new ingredient
  * Add a new ingredient definition to the inventory.
@@ -44,7 +48,7 @@ const createIngredient = async ({
     }
     return Service.rejectResponse(
       (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      (e as ServiceError).status || 405
     );
   }
 };
@@ -75,7 +79,7 @@ const deleteIngredient = async ({
   } catch (e) {
     return Service.rejectResponse(
       (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      (e as ServiceError).status || 405
     );
   }
 };
@@ -115,7 +119,7 @@ const getIngredientById = async ({
     }
     return Service.rejectResponse(
       (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      (e as ServiceError).status || 405
     );
   }
 };
@@ -157,7 +161,7 @@ const listIngredients = async (): Promise<ServiceResponse> => {
     }
     return Service.rejectResponse(
       (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      (e as ServiceError).status || 405
     );
   }
 };
@@ -205,7 +209,7 @@ const updateIngredient = async ({
     }
     return Service.rejectResponse(
       (e as Error).message || 'Invalid input',
-      (e as any).status || 405
+      (e as ServiceError).status || 405
     );
   }
 };

@@ -2,7 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactNode, useState, useEffect } from 'react';
-import { getNoryInventoryAPIMock } from '@nory/api-client';
+import { getNoryInventoryAPIMock } from '@repo/api-client/src/generated/noryInventoryAPI.msw';
 
 async function initMocks() {
   // eslint-disable-next-line no-constant-condition
@@ -36,6 +36,7 @@ export function Providers({ children }: { children: ReactNode }) {
       await initMocks();
       setIsReady(true);
     };
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     init();
   }, []);
 

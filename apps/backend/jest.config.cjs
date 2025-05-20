@@ -1,22 +1,23 @@
-/** @type {import('jest').Config} */
+// Jest configuration for Node.js TypeScript backend
 module.exports = {
-  preset: 'ts-jest/presets/js-with-ts-esm',
+  preset: 'ts-jest',
   testEnvironment: 'node',
+  roots: ['<rootDir>/src'],
+  testMatch: ['**/?(*.)+(test).[jt]s?(x)'],
   moduleFileExtensions: ['ts', 'js', 'json'],
-  transform: {
-    '^.+\\.ts$': ['ts-jest', {
-      useESM: true,
-      isolatedModules: true,
-    }],
-  },
-  extensionsToTreatAsEsm: ['.ts'],
-  testMatch: [
-    '**/src/tests/**/*.test.ts'
+  collectCoverage: true,
+  collectCoverageFrom: [
+    'src/**/*.{ts,js}',
+    '!src/**/*.d.ts',
+    '!src/**/index.{ts,js}',
   ],
-  moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.js$': '$1',
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov'],
+  globals: {
+    'ts-jest': {
+      tsconfig: '<rootDir>/tsconfig.json',
+    },
   },
+  setupFilesAfterEnv: [],
   verbose: true,
-  collectCoverage: false,
-  passWithNoTests: true,
 };

@@ -3,95 +3,53 @@ import Controller from './Controller.js';
 import * as modifiersService from '../services/ModifiersService.js';
 import { OpenAPIRequest } from '../types/common.js';
 
-/**
- * Create a new modifier group
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const createModifier = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    modifiersService.createModifier
-  );
-};
+export class ModifiersController extends Controller {
+  constructor(service?: unknown) {
+    super(service || modifiersService);
+  }
 
-/**
- * Delete a modifier group
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const deleteModifier = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    modifiersService.deleteModifier
-  );
-};
+  async createModifier(request: Request, response: Response): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/ModifiersService.js'))
+        .createModifier
+    );
+  }
 
-/**
- * Get a modifier by ID
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const getModifierById = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    modifiersService.getModifierById
-  );
-};
+  async deleteModifier(request: Request, response: Response): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/ModifiersService.js'))
+        .deleteModifier
+    );
+  }
 
-/**
- * List all modifiers
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const listModifiers = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    modifiersService.listModifiers
-  );
-};
+  async getModifierById(request: Request, response: Response): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/ModifiersService.js'))
+        .getModifierById
+    );
+  }
 
-/**
- * Update a modifier group
- *
- * @param request - The express request object
- * @param response - The express response object
- */
-const updateModifier = async (
-  request: Request,
-  response: Response
-): Promise<void> => {
-  await Controller.handleRequest(
-    request as OpenAPIRequest,
-    response,
-    modifiersService.updateModifier
-  );
-};
+  async listModifiers(request: Request, response: Response): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/ModifiersService.js'))
+        .listModifiers
+    );
+  }
 
-export {
-  createModifier,
-  deleteModifier,
-  getModifierById,
-  listModifiers,
-  updateModifier,
-};
+  async updateModifier(request: Request, response: Response): Promise<void> {
+    await this.handleRequest(
+      request as OpenAPIRequest,
+      response,
+      (this.service as typeof import('../services/ModifiersService.js'))
+        .updateModifier
+    );
+  }
+}

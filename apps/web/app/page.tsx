@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-import { useListIngredients } from '@nory/api-client';
+import Link from 'next/link';
 
 /**
  * // Update this page and corresponding test files. Make sure to use testId. And DaisyUI. Look in  utils/nextjsroutes.md To see what hook to use for this page. Source that hook and visualize/use it with daisyUI. Also look for the fakerjs implementation of that hook tanstack by genertaion orval noryApiClient. We will use the faker version in all tests. So all data coming will be random. So just test testId and hasValue() or similar. Use NextJS best practive for routing images etc. Not actual values. Use best pracitce for visualizing forms with use react-hook-form make sure check package.json with available libraries. Dont install any other libraries. For this File make sure you only change the page.tsx page.test.tsx and page.test.e2e.tsx. Verify using gh cli that its only max this 3 files changed. NO OTHER FILE. LEAVE THIS COMMENT IN THE FILE DO NOT REMOVE.
@@ -31,7 +31,7 @@ import { useListIngredients } from '@nory/api-client';
  * Example implementation using React Query and generated hooks:
  * 
  * import React from 'react';
- * import { None } from '@nory/api-client';
+ * import { None } from '@repo/api-client';
  * 
  * // Create a client
  * const queryClient = new QueryClient();
@@ -61,19 +61,6 @@ import { useListIngredients } from '@nory/api-client';
 interface HomePageProps {}
 
 const HomePage: FC<HomePageProps> = () => {
-  const { data, isLoading, error } = useListIngredients({
-    query: {
-      refetchOnMount: true,
-      refetchOnWindowFocus: false,
-      retry: false,
-    },
-  });
-
-  console.log('MSW Status:', process.env.NEXT_PUBLIC_API_MOCKING);
-  console.log('Mock Data:', data?.data);
-  console.log('Loading:', isLoading);
-  console.log('Error:', error);
-
   return (
     <div className="container mx-auto px-4" data-testid="home-page">
       <div data-testid="home-content">
@@ -92,13 +79,13 @@ const HomePage: FC<HomePageProps> = () => {
                 your operations, track ingredients, manage recipes, and optimize
                 your business with our powerful tools.
               </p>
-              <a
+              <Link
                 href="https://github.com/crossplatformsweden/nory-challange"
                 className="btn btn-primary"
                 data-testid="home-get-started"
               >
                 Get Started
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -142,13 +129,13 @@ const HomePage: FC<HomePageProps> = () => {
                 business network.
               </p>
               <div className="card-actions justify-end">
-                <a
+                <Link
                   href="/locations"
                   className="btn btn-primary btn-sm"
                   data-testid="home-locations-link"
                 >
                   View Locations
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -181,13 +168,13 @@ const HomePage: FC<HomePageProps> = () => {
                 suppliers.
               </p>
               <div className="card-actions justify-end">
-                <a
+                <Link
                   href="/ingredients"
                   className="btn btn-primary btn-sm"
                   data-testid="home-ingredients-link"
                 >
                   View Ingredients
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -220,13 +207,13 @@ const HomePage: FC<HomePageProps> = () => {
                 costs.
               </p>
               <div className="card-actions justify-end">
-                <a
+                <Link
                   href="/recipes"
                   className="btn btn-primary btn-sm"
                   data-testid="home-recipes-link"
                 >
                   View Recipes
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -249,23 +236,22 @@ const HomePage: FC<HomePageProps> = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
-                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                    d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"
                   />
                 </svg>
                 Modifiers
               </h2>
               <p data-testid="home-modifiers-description">
-                Manage menu modifiers, options, and pricing across your
-                locations.
+                Create and manage modifiers for your menu items.
               </p>
               <div className="card-actions justify-end">
-                <a
+                <Link
                   href="/modifiers"
                   className="btn btn-primary btn-sm"
                   data-testid="home-modifiers-link"
                 >
                   View Modifiers
-                </a>
+                </Link>
               </div>
             </div>
           </div>

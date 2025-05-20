@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import swaggerUI from 'swagger-ui-express';
 import jsYaml from 'js-yaml';
-import express, { Request, Response, NextFunction, Application } from 'express';
+import express, { Request, Response, Application } from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
@@ -15,7 +15,7 @@ import services from './services/index.js';
 import openApiRouter from './utils/openapiRouter.js';
 
 interface Schema {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 class ExpressServer {
@@ -77,7 +77,11 @@ class ExpressServer {
 
   launch(): void {
     this.app.use(
-      (err: any, _req: Request, res: Response, _next: NextFunction) => {
+      (
+        err: Error & { status?: number; errors?: string },
+        _req: Request,
+        res: Response
+      ) => {
         // format errors
         res.status(err.status || 500).json({
           message: err.message || err,
@@ -87,7 +91,7 @@ class ExpressServer {
     );
 
     this.server = http.createServer(this.app).listen(this.port);
-    console.log(`Listening on port ${this.port}`);
+    logger.info(`Listening on port ${this.port}`);
   }
 
   async close(): Promise<void> {
@@ -97,7 +101,7 @@ class ExpressServer {
           resolve();
         });
       });
-      console.log(`Server on port ${this.port} shut down`);
+      logger.info(`Server on port ${this.port} shut down`);
     }
   }
 }

@@ -1,5 +1,6 @@
 import Service from './Service.js';
 import { ServiceResponse } from '../types/common.js';
+import { isServiceError } from '../types/errors.js';
 import { z } from 'zod';
 import {
   createModifierOptionBody,
@@ -31,7 +32,7 @@ const createModifierOption = async ({
 
     // Mock implementation - create a new modifier option
     const newModifierOption = {
-      id: `option-${Date.now()}`,
+      id: `modifier-option-${Date.now()}`,
       modifierId,
       name: validatedData.name,
       price: validatedData.price,
@@ -45,10 +46,9 @@ const createModifierOption = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -63,31 +63,25 @@ const createModifierOption = async ({
  */
 const deleteModifierOption = async ({
   modifierId,
-  modifierOptionId,
+  optionId,
 }: {
   modifierId: string;
-  modifierOptionId: string;
+  optionId: string;
 }): Promise<ServiceResponse> => {
   try {
     // Mock implementation - validate IDs and return success
-    if (
-      !modifierId ||
-      !modifierId.trim() ||
-      !modifierOptionId ||
-      !modifierOptionId.trim()
-    ) {
+    if (!modifierId || !modifierId.trim() || !optionId || !optionId.trim()) {
       throw new Error('Invalid modifier ID or option ID');
     }
 
     return Service.successResponse({
       success: true,
-      message: `Option ${modifierOptionId} for modifier ${modifierId} deleted successfully`,
+      message: `Modifier option ${optionId} for modifier ${modifierId} deleted successfully`,
     });
   } catch (e) {
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -102,18 +96,18 @@ const deleteModifierOption = async ({
  */
 const getModifierOptionById = async ({
   modifierId,
-  modifierOptionId,
+  optionId,
 }: {
   modifierId: string;
-  modifierOptionId: string;
+  optionId: string;
 }): Promise<ServiceResponse> => {
   try {
     // Mock implementation - create sample data
     const mockModifierOption = {
-      id: modifierOptionId,
+      id: optionId,
       modifierId,
-      name: 'Extra Cheese',
-      price: 1.5,
+      name: 'Sample Option',
+      price: 1.99,
     };
 
     // Validate the response using Zod
@@ -128,10 +122,9 @@ const getModifierOptionById = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -154,14 +147,20 @@ const listModifierOptions = async ({
       {
         id: 'option-1',
         modifierId,
-        name: 'Extra Cheese',
-        price: 1.5,
+        name: 'Small',
+        price: 0,
       },
       {
         id: 'option-2',
         modifierId,
-        name: 'Extra Sauce',
-        price: 0.75,
+        name: 'Medium',
+        price: 1.99,
+      },
+      {
+        id: 'option-3',
+        modifierId,
+        name: 'Large',
+        price: 2.99,
       },
     ];
 
@@ -177,10 +176,9 @@ const listModifierOptions = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -226,10 +224,9 @@ const updateModifierOption = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 

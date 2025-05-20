@@ -1,5 +1,6 @@
 import Service from './Service.js';
 import { ServiceResponse } from '../types/common.js';
+import { isServiceError } from '../types/errors.js';
 import { z } from 'zod';
 import {
   createLocationBody,
@@ -41,10 +42,9 @@ const createLocation = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -72,10 +72,9 @@ const deleteLocation = async ({
       message: `Location ${locationId} deleted successfully`,
     });
   } catch (e) {
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -96,8 +95,8 @@ const getLocationById = async ({
     // Mock implementation - create sample data
     const mockLocation = {
       id: locationId,
-      name: 'Mock Location',
-      address: '123 Main St, City, Country',
+      name: 'Sample Location',
+      address: '123 Main St',
     };
 
     // Validate the response using Zod
@@ -111,10 +110,9 @@ const getLocationById = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -130,13 +128,13 @@ const listLocations = async (): Promise<ServiceResponse> => {
     const mockLocations = [
       {
         id: 'location-1',
-        name: 'Downtown Location',
-        address: '123 Main St, City, Country',
+        name: 'Downtown Branch',
+        address: '123 Main St',
       },
       {
         id: 'location-2',
-        name: 'Uptown Location',
-        address: '456 Oak Ave, City, Country',
+        name: 'Uptown Branch',
+        address: '456 Oak Ave',
       },
     ];
 
@@ -151,10 +149,9 @@ const listLocations = async (): Promise<ServiceResponse> => {
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
@@ -196,10 +193,9 @@ const updateLocation = async ({
         400
       );
     }
-    return Service.rejectResponse(
-      (e as Error).message || 'Invalid input',
-      (e as any).status || 405
-    );
+    const error = e as Error;
+    const status = isServiceError(e) ? e.status : 405;
+    return Service.rejectResponse(error.message || 'Invalid input', status);
   }
 };
 
