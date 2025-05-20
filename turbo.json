@@ -19,7 +19,15 @@
       "persistent": true
     },
     "generate": {
-      "cache": false
+      "cache": false,
+      "inputs": [
+        "utils/**/*.yml",
+        "utils/**/*.yaml",
+        "utils/**/*.json",
+        "orval.config.js",
+        "orval.config.cjs"
+      ],
+      "outputs": ["src/generated/**"]
     },
     "test": {
       "dependsOn": ["^build"],

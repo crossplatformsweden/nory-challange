@@ -384,6 +384,25 @@ importers:
       vite: 6.3.5
       zod: 3.24.4
 
+  packages/zod-clients:
+    specifiers:
+      '@repo/eslint-config': workspace:*
+      '@repo/typescript-config': workspace:*
+      eslint: ^8.56.0
+      orval: ^6.20.0
+      tsup: ^8.0.2
+      typescript: ^5.3.3
+      zod: ^3.22.4
+    dependencies:
+      zod: 3.24.4
+    devDependencies:
+      '@repo/eslint-config': link:../eslint-config
+      '@repo/typescript-config': link:../typescript-config
+      eslint: 8.57.1
+      orval: 6.31.0_jsa37cshu5uufpq6bozr2e3orq
+      tsup: 8.5.0_typescript@5.8.3
+      typescript: 5.8.3
+
 packages:
 
   /@adobe/css-tools/4.4.2:
@@ -12651,6 +12670,39 @@ packages:
       - typescript
     dev: true
 
+  /orval/6.31.0_jsa37cshu5uufpq6bozr2e3orq:
+    resolution: {integrity: sha512-515KTDQ4VRJCT+4DsMrK/QROWRq4PXrjgxAoEx3jmP7j+aQBGbx8WhidIF6aX1UgbTxw47Lq7QVp9mbnD0lnWA==}
+    hasBin: true
+    dependencies:
+      '@apidevtools/swagger-parser': 10.1.1_openapi-types@12.1.3
+      '@orval/angular': 6.31.0_openapi-types@12.1.3
+      '@orval/axios': 6.31.0_openapi-types@12.1.3
+      '@orval/core': 6.31.0_openapi-types@12.1.3
+      '@orval/fetch': 6.31.0_openapi-types@12.1.3
+      '@orval/hono': 6.31.0_openapi-types@12.1.3
+      '@orval/mock': 6.31.0_openapi-types@12.1.3
+      '@orval/query': 6.31.0_openapi-types@12.1.3
+      '@orval/swr': 6.31.0_openapi-types@12.1.3
+      '@orval/zod': 6.31.0_openapi-types@12.1.3
+      ajv: 8.17.1
+      cac: 6.7.14
+      chalk: 4.1.2
+      chokidar: 3.6.0
+      enquirer: 2.4.1
+      execa: 5.1.1
+      find-up: 5.0.0
+      fs-extra: 11.3.0
+      lodash.uniq: 4.5.0
+      openapi3-ts: 4.2.2
+      string-argv: 0.3.2
+      tsconfck: 2.1.2_typescript@5.8.3
+    transitivePeerDependencies:
+      - encoding
+      - openapi-types
+      - supports-color
+      - typescript
+    dev: true
+
   /os-tmpdir/1.0.2:
     resolution: {integrity: sha512-D2FR03Vir7FIu45XBY20mTb+/ZSWB00sjU9jdQXt83gDrI4Ztz5Fs7/yy74g2N5SVQY4xY1qDr4rNddwYRVX0g==}
     engines: {node: '>=0.10.0'}
@@ -14549,6 +14601,19 @@ packages:
       typescript: 5.5.4
     dev: true
 
+  /tsconfck/2.1.2_typescript@5.8.3:
+    resolution: {integrity: sha512-ghqN1b0puy3MhhviwO2kGF8SeMDNhEbnKxjK7h6+fvY9JAxqvXi8y5NAHSQv687OVboS2uZIByzGd45/YxrRHg==}
+    engines: {node: ^14.13.1 || ^16 || >=18}
+    hasBin: true
+    peerDependencies:
+      typescript: ^4.3.5 || ^5.0.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 5.8.3
+    dev: true
+
   /tsconfig-paths/4.2.0:
     resolution: {integrity: sha512-NoZ4roiN7LnbKn9QqE1amc9DJfzvZXxF4xDavcOWt1BPkdx+m+0gJuPM+S0vCe7zTJMYUP0R8pO2XMr+Y8oLIg==}
     engines: {node: '>=6'}
@@ -14602,6 +14667,50 @@ packages:
       tinyglobby: 0.2.13
       tree-kill: 1.2.2
       typescript: 5.5.4
+    transitivePeerDependencies:
+      - jiti
+      - supports-color
+      - tsx
+      - yaml
+    dev: true
+
+  /tsup/8.5.0_typescript@5.8.3:
+    resolution: {integrity: sha512-VmBp77lWNQq6PfuMqCHD3xWl22vEoWsKajkF8t+yMBawlUS8JzEI+vOVMeuNZIuMML8qXRizFKi9oD5glKQVcQ==}
+    engines: {node: '>=18'}
+    hasBin: true
+    peerDependencies:
+      '@microsoft/api-extractor': ^7.36.0
+      '@swc/core': ^1
+      postcss: ^8.4.12
+      typescript: '>=4.5.0'
+    peerDependenciesMeta:
+      '@microsoft/api-extractor':
+        optional: true
+      '@swc/core':
+        optional: true
+      postcss:
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      bundle-require: 5.1.0_esbuild@0.25.4
+      cac: 6.7.14
+      chokidar: 4.0.3
+      consola: 3.4.2
+      debug: 4.4.1
+      esbuild: 0.25.4
+      fix-dts-default-cjs-exports: 1.0.1
+      joycon: 3.1.1
+      picocolors: 1.1.1
+      postcss-load-config: 6.0.1
+      resolve-from: 5.0.0
+      rollup: 4.40.2
+      source-map: 0.8.0-beta.0
+      sucrase: 3.35.0
+      tinyexec: 0.3.2
+      tinyglobby: 0.2.13
+      tree-kill: 1.2.2
+      typescript: 5.8.3
     transitivePeerDependencies:
       - jiti
       - supports-color
