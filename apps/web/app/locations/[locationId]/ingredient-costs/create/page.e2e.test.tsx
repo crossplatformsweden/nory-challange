@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
 
 /**
  * E2E Testing Guide:
@@ -9,7 +9,7 @@ import { test, expect } from '@playwright/test'
  * 5. Test responsive behavior if needed
  * 6. Test any loading states
  * 7. Test any error states
- * 
+ *
  * Note: Use the URL path provided in the generator
  * and ensure all testIds match the page component.
  */
@@ -20,25 +20,103 @@ import { test, expect } from '@playwright/test'
 
 test.describe('CreateIngredientCostPage', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/locations/123/ingredient-costs/create')
-  })
+    await page.goto('/locations/123/ingredient-costs/create');
+  });
 
   test('renders all required elements', async ({ page }) => {
-    // Check that all elements are visible
-    await expect(page.getByTestId('create-ingredient-cost-page')).toBeVisible()
-    await expect(page.getByTestId('create-ingredient-cost-title')).toBeVisible()
-    await expect(page.getByTestId('create-ingredient-cost-content')).toBeVisible()
-  })
+    // Wait for the page to load by checking for either content, loading, or error state
+    await Promise.race([
+      page.waitForSelector('[data-testid="ingredient-cost-create-form"]'),
+      page.waitForSelector('[data-testid="ingredient-cost-create-loading"]'),
+    ]);
 
-  test('takes a screenshot of the page', async ({ page, browserName }) => {
-    // Get current date/time for unique screenshot name
-    const now = new Date()
-    const timestamp = now.toISOString().replace(/[:.]/g, '-')
-    
-    // Take screenshot with timestamp and browser name
-    await page.screenshot({ 
-      path: `./screenshots/create-ingredient-cost_${browserName}_${timestamp}.png`,
-      fullPage: true 
-    })
-  })
-}) 
+    // Check main page elements
+    await expect(page.getByTestId('ingredient-cost-create-page')).toBeVisible();
+    await expect(
+      page.getByTestId('ingredient-cost-create-title')
+    ).toBeVisible();
+    await expect(
+      page.getByTestId('ingredient-cost-create-back-button')
+    ).toBeVisible();
+
+    // Check form elements
+    await expect(page.getByTestId('ingredient-cost-create-form')).toBeVisible();
+    await expect(
+      page.getByTestId('ingredient-cost-create-ingredient-label')
+    ).toBeVisible();
+    await expect(
+      page.getByTestId('ingredient-cost-create-ingredient-select')
+    ).toBeVisible();
+    await expect(
+      page.getByTestId('ingredient-cost-create-cost-label')
+    ).toBeVisible();
+    await expect(
+      page.getByTestId('ingredient-cost-create-cost-input')
+    ).toBeVisible();
+    await expect(
+      page.getByTestId('ingredient-cost-create-submit-button')
+    ).toBeVisible();
+    await expect(
+      page.getByTestId('ingredient-cost-create-cancel-button')
+    ).toBeVisible();
+  });
+
+  test('shows loading state initially', async ({ page }) => {
+    await expect(
+      page.getByTestId('ingredient-cost-create-loading')
+    ).toBeVisible();
+  });
+
+  test('shows validation errors when submitting empty form', async ({
+    page,
+  }) => {
+    // Wait for form to be visible
+    await page.waitForSelector('[data-testid="ingredient-cost-create-form"]');
+
+    // Submit empty form
+    await page.getByTestId('ingredient-cost-create-submit-button').click();
+
+    // Check for validation errors
+    await expect(
+      page.getByTestId('ingredient-cost-create-ingredient-error')
+    ).toBeVisible();
+    await expect(
+      page.getByTestId('ingredient-cost-create-cost-error')
+    ).toBeVisible();
+  });
+
+  test('shows error state when API fails', async ({ page }) => {
+    // ... existing code ...
+  });
+
+  test('submits form and navigates on success', async ({ page }) => {
+    // Wait for form to be visible
+    await page.waitForSelector('[data-testid="ingredient-cost-create-form"]');
+
+    // Fill in the form
+    await page
+      .getByTestId('ingredient-cost-create-ingredient-select')
+      .selectOption({ index: 1 });
+    await page.getByTestId('ingredient-cost-create-cost-input').fill('10.99');
+
+    // Submit the form
+    await page.getByTestId('ingredient-cost-create-submit-button').click();
+
+    // Verify navigation to ingredient costs list page - only check the path pattern
+    await expect(page).toHaveURL(/\/locations\/[^/]+\/ingredient-costs$/);
+  });
+
+  test('takes a screenshot of the page', async ({ page }) => {
+    // Wait for form to be visible
+    await page.waitForSelector('[data-testid="ingredient-cost-create-form"]');
+
+    // Take a screenshot with a unique filename based on the current date and browser
+    const date = new Date().toISOString().split('T')[0];
+    const browserName =
+      page.context().browser()?.browserType().name() || 'unknown';
+    await page.screenshot({
+      path: `./test-results/ingredient-cost-create-${date}-${browserName}.png`,
+      fullPage: true,
+    });
+  });
+});

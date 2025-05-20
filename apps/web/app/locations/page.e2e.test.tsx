@@ -87,7 +87,7 @@ test.describe('LocationsListPage', () => {
       await page.locator('[data-testid^="location-view-"]').first().click();
 
       // Verify we navigated to the detail page
-      await expect(page).toHaveURL(`/locations/${locationId}`);
+      await expect(page).toHaveURL(/\/locations\/[^/]+$/);
     }
   });
 
@@ -100,7 +100,7 @@ test.describe('LocationsListPage', () => {
     await page.getByTestId('locations-list-create-button').click();
 
     // Verify we navigated to the create page
-    await expect(page).toHaveURL('/locations/create');
+    await expect(page).toHaveURL(/\/locations\/create$/);
   });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {

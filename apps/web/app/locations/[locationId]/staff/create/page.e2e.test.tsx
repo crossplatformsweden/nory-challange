@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
 
 /**
  * E2E Testing Guide:
@@ -9,7 +9,7 @@ import { test, expect } from '@playwright/test'
  * 5. Test responsive behavior if needed
  * 6. Test any loading states
  * 7. Test any error states
- * 
+ *
  * Note: Use the URL path provided in the generator
  * and ensure all testIds match the page component.
  */
@@ -20,25 +20,50 @@ import { test, expect } from '@playwright/test'
 
 test.describe('CreateStaffPage', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/locations/123/staff/create')
-  })
+    await page.goto('/locations/123/staff/create');
+  });
 
   test('renders all required elements', async ({ page }) => {
     // Check that all elements are visible
-    await expect(page.getByTestId('create-staff-page')).toBeVisible()
-    await expect(page.getByTestId('create-staff-title')).toBeVisible()
-    await expect(page.getByTestId('create-staff-content')).toBeVisible()
-  })
+    await expect(page.getByTestId('create-staff-page')).toBeVisible();
+    await expect(page.getByTestId('create-staff-title')).toBeVisible();
+    await expect(page.getByTestId('create-staff-cancel-button')).toBeVisible();
+    await expect(page.getByTestId('create-staff-content')).toBeVisible();
+    await expect(page.getByTestId('create-staff-name-input')).toBeVisible();
+    await expect(page.getByTestId('create-staff-email-input')).toBeVisible();
+    await expect(page.getByTestId('create-staff-role-select')).toBeVisible();
+    await expect(page.getByTestId('create-staff-submit-button')).toBeVisible();
+  });
+
+  test('submits form with valid data', async ({ page }) => {
+    // Fill form with valid data
+    await page.getByTestId('create-staff-name-input').fill('John Doe');
+    await page.getByTestId('create-staff-email-input').fill('john@example.com');
+    await page.getByTestId('create-staff-role-select').selectOption('STAFF');
+
+    // Submit form
+    await page.getByTestId('create-staff-submit-button').click();
+
+    // Check for success message
+    await expect(page.getByTestId('create-staff-success')).toBeVisible();
+
+    // Verify navigation to staff list page - only check the path pattern
+    await expect(page).toHaveURL(/\/locations\/[^/]+\/staff$/);
+  });
+
+  test('shows error state when API fails', async ({ page }) => {
+    // ... existing code ...
+  });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {
     // Get current date/time for unique screenshot name
-    const now = new Date()
-    const timestamp = now.toISOString().replace(/[:.]/g, '-')
-    
+    const now = new Date();
+    const timestamp = now.toISOString().replace(/[:.]/g, '-');
+
     // Take screenshot with timestamp and browser name
-    await page.screenshot({ 
+    await page.screenshot({
       path: `./screenshots/create-staff_${browserName}_${timestamp}.png`,
-      fullPage: true 
-    })
-  })
-}) 
+      fullPage: true,
+    });
+  });
+});

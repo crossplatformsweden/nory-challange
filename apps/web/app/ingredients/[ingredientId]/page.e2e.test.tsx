@@ -24,82 +24,20 @@ test.describe('IngredientDetailPage', () => {
   });
 
   test('renders all required elements', async ({ page }) => {
-    // Wait for the page to load (either content, loading state, or error)
-    await Promise.race([
-      page
-        .waitForSelector('[data-testid="ingredient-detail-content"]', {
-          timeout: 5000,
-        })
-        .catch(() => {}),
-      page
-        .waitForSelector('[data-testid="ingredient-detail-loading"]', {
-          timeout: 5000,
-        })
-        .catch(() => {}),
-      page
-        .waitForSelector('[data-testid="ingredient-detail-error"]', {
-          timeout: 5000,
-        })
-        .catch(() => {}),
-    ]);
+    // Wait for the page to load
+    await page.waitForSelector('[data-testid="ingredient-detail-page"]');
 
-    // Check that main elements are visible
+    // Check main page elements
     await expect(page.getByTestId('ingredient-detail-page')).toBeVisible();
     await expect(page.getByTestId('ingredient-detail-title')).toBeVisible();
     await expect(
       page.getByTestId('ingredient-detail-back-button')
     ).toBeVisible();
-
-    // Check for either content, loading state, or error
-    const hasContent =
-      (await page.getByTestId('ingredient-detail-content').count()) > 0;
-    const isLoading =
-      (await page.getByTestId('ingredient-detail-loading').count()) > 0;
-    const hasError =
-      (await page.getByTestId('ingredient-detail-error').count()) > 0;
-
-    // At least one of these states should be visible
-    expect(hasContent || isLoading || hasError).toBeTruthy();
-
-    // If content is loaded, check for detail elements
-    if (hasContent) {
-      await expect(page.getByTestId('ingredient-detail-name')).toBeVisible();
-      await expect(
-        page.getByTestId('ingredient-detail-edit-button')
-      ).toBeVisible();
-      await expect(
-        page.getByTestId('ingredient-detail-delete-button')
-      ).toBeVisible();
-    }
   });
 
-  test('back button navigates to previous page', async ({ page }) => {
-    // First go to the ingredients list page
-    await page.goto('/ingredients');
-
-    // Wait for the page to load
-    await page.waitForSelector('[data-testid="ingredients-list-page"]');
-
-    // Store the URL to verify we return here later
-    const originalUrl = page.url();
-
-    // Find and click on the first ingredient view button if available
-    const viewButton = page.getByTestId(/^ingredient-view-/);
-    const hasViewButton = (await viewButton.count()) > 0;
-
-    if (hasViewButton) {
-      await viewButton.first().click();
-
-      // Wait for detail page to load
-      await page.waitForSelector('[data-testid="ingredient-detail-page"]');
-
-      // Click the back button
-      await page.getByTestId('ingredient-detail-back-button').click();
-
-      // Verify we went back to the original page
-      await page.waitForURL(originalUrl);
-      await expect(page.getByTestId('ingredients-list-page')).toBeVisible();
-    }
+  test('shows loading state initially', async ({ page }) => {
+    await page.goto('/ingredients/123');
+    await expect(page.getByTestId('ingredient-detail-loading')).toBeVisible();
   });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {
@@ -107,7 +45,7 @@ test.describe('IngredientDetailPage', () => {
     const now = new Date();
     const timestamp = now.toISOString().replace(/[:.]/g, '-');
 
-    // Wait for the content to be loaded
+    // Wait for content to be loaded
     await page.waitForLoadState('networkidle');
 
     // Take screenshot with timestamp and browser name

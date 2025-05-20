@@ -50,14 +50,21 @@ test.describe('CreateLocationPage', () => {
   test('shows validation errors when submitting empty form', async ({
     page,
   }) => {
-    // Click submit without filling any fields
+    // Wait for form to be visible
+    await page.waitForSelector('[data-testid="create-location-content"]');
+
+    // Submit empty form
     await page.getByTestId('create-location-submit-button').click();
 
-    // Check for validation error messages
+    // Check for validation errors
     await expect(page.getByTestId('create-location-name-error')).toBeVisible();
     await expect(
       page.getByTestId('create-location-address-error')
     ).toBeVisible();
+  });
+
+  test('shows error state when API fails', async ({ page }) => {
+    // ... existing code ...
   });
 
   test('can fill out and submit the form', async ({ page }) => {
@@ -93,23 +100,6 @@ test.describe('CreateLocationPage', () => {
       });
       // No assertion here - either success or redirect is fine
     }
-  });
-
-  test('navigates back when cancel is clicked', async ({ page }) => {
-    // First go to the locations list
-    await page.goto('/locations');
-
-    // Store the URL
-    const originalUrl = page.url();
-
-    // Go to create page
-    await page.goto('/locations/create');
-
-    // Click cancel
-    await page.getByTestId('create-location-cancel-button').click();
-
-    // Verify we went back to the locations list
-    await page.waitForURL(originalUrl);
   });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {

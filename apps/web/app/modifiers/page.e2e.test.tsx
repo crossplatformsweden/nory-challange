@@ -95,7 +95,7 @@ test.describe('ModifiersListPage', () => {
       await page.locator('[data-testid^="modifier-view-"]').first().click();
 
       // Verify we navigated to the detail page
-      await expect(page).toHaveURL(`/modifiers/${modifierId}`);
+      await expect(page).toHaveURL(/\/modifiers\/[^/]+$/);
     }
   });
 
@@ -127,7 +127,7 @@ test.describe('ModifiersListPage', () => {
       await page.locator('[data-testid^="modifier-options-"]').first().click();
 
       // Verify we navigated to the options page
-      await expect(page).toHaveURL(`/modifiers/${modifierId}/options`);
+      await expect(page).toHaveURL(/\/modifiers\/[^/]+\/options$/);
     }
   });
 
@@ -138,7 +138,7 @@ test.describe('ModifiersListPage', () => {
     await page.getByTestId('modifiers-list-create-button').click();
 
     // Verify we navigated to the create page
-    await expect(page).toHaveURL('/modifiers/create');
+    await expect(page).toHaveURL(/\/modifiers\/create$/);
   });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {

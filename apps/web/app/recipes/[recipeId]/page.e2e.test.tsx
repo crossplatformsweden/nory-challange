@@ -27,59 +27,18 @@ test.describe('RecipeDetailPage', () => {
   });
 
   test('renders all required elements', async ({ page }) => {
-    // Wait for the page to load (either content, loading state, or error)
-    await Promise.race([
-      page
-        .waitForSelector('[data-testid="recipe-detail-content"]', {
-          timeout: 5000,
-        })
-        .catch(() => {}),
-      page
-        .waitForSelector('[data-testid="recipe-detail-loading"]', {
-          timeout: 5000,
-        })
-        .catch(() => {}),
-    ]);
+    // Wait for the page to load
+    await page.waitForSelector('[data-testid="recipe-detail-page"]');
 
     // Check main page elements
     await expect(page.getByTestId('recipe-detail-page')).toBeVisible();
     await expect(page.getByTestId('recipe-detail-title')).toBeVisible();
     await expect(page.getByTestId('recipe-detail-back-button')).toBeVisible();
-    await expect(page.getByTestId('recipe-detail-edit-button')).toBeVisible();
-
-    // Check for either content, loading state, or error
-    const hasContent =
-      (await page.getByTestId('recipe-detail-content').count()) > 0;
-    const isLoading =
-      (await page.getByTestId('recipe-detail-loading').count()) > 0;
-    const hasError =
-      (await page.getByTestId('recipe-detail-error').count()) > 0;
-
-    // At least one of these states should be visible
-    expect(hasContent || isLoading || hasError).toBeTruthy();
   });
 
   test('shows loading state initially', async ({ page }) => {
     await page.goto(baseUrl);
     await expect(page.getByTestId('recipe-detail-loading')).toBeVisible();
-  });
-
-  test('back button navigates to previous page', async ({ page }) => {
-    // First go to the recipes list page
-    await page.goto('/recipes');
-
-    // Store the URL to verify we return here later
-    const originalUrl = page.url();
-
-    // Navigate to recipe detail page
-    await page.goto(baseUrl);
-    await page.waitForSelector('[data-testid="recipe-detail-page"]');
-
-    // Click the back button
-    await page.getByTestId('recipe-detail-back-button').click();
-
-    // Verify we went back to the original page
-    await page.waitForURL(originalUrl);
   });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {

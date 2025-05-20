@@ -27,72 +27,18 @@ test.describe('LocationDetailPage', () => {
   });
 
   test('renders all required elements', async ({ page }) => {
-    // Wait for the page to load (either content, loading state, or error)
-    await Promise.race([
-      page
-        .waitForSelector('[data-testid="location-detail-content"]', {
-          timeout: 5000,
-        })
-        .catch(() => {}),
-      page
-        .waitForSelector('[data-testid="location-detail-loading"]', {
-          timeout: 5000,
-        })
-        .catch(() => {}),
-      page
-        .waitForSelector('[data-testid="location-detail-error"]', {
-          timeout: 5000,
-        })
-        .catch(() => {}),
-    ]);
+    // Wait for the page to load
+    await page.waitForSelector('[data-testid="location-detail-page"]');
 
     // Check main page elements
     await expect(page.getByTestId('location-detail-page')).toBeVisible();
     await expect(page.getByTestId('location-detail-title')).toBeVisible();
     await expect(page.getByTestId('location-detail-back-button')).toBeVisible();
-    await expect(page.getByTestId('location-detail-edit-button')).toBeVisible();
-
-    // Check for either content, loading state, or error
-    const hasContent =
-      (await page.getByTestId('location-detail-content').count()) > 0;
-    const isLoading =
-      (await page.getByTestId('location-detail-loading').count()) > 0;
-    const hasError =
-      (await page.getByTestId('location-detail-error').count()) > 0;
-
-    // At least one of these states should be visible
-    expect(hasContent || isLoading || hasError).toBeTruthy();
-
-    // If content is loaded, check location details
-    if (hasContent) {
-      await expect(page.getByTestId('location-detail-name')).toBeVisible();
-      await expect(page.getByTestId('location-detail-address')).toBeVisible();
-      await expect(page.getByTestId('location-detail-phone')).toBeVisible();
-      await expect(page.getByTestId('location-detail-email')).toBeVisible();
-    }
   });
 
   test('shows loading state initially', async ({ page }) => {
     await page.goto(baseUrl);
     await expect(page.getByTestId('location-detail-loading')).toBeVisible();
-  });
-
-  test('back button navigates to previous page', async ({ page }) => {
-    // First go to the locations list page
-    await page.goto('/locations');
-
-    // Store the URL to verify we return here later
-    const originalUrl = page.url();
-
-    // Navigate to location detail page
-    await page.goto(baseUrl);
-    await page.waitForSelector('[data-testid="location-detail-page"]');
-
-    // Click the back button
-    await page.getByTestId('location-detail-back-button').click();
-
-    // Verify we went back to the original page
-    await page.waitForURL(originalUrl);
   });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {

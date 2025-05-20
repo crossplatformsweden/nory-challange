@@ -295,3 +295,5 @@ This monorepo is well-suited for deployment on platforms like [Vercel](https://v
 ```
 
 ```
+
+pnpm test:unit "app/locations/\[locationId\]/reports/inventory-movements-timeline/page.test.tsx"
