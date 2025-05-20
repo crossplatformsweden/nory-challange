@@ -16,6 +16,8 @@ total 1 test per file.
 
 put it in backend folder.
 
+make sure its green.
+
 # TODO: Service Test Coverage
 
 Below is a table of service files and whether they have corresponding test files:
