@@ -10,7 +10,9 @@
     "grep": {},
     "grepInvert": null,
     "maxFailures": 0,
-    "metadata": {},
+    "metadata": {
+      "actualWorkers": 2
+    },
     "preserveOutput": "always",
     "reporter": [
       [
@@ -34,7 +36,9 @@
         "outputDir": "/Users/xemil/Source/nory-challange/apps/web/test-results",
         "repeatEach": 1,
         "retries": 1,
-        "metadata": {},
+        "metadata": {
+          "actualWorkers": 2
+        },
         "id": "chromium",
         "name": "chromium",
         "testDir": "/Users/xemil/Source/nory-challange/apps/web/app",
@@ -59,17 +63,3685 @@
       "timeout": 120000
     }
   },
-  "suites": [],
-  "errors": [
+  "suites": [
     {
-      "message": "Error: Process from config.webServer exited early.",
-      "stack": "Error: Process from config.webServer exited early."
+      "title": "ingredients/[ingredientId]/page.e2e.test.tsx",
+      "file": "ingredients/[ingredientId]/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "IngredientDetailPage",
+          "file": "ingredients/[ingredientId]/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1402,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:27.624Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2021c5f559bc54da5998-4121fead2fde0fd563c1",
+              "file": "ingredients/[ingredientId]/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "shows loading state initially",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1889,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:27.624Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2021c5f559bc54da5998-e0fff5b22a628e6bc4be",
+              "file": "ingredients/[ingredientId]/page.e2e.test.tsx",
+              "line": 38,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1956,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:29.233Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2021c5f559bc54da5998-1e4e525cbc72d40fb7b4",
+              "file": "ingredients/[ingredientId]/page.e2e.test.tsx",
+              "line": 43,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ingredients/page.e2e.test.tsx",
+      "file": "ingredients/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "IngredientsListPage",
+          "file": "ingredients/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2792,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:29.720Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2e8802e4f6bf21ba7e10-62c238501d292ac3d9bb",
+              "file": "ingredients/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "navigates to detail page when clicking view button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3694,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:31.195Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2e8802e4f6bf21ba7e10-817928cd810498dc56b3",
+              "file": "ingredients/page.e2e.test.tsx",
+              "line": 55,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1888,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:32.518Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2e8802e4f6bf21ba7e10-782db1d91351f0a4ca83",
+              "file": "ingredients/page.e2e.test.tsx",
+              "line": 94,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/[locationId]/ingredient-costs/[locationIngredientCostId]/page.e2e.test.tsx",
+      "file": "locations/[locationId]/ingredient-costs/[locationIngredientCostId]/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "IngredientCostDetailPage",
+          "file": "locations/[locationId]/ingredient-costs/[locationIngredientCostId]/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3241,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:34.410Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b37613b8f31dcbe26b99-719c96a5b58e2eef6317",
+              "file": "locations/[locationId]/ingredient-costs/[locationIngredientCostId]/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 861,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:34.893Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b37613b8f31dcbe26b99-e18acba24eac18161c14",
+              "file": "locations/[locationId]/ingredient-costs/[locationIngredientCostId]/page.e2e.test.tsx",
+              "line": 37,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/[locationId]/ingredient-costs/create/page.e2e.test.tsx",
+      "file": "locations/[locationId]/ingredient-costs/create/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "CreateIngredientCostPage",
+          "file": "locations/[locationId]/ingredient-costs/create/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3019,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:35.760Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "134559855148786efa42-4fcadfe979ce9a2d425e",
+              "file": "locations/[locationId]/ingredient-costs/create/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "shows loading state initially",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 378,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:37.659Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "134559855148786efa42-2b3ef257fd4b0250786f",
+              "file": "locations/[locationId]/ingredient-costs/create/page.e2e.test.tsx",
+              "line": 64,
+              "column": 3
+            },
+            {
+              "title": "shows validation errors when submitting empty form",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1651,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:38.040Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "134559855148786efa42-c7e266f5040acdc0217f",
+              "file": "locations/[locationId]/ingredient-costs/create/page.e2e.test.tsx",
+              "line": 70,
+              "column": 3
+            },
+            {
+              "title": "shows error state when API fails",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 297,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:38.782Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "134559855148786efa42-d37799fcd6167f07017b",
+              "file": "locations/[locationId]/ingredient-costs/create/page.e2e.test.tsx",
+              "line": 88,
+              "column": 3
+            },
+            {
+              "title": "submits form and navigates on success",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3541,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:39.083Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "134559855148786efa42-7af3f10ebc636abf1538",
+              "file": "locations/[locationId]/ingredient-costs/create/page.e2e.test.tsx",
+              "line": 92,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1666,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:39.694Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "134559855148786efa42-08daa0e701946b441711",
+              "file": "locations/[locationId]/ingredient-costs/create/page.e2e.test.tsx",
+              "line": 109,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/[locationId]/ingredient-costs/page.e2e.test.tsx",
+      "file": "locations/[locationId]/ingredient-costs/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "IngredientCostsListPage",
+          "file": "locations/[locationId]/ingredient-costs/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1153,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:41.367Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f95c048d1d4b721d8a0f-df40844a68d0d7886588",
+              "file": "locations/[locationId]/ingredient-costs/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "shows loading state initially",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 431,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:42.524Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f95c048d1d4b721d8a0f-ff4cee1608ce19195d0f",
+              "file": "locations/[locationId]/ingredient-costs/page.e2e.test.tsx",
+              "line": 74,
+              "column": 3
+            },
+            {
+              "title": "navigates to detail page when view button is clicked",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1802,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:42.633Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f95c048d1d4b721d8a0f-c73f76e4f69358f8ff6a",
+              "file": "locations/[locationId]/ingredient-costs/page.e2e.test.tsx",
+              "line": 80,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1647,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:42.958Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f95c048d1d4b721d8a0f-3f804b1789feac2714f3",
+              "file": "locations/[locationId]/ingredient-costs/page.e2e.test.tsx",
+              "line": 96,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/[locationId]/inventory-movements/record/page.e2e.test.tsx",
+      "file": "locations/[locationId]/inventory-movements/record/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "RecordInventoryMovementPage",
+          "file": "locations/[locationId]/inventory-movements/record/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1264,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:44.441Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "93631f5dbe57fbd63cf7-778b89b2bb6e56031677",
+              "file": "locations/[locationId]/inventory-movements/record/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1095,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:44.611Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "93631f5dbe57fbd63cf7-0758fb8fa0701243acd4",
+              "file": "locations/[locationId]/inventory-movements/record/page.e2e.test.tsx",
+              "line": 33,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/[locationId]/inventory-stock/page.e2e.test.tsx",
+      "file": "locations/[locationId]/inventory-stock/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "InventoryStockPage",
+          "file": "locations/[locationId]/inventory-stock/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1259,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:45.711Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "302af9de7824fc81057a-fdc1af764e2d093f54ff",
+              "file": "locations/[locationId]/inventory-stock/page.e2e.test.tsx",
+              "line": 29,
+              "column": 3
+            },
+            {
+              "title": "shows loading state initially",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1730,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:45.711Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "302af9de7824fc81057a-e6903374c62990f2c076",
+              "file": "locations/[locationId]/inventory-stock/page.e2e.test.tsx",
+              "line": 91,
+              "column": 3
+            },
+            {
+              "title": "record movement button navigates to correct page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 584,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:46.973Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "302af9de7824fc81057a-d933d8d1f900be95c58b",
+              "file": "locations/[locationId]/inventory-stock/page.e2e.test.tsx",
+              "line": 96,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2012,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:47.445Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "302af9de7824fc81057a-0c54f052488344c89f8b",
+              "file": "locations/[locationId]/inventory-stock/page.e2e.test.tsx",
+              "line": 111,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/[locationId]/menu-items/[menuItemId]/page.e2e.test.tsx",
+      "file": "locations/[locationId]/menu-items/[menuItemId]/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "MenuItemDetailPage",
+          "file": "locations/[locationId]/menu-items/[menuItemId]/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3154,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:47.567Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "274fb864cf4ea0167046-a4a8f8e3b611a8e7e5da",
+              "file": "locations/[locationId]/menu-items/[menuItemId]/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 371,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:49.466Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "274fb864cf4ea0167046-66fd1fd341331c0496b9",
+              "file": "locations/[locationId]/menu-items/[menuItemId]/page.e2e.test.tsx",
+              "line": 33,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/[locationId]/menu-items/create/page.e2e.test.tsx",
+      "file": "locations/[locationId]/menu-items/create/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Create Menu Item Page",
+          "file": "locations/[locationId]/menu-items/create/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should display the create menu item form",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1444,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:49.843Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "117c993c263f2d7abc19-f9097461f08207daf77e",
+              "file": "locations/[locationId]/menu-items/create/page.e2e.test.tsx",
+              "line": 27,
+              "column": 3
+            },
+            {
+              "title": "should show validation errors for required fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 546,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:50.725Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "117c993c263f2d7abc19-15a9ad6782a04326dc3e",
+              "file": "locations/[locationId]/menu-items/create/page.e2e.test.tsx",
+              "line": 56,
+              "column": 3
+            },
+            {
+              "title": "should create a menu item successfully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2315,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:51.273Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "117c993c263f2d7abc19-e3eed0976e8cd963e416",
+              "file": "locations/[locationId]/menu-items/create/page.e2e.test.tsx",
+              "line": 85,
+              "column": 3
+            },
+            {
+              "title": "should navigate back to list page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2333,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:51.291Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "117c993c263f2d7abc19-c49c15a28223c785c728",
+              "file": "locations/[locationId]/menu-items/create/page.e2e.test.tsx",
+              "line": 103,
+              "column": 3
+            },
+            {
+              "title": "should show loading state when submitting",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 497,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:53.591Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "117c993c263f2d7abc19-96e975918447121dc641",
+              "file": "locations/[locationId]/menu-items/create/page.e2e.test.tsx",
+              "line": 111,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 443,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:53.627Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "117c993c263f2d7abc19-eebe078f29562817dbaf",
+              "file": "locations/[locationId]/menu-items/create/page.e2e.test.tsx",
+              "line": 131,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/[locationId]/menu-items/page.e2e.test.tsx",
+      "file": "locations/[locationId]/menu-items/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "MenuItemsListPage",
+          "file": "locations/[locationId]/menu-items/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2233,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:54.076Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3aed9b6d47ffe9d4b396-f2227ec0fa29fa98dbf9",
+              "file": "locations/[locationId]/menu-items/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 463,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:54.092Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3aed9b6d47ffe9d4b396-097a83a33b2d4425b8eb",
+              "file": "locations/[locationId]/menu-items/page.e2e.test.tsx",
+              "line": 33,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/[locationId]/page.e2e.test.tsx",
+      "file": "locations/[locationId]/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "LocationDetailPage",
+          "file": "locations/[locationId]/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1245,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:54.559Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f3ef985a30758b5af886-389a29ea002cc4a84634",
+              "file": "locations/[locationId]/page.e2e.test.tsx",
+              "line": 29,
+              "column": 3
+            },
+            {
+              "title": "shows loading state initially",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 831,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:55.806Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f3ef985a30758b5af886-e9516cd24c36dc7dddd3",
+              "file": "locations/[locationId]/page.e2e.test.tsx",
+              "line": 39,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1908,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:56.316Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f3ef985a30758b5af886-b6652f03f41b7e278c3c",
+              "file": "locations/[locationId]/page.e2e.test.tsx",
+              "line": 44,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/[locationId]/reports/inventory-movements-timeline/page.e2e.test.tsx",
+      "file": "locations/[locationId]/reports/inventory-movements-timeline/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "InventoryMovementsTimelinePage",
+          "file": "locations/[locationId]/reports/inventory-movements-timeline/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1298,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:56.641Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a89465ea335e5b29f99e-a06ca474db7d8e7383c5",
+              "file": "locations/[locationId]/reports/inventory-movements-timeline/page.e2e.test.tsx",
+              "line": 29,
+              "column": 3
+            },
+            {
+              "title": "shows loading state initially",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 381,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:57.942Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a89465ea335e5b29f99e-ef173c8ac9a013a91116",
+              "file": "locations/[locationId]/reports/inventory-movements-timeline/page.e2e.test.tsx",
+              "line": 104,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1814,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:58.229Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a89465ea335e5b29f99e-a8b0f55be5615b3c03f0",
+              "file": "locations/[locationId]/reports/inventory-movements-timeline/page.e2e.test.tsx",
+              "line": 110,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/[locationId]/reports/inventory-summary/page.e2e.test.tsx",
+      "file": "locations/[locationId]/reports/inventory-summary/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "InventorySummaryReportPage",
+          "file": "locations/[locationId]/reports/inventory-summary/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1829,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:28:58.330Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cc1dbe99d12a565d2818-9819e3166000595b9e31",
+              "file": "locations/[locationId]/reports/inventory-summary/page.e2e.test.tsx",
+              "line": 28,
+              "column": 3
+            },
+            {
+              "title": "shows loading state initially",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 939,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:00.049Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cc1dbe99d12a565d2818-09899f8f3c6c5be466ad",
+              "file": "locations/[locationId]/reports/inventory-summary/page.e2e.test.tsx",
+              "line": 93,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/[locationId]/reports/page.e2e.test.tsx",
+      "file": "locations/[locationId]/reports/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "ReportsOverviewPage",
+          "file": "locations/[locationId]/reports/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3671,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:00.167Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "47142896fa9e89efa162-8fea8003cc01c5da31ff",
+              "file": "locations/[locationId]/reports/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "navigates to inventory summary report",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2530,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:00.991Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "47142896fa9e89efa162-c622c00446b042ce6da3",
+              "file": "locations/[locationId]/reports/page.e2e.test.tsx",
+              "line": 42,
+              "column": 3
+            },
+            {
+              "title": "navigates to inventory timeline report",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1742,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:03.524Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "47142896fa9e89efa162-45b0e5f1212c698345d3",
+              "file": "locations/[locationId]/reports/page.e2e.test.tsx",
+              "line": 55,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 331,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:03.840Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "47142896fa9e89efa162-d22c1d269913cf0c5115",
+              "file": "locations/[locationId]/reports/page.e2e.test.tsx",
+              "line": 65,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/[locationId]/staff/[staffId]/page.e2e.test.tsx",
+      "file": "locations/[locationId]/staff/[staffId]/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "StaffDetailPage",
+          "file": "locations/[locationId]/staff/[staffId]/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3197,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:04.175Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b67ed05bec613065fc04-32703ff6e37c1752bd44",
+              "file": "locations/[locationId]/staff/[staffId]/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "shows loading state initially",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 416,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:05.286Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b67ed05bec613065fc04-1aa9dd1578817092d33e",
+              "file": "locations/[locationId]/staff/[staffId]/page.e2e.test.tsx",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 349,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:05.705Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b67ed05bec613065fc04-66136d45b9709da3918a",
+              "file": "locations/[locationId]/staff/[staffId]/page.e2e.test.tsx",
+              "line": 41,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/[locationId]/staff/create/page.e2e.test.tsx",
+      "file": "locations/[locationId]/staff/create/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "CreateStaffPage",
+          "file": "locations/[locationId]/staff/create/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1345,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:06.059Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "eb982ffbc356af659e23-271fef85ee4e6fa900c0",
+              "file": "locations/[locationId]/staff/create/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "submits form with valid data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 5201,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:07.376Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "eb982ffbc356af659e23-2cdf1547ab9937c05345",
+              "file": "locations/[locationId]/staff/create/page.e2e.test.tsx",
+              "line": 38,
+              "column": 3
+            },
+            {
+              "title": "shows error state when API fails",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 364,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:07.406Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "eb982ffbc356af659e23-ab28af82de9320b0d02c",
+              "file": "locations/[locationId]/staff/create/page.e2e.test.tsx",
+              "line": 54,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 334,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:07.773Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "eb982ffbc356af659e23-c6dcbc7750833809ce06",
+              "file": "locations/[locationId]/staff/create/page.e2e.test.tsx",
+              "line": 58,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/[locationId]/staff/page.e2e.test.tsx",
+      "file": "locations/[locationId]/staff/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "StaffListPage",
+          "file": "locations/[locationId]/staff/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3102,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:08.111Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6b86d8f3a79da4ca6731-72cfa441cfd6af3216e4",
+              "file": "locations/[locationId]/staff/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "navigates to create staff page when clicking add button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5632,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:11.216Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6b86d8f3a79da4ca6731-6d23a063a245dafa1477",
+              "file": "locations/[locationId]/staff/page.e2e.test.tsx",
+              "line": 34,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 386,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:12.582Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6b86d8f3a79da4ca6731-507f59c478ea90c7a5c6",
+              "file": "locations/[locationId]/staff/page.e2e.test.tsx",
+              "line": 53,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/create/page.e2e.test.tsx",
+      "file": "locations/create/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "CreateLocationPage",
+          "file": "locations/create/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required form elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1080,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:12.973Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b9306f2f87fc0fe9847d-cac8d9b4ca24337db4b7",
+              "file": "locations/create/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "shows validation errors when submitting empty form",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 373,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:14.055Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b9306f2f87fc0fe9847d-d0245ceebe8d2df7f613",
+              "file": "locations/create/page.e2e.test.tsx",
+              "line": 50,
+              "column": 3
+            },
+            {
+              "title": "shows error state when API fails",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 259,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:14.439Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b9306f2f87fc0fe9847d-bd45a1ed2644e85c6a91",
+              "file": "locations/create/page.e2e.test.tsx",
+              "line": 66,
+              "column": 3
+            },
+            {
+              "title": "can fill out and submit the form",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 388,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:14.701Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b9306f2f87fc0fe9847d-f7e69b51bbc516563a78",
+              "file": "locations/create/page.e2e.test.tsx",
+              "line": 70,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 347,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:15.091Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b9306f2f87fc0fe9847d-d171f2280cd04e2055ee",
+              "file": "locations/create/page.e2e.test.tsx",
+              "line": 105,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "locations/page.e2e.test.tsx",
+      "file": "locations/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "LocationsListPage",
+          "file": "locations/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2941,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:15.446Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4e8d1a843afcc1ca03b8-e2042492fb8a3283fa36",
+              "file": "locations/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "navigates to location detail page when clicking view button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3616,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:16.854Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4e8d1a843afcc1ca03b8-23f72092bad9274c300b",
+              "file": "locations/page.e2e.test.tsx",
+              "line": 55,
+              "column": 3
+            },
+            {
+              "title": "navigates to create page when clicking add location button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2363,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:18.390Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4e8d1a843afcc1ca03b8-efdde8a4c858c9f8bfcb",
+              "file": "locations/page.e2e.test.tsx",
+              "line": 87,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1880,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:20.474Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4e8d1a843afcc1ca03b8-0f203e1fbae02bf6c598",
+              "file": "locations/page.e2e.test.tsx",
+              "line": 99,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "modifiers/[modifierId]/options/[modifierOptionId]/page.e2e.test.tsx",
+      "file": "modifiers/[modifierId]/options/[modifierOptionId]/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "ModifierOptionDetailPage",
+          "file": "modifiers/[modifierId]/options/[modifierOptionId]/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1167,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:20.757Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d3c471d6d8d100e30c8b-cf19f2b7c99503fa1bd0",
+              "file": "modifiers/[modifierId]/options/[modifierOptionId]/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 326,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:21.927Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d3c471d6d8d100e30c8b-6f3d1015e7d770847f85",
+              "file": "modifiers/[modifierId]/options/[modifierOptionId]/page.e2e.test.tsx",
+              "line": 33,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "modifiers/[modifierId]/options/page.e2e.test.tsx",
+      "file": "modifiers/[modifierId]/options/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "ModifierOptionsListPage",
+          "file": "modifiers/[modifierId]/options/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1296,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:22.257Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a5e23be94e870d3d5d01-0569ae180052f16d34fb",
+              "file": "modifiers/[modifierId]/options/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1148,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:22.359Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a5e23be94e870d3d5d01-c4c54d8079138fdd5d7b",
+              "file": "modifiers/[modifierId]/options/page.e2e.test.tsx",
+              "line": 33,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "modifiers/[modifierId]/page.e2e.test.tsx",
+      "file": "modifiers/[modifierId]/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "ModifierDetailPage",
+          "file": "modifiers/[modifierId]/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1326,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:23.512Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee2cd28f31a07862de56-89d2820d11ed65b5f0c2",
+              "file": "modifiers/[modifierId]/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1212,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:23.557Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee2cd28f31a07862de56-a0df06e59354ecbdb213",
+              "file": "modifiers/[modifierId]/page.e2e.test.tsx",
+              "line": 33,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "modifiers/page.e2e.test.tsx",
+      "file": "modifiers/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "ModifiersListPage",
+          "file": "modifiers/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1034,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:24.774Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ec860cd00ebe4b89b54a-aee4ea3c3fa2d43561ca",
+              "file": "modifiers/page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "navigates to detail page when clicking view button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4150,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:24.842Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ec860cd00ebe4b89b54a-cf159842418c6df6a7ca",
+              "file": "modifiers/page.e2e.test.tsx",
+              "line": 70,
+              "column": 3
+            },
+            {
+              "title": "navigates to options page when clicking view options button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3542,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:25.811Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ec860cd00ebe4b89b54a-5e86de510053f9bef094",
+              "file": "modifiers/page.e2e.test.tsx",
+              "line": 97,
+              "column": 3
+            },
+            {
+              "title": "navigates to create page when clicking add modifier button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2227,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:28.995Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ec860cd00ebe4b89b54a-4c97eb76074f9a4b74c5",
+              "file": "modifiers/page.e2e.test.tsx",
+              "line": 124,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1883,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:29.355Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ec860cd00ebe4b89b54a-bc323905f94d001ec135",
+              "file": "modifiers/page.e2e.test.tsx",
+              "line": 134,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "page.e2e.test.tsx",
+      "file": "page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "HomePage",
+          "file": "page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 444,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:31.227Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5e75487f6a1799f6b5cf-e22fa26c3bb825871745",
+              "file": "page.e2e.test.tsx",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 395,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:31.242Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5e75487f6a1799f6b5cf-a674ff60d9cfd82c15a9",
+              "file": "page.e2e.test.tsx",
+              "line": 33,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "recipes/[recipeId]/ingredient-links/create/page.e2e.test.tsx",
+      "file": "recipes/[recipeId]/ingredient-links/create/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "CreateRecipeIngredientLinkPage",
+          "file": "recipes/[recipeId]/ingredient-links/create/page.e2e.test.tsx",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3234,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:31.642Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "209d4ad7013ec93c13ac-bc344e139c1aef51d556",
+              "file": "recipes/[recipeId]/ingredient-links/create/page.e2e.test.tsx",
+              "line": 22,
+              "column": 3
+            },
+            {
+              "title": "shows loading state initially",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1829,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:31.675Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "209d4ad7013ec93c13ac-817996ae09f0a585fd27",
+              "file": "recipes/[recipeId]/ingredient-links/create/page.e2e.test.tsx",
+              "line": 83,
+              "column": 3
+            },
+            {
+              "title": "back button navigates to previous page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1634,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:33.507Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "209d4ad7013ec93c13ac-7c948bf6e62cc2e87201",
+              "file": "recipes/[recipeId]/ingredient-links/create/page.e2e.test.tsx",
+              "line": 90,
+              "column": 3
+            },
+            {
+              "title": "shows validation errors for empty form submission",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2239,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:34.880Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "209d4ad7013ec93c13ac-3d66578bd2f07673dc03",
+              "file": "recipes/[recipeId]/ingredient-links/create/page.e2e.test.tsx",
+              "line": 110,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1990,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:35.145Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "209d4ad7013ec93c13ac-58c80d4ddeb2f44b75ba",
+              "file": "recipes/[recipeId]/ingredient-links/create/page.e2e.test.tsx",
+              "line": 129,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "recipes/[recipeId]/ingredient-links/page.e2e.test.tsx",
+      "file": "recipes/[recipeId]/ingredient-links/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "RecipeIngredientLinksPage",
+          "file": "recipes/[recipeId]/ingredient-links/page.e2e.test.tsx",
+          "line": 13,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3448,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:37.126Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "aeab37a04f11639bc6b9-f4b6e98b160a0c82840f",
+              "file": "recipes/[recipeId]/ingredient-links/page.e2e.test.tsx",
+              "line": 21,
+              "column": 3
+            },
+            {
+              "title": "shows loading state initially",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2044,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:37.141Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "aeab37a04f11639bc6b9-8c54e2722727c559a84f",
+              "file": "recipes/[recipeId]/ingredient-links/page.e2e.test.tsx",
+              "line": 73,
+              "column": 3
+            },
+            {
+              "title": "navigates to create page when clicking add button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1764,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:39.187Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "aeab37a04f11639bc6b9-89c92670a136dd2ce496",
+              "file": "recipes/[recipeId]/ingredient-links/page.e2e.test.tsx",
+              "line": 80,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2961,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:40.576Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "aeab37a04f11639bc6b9-ac34c6504b90dffca1ef",
+              "file": "recipes/[recipeId]/ingredient-links/page.e2e.test.tsx",
+              "line": 98,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "recipes/[recipeId]/page.e2e.test.tsx",
+      "file": "recipes/[recipeId]/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "RecipeDetailPage",
+          "file": "recipes/[recipeId]/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 329,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:40.956Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e89b2d1de22c06009307-b17829c77dd3f4292c32",
+              "file": "recipes/[recipeId]/page.e2e.test.tsx",
+              "line": 29,
+              "column": 3
+            },
+            {
+              "title": "shows loading state initially",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 831,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:41.287Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e89b2d1de22c06009307-37252dff1a790f0007b3",
+              "file": "recipes/[recipeId]/page.e2e.test.tsx",
+              "line": 39,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1882,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:42.120Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e89b2d1de22c06009307-a3db201742c2e5b1efd5",
+              "file": "recipes/[recipeId]/page.e2e.test.tsx",
+              "line": 44,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "recipes/page.e2e.test.tsx",
+      "file": "recipes/page.e2e.test.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "RecipesListPage",
+          "file": "recipes/page.e2e.test.tsx",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders all required elements",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3115,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:43.542Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b3e1fa7bfd8d8c6d8d79-ec6139f1fad7544636d4",
+              "file": "recipes/page.e2e.test.tsx",
+              "line": 28,
+              "column": 3
+            },
+            {
+              "title": "shows loading state initially",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1275,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:44.007Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b3e1fa7bfd8d8c6d8d79-9f722afddff2f8d31f9b",
+              "file": "recipes/page.e2e.test.tsx",
+              "line": 75,
+              "column": 3
+            },
+            {
+              "title": "navigates to create page when clicking create button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1675,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:45.285Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b3e1fa7bfd8d8c6d8d79-558f78c7929880841e48",
+              "file": "recipes/page.e2e.test.tsx",
+              "line": 80,
+              "column": 3
+            },
+            {
+              "title": "takes a screenshot of the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2012,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-05-20T17:29:46.660Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b3e1fa7bfd8d8c6d8d79-bca51e88f49b2ee3b5ad",
+              "file": "recipes/page.e2e.test.tsx",
+              "line": 99,
+              "column": 3
+            }
+          ]
+        }
+      ]
     }
   ],
+  "errors": [],
   "stats": {
-    "startTime": "2025-05-20T17:21:20.675Z",
-    "duration": 1728.4570000000003,
-    "expected": 0,
+    "startTime": "2025-05-20T17:28:22.953Z",
+    "duration": 85873.31300000001,
+    "expected": 94,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
