@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Controller from './Controller.js';
-import * as inventoryMovementsService from '../services/InventoryMovementsService.js';
+import Controller from './Controller';
+import * as inventoryMovementsService from '../services/InventoryMovementsService';
 import { OpenAPIRequest } from '../types/common.js';
 
 export class InventoryMovementsController extends Controller {
@@ -21,10 +21,8 @@ export class InventoryMovementsController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (
-        this
-          .service as typeof import('../services/InventoryMovementsService.js')
-      ).createInventoryMovement
+      (this.service as typeof import('../services/InventoryMovementsService'))
+        .createInventoryMovement
     );
   }
 
@@ -41,10 +39,8 @@ export class InventoryMovementsController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (
-        this
-          .service as typeof import('../services/InventoryMovementsService.js')
-      ).listInventoryMovements
+      (this.service as typeof import('../services/InventoryMovementsService'))
+        .listInventoryMovements
     );
   }
 }

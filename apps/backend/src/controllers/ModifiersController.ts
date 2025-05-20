@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Controller from './Controller.js';
-import * as modifiersService from '../services/ModifiersService.js';
+import Controller from './Controller';
+import * as modifiersService from '../services/ModifiersService';
 import { OpenAPIRequest } from '../types/common.js';
 
 export class ModifiersController extends Controller {
@@ -12,7 +12,7 @@ export class ModifiersController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/ModifiersService.js'))
+      (this.service as typeof import('../services/ModifiersService'))
         .createModifier
     );
   }
@@ -21,7 +21,7 @@ export class ModifiersController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/ModifiersService.js'))
+      (this.service as typeof import('../services/ModifiersService'))
         .deleteModifier
     );
   }
@@ -30,7 +30,7 @@ export class ModifiersController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/ModifiersService.js'))
+      (this.service as typeof import('../services/ModifiersService'))
         .getModifierById
     );
   }
@@ -39,7 +39,7 @@ export class ModifiersController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/ModifiersService.js'))
+      (this.service as typeof import('../services/ModifiersService'))
         .listModifiers
     );
   }
@@ -48,7 +48,7 @@ export class ModifiersController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/ModifiersService.js'))
+      (this.service as typeof import('../services/ModifiersService'))
         .updateModifier
     );
   }

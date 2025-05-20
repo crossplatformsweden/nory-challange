@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Controller from './Controller.js';
-import * as recipeIngredientLinksService from '../services/RecipeIngredientLinksService.js';
+import Controller from './Controller';
+import * as recipeIngredientLinksService from '../services/RecipeIngredientLinksService';
 import { OpenAPIRequest } from '../types/common.js';
 
 export class RecipeIngredientLinksController extends Controller {
@@ -23,7 +23,7 @@ export class RecipeIngredientLinksController extends Controller {
       response,
       (
         this
-          .service as typeof import('../services/RecipeIngredientLinksService.js')
+          .service as typeof import('../services/RecipeIngredientLinksService')
       ).createRecipeIngredientLink
     );
   }
@@ -43,7 +43,7 @@ export class RecipeIngredientLinksController extends Controller {
       response,
       (
         this
-          .service as typeof import('../services/RecipeIngredientLinksService.js')
+          .service as typeof import('../services/RecipeIngredientLinksService')
       ).deleteRecipeIngredientLink
     );
   }
@@ -63,7 +63,7 @@ export class RecipeIngredientLinksController extends Controller {
       response,
       (
         this
-          .service as typeof import('../services/RecipeIngredientLinksService.js')
+          .service as typeof import('../services/RecipeIngredientLinksService')
       ).getRecipeIngredientLinkById
     );
   }
@@ -83,7 +83,7 @@ export class RecipeIngredientLinksController extends Controller {
       response,
       (
         this
-          .service as typeof import('../services/RecipeIngredientLinksService.js')
+          .service as typeof import('../services/RecipeIngredientLinksService')
       ).listRecipeIngredientLinks
     );
   }

@@ -15,7 +15,6 @@ module.exports = {
   },
   transformIgnorePatterns: ['/node_modules/(?!@repo/zod-clients)'],
   moduleNameMapper: {
-    '^(.{1,2}/.*)js$': '$1',
     '^@repo/zod-clients$':
       '<rootDir>/../../../packages/zod-clients/src/index.ts',
     '^@repo/zod-clients/(.*)$':

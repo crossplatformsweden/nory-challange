@@ -1,6 +1,6 @@
-import Service from './Service.js';
+import Service from './Service';
 import { ServiceResponse, ServiceError } from '../types/common.js';
-import { isServiceError } from '../types/errors.js';
+import { isServiceError } from '../types/errors';
 import { z } from 'zod';
 import {
   createStaffAtLocationBody,

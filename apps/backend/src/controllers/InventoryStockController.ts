@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Controller from './Controller.js';
-import * as inventoryStockService from '../services/InventoryStockService.js';
+import Controller from './Controller';
+import * as inventoryStockService from '../services/InventoryStockService';
 import { OpenAPIRequest } from '../types/common.js';
 
 export class InventoryStockController extends Controller {
@@ -21,7 +21,7 @@ export class InventoryStockController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/InventoryStockService.js'))
+      (this.service as typeof import('../services/InventoryStockService'))
         .createInventoryStock
     );
   }
@@ -39,7 +39,7 @@ export class InventoryStockController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/InventoryStockService.js'))
+      (this.service as typeof import('../services/InventoryStockService'))
         .deleteInventoryStock
     );
   }
@@ -57,7 +57,7 @@ export class InventoryStockController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/InventoryStockService.js'))
+      (this.service as typeof import('../services/InventoryStockService'))
         .getInventoryStockById
     );
   }
@@ -75,7 +75,7 @@ export class InventoryStockController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/InventoryStockService.js'))
+      (this.service as typeof import('../services/InventoryStockService'))
         .listInventoryStock
     );
   }
@@ -93,7 +93,7 @@ export class InventoryStockController extends Controller {
     await this.handleRequest(
       request as OpenAPIRequest,
       response,
-      (this.service as typeof import('../services/InventoryStockService.js'))
+      (this.service as typeof import('../services/InventoryStockService'))
         .updateInventoryStock
     );
   }

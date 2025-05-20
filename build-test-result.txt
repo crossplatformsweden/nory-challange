@@ -18,6 +18,12 @@ turbo 2.5.3
 @repo/eslint-config:build: > echo 'No build needed for eslint config'
 @repo/eslint-config:build: 
 @repo/eslint-config:build: No build needed for eslint config
+@repo/plop-generators:build: cache hit, replaying logs c6ec1dbb1dbe64d6
+@repo/plop-generators:build: 
+@repo/plop-generators:build: 
+@repo/plop-generators:build: > @repo/plop-generators@0.0.1 build /Users/xemil/Source/nory-challange/packages/plop-generators
+@repo/plop-generators:build: > tsc && cp -r src/plop-templates dist/
+@repo/plop-generators:build: 
 @repo/zod-clients:build: cache hit, replaying logs 2f16eae6c9cdafbc
 @repo/zod-clients:build: 
 @repo/zod-clients:build: 
@@ -66,12 +72,6 @@ turbo 2.5.3
 @repo/api-client:build: DTS ⚡️ Build success in 1715ms
 @repo/api-client:build: DTS dist/index.d.cts 157.53 KB
 @repo/api-client:build: DTS dist/index.d.ts  157.53 KB
-@repo/plop-generators:build: cache hit, replaying logs c6ec1dbb1dbe64d6
-@repo/plop-generators:build: 
-@repo/plop-generators:build: 
-@repo/plop-generators:build: > @repo/plop-generators@0.0.1 build /Users/xemil/Source/nory-challange/packages/plop-generators
-@repo/plop-generators:build: > tsc && cp -r src/plop-templates dist/
-@repo/plop-generators:build: 
 @nory/backend-db:build: cache hit, replaying logs a439465a8f618336
 @nory/backend-db:build: 
 @nory/backend-db:build: 
@@ -139,7 +139,7 @@ turbo 2.5.3
 
  Tasks:    8 successful, 8 total
 Cached:    8 cached, 8 total
-  Time:    313ms >>> FULL TURBO
+  Time:    257ms >>> FULL TURBO
 
 
 > with-tailwind@ check-types /Users/xemil/Source/nory-challange
@@ -150,22 +150,22 @@ turbo 2.5.3
 • Packages in scope: @nory/backend-db, @repo/api-client, @repo/eslint-config, @repo/jest-config, @repo/plop-generators, @repo/tailwind-config, @repo/typescript-config, @repo/ui, @repo/zod-clients
 • Running check-types in 9 packages
 • Remote caching disabled
-@repo/ui:check-types: cache hit, replaying logs 6568dc8e0822619d
-@repo/ui:check-types: 
-@repo/ui:check-types: 
-@repo/ui:check-types: > @repo/ui@0.1.0 check-types /Users/xemil/Source/nory-challange/packages/ui
-@repo/ui:check-types: > tsc --noEmit
-@repo/ui:check-types: 
 @repo/plop-generators:check-types: cache hit, replaying logs a527ffb8c76f8cd5
 @repo/plop-generators:check-types: 
 @repo/plop-generators:check-types: 
 @repo/plop-generators:check-types: > @repo/plop-generators@0.0.1 check-types /Users/xemil/Source/nory-challange/packages/plop-generators
 @repo/plop-generators:check-types: > tsc --noEmit
 @repo/plop-generators:check-types: 
+@repo/ui:check-types: cache hit, replaying logs 6568dc8e0822619d
+@repo/ui:check-types: 
+@repo/ui:check-types: 
+@repo/ui:check-types: > @repo/ui@0.1.0 check-types /Users/xemil/Source/nory-challange/packages/ui
+@repo/ui:check-types: > tsc --noEmit
+@repo/ui:check-types: 
 
  Tasks:    2 successful, 2 total
 Cached:    2 cached, 2 total
-  Time:    151ms >>> FULL TURBO
+  Time:    142ms >>> FULL TURBO
 
 
 > with-tailwind@ lint /Users/xemil/Source/nory-challange
@@ -176,42 +176,42 @@ turbo 2.5.3
 • Packages in scope: @nory/backend-db, @repo/api-client, @repo/eslint-config, @repo/jest-config, @repo/plop-generators, @repo/tailwind-config, @repo/typescript-config, @repo/ui, @repo/zod-clients
 • Running lint in 9 packages
 • Remote caching disabled
-@repo/eslint-config:lint: cache hit, replaying logs 4e53903f07f6b8d0
 @repo/zod-clients:lint: cache hit, replaying logs 61b3a6f824234dbf
+@repo/zod-clients:lint: 
+@repo/zod-clients:lint: 
+@repo/zod-clients:lint: > @repo/zod-clients@0.1.0 lint /Users/xemil/Source/nory-challange/packages/zod-clients
+@repo/zod-clients:lint: > eslint .
+@repo/zod-clients:lint: 
+@repo/eslint-config:lint: cache hit, replaying logs 4e53903f07f6b8d0
 @repo/eslint-config:lint: 
 @repo/eslint-config:lint: 
 @repo/eslint-config:lint: > @repo/eslint-config@0.0.0 lint /Users/xemil/Source/nory-challange/packages/eslint-config
 @repo/eslint-config:lint: > echo 'No linting needed for eslint config'
 @repo/eslint-config:lint: 
 @repo/eslint-config:lint: No linting needed for eslint config
-@repo/zod-clients:lint: 
-@repo/zod-clients:lint: 
-@repo/zod-clients:lint: > @repo/zod-clients@0.1.0 lint /Users/xemil/Source/nory-challange/packages/zod-clients
-@repo/zod-clients:lint: > eslint .
-@repo/zod-clients:lint: 
-@repo/ui:lint: cache hit, replaying logs 746829bb387b53f2
-@repo/ui:lint: 
-@repo/ui:lint: > @repo/ui@0.1.0 lint /Users/xemil/Source/nory-challange/packages/ui
-@repo/ui:lint: > eslint .
-@repo/ui:lint: 
 @repo/api-client:lint: cache hit, replaying logs 938f95bb70c7de29
 @repo/api-client:lint: 
 @repo/api-client:lint: 
 @repo/api-client:lint: > @repo/api-client@0.0.1 lint /Users/xemil/Source/nory-challange/packages/api-client
 @repo/api-client:lint: > eslint src/
 @repo/api-client:lint: 
-@repo/jest-config:lint: cache hit, replaying logs 5d51e14a7c1a31e4
-@repo/jest-config:lint: 
-@repo/jest-config:lint: 
-@repo/jest-config:lint: > @repo/jest-config@0.0.0 lint /Users/xemil/Source/nory-challange/packages/jest-config
-@repo/jest-config:lint: > exit 0
-@repo/jest-config:lint: 
+@repo/ui:lint: cache hit, replaying logs 746829bb387b53f2
+@repo/ui:lint: 
+@repo/ui:lint: > @repo/ui@0.1.0 lint /Users/xemil/Source/nory-challange/packages/ui
+@repo/ui:lint: > eslint .
+@repo/ui:lint: 
 @repo/plop-generators:lint: cache hit, replaying logs 1038daa93244afcf
 @repo/plop-generators:lint: 
 @repo/plop-generators:lint: 
 @repo/plop-generators:lint: > @repo/plop-generators@0.0.1 lint /Users/xemil/Source/nory-challange/packages/plop-generators
 @repo/plop-generators:lint: > eslint "src/**/*.{ts,tsx,js,jsx}"
 @repo/plop-generators:lint: 
+@repo/jest-config:lint: cache hit, replaying logs 5d51e14a7c1a31e4
+@repo/jest-config:lint: 
+@repo/jest-config:lint: 
+@repo/jest-config:lint: > @repo/jest-config@0.0.0 lint /Users/xemil/Source/nory-challange/packages/jest-config
+@repo/jest-config:lint: > exit 0
+@repo/jest-config:lint: 
 @nory/backend-db:lint: cache hit, replaying logs 0502a5a68632df90
 @nory/backend-db:lint: 
 @nory/backend-db:lint: > @nory/backend-db@0.1.0 lint /Users/xemil/Source/nory-challange/packages/backend-db
@@ -230,7 +230,7 @@ turbo 2.5.3
 
  Tasks:    7 successful, 7 total
 Cached:    7 cached, 7 total
-  Time:    146ms >>> FULL TURBO
+  Time:    169ms >>> FULL TURBO
 
 Scope: 9 of 12 workspace projects
 packages/plop-generators test$ echo 'Tests skipped for plop generators'
@@ -240,8 +240,9 @@ packages/plop-generators test: Done
 packages/ui test: PASS src/components/collapsible/collapsible.test.tsx
 packages/ui test: PASS src/components/input-otp/input-otp.test.tsx
 packages/ui test: PASS src/components/drawer/drawer.test.tsx
-packages/ui test: PASS src/components/command/command.test.tsx
 packages/ui test: PASS src/components/dialog/dialog.test.tsx
+packages/ui test: PASS src/components/command/command.test.tsx
+packages/ui test: PASS src/components/popover/popover.test.tsx
 packages/ui test: PASS src/components/chart/chart.test.tsx
 packages/ui test:   ● Console
 packages/ui test:     console.warn
@@ -276,7 +277,6 @@ packages/ui test:       at ../../node_modules/.pnpm/@testing-library+react@15.0.
 packages/ui test:       at renderRoot (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:180:26)
 packages/ui test:       at render (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:271:10)
 packages/ui test:       at Object.<anonymous> (src/components/chart/chart.test.tsx:15:11)
-packages/ui test: PASS src/components/popover/popover.test.tsx
 packages/ui test: PASS src/components/accordion/accordion.test.tsx
 packages/ui test: PASS src/components/dropdown-menu/dropdown-menu.test.tsx
 packages/ui test:   ● Console
@@ -324,17 +324,10 @@ packages/ui test:       at pointerAction (../../node_modules/.pnpm/@testing-libr
 packages/ui test:       at Object.pointer (../../node_modules/.pnpm/@testing-library+user-event@14.5.2_eboxt5b3qr45gcxzx7wxppt6li/node_modules/@testing-library/user-event/dist/cjs/pointer/index.js:32:9)
 packages/ui test:       at Object.asyncWrapper (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:88:22)
 packages/ui test:       at Object.<anonymous> (src/components/dropdown-menu/dropdown-menu.test.tsx:292:5)
-packages/ui test: PASS src/components/form/form.test.tsx
 packages/ui test: PASS src/components/calendar/calendar.test.tsx
 packages/ui test: PASS src/components/select/select.test.tsx
-packages/ui test: PASS src/components/menubar/menubar.test.tsx
-packages/ui test: PASS src/components/context-menu/context-menu.test.tsx
-packages/ui test: PASS src/components/button/button.test.tsx
-packages/ui test: PASS src/components/checkbox/checkbox.test.tsx
-packages/ui test: PASS src/components/carousel/carousel.test.tsx
-packages/ui test: PASS src/components/radio-group/radio-group.test.tsx
 packages/ui test: PASS src/components/pagination/pagination.test.tsx
-packages/ui test: PASS src/components/breadcrumb/breadcrumb.test.tsx
+packages/ui test: PASS src/components/checkbox/checkbox.test.tsx
 packages/ui test: PASS src/components/progress/progress.test.tsx
 packages/ui test:   ● Console
 packages/ui test:     console.error
@@ -366,9 +359,15 @@ packages/ui test:       at ../../node_modules/.pnpm/@testing-library+react@15.0.
 packages/ui test:       at renderRoot (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:180:26)
 packages/ui test:       at render (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:271:10)
 packages/ui test:       at Object.<anonymous> (src/components/progress/progress.test.tsx:105:11)
-packages/ui test: PASS src/components/card/card.test.tsx
+packages/ui test: PASS src/components/form/form.test.tsx
 packages/ui test: PASS src/components/input/input.test.tsx
-packages/ui test: PASS src/components/label/label.test.tsx
+packages/ui test: PASS src/components/button/button.test.tsx
+packages/ui test: PASS src/components/menubar/menubar.test.tsx
+packages/ui test: PASS src/components/breadcrumb/breadcrumb.test.tsx
+packages/ui test: PASS src/components/carousel/carousel.test.tsx
+packages/ui test: PASS src/components/navigation-menu/navigation-menu.test.tsx
+packages/ui test: PASS src/components/avatar/avatar.test.tsx
+packages/ui test: PASS src/components/context-menu/context-menu.test.tsx
 packages/ui test: PASS src/components/resizable/resizable.test.tsx
 packages/ui test:   ● Console
 packages/ui test:     console.error
@@ -439,17 +438,18 @@ packages/ui test:       at ../../node_modules/.pnpm/@testing-library+react@15.0.
 packages/ui test:       at renderRoot (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:180:26)
 packages/ui test:       at render (../../node_modules/.pnpm/@testing-library+react@15.0.7_xyeeynaru3mn4yiy6efov6jlji/node_modules/@testing-library/react/dist/pure.js:271:10)
 packages/ui test:       at Object.<anonymous> (src/components/resizable/resizable.test.tsx:131:11)
-packages/ui test: PASS src/components/navigation-menu/navigation-menu.test.tsx
-packages/ui test: PASS src/components/alert/alert.test.tsx
-packages/ui test: PASS src/components/badge/badge.test.tsx
-packages/ui test: PASS src/__tests__/dummy.test.ts
 packages/ui test: PASS src/components/aspect-ratio/aspect-ratio.test.tsx
-packages/ui test: PASS src/components/avatar/avatar.test.tsx
+packages/ui test: PASS src/components/card/card.test.tsx
+packages/ui test: PASS src/components/label/label.test.tsx
+packages/ui test: PASS src/components/radio-group/radio-group.test.tsx
+packages/ui test: PASS src/__tests__/dummy.test.ts
+packages/ui test: PASS src/components/badge/badge.test.tsx
+packages/ui test: PASS src/components/alert/alert.test.tsx
 packages/ui test: PASS src/components/hover-card/hover-card.test.tsx
 packages/ui test: Test Suites: 32 passed, 32 total
 packages/ui test: Tests:       214 passed, 214 total
 packages/ui test: Snapshots:   0 total
-packages/ui test: Time:        2.41 s
+packages/ui test: Time:        2.206 s
 packages/ui test: Ran all test suites.
 packages/ui test: Done
 packages/backend-db test$ jest --passWithNoTests
@@ -458,11 +458,11 @@ packages/backend-db test:     The "ts-jest" config option "isolatedModules" is d
 packages/backend-db test:   
 packages/backend-db test: PASS src/tests/dummy.test.ts
 packages/backend-db test:   Dummy test
-packages/backend-db test:     ✓ should pass (1 ms)
+packages/backend-db test:     ✓ should pass
 packages/backend-db test: Test Suites: 1 passed, 1 total
 packages/backend-db test: Tests:       1 passed, 1 total
 packages/backend-db test: Snapshots:   0 total
-packages/backend-db test: Time:        0.269 s, estimated 1 s
+packages/backend-db test: Time:        0.276 s, estimated 1 s
 packages/backend-db test: Ran all test suites.
 packages/backend-db test: Done
 
@@ -505,6 +505,7 @@ turbo 2.5.3
 @repo/zod-clients:build: DTS ⚡️ Build success in 1121ms
 @repo/zod-clients:build: DTS dist/index.d.ts  48.29 KB
 @repo/zod-clients:build: DTS dist/index.d.cts 48.29 KB
+nory-inventory-api:build: cache miss, executing a1b3691258b2f62d
 @repo/api-client:build: cache hit, replaying logs 5b46e224d5aa6373
 @repo/api-client:build: 
 @repo/api-client:build: 
@@ -529,11 +530,6 @@ turbo 2.5.3
 @repo/api-client:build: DTS ⚡️ Build success in 1715ms
 @repo/api-client:build: DTS dist/index.d.cts 157.53 KB
 @repo/api-client:build: DTS dist/index.d.ts  157.53 KB
-nory-inventory-api:build: cache hit, replaying logs d53d306c9bf9d08d
-nory-inventory-api:build: 
-nory-inventory-api:build: > nory-inventory-api@1.0.0 build /Users/xemil/Source/nory-challange/apps/backend
-nory-inventory-api:build: > tsc
-nory-inventory-api:build: 
 @repo/ui:build:components: cache hit, replaying logs 5360345fd47f1d07
 @repo/ui:build:components: 
 @repo/ui:build:components: 
@@ -574,58 +570,55 @@ nory-inventory-api:build:
 @repo/ui:build: DTS ⚡️ Build success in 2302ms
 @repo/ui:build: DTS dist/index.d.ts  60.57 KB
 @repo/ui:build: DTS dist/index.d.cts 60.57 KB
-web:build: cache hit, replaying logs 09d3101817ae8b0d
+web:build: cache hit, replaying logs 0a6a240c272f71c9
 web:build: 
+web:build: 
 web:build: > web@0.1.0 build /Users/xemil/Source/nory-challange/apps/web
 web:build: > next build
 web:build: 
-web:build:    ▲ Next.js 15.3.2
+web:build:    [1m[38;2;173;127;168m▲ Next.js 15.3.2[39m[22m
 web:build: 
-web:build:    Creating an optimized production build ...
+web:build:  [37m[1m [22m[39m Creating an optimized production build ...
 web:build: /*! 🌼 daisyUI 5.0.35 */
-web:build:  ✓ Compiled successfully in 2000ms
-web:build:    Skipping validation of types
-web:build:    Skipping linting
-web:build:    Collecting page data ...
-web:build:    Generating static pages (0/10) ...
-web:build:    Generating static pages (2/10) 
-web:build:    Generating static pages (4/10) 
-web:build:    Generating static pages (7/10) 
-web:build:  ✓ Generating static pages (10/10)
-web:build:    Finalizing page optimization ...
-web:build:    Collecting build traces ...
+web:build:  [32m[1m✓[22m[39m Compiled successfully in 2000ms
+web:build:  [37m[1m [22m[39m Skipping validation of types
+web:build:  [37m[1m [22m[39m Skipping linting
+web:build: [?25l [37m[1m [22m[39m Collecting page data  [36m.[39m[2K[1G [37m[1m [22m[39m Collecting page data  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting page data  [36m...[39m[2K[1G[?25h [37m[1m [22m[39m Collecting page data    web:build:  [32m[1m✓[22m[39m Collecting page data 
+web:build: [?25l [37m[1m [22m[39m Generating static pages (0/10)  [36m[    ][39m[2K[1G [37m[1m [22m[39m Generating static pages (0/10)  [36m[=   ][39m[2K[1G [37m[1m [22m[39m Generating static pages (0/10)  [36m[==  ][39m[2K[1G[?25h [32m[1m✓[22m[39m Generating static pages (10/10)
+web:build: [?25l [37m[1m [22m[39m Finalizing page optimization  [36m.[39m[?25l [37m[1m [22m[39m Collecting build traces  [36m.[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m..[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m...[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m...[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m.[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m.[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m..[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m...[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m...[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m.[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m.[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m..[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m...[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m...[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m.[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m.[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m..[39m[2K[1G[?25h [37m[1m [22m[39m Collecting build traces    web:build:  [32m[1m✓[22m[39m Collecting build traces 
+web:build: [2K[1G[?25h [37m[1m [22m[39m Finalizing page optimization    web:build:  [32m[1m✓[22m[39m Finalizing page optimization 
 web:build: 
-web:build: Route (app)                                                                 Size  First Load JS
-web:build: ┌ ○ /                                                                    1.73 kB         106 kB
-web:build: ├ ○ /_not-found                                                            984 B         102 kB
-web:build: ├ ○ /ingredients                                                         1.18 kB         1.1 MB
-web:build: ├ ƒ /ingredients/[ingredientId]                                          1.45 kB         1.1 MB
-web:build: ├ ○ /locations                                                           1.18 kB         1.1 MB
-web:build: ├ ƒ /locations/[locationId]                                              1.95 kB         1.1 MB
-web:build: ├ ƒ /locations/[locationId]/ingredient-costs                             1.38 kB         1.1 MB
-web:build: ├ ƒ /locations/[locationId]/ingredient-costs/[locationIngredientCostId]  1.28 kB         1.1 MB
-web:build: ├ ƒ /locations/[locationId]/ingredient-costs/create                      1.38 kB        1.11 MB
-web:build: ├ ƒ /locations/[locationId]/inventory-movements/record                     398 B         102 kB
-web:build: ├ ƒ /locations/[locationId]/inventory-stock                              1.82 kB         1.1 MB
-web:build: ├ ƒ /locations/[locationId]/menu-items                                   1.05 kB         1.1 MB
-web:build: ├ ƒ /locations/[locationId]/menu-items/[menuItemId]                      1.04 kB         1.1 MB
-web:build: ├ ƒ /locations/[locationId]/menu-items/create                             1.5 kB        1.11 MB
-web:build: ├ ƒ /locations/[locationId]/reports                                      1.29 kB         1.1 MB
-web:build: ├ ƒ /locations/[locationId]/reports/inventory-movements-timeline            2 kB         1.1 MB
-web:build: ├ ƒ /locations/[locationId]/reports/inventory-summary                    3.25 kB         1.1 MB
-web:build: ├ ƒ /locations/[locationId]/staff                                         1.3 kB         1.1 MB
-web:build: ├ ƒ /locations/[locationId]/staff/[staffId]                              1.23 kB         1.1 MB
-web:build: ├ ƒ /locations/[locationId]/staff/create                                 1.68 kB        1.11 MB
-web:build: ├ ○ /locations/create                                                    1.73 kB        1.11 MB
-web:build: ├ ○ /modifiers                                                           1.35 kB         1.1 MB
-web:build: ├ ƒ /modifiers/[modifierId]                                                382 B         102 kB
-web:build: ├ ƒ /modifiers/[modifierId]/options                                        393 B         102 kB
-web:build: ├ ƒ /modifiers/[modifierId]/options/[modifierOptionId]                     393 B         102 kB
-web:build: ├ ○ /recipes                                                             1.42 kB         1.1 MB
-web:build: ├ ƒ /recipes/[recipeId]                                                  1.66 kB         1.1 MB
-web:build: ├ ƒ /recipes/[recipeId]/ingredient-links                                 2.38 kB         1.1 MB
-web:build: └ ƒ /recipes/[recipeId]/ingredient-links/create                          2.06 kB        1.11 MB
-web:build: + First Load JS shared by all                                             101 kB
+web:build: [4mRoute (app)[24m                                                                 [4mSize[24m  [4mFirst Load JS[24m  [4m[24m  [4m[24m
+web:build: ┌ ○ /                                                                    1.73 kB         [37m[1m106 kB[22m[39m
+web:build: ├ ○ /_not-found                                                            984 B         [37m[1m102 kB[22m[39m
+web:build: ├ ○ /ingredients                                                         1.18 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /ingredients/[ingredientId]                                          1.45 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ○ /locations                                                           1.18 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /locations/[locationId]                                              1.95 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /locations/[locationId]/ingredient-costs                             1.38 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /locations/[locationId]/ingredient-costs/[locationIngredientCostId]  1.28 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /locations/[locationId]/ingredient-costs/create                      1.38 kB        [37m[1m1.11 MB[22m[39m
+web:build: ├ ƒ /locations/[locationId]/inventory-movements/record                     398 B         [37m[1m102 kB[22m[39m
+web:build: ├ ƒ /locations/[locationId]/inventory-stock                              1.82 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /locations/[locationId]/menu-items                                   1.05 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /locations/[locationId]/menu-items/[menuItemId]                      1.04 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /locations/[locationId]/menu-items/create                             1.5 kB        [37m[1m1.11 MB[22m[39m
+web:build: ├ ƒ /locations/[locationId]/reports                                      1.29 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /locations/[locationId]/reports/inventory-movements-timeline            2 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /locations/[locationId]/reports/inventory-summary                    3.25 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /locations/[locationId]/staff                                         1.3 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /locations/[locationId]/staff/[staffId]                              1.23 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /locations/[locationId]/staff/create                                 1.68 kB        [37m[1m1.11 MB[22m[39m
+web:build: ├ ○ /locations/create                                                    1.73 kB        [37m[1m1.11 MB[22m[39m
+web:build: ├ ○ /modifiers                                                           1.35 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /modifiers/[modifierId]                                                382 B         [37m[1m102 kB[22m[39m
+web:build: ├ ƒ /modifiers/[modifierId]/options                                        393 B         [37m[1m102 kB[22m[39m
+web:build: ├ ƒ /modifiers/[modifierId]/options/[modifierOptionId]                     393 B         [37m[1m102 kB[22m[39m
+web:build: ├ ○ /recipes                                                             1.42 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /recipes/[recipeId]                                                  1.66 kB         [37m[1m1.1 MB[22m[39m
+web:build: ├ ƒ /recipes/[recipeId]/ingredient-links                                 2.38 kB         [37m[1m1.1 MB[22m[39m
+web:build: └ ƒ /recipes/[recipeId]/ingredient-links/create                          2.06 kB        [37m[1m1.11 MB[22m[39m
+web:build: + First Load JS shared by all                                             [37m[1m101 kB[22m[39m
 web:build:   ├ chunks/5834-0bb801d015849a56.js                                      46.1 kB
 web:build:   ├ chunks/61d6f076-e6736b915a4c83b3.js                                  53.2 kB
 web:build:   └ other shared chunks (total)                                          1.91 kB
@@ -634,10 +627,15 @@ web:build:
 web:build: ○  (Static)   prerendered as static content
 web:build: ƒ  (Dynamic)  server-rendered on demand
 web:build: 
+web:build: [?25h
+nory-inventory-api:build: 
+nory-inventory-api:build: > nory-inventory-api@1.0.0 build /Users/xemil/Source/nory-challange/apps/backend
+nory-inventory-api:build: > tsc
+nory-inventory-api:build: 
 
  Tasks:    8 successful, 8 total
-Cached:    8 cached, 8 total
-  Time:    622ms >>> FULL TURBO
+Cached:    7 cached, 8 total
+  Time:    1.483s 
 
 
 > with-tailwind@ check-types /Users/xemil/Source/nory-challange
@@ -654,22 +652,21 @@ turbo 2.5.3
 @repo/ui:check-types: > @repo/ui@0.1.0 check-types /Users/xemil/Source/nory-challange/packages/ui
 @repo/ui:check-types: > tsc --noEmit
 @repo/ui:check-types: 
+nory-inventory-api:check-types: cache hit, replaying logs b3da6f3a588fd7e6
+nory-inventory-api:check-types: 
+nory-inventory-api:check-types: > nory-inventory-api@1.0.0 check-types /Users/xemil/Source/nory-challange/apps/backend
+nory-inventory-api:check-types: > tsc --noEmit
+nory-inventory-api:check-types: 
 web:check-types: cache hit, replaying logs e8fe96b0dd827a2d
 web:check-types: 
 web:check-types: 
 web:check-types: > web@0.1.0 check-types /Users/xemil/Source/nory-challange/apps/web
 web:check-types: > tsc --noEmit
 web:check-types: 
-nory-inventory-api:check-types: cache hit, replaying logs cc8e9a86439a3519
-nory-inventory-api:check-types: 
-nory-inventory-api:check-types: 
-nory-inventory-api:check-types: > nory-inventory-api@1.0.0 check-types /Users/xemil/Source/nory-challange/apps/backend
-nory-inventory-api:check-types: > tsc --noEmit
-nory-inventory-api:check-types: 
 
  Tasks:    3 successful, 3 total
 Cached:    3 cached, 3 total
-  Time:    158ms >>> FULL TURBO
+  Time:    151ms >>> FULL TURBO
 
 
 > with-tailwind@ lint /Users/xemil/Source/nory-challange
@@ -693,33 +690,27 @@ turbo 2.5.3
 @repo/zod-clients:lint: > @repo/zod-clients@0.1.0 lint /Users/xemil/Source/nory-challange/packages/zod-clients
 @repo/zod-clients:lint: > eslint .
 @repo/zod-clients:lint: 
-@repo/jest-config:lint: cache hit, replaying logs 5d51e14a7c1a31e4
-@repo/jest-config:lint: 
-@repo/jest-config:lint: 
-@repo/jest-config:lint: > @repo/jest-config@0.0.0 lint /Users/xemil/Source/nory-challange/packages/jest-config
-@repo/jest-config:lint: > exit 0
-@repo/jest-config:lint: 
-@repo/ui:lint: cache hit, replaying logs 746829bb387b53f2
-@repo/ui:lint: 
-@repo/ui:lint: > @repo/ui@0.1.0 lint /Users/xemil/Source/nory-challange/packages/ui
-@repo/ui:lint: > eslint .
-@repo/ui:lint: 
 @repo/api-client:lint: cache hit, replaying logs 938f95bb70c7de29
 @repo/api-client:lint: 
 @repo/api-client:lint: 
 @repo/api-client:lint: > @repo/api-client@0.0.1 lint /Users/xemil/Source/nory-challange/packages/api-client
 @repo/api-client:lint: > eslint src/
 @repo/api-client:lint: 
-nory-inventory-api:lint: cache hit, replaying logs 29f1f3356d9ea571
+@repo/ui:lint: cache hit, replaying logs 746829bb387b53f2
+@repo/ui:lint: 
+@repo/ui:lint: > @repo/ui@0.1.0 lint /Users/xemil/Source/nory-challange/packages/ui
+@repo/ui:lint: > eslint .
+@repo/ui:lint: 
+@repo/jest-config:lint: cache hit, replaying logs 5d51e14a7c1a31e4
+@repo/jest-config:lint: 
+@repo/jest-config:lint: 
+@repo/jest-config:lint: > @repo/jest-config@0.0.0 lint /Users/xemil/Source/nory-challange/packages/jest-config
+@repo/jest-config:lint: > exit 0
+@repo/jest-config:lint: 
+nory-inventory-api:lint: cache hit, replaying logs 574937afd2fed4a0
 nory-inventory-api:lint: 
 nory-inventory-api:lint: > nory-inventory-api@1.0.0 lint /Users/xemil/Source/nory-challange/apps/backend
 nory-inventory-api:lint: > eslint src || true
-nory-inventory-api:lint: 
-nory-inventory-api:lint: 
-nory-inventory-api:lint: /Users/xemil/Source/nory-challange/apps/backend/src/utils/openapiRouter.ts
-nory-inventory-api:lint:   115:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-nory-inventory-api:lint: 
-nory-inventory-api:lint: ✖ 1 problem (0 errors, 1 warning)
 nory-inventory-api:lint: 
 web:lint: cache hit, replaying logs 0ca391c980edacfa
 web:lint: 
@@ -729,36 +720,32 @@ web:lint:
 
  Tasks:    7 successful, 7 total
 Cached:    7 cached, 7 total
-  Time:    139ms >>> FULL TURBO
+  Time:    141ms >>> FULL TURBO
 
 Scope: 2 of 12 workspace projects
-apps/backend test$ jest --config ./jest.config.cjs --passWithNoTests
+apps/backend test$ jest --config ./jest.config.js --passWithNoTests
 apps/web test$ pnpm test:unit && pnpm test:e2e
 apps/web test: > web@0.1.0 test:unit /Users/xemil/Source/nory-challange/apps/web
 apps/web test: > jest --config jest.config.cjs
-apps/backend test: ts-jest[ts-jest-transformer] (WARN) Define `ts-jest` config under `globals` is deprecated. Please do
-apps/backend test: transform: {
-apps/backend test:     <transform_regex>: ['ts-jest', { /* ts-jest config goes here in Jest */ }],
-apps/backend test: },
-apps/backend test: See more at https://kulshekhar.github.io/ts-jest/docs/getting-started/presets#advanced
-apps/backend test: PASS src/tests/dummy.test.ts
-apps/backend test:   Dummy test
-apps/backend test:     ✓ should pass (1 ms)
-apps/web test: PASS app/locations/[locationId]/menu-items/create/page.test.tsx
-apps/web test: PASS app/locations/[locationId]/inventory-movements/record/page.test.tsx
-apps/web test: PASS app/locations/[locationId]/menu-items/[menuItemId]/page.test.tsx
-apps/web test: PASS app/locations/[locationId]/reports/inventory-summary/page.test.tsx
-apps/web test: PASS app/locations/[locationId]/ingredient-costs/page.test.tsx
-apps/web test: PASS app/recipes/[recipeId]/ingredient-links/create/page.test.tsx
-apps/web test: PASS app/locations/[locationId]/staff/[staffId]/page.test.tsx
-apps/web test: PASS app/locations/[locationId]/reports/inventory-movements-timeline/page.test.tsx
-apps/web test: PASS app/locations/[locationId]/ingredient-costs/[locationIngredientCostId]/page.test.tsx
-apps/web test: PASS app/locations/[locationId]/menu-items/page.test.tsx
+apps/backend test: PASS src/controllers/StaffController.test.ts
+apps/backend test: PASS src/controllers/MenuItemsController.test.ts
+apps/backend test: PASS src/services/IngredientsService.test.ts
+apps/backend test: PASS src/controllers/RecipeIngredientLinksController.test.ts
+apps/backend test: PASS src/controllers/ModifiersController.test.ts
+apps/backend test: PASS src/controllers/RecipesController.test.ts
+apps/backend test: PASS src/controllers/LocationMenuItemsController.test.ts
+apps/backend test: PASS src/controllers/ModifierOptionsController.test.ts
 apps/web test: PASS app/locations/[locationId]/inventory-stock/page.test.tsx
-apps/web test: PASS app/locations/[locationId]/ingredient-costs/create/page.test.tsx
-apps/web test: PASS app/ingredients/[ingredientId]/page.test.tsx
-apps/web test: PASS app/modifiers/[modifierId]/options/[modifierOptionId]/page.test.tsx
-apps/web test: PASS app/locations/[locationId]/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/inventory-movements/record/page.test.tsx
+apps/web test: PASS app/recipes/[recipeId]/ingredient-links/create/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/reports/inventory-movements-timeline/page.test.tsx
+apps/backend test: PASS src/controllers/LocationsController.test.ts
+apps/web test: PASS app/locations/[locationId]/reports/inventory-summary/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/staff/[staffId]/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/ingredient-costs/[locationIngredientCostId]/page.test.tsx
+apps/backend test: PASS src/tests/dummy.test.ts
+apps/web test: PASS app/locations/[locationId]/menu-items/[menuItemId]/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/menu-items/create/page.test.tsx
 apps/web test: PASS app/locations/[locationId]/staff/create/page.test.tsx
 apps/web test:   ● Console
 apps/web test:     console.error
@@ -786,14 +773,22 @@ apps/web test:       108 |   };
 apps/web test:       109 |
 apps/web test:       at error (app/locations/[locationId]/staff/create/page.tsx:106:15)
 apps/web test:       at isSubmitted (../../node_modules/.pnpm/react-hook-form@7.56.4_react@19.1.0/node_modules/react-hook-form/src/logic/createFormControl.ts:1267:9)
-apps/web test: PASS app/locations/page.test.tsx
-apps/web test: PASS app/recipes/[recipeId]/ingredient-links/page.test.tsx
-apps/web test: PASS app/modifiers/[modifierId]/options/page.test.tsx
-apps/web test: PASS app/locations/[locationId]/reports/page.test.tsx
-apps/web test: PASS app/ingredients/page.test.tsx
-apps/web test: PASS app/locations/[locationId]/staff/page.test.tsx
-apps/web test: PASS app/modifiers/[modifierId]/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/ingredient-costs/create/page.test.tsx
+apps/backend test: PASS src/controllers/InventoryStockController.test.ts
+apps/web test: PASS app/recipes/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/ingredient-costs/page.test.tsx
+apps/web test: PASS app/ingredients/[ingredientId]/page.test.tsx
+apps/backend test: PASS src/controllers/LocationIngredientCostsController.test.ts
+apps/web test: PASS app/page.test.tsx
 apps/web test: PASS app/recipes/[recipeId]/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/reports/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/menu-items/page.test.tsx
+apps/web test: PASS app/locations/page.test.tsx
+apps/backend test: PASS src/controllers/InventoryMovementsController.test.ts
+apps/web test: PASS app/recipes/[recipeId]/ingredient-links/page.test.tsx
+apps/web test: PASS app/locations/[locationId]/staff/page.test.tsx
+apps/backend test: PASS src/services/LocationMenuItemsService.test.ts
 apps/web test: PASS app/locations/create/page.test.tsx
 apps/web test:   ● Console
 apps/web test:     console.error
@@ -821,62 +816,25 @@ apps/web test:       106 |   };
 apps/web test:       107 |
 apps/web test:       at error (app/locations/create/page.tsx:104:15)
 apps/web test:       at isSubmitted (../../node_modules/.pnpm/react-hook-form@7.56.4_react@19.1.0/node_modules/react-hook-form/src/logic/createFormControl.ts:1267:9)
-apps/web test: PASS app/recipes/page.test.tsx
+apps/web test: PASS app/ingredients/page.test.tsx
 apps/web test: PASS app/modifiers/page.test.tsx
-apps/backend test: Failed to collect coverage from /Users/xemil/Source/nory-challange/apps/backend/src/config.ts
-apps/backend test: ERROR: src/config.ts:4:34 - error TS1343: The 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', or 'nodenext'.
-apps/backend test: 4 const __filename = fileURLToPath(import.meta.url);
-apps/backend test:                                    ~~~~~~~~~~~
-apps/backend test: STACK: 
-apps/web test: PASS app/page.test.tsx
+apps/web test: PASS app/modifiers/[modifierId]/page.test.tsx
+apps/web test: PASS app/modifiers/[modifierId]/options/[modifierOptionId]/page.test.tsx
+apps/web test: PASS app/modifiers/[modifierId]/options/page.test.tsx
+apps/backend test: PASS src/controllers/IngredientsController.test.ts
 apps/web test: Test Suites: 28 passed, 28 total
 apps/web test: Tests:       139 passed, 139 total
 apps/web test: Snapshots:   0 total
-apps/web test: Time:        3.752 s
+apps/web test: Time:        1.94 s, estimated 2 s
 apps/web test: Ran all test suites.
-apps/backend test: ---------------------------------------|---------|----------|---------|---------|-------------------
-apps/backend test: File                                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
-apps/backend test: ---------------------------------------|---------|----------|---------|---------|-------------------
-apps/backend test: All files                              |       0 |        0 |       0 |       0 |                   
-apps/backend test:  src                                   |       0 |        0 |       0 |       0 |                   
-apps/backend test:   expressServer.ts                     |       0 |        0 |       0 |       0 | 1-109             
-apps/backend test:   logger.ts                            |       0 |        0 |     100 |       0 | 1-21              
-apps/backend test:  src/controllers                       |       0 |        0 |       0 |       0 |                   
-apps/backend test:   Controller.ts                        |       0 |        0 |       0 |       0 | 1-175             
-apps/backend test:   IngredientsController.ts             |       0 |        0 |       0 |       0 | 2-74              
-apps/backend test:   InventoryMovementsController.ts      |       0 |        0 |       0 |       0 | 2-41              
-apps/backend test:   InventoryStockController.ts          |       0 |        0 |       0 |       0 | 2-93              
-apps/backend test:   LocationIngredientCostsController.ts |       0 |        0 |       0 |       0 | 2-101             
-apps/backend test:   LocationMenuItemsController.ts       |       0 |        0 |       0 |       0 | 2-63              
-apps/backend test:   LocationsController.ts               |       0 |        0 |       0 |       0 | 2-78              
-apps/backend test:   MenuItemsController.ts               |       0 |        0 |       0 |       0 | 2-78              
-apps/backend test:   ModifierOptionsController.ts         |       0 |        0 |       0 |       0 | 2-59              
-apps/backend test:   ModifiersController.ts               |       0 |        0 |       0 |       0 | 2-48              
-apps/backend test:   RecipeIngredientLinksController.ts   |       0 |        0 |       0 |       0 | 2-81              
-apps/backend test:   RecipesController.ts                 |       0 |        0 |       0 |       0 | 2-48              
-apps/backend test:   StaffController.ts                   |       0 |        0 |       0 |       0 | 2-63              
-apps/backend test:  src/services                          |       0 |        0 |       0 |       0 |                   
-apps/backend test:   IngredientsService.ts                |       0 |        0 |       0 |       0 | 1-222             
-apps/backend test:   InventoryMovementsService.ts         |       0 |        0 |       0 |       0 | 1-161             
-apps/backend test:   InventoryStockService.ts             |       0 |        0 |       0 |       0 | 1-292             
-apps/backend test:   LocationIngredientCostsService.ts    |       0 |        0 |       0 |       0 | 1-256             
-apps/backend test:   LocationMenuItemsService.ts          |       0 |        0 |       0 |       0 | 1-247             
-apps/backend test:   LocationsService.ts                  |       0 |        0 |       0 |       0 | 1-207             
-apps/backend test:   ModifierOptionsService.ts            |       0 |        0 |       0 |       0 | 1-238             
-apps/backend test:   ModifiersService.ts                  |       0 |        0 |       0 |       0 | 1-202             
-apps/backend test:   RecipeIngredientLinksService.ts      |       0 |        0 |       0 |       0 | 1-187             
-apps/backend test:   RecipesService.ts                    |       0 |        0 |       0 |       0 | 1-202             
-apps/backend test:   Service.ts                           |       0 |        0 |       0 |       0 | 5-13              
-apps/backend test:   StaffService.ts                      |       0 |        0 |       0 |       0 | 1-245             
-apps/backend test:  src/types                             |       0 |        0 |       0 |       0 |                   
-apps/backend test:   errors.ts                            |       0 |        0 |       0 |       0 | 6-7               
-apps/backend test:  src/utils                             |       0 |        0 |       0 |       0 |                   
-apps/backend test:   openapiRouter.ts                     |       0 |        0 |       0 |       0 | 2-132             
-apps/backend test: ---------------------------------------|---------|----------|---------|---------|-------------------
-apps/backend test: Test Suites: 1 passed, 1 total
-apps/backend test: Tests:       1 passed, 1 total
+apps/backend test: PASS src/services/InventoryStockService.test.ts
+apps/backend test: PASS src/services/InventoryMovementsService.test.ts
+apps/backend test: PASS src/services/LocationIngredientCostsService.test.ts
+apps/backend test: PASS src/services/LocationsService.test.ts
+apps/backend test: Test Suites: 19 passed, 19 total
+apps/backend test: Tests:       89 passed, 89 total
 apps/backend test: Snapshots:   0 total
-apps/backend test: Time:        4.707 s
+apps/backend test: Time:        2.695 s
 apps/backend test: Ran all test suites.
 apps/backend test: Done
 apps/web test: > web@0.1.0 test:e2e /Users/xemil/Source/nory-challange/apps/web
@@ -890,211 +848,207 @@ apps/web test: [WebServer]    - Local:        http://localhost:3001
 apps/web test: [WebServer]    - Network:      http://192.168.0.4:3001
 apps/web test: [WebServer] 
 apps/web test: [WebServer]  ✓ Starting...
-apps/web test: [WebServer]  ✓ Ready in 827ms
+apps/web test: [WebServer]  ✓ Ready in 791ms
 apps/web test: [WebServer]  ○ Compiling / ...
 apps/web test: [WebServer] /*! 🌼 daisyUI 5.0.35 */
-apps/web test: [WebServer]  ✓ Compiled / in 1941ms
-apps/web test: [WebServer]  GET / 200 in 2273ms
+apps/web test: [WebServer]  ✓ Compiled / in 1800ms
+apps/web test: [WebServer]  GET / 200 in 2118ms
 apps/web test: Running 94 tests using 2 workers
 apps/web test: [WebServer]  ○ Compiling /ingredients/[ingredientId] ...
-apps/web test: [WebServer]  ✓ Compiled /ingredients/[ingredientId] in 604ms
-apps/web test: [WebServer]  GET /ingredients/123 200 in 942ms
-apps/web test: [WebServer]  GET /ingredients/123 200 in 942ms
-apps/web test: [WebServer]  GET /ingredients/123 200 in 100ms
-apps/web test: ·[WebServer]  GET /ingredients/123 200 in 63ms
-apps/web test: [WebServer]  GET /ingredients/123 200 in 177ms
+apps/web test: [WebServer]  ✓ Compiled /ingredients/[ingredientId] in 599ms
+apps/web test: [WebServer]  GET /ingredients/123 200 in 928ms
+apps/web test: [WebServer]  GET /ingredients/123 200 in 927ms
+apps/web test: [WebServer]  GET /ingredients/123 200 in 85ms
+apps/web test: ·[WebServer]  GET /ingredients/123 200 in 69ms
+apps/web test: [WebServer]  GET /ingredients/123 200 in 70ms
 apps/web test: ·[WebServer]  ○ Compiling /ingredients ...
-apps/web test: [WebServer]  ✓ Compiled /ingredients in 559ms
-apps/web test: [WebServer]  GET /ingredients 200 in 594ms
-apps/web test: ·[WebServer]  GET /ingredients 200 in 30ms
-apps/web test: [WebServer]  GET /ingredients 200 in 40ms
-apps/web test: [WebServer]  GET /ingredients 200 in 41ms
+apps/web test: [WebServer]  ✓ Compiled /ingredients in 586ms
+apps/web test: [WebServer]  GET /ingredients 200 in 629ms
 apps/web test: ·[WebServer]  GET /ingredients 200 in 33ms
-apps/web test: [WebServer]  GET /ingredients/sparkle 200 in 46ms
-apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/ingredient-costs/[locationIngredientCostId] ...
-apps/web test: ·[WebServer]  ✓ Compiled /locations/[locationId]/ingredient-costs/[locationIngredientCostId] in 596ms
-apps/web test: [WebServer]  GET /locations/123/ingredient-costs/456 200 in 898ms
-apps/web test: [WebServer]  GET /locations/123/ingredient-costs/456 200 in 337ms
+apps/web test: [WebServer]  GET /ingredients 200 in 39ms
+apps/web test: [WebServer]  GET /ingredients 200 in 31ms
+apps/web test: ·[WebServer]  GET /ingredients 200 in 39ms
+apps/web test: [WebServer]  GET /ingredients/after 200 in 52ms
+apps/web test: ··[WebServer]  ○ Compiling /locations/[locationId]/ingredient-costs/[locationIngredientCostId] ...
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/ingredient-costs/[locationIngredientCostId] in 608ms
+apps/web test: [WebServer]  GET /locations/123/ingredient-costs/456 200 in 920ms
+apps/web test: [WebServer]  GET /locations/123/ingredient-costs/456 200 in 540ms
 apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/ingredient-costs/create ...
-apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/ingredient-costs/create in 558ms
-apps/web test: [WebServer]  GET /locations/123/ingredient-costs/create 200 in 848ms
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/ingredient-costs/create in 580ms
+apps/web test: [WebServer]  GET /locations/123/ingredient-costs/create 200 in 861ms
+apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs/create 200 in 34ms
+apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs/create 200 in 33ms
+apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs/create 200 in 38ms
+apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs/create 200 in 36ms
 apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs/create 200 in 32ms
-apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs/create 200 in 31ms
-apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs/create 200 in 39ms
-apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs/create 200 in 35ms
-apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs/create 200 in 35ms
 apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/ingredient-costs ...
-apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/ingredient-costs in 569ms
-apps/web test: [WebServer]  GET /locations/123/ingredient-costs 200 in 638ms
-apps/web test: [WebServer]  GET /locations/123/ingredient-costs 200 in 858ms
-apps/web test: ··[WebServer]  GET /locations/123/ingredient-costs 200 in 49ms
-apps/web test: [WebServer]  GET /locations/123/ingredient-costs 200 in 110ms
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/ingredient-costs in 687ms
+apps/web test: [WebServer]  GET /locations/123/ingredient-costs 200 in 720ms
+apps/web test: [WebServer]  GET /locations/123/ingredient-costs 200 in 978ms
+apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs 200 in 34ms
+apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs 200 in 58ms
 apps/web test: ·[WebServer]  GET /locations/123/ingredient-costs 200 in 32ms
-apps/web test: [WebServer]  GET /locations/123/ingredient-costs/minus 200 in 25ms
+apps/web test: [WebServer]  GET /locations/123/ingredient-costs/meanwhile 200 in 26ms
 apps/web test: ··[WebServer]  ○ Compiling /locations/[locationId]/inventory-movements/record ...
-apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/inventory-movements/record in 612ms
-apps/web test: [WebServer]  GET /locations/123/inventory-movements/record 200 in 686ms
-apps/web test: [WebServer]  GET /locations/123/inventory-movements/record 200 in 908ms
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/inventory-movements/record in 527ms
+apps/web test: [WebServer]  GET /locations/123/inventory-movements/record 200 in 842ms
+apps/web test: [WebServer]  GET /locations/123/inventory-movements/record 200 in 669ms
 apps/web test: ··[WebServer]  ○ Compiling /locations/[locationId]/inventory-stock ...
-apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/inventory-stock in 592ms
-apps/web test: [WebServer]  GET /locations/123/inventory-stock 200 in 858ms
-apps/web test: [WebServer]  GET /locations/123/inventory-stock 200 in 891ms
-apps/web test: [WebServer]  GET /locations/123/inventory-stock 200 in 64ms
-apps/web test: ·[WebServer]  GET /locations/123/inventory-stock 200 in 56ms
-apps/web test: [WebServer]  GET /locations/123/inventory-stock 200 in 147ms
-apps/web test: [WebServer]  GET /locations/123/inventory-movements/record 200 in 57ms
-apps/web test: [WebServer]  ○ Compiling /_not-found/page ...
-apps/web test: ··[WebServer]  GET /locations/123/inventory-stock 200 in 97ms
-apps/web test: [WebServer]  ✓ Compiled /_not-found/page in 1370ms
-apps/web test: [WebServer]  GET /locations/123/menu-items/456 200 in 1028ms
-apps/web test: ·[WebServer]  GET /locations/123/menu-items/456 200 in 39ms
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/inventory-stock in 586ms
+apps/web test: [WebServer]  GET /locations/123/inventory-stock 200 in 881ms
+apps/web test: [WebServer]  GET /locations/123/inventory-stock 200 in 835ms
+apps/web test: [WebServer]  GET /locations/123/inventory-stock 200 in 59ms
+apps/web test: ·[WebServer]  GET /locations/123/inventory-stock 200 in 79ms
+apps/web test: [WebServer]  GET /locations/123/inventory-stock 200 in 82ms
+apps/web test: [WebServer]  GET /locations/123/inventory-movements/record 200 in 44ms
+apps/web test: ·[WebServer]  ○ Compiling /_not-found/page ...
+apps/web test: ·[WebServer]  GET /locations/123/inventory-stock 200 in 59ms
+apps/web test: [WebServer]  ✓ Compiled /_not-found/page in 1292ms
+apps/web test: [WebServer]  GET /locations/123/menu-items/456 200 in 957ms
+apps/web test: ·[WebServer]  GET /locations/123/menu-items/456 200 in 31ms
 apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/menu-items/create ...
-apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/menu-items/create in 550ms
-apps/web test: ·[WebServer]  GET /locations/location1/menu-items/create 200 in 849ms
-apps/web test: [WebServer]  GET /locations/location1/menu-items/create 200 in 73ms
-apps/web test: ··[WebServer]  GET /locations/location1/menu-items/create 200 in 64ms
-apps/web test: [WebServer]  GET /locations/location1/menu-items/create 200 in 119ms
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/menu-items/create in 589ms
+apps/web test: ·[WebServer]  GET /locations/location1/menu-items/create 200 in 876ms
+apps/web test: [WebServer]  GET /locations/location1/menu-items/create 200 in 107ms
+apps/web test: ··[WebServer]  GET /locations/location1/menu-items/create 200 in 38ms
+apps/web test: [WebServer]  GET /locations/location1/menu-items/create 200 in 86ms
 apps/web test: [WebServer]  ○ Compiling /locations/[locationId]/menu-items ...
-apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/menu-items in 706ms
-apps/web test: [WebServer]  GET /locations/location1/menu-items 200 in 979ms
-apps/web test: [WebServer]  GET /locations/location1/menu-items 200 in 51ms
-apps/web test: ·[WebServer]  GET /locations/location1/menu-items/create 200 in 31ms
-apps/web test: ·[WebServer]  GET /locations/location1/menu-items/create 200 in 41ms
-apps/web test: ··[WebServer]  GET /locations/123/menu-items 200 in 43ms
-apps/web test: [WebServer]  GET /locations/123/menu-items 200 in 51ms
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/menu-items in 567ms
+apps/web test: [WebServer]  GET /locations/location1/menu-items 200 in 832ms
+apps/web test: [WebServer]  GET /locations/location1/menu-items 200 in 28ms
+apps/web test: ··[WebServer]  GET /locations/location1/menu-items/create 200 in 40ms
+apps/web test: [WebServer]  GET /locations/location1/menu-items/create 200 in 79ms
+apps/web test: ··[WebServer]  GET /locations/123/menu-items 200 in 62ms
+apps/web test: [WebServer]  GET /locations/123/menu-items 200 in 66ms
 apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId] ...
-apps/web test: [WebServer]  ✓ Compiled /locations/[locationId] in 632ms
-apps/web test: [WebServer]  GET /locations/123 200 in 915ms
-apps/web test: ·[WebServer]  GET /locations/123 200 in 31ms
-apps/web test: [WebServer]  GET /locations/123 200 in 41ms
-apps/web test: [WebServer]  GET /locations/123 200 in 33ms
-apps/web test: ·[WebServer]  GET /locations/123 200 in 35ms
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId] in 680ms
+apps/web test: [WebServer]  GET /locations/123 200 in 959ms
+apps/web test: ·[WebServer]  GET /locations/123 200 in 33ms
+apps/web test: [WebServer]  GET /locations/123 200 in 37ms
+apps/web test: [WebServer]  GET /locations/123 200 in 31ms
+apps/web test: ·[WebServer]  GET /locations/123 200 in 36ms
 apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/reports/inventory-movements-timeline ...
-apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/reports/inventory-movements-timeline in 688ms
-apps/web test: [WebServer]  GET /locations/123/reports/inventory-movements-timeline?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 970ms
-apps/web test: ·[WebServer]  GET /locations/123/reports/inventory-movements-timeline?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 32ms
-apps/web test: ··[WebServer]  GET /locations/123/reports/inventory-movements-timeline?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 54ms
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/reports/inventory-movements-timeline in 671ms
+apps/web test: [WebServer]  GET /locations/123/reports/inventory-movements-timeline?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 947ms
+apps/web test: ·[WebServer]  GET /locations/123/reports/inventory-movements-timeline?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 30ms
+apps/web test: ··[WebServer]  GET /locations/123/reports/inventory-movements-timeline?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 40ms
 apps/web test: [WebServer]  ○ Compiling /locations/[locationId]/reports/inventory-summary ...
-apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/reports/inventory-summary in 650ms
-apps/web test: [WebServer]  GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 948ms
-apps/web test: ·[WebServer]  GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 34ms
-apps/web test: [WebServer]  GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 49ms
-apps/web test: ·[WebServer]  GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 54ms
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/reports/inventory-summary in 618ms
+apps/web test: [WebServer]  GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 907ms
+apps/web test: ·[WebServer]  GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 43ms
+apps/web test: [WebServer]  GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 41ms
+apps/web test: ·[WebServer]  GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z 200 in 53ms
 apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/reports ...
-apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/reports in 938ms
-apps/web test: [WebServer]  GET /locations/123/reports 200 in 1252ms
-apps/web test: [WebServer]  GET /locations/123/reports 200 in 731ms
-apps/web test: [WebServer]  GET /locations/blindly/reports/inventory-summary 200 in 52ms
-apps/web test: [WebServer]  GET /locations/123/reports 200 in 93ms
-apps/web test: ·[WebServer]  GET /locations/123/reports 200 in 40ms
-apps/web test: ·[WebServer]  GET /locations/123/reports 200 in 37ms
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/reports in 777ms
+apps/web test: [WebServer]  GET /locations/123/reports 200 in 626ms
+apps/web test: [WebServer]  GET /locations/123/reports 200 in 1103ms
+apps/web test: [WebServer]  GET /locations/boo/reports/inventory-summary 200 in 25ms
+apps/web test: [WebServer]  GET /locations/123/reports 200 in 36ms
+apps/web test: ·[WebServer]  GET /locations/123/reports 200 in 32ms
+apps/web test: ·[WebServer]  GET /locations/123/reports 200 in 32ms
 apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/staff/[staffId] ...
-apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/staff/[staffId] in 784ms
-apps/web test: [WebServer]  GET /locations/wordy/reports/inventory-movements-timeline 200 in 22ms
-apps/web test: [WebServer]  GET /locations/123/staff/456 200 in 1070ms
-apps/web test: ·[WebServer]  GET /locations/123/staff/456 200 in 80ms
-apps/web test: ·[WebServer]  GET /locations/123/staff/456 200 in 31ms
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/staff/[staffId] in 564ms
+apps/web test: [WebServer]  GET /locations/123/staff/456 200 in 838ms
+apps/web test: [WebServer]  GET /locations/shoe-horn/reports/inventory-movements-timeline 200 in 52ms
+apps/web test: ·[WebServer]  GET /locations/123/staff/456 200 in 33ms
+apps/web test: ·[WebServer]  GET /locations/123/staff/456 200 in 47ms
 apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/staff/create ...
-apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/staff/create in 632ms
-apps/web test: [WebServer]  GET /locations/123/staff/create 200 in 913ms
-apps/web test: ··[WebServer]  GET /locations/123/staff/create 200 in 62ms
-apps/web test: [WebServer]  GET /locations/123/staff/create 200 in 65ms
-apps/web test: ·[WebServer]  GET /locations/123/staff/create 200 in 41ms
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/staff/create in 580ms
+apps/web test: [WebServer]  GET /locations/123/staff/create 200 in 858ms
+apps/web test: ··[WebServer]  GET /locations/123/staff/create 200 in 40ms
+apps/web test: [WebServer]  GET /locations/123/staff/create 200 in 50ms
+apps/web test: ·[WebServer]  GET /locations/123/staff/create 200 in 32ms
 apps/web test: ·[WebServer]  ○ Compiling /locations/[locationId]/staff ...
-apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/staff in 621ms
-apps/web test: [WebServer]  GET /locations/123/staff 200 in 901ms
-apps/web test: ·[WebServer]  GET /locations/123/staff 200 in 48ms
-apps/web test: [WebServer]  GET /locations/123/staff 200 in 53ms
-apps/web test: ·[WebServer]  GET /locations/123/staff/create 200 in 57ms
-apps/web test: [WebServer]  GET /locations/123/staff 200 in 120ms
+apps/web test: [WebServer]  ✓ Compiled /locations/[locationId]/staff in 580ms
+apps/web test: [WebServer]  GET /locations/123/staff 200 in 860ms
+apps/web test: ·[WebServer]  GET /locations/123/staff 200 in 32ms
+apps/web test: [WebServer]  GET /locations/123/staff 200 in 47ms
+apps/web test: [WebServer]  GET /locations/123/staff/create 200 in 41ms
 apps/web test: ·[WebServer]  GET /locations/123/staff 200 in 50ms
+apps/web test: ·[WebServer]  GET /locations/123/staff 200 in 46ms
 apps/web test: [WebServer]  ○ Compiling /locations/create ...
-apps/web test: [WebServer]  ✓ Compiled /locations/create in 1006ms
-apps/web test: [WebServer]  GET /locations/create 200 in 1050ms
-apps/web test: ·[WebServer]  GET /locations/create 200 in 47ms
+apps/web test: [WebServer]  ✓ Compiled /locations/create in 698ms
+apps/web test: [WebServer]  GET /locations/create 200 in 744ms
 apps/web test: ·[WebServer]  GET /locations/create 200 in 29ms
 apps/web test: ·[WebServer]  GET /locations/create 200 in 29ms
-apps/web test: ·[WebServer]  GET /locations/create 200 in 33ms
-apps/web test: ·[WebServer]  GET /locations/123/staff/blah 200 in 53ms
+apps/web test: ·[WebServer]  GET /locations/create 200 in 53ms
+apps/web test: ·[WebServer]  GET /locations/create 200 in 28ms
+apps/web test: ·[WebServer]  GET /locations/123/staff/pearl 200 in 49ms
 apps/web test: [WebServer]  ○ Compiling /locations ...
-apps/web test: [WebServer]  ✓ Compiled /locations in 879ms
-apps/web test: [WebServer]  GET /locations 200 in 920ms
-apps/web test: ·[WebServer]  GET /locations 200 in 41ms
-apps/web test: [WebServer]  GET /locations 200 in 55ms
-apps/web test: [WebServer]  GET /locations 200 in 31ms
-apps/web test: ·[WebServer]  GET /locations 200 in 42ms
-apps/web test: [WebServer]  GET /locations 200 in 51ms
-apps/web test: [WebServer]  GET /locations 200 in 35ms
-apps/web test: [WebServer]  GET /locations/tassel 200 in 44ms
-apps/web test: ·[WebServer]  GET /locations/create 200 in 44ms
-apps/web test: [WebServer]  GET /locations 200 in 53ms
+apps/web test: [WebServer]  ✓ Compiled /locations in 690ms
+apps/web test: [WebServer]  GET /locations 200 in 726ms
+apps/web test: ·[WebServer]  GET /locations 200 in 31ms
+apps/web test: [WebServer]  GET /locations 200 in 34ms
+apps/web test: ·[WebServer]  GET /locations 200 in 31ms
+apps/web test: [WebServer]  GET /locations 200 in 32ms
+apps/web test: [WebServer]  GET /locations 200 in 34ms
+apps/web test: [WebServer]  GET /locations/underneath 200 in 60ms
+apps/web test: [WebServer]  GET /locations/create 200 in 43ms
+apps/web test: ·[WebServer]  GET /locations 200 in 30ms
 apps/web test: ·[WebServer]  ○ Compiling /modifiers/[modifierId]/options/[modifierOptionId] ...
-apps/web test: [WebServer]  ✓ Compiled /modifiers/[modifierId]/options/[modifierOptionId] in 781ms
-apps/web test: ·[WebServer]  GET /modifiers/123/options/456 200 in 74ms
-apps/web test: [WebServer]  GET /modifiers/123/options/456 200 in 1090ms
+apps/web test: [WebServer]  ✓ Compiled /modifiers/[modifierId]/options/[modifierOptionId] in 532ms
+apps/web test: [WebServer]  GET /modifiers/123/options/456 200 in 804ms
+apps/web test: ·[WebServer]  GET /modifiers/123/options/456 200 in 34ms
 apps/web test: ··[WebServer]  ○ Compiling /modifiers/[modifierId]/options ...
-apps/web test: [WebServer]  ✓ Compiled /modifiers/[modifierId]/options in 600ms
-apps/web test: [WebServer]  GET /modifiers/123/options 200 in 828ms
-apps/web test: [WebServer]  GET /modifiers/123/options 200 in 897ms
+apps/web test: [WebServer]  ✓ Compiled /modifiers/[modifierId]/options in 628ms
+apps/web test: [WebServer]  GET /modifiers/123/options 200 in 682ms
+apps/web test: [WebServer]  GET /modifiers/123/options 200 in 922ms
 apps/web test: ··[WebServer]  ○ Compiling /modifiers/[modifierId] ...
-apps/web test: [WebServer]  ✓ Compiled /modifiers/[modifierId] in 622ms
-apps/web test: [WebServer]  GET /modifiers/123 200 in 924ms
-apps/web test: [WebServer]  GET /modifiers/123 200 in 847ms
+apps/web test: [WebServer]  ✓ Compiled /modifiers/[modifierId] in 600ms
+apps/web test: [WebServer]  GET /modifiers/123 200 in 841ms
+apps/web test: [WebServer]  GET /modifiers/123 200 in 895ms
 apps/web test: ··[WebServer]  ○ Compiling /modifiers ...
-apps/web test: [WebServer]  ✓ Compiled /modifiers in 656ms
-apps/web test: [WebServer]  GET /modifiers 200 in 714ms
-apps/web test: [WebServer]  GET /modifiers 200 in 668ms
+apps/web test: [WebServer]  ✓ Compiled /modifiers in 823ms
+apps/web test: [WebServer]  GET /modifiers 200 in 837ms
+apps/web test: [WebServer]  GET /modifiers 200 in 884ms
+apps/web test: ·[WebServer]  GET /modifiers 200 in 29ms
+apps/web test: [WebServer]  GET /modifiers/naive 200 in 45ms
+apps/web test: [WebServer]  GET /modifiers/sun/options 200 in 45ms
 apps/web test: ·[WebServer]  GET /modifiers 200 in 31ms
-apps/web test: [WebServer]  GET /modifiers/over 200 in 52ms
-apps/web test: [WebServer]  GET /modifiers/that/options 200 in 37ms
-apps/web test: ·[WebServer]  GET /modifiers 200 in 36ms
-apps/web test: ·[WebServer]  GET /modifiers 200 in 33ms
+apps/web test: ·[WebServer]  GET /modifiers 200 in 29ms
 apps/web test: [WebServer]  GET /modifiers/create 200 in 40ms
-apps/web test: ··[WebServer]  GET / 200 in 38ms
-apps/web test: [WebServer]  GET / 200 in 75ms
+apps/web test: ··[WebServer]  GET / 200 in 33ms
+apps/web test: [WebServer]  GET / 200 in 34ms
 apps/web test: ··[WebServer]  ○ Compiling /recipes/[recipeId]/ingredient-links/create ...
-apps/web test: [WebServer]  ✓ Compiled /recipes/[recipeId]/ingredient-links/create in 1443ms
-apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 1752ms
-apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 1789ms
-apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 103ms
-apps/web test: [WebServer]  GET /ingredients 200 in 49ms
-apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 77ms
+apps/web test: [WebServer]  ✓ Compiled /recipes/[recipeId]/ingredient-links/create in 818ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 1094ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 1115ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 48ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 53ms
 apps/web test: ·[WebServer]  ○ Compiling /recipes/[recipeId] ...
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 37ms
+apps/web test: [WebServer]  ✓ Compiled /recipes/[recipeId] in 882ms
+apps/web test: [WebServer]  GET /recipes/123 200 in 491ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 45ms
+apps/web test: [WebServer]  GET /recipes/123 200 in 33ms
+apps/web test: ·
+apps/web test: ·[WebServer]  GET /recipes/123/ingredient-links/create 200 in 41ms
 apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 103ms
-apps/web test: [WebServer]  ✓ Compiled /recipes/[recipeId] in 1498ms
-apps/web test: ·[WebServer]  GET /recipes/123 200 in 992ms
-apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 80ms
-apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 69ms
-apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 305ms
-apps/web test: [WebServer]  GET /recipes/123 200 in 148ms
-apps/web test: [WebServer]  GET /ingredients 200 in 117ms
-apps/web test: [WebServer]  GET /recipes/123 200 in 115ms
-apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 186ms
-apps/web test: ·[WebServer]  GET /recipes/123/ingredient-links/create 200 in 59ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 55ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 49ms
 apps/web test: ··[WebServer]  ○ Compiling /recipes/[recipeId]/ingredient-links ...
-apps/web test: [WebServer]  ✓ Compiled /recipes/[recipeId]/ingredient-links in 762ms
-apps/web test: [WebServer]  GET /recipes/123/ingredient-links 200 in 1070ms
-apps/web test: [WebServer]  GET /recipes/123/ingredient-links 200 in 594ms
-apps/web test: [WebServer]  GET /recipes/123/ingredient-links 200 in 85ms
-apps/web test: [WebServer]  GET /recipes/123 200 in 46ms
-apps/web test: [WebServer]  GET /recipes/123/ingredient-links 200 in 76ms
-apps/web test: ·[WebServer]  GET /recipes/123/ingredient-links 200 in 35ms
+apps/web test: [WebServer]  ✓ Compiled /recipes/[recipeId]/ingredient-links in 703ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links 200 in 1043ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links 200 in 790ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links 200 in 51ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links 200 in 46ms
+apps/web test: ·[WebServer]  GET /recipes/123/ingredient-links 200 in 33ms
 apps/web test: ·[WebServer]  GET /recipes/123/ingredient-links 200 in 32ms
-apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 28ms
-apps/web test: ·[WebServer]  GET /recipes/123 200 in 39ms
-apps/web test: ·[WebServer]  GET /recipes/123 200 in 31ms
-apps/web test: [WebServer]  GET /recipes/123 200 in 45ms
-apps/web test: [WebServer]  GET /recipes/123 200 in 58ms
-apps/web test: ·[WebServer]  GET /recipes/123 200 in 32ms
+apps/web test: [WebServer]  GET /recipes/123/ingredient-links/create 200 in 22ms
+apps/web test: ·[WebServer]  GET /recipes/123 200 in 34ms
+apps/web test: ·[WebServer]  GET /recipes/123 200 in 34ms
+apps/web test: [WebServer]  GET /recipes/123 200 in 68ms
+apps/web test: [WebServer]  GET /recipes/123 200 in 47ms
+apps/web test: ·[WebServer]  GET /recipes/123 200 in 72ms
 apps/web test: ·[WebServer]  ○ Compiling /recipes ...
-apps/web test: ·[WebServer]  ✓ Compiled /recipes in 1288ms
-apps/web test: [WebServer]  GET /recipes 200 in 766ms
-apps/web test: [WebServer]  GET /recipes 200 in 1396ms
-apps/web test: [WebServer]  GET /recipes 200 in 73ms
+apps/web test: ·[WebServer]  ✓ Compiled /recipes in 721ms
+apps/web test: [WebServer]  GET /recipes 200 in 199ms
+apps/web test: [WebServer]  GET /recipes 200 in 781ms
+apps/web test: [WebServer]  GET /recipes 200 in 72ms
 apps/web test: [WebServer]  GET /recipes 200 in 33ms
-apps/web test: ·[WebServer]  GET /recipes 200 in 29ms
-apps/web test: ·[WebServer]  GET /recipes/create 200 in 72ms
-apps/web test: [WebServer]  GET /recipes 200 in 145ms
+apps/web test: ·[WebServer]  GET /recipes 200 in 33ms
+apps/web test: ·[WebServer]  GET /recipes/create 200 in 51ms
+apps/web test: [WebServer]  GET /recipes 200 in 129ms
 apps/web test: ··
-apps/web test:   94 passed (1.5m)
+apps/web test:   94 passed (1.4m)
 apps/web test: Done

@@ -1,8 +1,7 @@
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Use process.cwd() as the base directory for compatibility
+const ROOT_DIR = process.cwd();
 
 interface Config {
   ROOT_DIR: string;
@@ -17,12 +16,12 @@ interface Config {
 }
 
 const config: Config = {
-  ROOT_DIR: __dirname,
+  ROOT_DIR: ROOT_DIR,
   URL_PORT: 8080,
   URL_PATH: 'https://api.nory.example.com',
   BASE_VERSION: '/api',
-  CONTROLLER_DIRECTORY: path.join(__dirname, 'controllers'),
-  PROJECT_DIR: __dirname,
+  CONTROLLER_DIRECTORY: path.join(ROOT_DIR, 'controllers'),
+  PROJECT_DIR: ROOT_DIR,
   OPENAPI_YAML: '',
   FULL_PATH: '',
   FILE_UPLOAD_PATH: '',

@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import OpenApiValidator from 'express-openapi-validator';
 import logger from './logger.js';
-import config from './config.js';
+import config from './config';
 import controllers from './controllers/index.js';
 import services from './services/index.js';
 import openApiRouter from './utils/openapiRouter.js';
