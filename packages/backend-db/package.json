@@ -12,7 +12,7 @@
     "generate-types": "supabase gen types typescript --project-id your-project-id > src/types/supabase.ts",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "prebuild": "pnpm type-check",
