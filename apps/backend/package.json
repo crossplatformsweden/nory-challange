@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "prestart": "npm install",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "node index.js",
+    "build": "echo 'No build step required'",
+    "lint": "eslint .",
+    "check-types": "echo 'No type checking required'"
   },
   "keywords": [
     "openapi-generator",
@@ -14,6 +18,7 @@
   "license": "Unlicense",
   "private": true,
   "dependencies": {
+    "@repo/zod-clients": "workspace:*",
     "body-parser": "^1.19.0",
     "camelcase": "^5.3.1",
     "cookie-parser": "^1.4.4",
