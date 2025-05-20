@@ -2,12 +2,6 @@ Write a unit test confirming all files under
 
 Write file path to test:
 
-apps/backend/src/services
-
-and
-
-apps/backend/src/controllers
-
 have a corresponding test file.
 
 1. with .ts
@@ -28,19 +22,7 @@ Examine existing tests before writing a new test! Always source the file to test
 
 Verify end of file for latest test result. build-test-result.txt
 
-Command.ts index.ts etc
-
 All required tests are present and passing. ✅
-
-## TODOs
-
-- [x] Implement missing test files for:
-  - ModifierOptionsService.ts
-  - ModifiersService.ts
-  - RecipeIngredientLinksService.ts
-  - RecipesService.ts
-  - StaffService.ts
-- [x] Commit the new/updated test files.
 
 Make sure all files are commited and pushed.
 
@@ -49,6 +31,8 @@ Make sure all files are commited and pushed.
 ## Backend Build/Test/Lint/E2E Progress Log
 
 ### Plan
+
+TODO: Change command to ui package. update commands list IMPORTANT!
 
 1. Validate lint for backend: `pnpm lint --filter=./apps/backend`
 2. Validate build for backend: `pnpm build --filter=./apps/backend`
@@ -61,17 +45,4 @@ Make sure all files are commited and pushed.
 
 ### Progress
 
-- [x] Lint: No errors, only warnings in backend-db (can be improved, but not blocking)
-- [x] Build: Success for backend
-- [x] Type checks: Success for backend
-- [x] Unit tests: All backend test suites passed (19/19, 89 tests)
-- [x] E2E tests: No backend e2e tests present (confirmed)
-- [x] All backend Services and Controllers have tests (confirmed by test output)
-- [x] All test ids validated in e2e/unit tests (per requirements)
-- [x] Commit and push (pending final confirmation)
-
 #### Next steps:
-
-- All backend requirements are met. Build, lint, type checks, unit tests, and e2e (if present) are green for backend per build-test-result.txt.
-- No errors or failed tests for backend. All Services and Controllers have tests. All test ids validated. No navigation in e2e. All timeouts are 1.5s where relevant.
-- Next: Commit and push all changes as everything is working and green.
