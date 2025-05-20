@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
+// ARE YOU SURE THE PATHS ARE CORRECT? Verify in test that it finds some files. and array is noty empty. using a expect
+
 function getAllTsFilesRecursively(dir: string): string[] {
   let results: string[] = [];
   const list = fs.readdirSync(dir);
@@ -25,6 +27,9 @@ describe('All controllers and services have corresponding test files (recursive)
   baseDirs.forEach((dir) => {
     if (!fs.existsSync(dir)) return;
     const files = getAllTsFilesRecursively(dir);
+    it(`should find at least one .ts file in ${path.relative(process.cwd(), dir)}`, () => {
+      expect(files.length).toBeGreaterThan(0);
+    });
     files.forEach((file) => {
       const testFile = file.replace(/\.ts$/, '.test.ts');
       it(`${path.relative(process.cwd(), file)} should have a corresponding test file`, () => {
