@@ -3,12 +3,12 @@ import IngredientCostDetailPage from './page';
 import { useParams, useRouter } from 'next/navigation';
 import { useGetLocationIngredientCostById } from '@nory/api-client';
 
+// THIS IS A TEMPLATE FOR TESTING A PAGE COMPONENT IN A NEXT.JS APPLICATION
+
 /**
  * Testing Guide:
  * 1. Test the presence of all elements with testIds
  * 2. Test any form validation if forms are added
- * 3. Test any data loading states
- * 4. Test any error states
  * 5. Use the faker implementation from the hook for test data
  * 6. Mock the orval generated client responses
  * 7. Test any user interactions

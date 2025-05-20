@@ -49,3 +49,160 @@ pnpm test:unit "app/locations/\[locationId\]/ingredient-costs/page.test.tsx"
 ```
 
 Make 1 test at a time work. Make sure all test mockData is typed
+
+# Implementation TODO List
+
+## Menu Items Feature
+
+### List View
+
+- [x] `/apps/web/app/locations/[locationId]/menu-items/page.tsx`
+  - Hook: `useListLocationMenuItems`
+  - Features:
+    - List all menu items for a location
+    - Add proper data fetching
+    - Implement DaisyUI table/list view
+    - Add create/edit/delete actions
+    - Add proper loading states
+    - Add error handling
+  - Implementation Details:
+    - Uses DaisyUI table component
+    - Implements loading spinner
+    - Implements error alert
+    - Uses NextJS Link for navigation
+    - Has proper test IDs for all elements
+    - Includes unit and e2e tests
+
+### Detail View
+
+- [x] `/apps/web/app/locations/[locationId]/menu-items/[menuItemId]/page.tsx`
+  - Hook: `useGetLocationMenuItemById`
+  - Features:
+    - Display menu item details
+    - Add edit functionality
+    - Add delete functionality
+    - Add proper loading states
+    - Add error handling
+  - Implementation Details:
+    - Uses DaisyUI card and grid components
+    - Implements loading spinner
+    - Implements error alert
+    - Implements not found state
+    - Uses NextJS Link for navigation
+    - Has proper test IDs for all elements
+    - Includes unit and e2e tests
+
+### Create View
+
+- [x] `/apps/web/app/locations/[locationId]/menu-items/create/page.tsx`
+  - Hook: `useCreateLocationMenuItem`
+  - Features:
+    - Create form with react-hook-form
+    - Add validation
+    - Add proper error handling
+    - Add success feedback
+    - Add navigation after creation
+
+## Sales Feature
+
+### List View
+
+- [ ] `/apps/web/app/locations/[locationId]/sales/page.tsx`
+  - Hook: `useListLocationSales`
+  - Features:
+    - List all sales for a location
+    - Add proper data fetching
+    - Implement DaisyUI table/list view
+    - Add create/view actions
+    - Add proper loading states
+    - Add error handling
+
+### Detail View
+
+- [ ] `/apps/web/app/locations/[locationId]/sales/[saleId]/page.tsx`
+  - Hook: `useGetLocationSaleById`
+  - Features:
+    - Display sale details
+    - Add proper loading states
+    - Add error handling
+    - Add print/export functionality
+
+### Create View
+
+- [ ] `/apps/web/app/locations/[locationId]/sales/new/page.tsx`
+  - Hook: `useCreateLocationSale`
+  - Features:
+    - Create form with react-hook-form
+    - Add validation
+    - Add proper error handling
+    - Add success feedback
+    - Add navigation after creation
+
+## Inventory Feature
+
+### Record Movement
+
+- [ ] `/apps/web/app/locations/[locationId]/inventory-movements/record/page.tsx`
+  - Hook: `useCreateLocationInventoryMovement`
+  - Features:
+    - Create form with react-hook-form
+    - Add validation
+    - Add proper error handling
+    - Add success feedback
+    - Add navigation after creation
+
+## Modifiers Feature
+
+### Detail View
+
+- [ ] `/apps/web/app/modifiers/[modifierId]/page.tsx`
+  - Hook: `useGetModifierById`
+  - Features:
+    - Display modifier details
+    - Add edit functionality
+    - Add delete functionality
+    - Add proper loading states
+    - Add error handling
+
+### Options List
+
+- [ ] `/apps/web/app/modifiers/[modifierId]/options/page.tsx`
+  - Hook: `useListModifierOptions`
+  - Features:
+    - List all options for a modifier
+    - Add proper data fetching
+    - Implement DaisyUI table/list view
+    - Add create/edit/delete actions
+    - Add proper loading states
+    - Add error handling
+
+### Option Detail
+
+- [ ] `/apps/web/app/modifiers/[modifierId]/options/[modifierOptionId]/page.tsx`
+  - Hook: `useGetModifierOptionById`
+  - Features:
+    - Display option details
+    - Add edit functionality
+    - Add delete functionality
+    - Add proper loading states
+    - Add error handling
+
+## Implementation Requirements for All Pages
+
+1. Use proper hooks from `@nory/api-client`
+2. Implement UI using DaisyUI components
+3. Add proper testIds to all interactive elements
+4. Use react-hook-form for forms
+5. Use NextJS Image component for images
+6. Use the orval generated client for API calls
+7. Keep the testIds consistent with the test files
+8. Add proper loading states
+9. Add proper error handling
+10. Add proper success feedback
+11. Add proper navigation
+12. Add proper validation
+13. Add proper data fetching
+14. Add proper state management
+15. Add proper UI components
+16. Add proper tests
+17. Add proper documentation

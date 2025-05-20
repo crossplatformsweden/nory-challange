@@ -1,4 +1,6 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
+
+// THIS IS A TEMPLATE FOR TESTING A PAGE COMPONENT IN A NEXT.JS APPLICATION
 
 /**
  * E2E Testing Guide:
@@ -7,9 +9,7 @@ import { test, expect } from '@playwright/test'
  * 3. Test any user interactions (clicks, form submissions, etc.)
  * 4. Take screenshots for visual regression testing
  * 5. Test responsive behavior if needed
- * 6. Test any loading states
- * 7. Test any error states
- * 
+ *
  * Note: Use the URL path provided in the generator
  * and ensure all testIds match the page component.
  */
@@ -20,25 +20,29 @@ import { test, expect } from '@playwright/test'
 
 test.describe('IngredientCostDetailPage', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/locations/123/ingredient-costs/456')
-  })
+    await page.goto('/locations/123/ingredient-costs/456');
+  });
 
   test('renders all required elements', async ({ page }) => {
     // Check that all elements are visible
-    await expect(page.getByTestId('ingredient-cost-detail-page')).toBeVisible()
-    await expect(page.getByTestId('ingredient-cost-detail-title')).toBeVisible()
-    await expect(page.getByTestId('ingredient-cost-detail-content')).toBeVisible()
-  })
+    await expect(page.getByTestId('ingredient-cost-detail-page')).toBeVisible();
+    await expect(
+      page.getByTestId('ingredient-cost-detail-title')
+    ).toBeVisible();
+    await expect(
+      page.getByTestId('ingredient-cost-detail-content')
+    ).toBeVisible();
+  });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {
     // Get current date/time for unique screenshot name
-    const now = new Date()
-    const timestamp = now.toISOString().replace(/[:.]/g, '-')
-    
+    const now = new Date();
+    const timestamp = now.toISOString().replace(/[:.]/g, '-');
+
     // Take screenshot with timestamp and browser name
-    await page.screenshot({ 
+    await page.screenshot({
       path: `./screenshots/ingredient-cost-detail_${browserName}_${timestamp}.png`,
-      fullPage: true 
-    })
-  })
-}) 
+      fullPage: true,
+    });
+  });
+});

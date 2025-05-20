@@ -1,8 +1,10 @@
 'use client';
 
 import { FC } from 'react';
-// TODO USE THIS HOOK
 import { useCreateLocationMenuItem } from '@nory/api-client';
+import { useParams, useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import Link from 'next/link';
 
 /**
  * // Update this page and corresponding test files. Make sure to use testId. And DaisyUI. Look in  utils/nextjsroutes.md To see what hook to use for this page. Source that hook and visualize/use it with daisyUI. Also look for the fakerjs implementation of that hook tanstack by genertaion orval noryApiClient. We will use the faker version in all tests. So all data coming will be random. So just test testId and hasValue() or similar. Use NextJS best practive for routing images etc. Not actual values. Use best pracitce for visualizing forms with use react-hook-form make sure check package.json with available libraries. Dont install any other libraries. For this File make sure you only change the page.tsx page.test.tsx and page.test.e2e.tsx. Verify using gh cli that its only max this 3 files changed. NO OTHER FILE. LEAVE THIS COMMENT IN THE FILE DO NOT REMOVE.
@@ -59,23 +61,217 @@ import { useCreateLocationMenuItem } from '@nory/api-client';
  
  */
 
+interface CreateMenuItemFormData {
+  recipeId: string;
+  price: number;
+  category: string;
+  description: string;
+  isActive: boolean;
+  modifierIds?: string[] | null;
+}
+
 interface CreateMenuItemPageProps {}
 
 const CreateMenuItemPage: FC<CreateMenuItemPageProps> = () => {
+  const { locationId } = useParams();
+  const router = useRouter();
+  const { mutate, isPending, error } = useCreateLocationMenuItem();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateMenuItemFormData>({
+    defaultValues: {
+      recipeId: '',
+      price: 0,
+      category: '',
+      description: '',
+      isActive: true,
+      modifierIds: null,
+    },
+  });
+
+  const onSubmit = (data: CreateMenuItemFormData) => {
+    mutate(
+      {
+        locationId: locationId as string,
+        data: {
+          recipeId: data.recipeId,
+          price: data.price,
+          modifierIds: data.modifierIds,
+        },
+      },
+      {
+        onSuccess: () => {
+          router.push(`/locations/${locationId}/menu-items`);
+        },
+      }
+    );
+  };
+
   return (
     <div
       className="card bg-base-100 shadow-xl"
       data-testid="create-menu-item-page"
     >
       <div className="card-body">
-        <h1
-          className="card-title text-2xl font-bold"
-          data-testid="create-menu-item-title"
-        >
-          CreateMenuItem Page
-        </h1>
+        <div className="flex items-center justify-between">
+          <h1
+            className="card-title text-2xl font-bold"
+            data-testid="create-menu-item-title"
+          >
+            Create Menu Item
+          </h1>
+          <Link
+            href={`/locations/${locationId}/menu-items`}
+            className="btn btn-ghost"
+            data-testid="create-menu-item-back-button"
+          >
+            Back to List
+          </Link>
+        </div>
 
-        <div data-testid="create-menu-item-content">Add your content here</div>
+        <div className="divider"></div>
+
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          data-testid="create-menu-item-form"
+        >
+          <div className="space-y-4">
+            <div className="form-control">
+              <label className="label" htmlFor="recipeId">
+                <span className="label-text">Recipe ID</span>
+              </label>
+              <input
+                type="text"
+                id="recipeId"
+                className={`input input-bordered ${errors.recipeId ? 'input-error' : ''}`}
+                data-testid="create-menu-item-recipe-id-input"
+                {...register('recipeId', { required: 'Recipe ID is required' })}
+              />
+              {errors.recipeId && (
+                <label className="label">
+                  <span
+                    className="label-text-alt text-error"
+                    data-testid="create-menu-item-recipe-id-error"
+                  >
+                    {errors.recipeId.message}
+                  </span>
+                </label>
+              )}
+            </div>
+
+            <div className="form-control">
+              <label className="label" htmlFor="price">
+                <span className="label-text">Price</span>
+              </label>
+              <input
+                type="number"
+                id="price"
+                step="0.01"
+                min="0"
+                className={`input input-bordered ${errors.price ? 'input-error' : ''}`}
+                data-testid="create-menu-item-price-input"
+                {...register('price', {
+                  required: 'Price is required',
+                  min: { value: 0, message: 'Price must be positive' },
+                })}
+              />
+              {errors.price && (
+                <label className="label">
+                  <span
+                    className="label-text-alt text-error"
+                    data-testid="create-menu-item-price-error"
+                  >
+                    {errors.price.message}
+                  </span>
+                </label>
+              )}
+            </div>
+
+            <div className="form-control">
+              <label className="label" htmlFor="category">
+                <span className="label-text">Category</span>
+              </label>
+              <input
+                type="text"
+                id="category"
+                className={`input input-bordered ${errors.category ? 'input-error' : ''}`}
+                data-testid="create-menu-item-category-input"
+                {...register('category', { required: 'Category is required' })}
+              />
+              {errors.category && (
+                <label className="label">
+                  <span
+                    className="label-text-alt text-error"
+                    data-testid="create-menu-item-category-error"
+                  >
+                    {errors.category.message}
+                  </span>
+                </label>
+              )}
+            </div>
+
+            <div className="form-control">
+              <label className="label" htmlFor="description">
+                <span className="label-text">Description</span>
+              </label>
+              <textarea
+                id="description"
+                className={`textarea textarea-bordered ${errors.description ? 'textarea-error' : ''}`}
+                data-testid="create-menu-item-description-input"
+                {...register('description')}
+              />
+              {errors.description && (
+                <label className="label">
+                  <span
+                    className="label-text-alt text-error"
+                    data-testid="create-menu-item-description-error"
+                  >
+                    {errors.description.message}
+                  </span>
+                </label>
+              )}
+            </div>
+
+            <div className="form-control">
+              <label className="label cursor-pointer">
+                <span className="label-text">Active</span>
+                <input
+                  type="checkbox"
+                  className="toggle"
+                  data-testid="create-menu-item-active-input"
+                  {...register('isActive')}
+                />
+              </label>
+            </div>
+
+            {error && (
+              <div
+                className="alert alert-error"
+                data-testid="create-menu-item-error"
+              >
+                <span>Error creating menu item: {error.message}</span>
+              </div>
+            )}
+
+            <div className="form-control mt-6">
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={isPending}
+                data-testid="create-menu-item-submit-button"
+              >
+                {isPending ? (
+                  <span className="loading loading-spinner loading-sm"></span>
+                ) : (
+                  'Create Menu Item'
+                )}
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   );
