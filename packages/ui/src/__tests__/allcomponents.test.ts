@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-// ARE YOU SURE THE PATHS ARE CORRECT? Verify in test that it finds some files. and array is not empty. using a expect
+// ARE YOU SURE THE PATHS ARE CORRECT? Verify in test that it finds some files. and array is not empty. using a expect and that each components has a story file.
 
 function getAllComponentFilesRecursively(dir: string): string[] {
   let results: string[] = [];
@@ -27,12 +27,17 @@ describe('All UI components have corresponding test files (recursive)', () => {
     expect(files.length).toBeGreaterThan(0);
   });
   files.forEach((file) => {
-    const testFile = path.join(path.dirname(file), path.basename(file).replace('index.tsx', path.basename(path.dirname(file)) + '.test.tsx'));
+    const dirName = path.basename(path.dirname(file));
+    const testFile = path.join(path.dirname(file), `${dirName}.test.tsx`);
+    const storiesFile = path.join(path.dirname(file), `${dirName}.stories.tsx`);
     it(`${path.relative(process.cwd(), file)} should have a corresponding test file`, () => {
       expect(fs.existsSync(testFile)).toBe(true);
       // FILE SHOULD EXIST
       const lineCount = fs.readFileSync(testFile, 'utf-8').split('\n').length;
       expect(lineCount).toBeGreaterThanOrEqual(50);
+    });
+    it(`${path.relative(process.cwd(), file)} should have a corresponding stories file`, () => {
+      expect(fs.existsSync(storiesFile)).toBe(true);
     });
   });
 }); 

@@ -28,7 +28,8 @@ const meta: Meta<typeof Accordion> = {
 export default meta;
 type Story = StoryObj<typeof Accordion>;
 
-export const SingleItem: Story = {
+export const SingleItem: Story 
+= {
   render: (args) => (
     <Accordion {...args}>
       <AccordionItem value="item-1">
