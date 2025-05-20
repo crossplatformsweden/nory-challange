@@ -30,4 +30,6 @@ Make sure all files are commited and pushed.
 
 #### Next steps:
 
-- All backend requirements are met. Ready to commit and push.
+- All backend requirements are met. Build, lint, type checks, unit tests, and e2e (if present) are green for backend per build-test-result.txt.
+- No errors or failed tests for backend. All Services and Controllers have tests. All test ids validated. No navigation in e2e. All timeouts are 1.5s where relevant.
+- Next: Commit and push all changes as everything is working and green.
