@@ -5,10 +5,7 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type {
   MutationFunction,
   QueryFunction,
@@ -16,14 +13,10 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query'
-import axios from 'axios'
-import type {
-  AxiosError,
-  AxiosRequestConfig,
-  AxiosResponse
-} from 'axios'
+  UseQueryResult,
+} from '@tanstack/react-query';
+import axios from 'axios';
+import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import type {
   BadRequestResponse,
   ConflictResponse,
@@ -32,294 +25,428 @@ import type {
   InventoryStockCreate,
   InventoryStockUpdate,
   ListInventoryStockParams,
-  NotFoundResponse
-} from '../noryInventoryAPI.schemas'
-
-
+  NotFoundResponse,
+} from '../noryInventoryAPI.schemas';
 
 /**
  * Retrieve current inventory stock levels, optionally filtered by location or ingredient. Includes embedded location and ingredient summaries.
  * @summary List inventory stock levels
  */
 export const listInventoryStock = (
-    params?: ListInventoryStockParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<InventoryStock[]>> => {
-    
-    return axios.get(
-      `/inventory_stock`,{
+  params?: ListInventoryStockParams,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<InventoryStock[]>> => {
+  return axios.get(`/inventory_stock`, {
     ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
+    params: { ...params, ...options?.params },
+  });
+};
 
-
-export const getListInventoryStockQueryKey = (params?: ListInventoryStockParams,) => {
-    return [`/inventory_stock`, ...(params ? [params]: [])] as const;
-    }
-
-    
-export const getListInventoryStockQueryOptions = <TData = Awaited<ReturnType<typeof listInventoryStock>>, TError = AxiosError<InternalServerErrorResponse>>(params?: ListInventoryStockParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listInventoryStock>>, TError, TData>>, axios?: AxiosRequestConfig}
+export const getListInventoryStockQueryKey = (
+  params?: ListInventoryStockParams
 ) => {
+  return [`/inventory_stock`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+export const getListInventoryStockQueryOptions = <
+  TData = Awaited<ReturnType<typeof listInventoryStock>>,
+  TError = AxiosError<InternalServerErrorResponse>,
+>(
+  params?: ListInventoryStockParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listInventoryStock>>,
+        TError,
+        TData
+      >
+    >;
+    axios?: AxiosRequestConfig;
+  }
+) => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getListInventoryStockQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ?? getListInventoryStockQueryKey(params);
 
-  
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listInventoryStock>>
+  > = ({ signal }) => listInventoryStock(params, { signal, ...axiosOptions });
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listInventoryStock>>> = ({ signal }) => listInventoryStock(params, { signal, ...axiosOptions });
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listInventoryStock>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
 
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listInventoryStock>>, TError, TData> & { queryKey: QueryKey }
-}
-
-export type ListInventoryStockQueryResult = NonNullable<Awaited<ReturnType<typeof listInventoryStock>>>
-export type ListInventoryStockQueryError = AxiosError<InternalServerErrorResponse>
+export type ListInventoryStockQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listInventoryStock>>
+>;
+export type ListInventoryStockQueryError =
+  AxiosError<InternalServerErrorResponse>;
 
 /**
  * @summary List inventory stock levels
  */
-export const useListInventoryStock = <TData = Awaited<ReturnType<typeof listInventoryStock>>, TError = AxiosError<InternalServerErrorResponse>>(
- params?: ListInventoryStockParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listInventoryStock>>, TError, TData>>, axios?: AxiosRequestConfig}
+export const useListInventoryStock = <
+  TData = Awaited<ReturnType<typeof listInventoryStock>>,
+  TError = AxiosError<InternalServerErrorResponse>,
+>(
+  params?: ListInventoryStockParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listInventoryStock>>,
+        TError,
+        TData
+      >
+    >;
+    axios?: AxiosRequestConfig;
+  }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const queryOptions = getListInventoryStockQueryOptions(params, options);
 
-  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
 
-  const queryOptions = getListInventoryStockQueryOptions(params,options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
-}
-
-
+};
 
 /**
  * Create a record for an ingredient's stock level at a specific location. This is typically for initial setup or adding an item to a location for the first time. Subsequent changes should use movements.
  * @summary Create a new inventory stock record
  */
 export const createInventoryStock = (
-    inventoryStockCreate: InventoryStockCreate, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<InventoryStock>> => {
-    
-    return axios.post(
-      `/inventory_stock`,
-      inventoryStockCreate,options
-    );
-  }
+  inventoryStockCreate: InventoryStockCreate,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<InventoryStock>> => {
+  return axios.post(`/inventory_stock`, inventoryStockCreate, options);
+};
 
+export const getCreateInventoryStockMutationOptions = <
+  TError = AxiosError<
+    | BadRequestResponse
+    | NotFoundResponse
+    | ConflictResponse
+    | InternalServerErrorResponse
+  >,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createInventoryStock>>,
+    TError,
+    { data: InventoryStockCreate },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createInventoryStock>>,
+  TError,
+  { data: InventoryStockCreate },
+  TContext
+> => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createInventoryStock>>,
+    { data: InventoryStockCreate }
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getCreateInventoryStockMutationOptions = <TError = AxiosError<BadRequestResponse | NotFoundResponse | ConflictResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createInventoryStock>>, TError,{data: InventoryStockCreate}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof createInventoryStock>>, TError,{data: InventoryStockCreate}, TContext> => {
-const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
+    return createInventoryStock(data, axiosOptions);
+  };
 
-      
+  return { mutationFn, ...mutationOptions };
+};
 
+export type CreateInventoryStockMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createInventoryStock>>
+>;
+export type CreateInventoryStockMutationBody = InventoryStockCreate;
+export type CreateInventoryStockMutationError = AxiosError<
+  | BadRequestResponse
+  | NotFoundResponse
+  | ConflictResponse
+  | InternalServerErrorResponse
+>;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createInventoryStock>>, {data: InventoryStockCreate}> = (props) => {
-          const {data} = props ?? {};
-
-          return  createInventoryStock(data,axiosOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateInventoryStockMutationResult = NonNullable<Awaited<ReturnType<typeof createInventoryStock>>>
-    export type CreateInventoryStockMutationBody = InventoryStockCreate
-    export type CreateInventoryStockMutationError = AxiosError<BadRequestResponse | NotFoundResponse | ConflictResponse | InternalServerErrorResponse>
-
-    /**
+/**
  * @summary Create a new inventory stock record
  */
-export const useCreateInventoryStock = <TError = AxiosError<BadRequestResponse | NotFoundResponse | ConflictResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createInventoryStock>>, TError,{data: InventoryStockCreate}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationResult<
-        Awaited<ReturnType<typeof createInventoryStock>>,
-        TError,
-        {data: InventoryStockCreate},
-        TContext
-      > => {
+export const useCreateInventoryStock = <
+  TError = AxiosError<
+    | BadRequestResponse
+    | NotFoundResponse
+    | ConflictResponse
+    | InternalServerErrorResponse
+  >,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createInventoryStock>>,
+    TError,
+    { data: InventoryStockCreate },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof createInventoryStock>>,
+  TError,
+  { data: InventoryStockCreate },
+  TContext
+> => {
+  const mutationOptions = getCreateInventoryStockMutationOptions(options);
 
-      const mutationOptions = getCreateInventoryStockMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    /**
+  return useMutation(mutationOptions);
+};
+/**
  * Retrieve a specific inventory stock record. Includes embedded location and ingredient summaries.
  * @summary Get an inventory stock record by ID
  */
 export const getInventoryStockById = (
-    stockId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<InventoryStock>> => {
-    
-    return axios.get(
-      `/inventory_stock/${stockId}`,options
-    );
+  stockId: string,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<InventoryStock>> => {
+  return axios.get(`/inventory_stock/${stockId}`, options);
+};
+
+export const getGetInventoryStockByIdQueryKey = (stockId: string) => {
+  return [`/inventory_stock/${stockId}`] as const;
+};
+
+export const getGetInventoryStockByIdQueryOptions = <
+  TData = Awaited<ReturnType<typeof getInventoryStockById>>,
+  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
+>(
+  stockId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getInventoryStockById>>,
+        TError,
+        TData
+      >
+    >;
+    axios?: AxiosRequestConfig;
   }
-
-
-export const getGetInventoryStockByIdQueryKey = (stockId: string,) => {
-    return [`/inventory_stock/${stockId}`] as const;
-    }
-
-    
-export const getGetInventoryStockByIdQueryOptions = <TData = Awaited<ReturnType<typeof getInventoryStockById>>, TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>>(stockId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryStockById>>, TError, TData>>, axios?: AxiosRequestConfig}
 ) => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {};
 
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ?? getGetInventoryStockByIdQueryKey(stockId);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetInventoryStockByIdQueryKey(stockId);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getInventoryStockById>>
+  > = ({ signal }) =>
+    getInventoryStockById(stockId, { signal, ...axiosOptions });
 
-  
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!stockId,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getInventoryStockById>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getInventoryStockById>>> = ({ signal }) => getInventoryStockById(stockId, { signal, ...axiosOptions });
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(stockId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getInventoryStockById>>, TError, TData> & { queryKey: QueryKey }
-}
-
-export type GetInventoryStockByIdQueryResult = NonNullable<Awaited<ReturnType<typeof getInventoryStockById>>>
-export type GetInventoryStockByIdQueryError = AxiosError<NotFoundResponse | InternalServerErrorResponse>
+export type GetInventoryStockByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getInventoryStockById>>
+>;
+export type GetInventoryStockByIdQueryError = AxiosError<
+  NotFoundResponse | InternalServerErrorResponse
+>;
 
 /**
  * @summary Get an inventory stock record by ID
  */
-export const useGetInventoryStockById = <TData = Awaited<ReturnType<typeof getInventoryStockById>>, TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>>(
- stockId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryStockById>>, TError, TData>>, axios?: AxiosRequestConfig}
+export const useGetInventoryStockById = <
+  TData = Awaited<ReturnType<typeof getInventoryStockById>>,
+  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
+>(
+  stockId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getInventoryStockById>>,
+        TError,
+        TData
+      >
+    >;
+    axios?: AxiosRequestConfig;
+  }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const queryOptions = getGetInventoryStockByIdQueryOptions(stockId, options);
 
-  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
 
-  const queryOptions = getGetInventoryStockByIdQueryOptions(stockId,options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
-}
-
-
+};
 
 /**
  * Directly adjust the quantity of a specific ingredient at a location. Consider using Inventory Movements for auditable changes.
  * @summary Update an inventory stock entry (e.g., adjust quantity)
  */
 export const updateInventoryStock = (
-    stockId: string,
-    inventoryStockUpdate: InventoryStockUpdate, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<InventoryStock>> => {
-    
-    return axios.patch(
-      `/inventory_stock/${stockId}`,
-      inventoryStockUpdate,options
-    );
-  }
+  stockId: string,
+  inventoryStockUpdate: InventoryStockUpdate,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<InventoryStock>> => {
+  return axios.patch(
+    `/inventory_stock/${stockId}`,
+    inventoryStockUpdate,
+    options
+  );
+};
 
+export const getUpdateInventoryStockMutationOptions = <
+  TError = AxiosError<
+    BadRequestResponse | NotFoundResponse | InternalServerErrorResponse
+  >,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateInventoryStock>>,
+    TError,
+    { stockId: string; data: InventoryStockUpdate },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof updateInventoryStock>>,
+  TError,
+  { stockId: string; data: InventoryStockUpdate },
+  TContext
+> => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof updateInventoryStock>>,
+    { stockId: string; data: InventoryStockUpdate }
+  > = (props) => {
+    const { stockId, data } = props ?? {};
 
-export const getUpdateInventoryStockMutationOptions = <TError = AxiosError<BadRequestResponse | NotFoundResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateInventoryStock>>, TError,{stockId: string;data: InventoryStockUpdate}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof updateInventoryStock>>, TError,{stockId: string;data: InventoryStockUpdate}, TContext> => {
-const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
+    return updateInventoryStock(stockId, data, axiosOptions);
+  };
 
-      
+  return { mutationFn, ...mutationOptions };
+};
 
+export type UpdateInventoryStockMutationResult = NonNullable<
+  Awaited<ReturnType<typeof updateInventoryStock>>
+>;
+export type UpdateInventoryStockMutationBody = InventoryStockUpdate;
+export type UpdateInventoryStockMutationError = AxiosError<
+  BadRequestResponse | NotFoundResponse | InternalServerErrorResponse
+>;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateInventoryStock>>, {stockId: string;data: InventoryStockUpdate}> = (props) => {
-          const {stockId,data} = props ?? {};
-
-          return  updateInventoryStock(stockId,data,axiosOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UpdateInventoryStockMutationResult = NonNullable<Awaited<ReturnType<typeof updateInventoryStock>>>
-    export type UpdateInventoryStockMutationBody = InventoryStockUpdate
-    export type UpdateInventoryStockMutationError = AxiosError<BadRequestResponse | NotFoundResponse | InternalServerErrorResponse>
-
-    /**
+/**
  * @summary Update an inventory stock entry (e.g., adjust quantity)
  */
-export const useUpdateInventoryStock = <TError = AxiosError<BadRequestResponse | NotFoundResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateInventoryStock>>, TError,{stockId: string;data: InventoryStockUpdate}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationResult<
-        Awaited<ReturnType<typeof updateInventoryStock>>,
-        TError,
-        {stockId: string;data: InventoryStockUpdate},
-        TContext
-      > => {
+export const useUpdateInventoryStock = <
+  TError = AxiosError<
+    BadRequestResponse | NotFoundResponse | InternalServerErrorResponse
+  >,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateInventoryStock>>,
+    TError,
+    { stockId: string; data: InventoryStockUpdate },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof updateInventoryStock>>,
+  TError,
+  { stockId: string; data: InventoryStockUpdate },
+  TContext
+> => {
+  const mutationOptions = getUpdateInventoryStockMutationOptions(options);
 
-      const mutationOptions = getUpdateInventoryStockMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    /**
+  return useMutation(mutationOptions);
+};
+/**
  * Remove a specific ingredient's stock record for a location. Use with caution as this removes the historical link.
  * @summary Delete an inventory stock record
  */
 export const deleteInventoryStock = (
-    stockId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<void>> => {
-    
-    return axios.delete(
-      `/inventory_stock/${stockId}`,options
-    );
-  }
+  stockId: string,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
+  return axios.delete(`/inventory_stock/${stockId}`, options);
+};
 
+export const getDeleteInventoryStockMutationOptions = <
+  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteInventoryStock>>,
+    TError,
+    { stockId: string },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof deleteInventoryStock>>,
+  TError,
+  { stockId: string },
+  TContext
+> => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteInventoryStock>>,
+    { stockId: string }
+  > = (props) => {
+    const { stockId } = props ?? {};
 
-export const getDeleteInventoryStockMutationOptions = <TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteInventoryStock>>, TError,{stockId: string}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof deleteInventoryStock>>, TError,{stockId: string}, TContext> => {
-const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
+    return deleteInventoryStock(stockId, axiosOptions);
+  };
 
-      
+  return { mutationFn, ...mutationOptions };
+};
 
+export type DeleteInventoryStockMutationResult = NonNullable<
+  Awaited<ReturnType<typeof deleteInventoryStock>>
+>;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteInventoryStock>>, {stockId: string}> = (props) => {
-          const {stockId} = props ?? {};
+export type DeleteInventoryStockMutationError = AxiosError<
+  NotFoundResponse | InternalServerErrorResponse
+>;
 
-          return  deleteInventoryStock(stockId,axiosOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DeleteInventoryStockMutationResult = NonNullable<Awaited<ReturnType<typeof deleteInventoryStock>>>
-    
-    export type DeleteInventoryStockMutationError = AxiosError<NotFoundResponse | InternalServerErrorResponse>
-
-    /**
+/**
  * @summary Delete an inventory stock record
  */
-export const useDeleteInventoryStock = <TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteInventoryStock>>, TError,{stockId: string}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationResult<
-        Awaited<ReturnType<typeof deleteInventoryStock>>,
-        TError,
-        {stockId: string},
-        TContext
-      > => {
+export const useDeleteInventoryStock = <
+  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteInventoryStock>>,
+    TError,
+    { stockId: string },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof deleteInventoryStock>>,
+  TError,
+  { stockId: string },
+  TContext
+> => {
+  const mutationOptions = getDeleteInventoryStockMutationOptions(options);
 
-      const mutationOptions = getDeleteInventoryStockMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    
+  return useMutation(mutationOptions);
+};

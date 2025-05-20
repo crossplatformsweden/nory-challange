@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import IngredientDetailPage from './page';
 import { useParams } from 'next/navigation';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useGetIngredientById } from '@nory/api-client';
+import { useGetIngredientById } from '@repo/api-client';
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
@@ -13,7 +13,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock the API client hook
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useGetIngredientById: jest.fn(),
 }));
 

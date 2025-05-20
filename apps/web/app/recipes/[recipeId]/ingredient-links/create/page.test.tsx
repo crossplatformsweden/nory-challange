@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import CreateRecipeIngredientLinkPage from './page';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import {
   useListIngredients,
   useCreateRecipeIngredientLink,
   useGetRecipeById,
-} from '@nory/api-client';
+} from '@repo/api-client';
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
@@ -17,7 +17,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock the API client hooks
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useListIngredients: jest.fn(),
   useCreateRecipeIngredientLink: jest.fn(),
   useGetRecipeById: jest.fn(),

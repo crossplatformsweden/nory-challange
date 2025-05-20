@@ -1,6 +1,6 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import MenuItemsListPage from './page';
-import { useListLocationMenuItems } from '@nory/api-client';
+import { useListLocationMenuItems } from '@repo/api-client';
 import { useParams } from 'next/navigation';
 
 /**
@@ -18,7 +18,7 @@ import { useParams } from 'next/navigation';
  */
 
 // Mock the hooks
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useListLocationMenuItems: jest.fn(),
 }));
 

@@ -1,7 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import InventoryMovementsTimelinePage from './page';
 import { useParams, useRouter } from 'next/navigation';
-import { useListInventoryMovements } from '@nory/api-client';
+import { useListInventoryMovements } from '@repo/api-client';
 
 /**
  * Testing Guide:
@@ -27,7 +27,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock the API hook
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useListInventoryMovements: jest.fn(),
 }));
 

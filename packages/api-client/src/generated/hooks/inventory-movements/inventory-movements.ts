@@ -5,10 +5,7 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type {
   MutationFunction,
   QueryFunction,
@@ -16,139 +13,183 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query'
-import axios from 'axios'
-import type {
-  AxiosError,
-  AxiosRequestConfig,
-  AxiosResponse
-} from 'axios'
+  UseQueryResult,
+} from '@tanstack/react-query';
+import axios from 'axios';
+import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import type {
   BadRequestResponse,
   InternalServerErrorResponse,
   InventoryMovement,
   InventoryMovementCreate,
   ListInventoryMovementsParams,
-  NotFoundResponse
-} from '../noryInventoryAPI.schemas'
-
-
+  NotFoundResponse,
+} from '../noryInventoryAPI.schemas';
 
 /**
  * Retrieve a history of inventory stock changes (movements), useful for tracking usage, waste, and restocking. Includes embedded ingredient summaries.
  * @summary List inventory movements (stock changes)
  */
 export const listInventoryMovements = (
-    params?: ListInventoryMovementsParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<InventoryMovement[]>> => {
-    
-    return axios.get(
-      `/inventory_movements`,{
+  params?: ListInventoryMovementsParams,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<InventoryMovement[]>> => {
+  return axios.get(`/inventory_movements`, {
     ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
+    params: { ...params, ...options?.params },
+  });
+};
 
-
-export const getListInventoryMovementsQueryKey = (params?: ListInventoryMovementsParams,) => {
-    return [`/inventory_movements`, ...(params ? [params]: [])] as const;
-    }
-
-    
-export const getListInventoryMovementsQueryOptions = <TData = Awaited<ReturnType<typeof listInventoryMovements>>, TError = AxiosError<InternalServerErrorResponse>>(params?: ListInventoryMovementsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listInventoryMovements>>, TError, TData>>, axios?: AxiosRequestConfig}
+export const getListInventoryMovementsQueryKey = (
+  params?: ListInventoryMovementsParams
 ) => {
+  return [`/inventory_movements`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+export const getListInventoryMovementsQueryOptions = <
+  TData = Awaited<ReturnType<typeof listInventoryMovements>>,
+  TError = AxiosError<InternalServerErrorResponse>,
+>(
+  params?: ListInventoryMovementsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listInventoryMovements>>,
+        TError,
+        TData
+      >
+    >;
+    axios?: AxiosRequestConfig;
+  }
+) => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getListInventoryMovementsQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ?? getListInventoryMovementsQueryKey(params);
 
-  
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listInventoryMovements>>
+  > = ({ signal }) =>
+    listInventoryMovements(params, { signal, ...axiosOptions });
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listInventoryMovements>>> = ({ signal }) => listInventoryMovements(params, { signal, ...axiosOptions });
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listInventoryMovements>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
 
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listInventoryMovements>>, TError, TData> & { queryKey: QueryKey }
-}
-
-export type ListInventoryMovementsQueryResult = NonNullable<Awaited<ReturnType<typeof listInventoryMovements>>>
-export type ListInventoryMovementsQueryError = AxiosError<InternalServerErrorResponse>
+export type ListInventoryMovementsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listInventoryMovements>>
+>;
+export type ListInventoryMovementsQueryError =
+  AxiosError<InternalServerErrorResponse>;
 
 /**
  * @summary List inventory movements (stock changes)
  */
-export const useListInventoryMovements = <TData = Awaited<ReturnType<typeof listInventoryMovements>>, TError = AxiosError<InternalServerErrorResponse>>(
- params?: ListInventoryMovementsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listInventoryMovements>>, TError, TData>>, axios?: AxiosRequestConfig}
+export const useListInventoryMovements = <
+  TData = Awaited<ReturnType<typeof listInventoryMovements>>,
+  TError = AxiosError<InternalServerErrorResponse>,
+>(
+  params?: ListInventoryMovementsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listInventoryMovements>>,
+        TError,
+        TData
+      >
+    >;
+    axios?: AxiosRequestConfig;
+  }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const queryOptions = getListInventoryMovementsQueryOptions(params, options);
 
-  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
 
-  const queryOptions = getListInventoryMovementsQueryOptions(params,options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
-}
-
-
+};
 
 /**
  * Record a change in stock for a specific ingredient at a location. This is the preferred way to track stock changes over direct stock updates.
  * @summary Create a new inventory movement (e.g., log waste or restock)
  */
 export const createInventoryMovement = (
-    inventoryMovementCreate: InventoryMovementCreate, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<InventoryMovement>> => {
-    
-    return axios.post(
-      `/inventory_movements`,
-      inventoryMovementCreate,options
-    );
-  }
+  inventoryMovementCreate: InventoryMovementCreate,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<InventoryMovement>> => {
+  return axios.post(`/inventory_movements`, inventoryMovementCreate, options);
+};
 
+export const getCreateInventoryMovementMutationOptions = <
+  TError = AxiosError<
+    BadRequestResponse | NotFoundResponse | InternalServerErrorResponse
+  >,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createInventoryMovement>>,
+    TError,
+    { data: InventoryMovementCreate },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createInventoryMovement>>,
+  TError,
+  { data: InventoryMovementCreate },
+  TContext
+> => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createInventoryMovement>>,
+    { data: InventoryMovementCreate }
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getCreateInventoryMovementMutationOptions = <TError = AxiosError<BadRequestResponse | NotFoundResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createInventoryMovement>>, TError,{data: InventoryMovementCreate}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof createInventoryMovement>>, TError,{data: InventoryMovementCreate}, TContext> => {
-const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
+    return createInventoryMovement(data, axiosOptions);
+  };
 
-      
+  return { mutationFn, ...mutationOptions };
+};
 
+export type CreateInventoryMovementMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createInventoryMovement>>
+>;
+export type CreateInventoryMovementMutationBody = InventoryMovementCreate;
+export type CreateInventoryMovementMutationError = AxiosError<
+  BadRequestResponse | NotFoundResponse | InternalServerErrorResponse
+>;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createInventoryMovement>>, {data: InventoryMovementCreate}> = (props) => {
-          const {data} = props ?? {};
-
-          return  createInventoryMovement(data,axiosOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateInventoryMovementMutationResult = NonNullable<Awaited<ReturnType<typeof createInventoryMovement>>>
-    export type CreateInventoryMovementMutationBody = InventoryMovementCreate
-    export type CreateInventoryMovementMutationError = AxiosError<BadRequestResponse | NotFoundResponse | InternalServerErrorResponse>
-
-    /**
+/**
  * @summary Create a new inventory movement (e.g., log waste or restock)
  */
-export const useCreateInventoryMovement = <TError = AxiosError<BadRequestResponse | NotFoundResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createInventoryMovement>>, TError,{data: InventoryMovementCreate}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationResult<
-        Awaited<ReturnType<typeof createInventoryMovement>>,
-        TError,
-        {data: InventoryMovementCreate},
-        TContext
-      > => {
+export const useCreateInventoryMovement = <
+  TError = AxiosError<
+    BadRequestResponse | NotFoundResponse | InternalServerErrorResponse
+  >,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createInventoryMovement>>,
+    TError,
+    { data: InventoryMovementCreate },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof createInventoryMovement>>,
+  TError,
+  { data: InventoryMovementCreate },
+  TContext
+> => {
+  const mutationOptions = getCreateInventoryMovementMutationOptions(options);
 
-      const mutationOptions = getCreateInventoryMovementMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    
+  return useMutation(mutationOptions);
+};

@@ -1,0 +1,109 @@
+
+> web@0.1.0 test:e2e /Users/xemil/Source/nory-challange/apps/web
+> playwright test --config playwright.config.ts
+
+[2m[WebServer] [22m
+[2m[WebServer] [22m> web@0.1.0 dev /Users/xemil/Source/nory-challange/apps/web
+[2m[WebServer] [22m> next dev --port 3001 --turbopack
+[2m[WebServer] [22m
+[2m[WebServer] [22m   [1m[38;2;173;127;168m▲ Next.js 15.3.2[39m[22m (Turbopack)
+[2m[WebServer] [22m   - Local:        http://localhost:3001
+[2m[WebServer] [22m   - Network:      http://192.168.0.4:3001
+[2m[WebServer] [22m
+[2m[WebServer] [22m [32m[1m✓[22m[39m Starting...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Ready in 730ms
+[2m[WebServer] [22m [37m[1m○[22m[39m Compiling / ...
+[2m[WebServer] [22m/*! 🌼 daisyUI 5.0.35 */
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled / in 1887ms
+[2m[WebServer] [22m GET / [32m200[39m in 2238ms
+
+Running 94 tests using 2 workers
+[2m[WebServer] [22m [37m[1m○[22m[39m Compiling /ingredients/[ingredientId] ...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled /ingredients/[ingredientId] in 518ms
+[2m[WebServer] [22m GET /ingredients/123 [32m200[39m in 821ms
+[2m[WebServer] [22m GET /ingredients/123 [32m200[39m in 822ms
+[2m[WebServer] [22m GET /ingredients/123 [32m200[39m in 160ms
+[2m[WebServer] [22m GET /ingredients/123 [32m200[39m in 35ms
+F[2m[WebServer] [22m GET /ingredients/123 [32m200[39m in 45ms
+·[2m[WebServer] [22m [37m[1m○[22m[39m Compiling /ingredients ...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled /ingredients in 635ms
+[2m[WebServer] [22m GET /ingredients [32m200[39m in 675ms
+F[2m[WebServer] [22m GET /ingredients [32m200[39m in 42ms
+[2m[WebServer] [22m GET /ingredients [32m200[39m in 37ms
+[2m[WebServer] [22m GET /ingredients [32m200[39m in 38ms
+·[2m[WebServer] [22m GET /ingredients [32m200[39m in 38ms
+·[2m[WebServer] [22m [37m[1m○[22m[39m Compiling /locations/[locationId]/ingredient-costs/[locationIngredientCostId] ...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled /locations/[locationId]/ingredient-costs/[locationIngredientCostId] in 635ms
+[2m[WebServer] [22m GET /locations/123/ingredient-costs/456 [32m200[39m in 964ms
+F[2m[WebServer] [22m GET /locations/123/ingredient-costs/456 [32m200[39m in 39ms
+·[2m[WebServer] [22m [37m[1m○[22m[39m Compiling /locations/[locationId]/ingredient-costs/create ...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled /locations/[locationId]/ingredient-costs/create in 714ms
+[2m[WebServer] [22m GET /locations/123/ingredient-costs/create [32m200[39m in 1004ms
+T[2m[WebServer] [22m GET /locations/123/ingredient-costs/create [32m200[39m in 60ms
+F[2m[WebServer] [22m GET /locations/123/ingredient-costs/create [32m200[39m in 33ms
+T[2m[WebServer] [22m GET /locations/123/ingredient-costs/create [32m200[39m in 43ms
+·[2m[WebServer] [22m GET /locations/123/ingredient-costs/create [32m200[39m in 36ms
+T[2m[WebServer] [22m GET /locations/123/ingredient-costs/create [32m200[39m in 39ms
+T[2m[WebServer] [22m [37m[1m○[22m[39m Compiling /locations/[locationId]/ingredient-costs ...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled /locations/[locationId]/ingredient-costs in 635ms
+[2m[WebServer] [22m GET /locations/123/ingredient-costs [32m200[39m in 905ms
+T[2m[WebServer] [22m GET /locations/123/ingredient-costs [32m200[39m in 40ms
+F[2m[WebServer] [22m GET /locations/123/ingredient-costs [32m200[39m in 37ms
+T[2m[WebServer] [22m GET /locations/123/ingredient-costs [32m200[39m in 38ms
+T[2m[WebServer] [22m [37m[1m○[22m[39m Compiling /locations/[locationId]/inventory-movements/record ...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled /locations/[locationId]/inventory-movements/record in 647ms
+[2m[WebServer] [22m GET /locations/123/inventory-movements/record [32m200[39m in 982ms
+·[2m[WebServer] [22m GET /locations/123/inventory-movements/record [32m200[39m in 44ms
+·[2m[WebServer] [22m [37m[1m○[22m[39m Compiling /locations/[locationId]/inventory-stock ...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled /locations/[locationId]/inventory-stock in 554ms
+[2m[WebServer] [22m GET /locations/123/inventory-stock [32m200[39m in 828ms
+T[2m[WebServer] [22m GET /locations/123/inventory-stock [32m200[39m in 41ms
+[2m[WebServer] [22m GET /locations/123/inventory-stock [32m200[39m in 47ms
+[2m[WebServer] [22m GET /locations/123/inventory-stock [32m200[39m in 39ms
+F[2m[WebServer] [22m GET /locations/123/inventory-stock [32m200[39m in 35ms
+T[2m[WebServer] [22m GET /locations/123/inventory-stock [32m200[39m in 44ms
+·[2m[WebServer] [22m [37m[1m○[22m[39m Compiling /locations/[locationId]/menu-items/[menuItemId] ...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled /locations/[locationId]/menu-items/[menuItemId] in 599ms
+[2m[WebServer] [22m GET /locations/123/menu-items/456 [32m200[39m in 869ms
+F[2m[WebServer] [22m GET /locations/123/menu-items/456 [32m200[39m in 34ms
+·[2m[WebServer] [22m [37m[1m○[22m[39m Compiling /locations/[locationId]/menu-items/create ...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled /locations/[locationId]/menu-items/create in 541ms
+[2m[WebServer] [22m GET /locations/location1/menu-items/create [32m200[39m in 827ms
+F[2m[WebServer] [22m GET /locations/location1/menu-items/create [32m200[39m in 37ms
+T[2m[WebServer] [22m GET /locations/location1/menu-items/create [32m200[39m in 38ms
+T[2m[WebServer] [22m GET /locations/location1/menu-items/create [32m200[39m in 38ms
+T[2m[WebServer] [22m GET /locations/location1/menu-items/create [32m200[39m in 34ms
+T[2m[WebServer] [22m GET /locations/location1/menu-items/create [32m200[39m in 45ms
+·[2m[WebServer] [22m [37m[1m○[22m[39m Compiling /locations/[locationId]/menu-items ...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled /locations/[locationId]/menu-items in 560ms
+[2m[WebServer] [22m GET /locations/123/menu-items [32m200[39m in 840ms
+TF[2m[WebServer] [22m GET /locations/123/menu-items [32m200[39m in 39ms
+·[2m[WebServer] [22m [37m[1m○[22m[39m Compiling /locations/[locationId] ...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled /locations/[locationId] in 620ms
+[2m[WebServer] [22m GET /locations/123 [32m200[39m in 912ms
+[2m[WebServer] [22m GET /locations/123 [32m200[39m in 699ms
+[2m[WebServer] [22m GET /locations/123 [32m200[39m in 78ms
+[2m[WebServer] [22m GET /locations/123 [32m200[39m in 39ms
+F[2m[WebServer] [22m GET /locations/123 [32m200[39m in 45ms
+·[2m[WebServer] [22m [37m[1m○[22m[39m Compiling /locations/[locationId]/reports/inventory-movements-timeline ...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled /locations/[locationId]/reports/inventory-movements-timeline in 621ms
+[2m[WebServer] [22m GET /locations/123/reports/inventory-movements-timeline?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z [32m200[39m in 924ms
+T[2m[WebServer] [22m GET /locations/123/reports/inventory-movements-timeline?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z [32m200[39m in 45ms
+F[2m[WebServer] [22m GET /locations/123/reports/inventory-movements-timeline?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z [32m200[39m in 34ms
+T[2m[WebServer] [22m [37m[1m○[22m[39m Compiling /locations/[locationId]/reports/inventory-summary ...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled /locations/[locationId]/reports/inventory-summary in 774ms
+[2m[WebServer] [22m GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z [32m200[39m in 1056ms
+T[2m[WebServer] [22m GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z [32m200[39m in 40ms
+[2m[WebServer] [22m GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z [32m200[39m in 42ms
+[2m[WebServer] [22m GET /locations/123/reports/inventory-summary?startTime=2024-01-01T00:00:00Z&endTime=2024-12-31T23:59:59Z [32m200[39m in 36ms
+T[2m[WebServer] [22m [37m[1m○[22m[39m Compiling /locations/[locationId]/reports ...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled /locations/[locationId]/reports in 676ms
+[2m[WebServer] [22m GET /locations/123/reports [32m200[39m in 943ms
+F[2m[WebServer] [22m GET /locations/123/reports [32m200[39m in 36ms
+F[2m[WebServer] [22m GET /locations/123/reports [32m200[39m in 36ms
+T[2m[WebServer] [22m GET /locations/123/reports [32m200[39m in 44ms
+·[2m[WebServer] [22m [37m[1m○[22m[39m Compiling /locations/[locationId]/staff/[staffId] ...
+[2m[WebServer] [22m [32m[1m✓[22m[39m Compiled /locations/[locationId]/staff/[staffId] in 654ms
+[2m[WebServer] [22m GET /locations/123/staff/456 [32m200[39m in 923ms
+T[2m[WebServer] [22m GET /locations/123/staff/456 [32m200[39m in 36ms
+F

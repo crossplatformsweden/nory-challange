@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
   useGetRecipeById,
   useListRecipeIngredientLinks,
-} from '@nory/api-client';
+} from '@repo/api-client';
 import { useParams, useRouter } from 'next/navigation';
 
 /**
@@ -36,7 +36,7 @@ import { useParams, useRouter } from 'next/navigation';
  * Example implementation using React Query and generated hooks:
  * 
  * import React from 'react';
- * import { useGetRecipeById } from '@nory/api-client';
+ * import { useGetRecipeById } from '@repo/api-client';
  * 
  * // Create a client
  * const queryClient = new QueryClient();
@@ -79,11 +79,7 @@ const RecipeDetailPage: FC<RecipeDetailPageProps> = () => {
     },
   });
 
-  const {
-    data: ingredientLinksData,
-    isLoading: ingredientLinksLoading,
-    error: ingredientLinksError,
-  } = useListRecipeIngredientLinks(recipeId, {
+  const { data: ingredientLinksData } = useListRecipeIngredientLinks(recipeId, {
     query: {
       refetchOnMount: true,
       refetchOnWindowFocus: false,

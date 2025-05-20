@@ -1,7 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import IngredientCostsListPage from './page';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { useListLocationIngredientCosts } from '@nory/api-client';
+import { useRouter } from 'next/navigation';
+import { useListLocationIngredientCosts } from '@repo/api-client';
 
 /**
  * Testing Guide:
@@ -34,7 +34,7 @@ jest.mock('next/navigation', () => {
 });
 
 // Mock the API hook
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useListLocationIngredientCosts: jest.fn(),
 }));
 

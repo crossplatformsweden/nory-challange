@@ -51,7 +51,7 @@ test.describe('CreateStaffPage', () => {
     await expect(page).toHaveURL(/\/locations\/[^/]+\/staff$/);
   });
 
-  test('shows error state when API fails', async ({ page }) => {
+  test('shows error state when API fails', async () => {
     // ... existing code ...
   });
 

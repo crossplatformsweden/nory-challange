@@ -5,18 +5,17 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 // import turboPlugin from "eslint-plugin-turbo";
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import typescriptEslintParser from '@typescript-eslint/parser';
-// @ts-ignore
-import onlyWarn from 'eslint-plugin-only-warn';
 
 /**
  * A shared ESLint configuration for the repository.
  */
+/** @type {import('eslint').Linter.FlatConfig[]} */
 const config = [
   js.configs.recommended,
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 'latest',
+      ecmaVersion: 2024,
       sourceType: 'module',
       parser: typescriptEslintParser,
       parserOptions: {
@@ -33,18 +32,29 @@ const config = [
     },
     plugins: {
       '@typescript-eslint': typescriptEslint,
-      'only-warn': onlyWarn,
     },
     rules: {
-      'no-console': 'off',
+      'no-console': 'error',
       'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': ['error'],
-      '@typescript-eslint/no-var-requires': 'off',
+      '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-var-requires': 'error',
+      '@typescript-eslint/no-redeclare': 'error',
+      'no-undef': 'error',
+      // Treat all warnings as errors
+      'no-warning-comments': 'error',
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'CallExpression[callee.name="console.warn"]',
+          message: 'Console warnings are not allowed. Use error instead.',
+        },
+      ],
     },
   },
   eslintConfigPrettier,
   {
-    ignores: ['dist/**'],
+    ignores: ['dist/**', 'node_modules/**', '.turbo/**'],
   },
 ];
 

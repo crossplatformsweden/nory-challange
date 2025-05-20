@@ -5,10 +5,7 @@
  * API for managing inventory, staff, locations, recipes, menu items, and related data for Nory.
  * OpenAPI spec version: 1.0.0
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type {
   MutationFunction,
   QueryFunction,
@@ -16,306 +13,389 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query'
-import axios from 'axios'
-import type {
-  AxiosError,
-  AxiosRequestConfig,
-  AxiosResponse
-} from 'axios'
+  UseQueryResult,
+} from '@tanstack/react-query';
+import axios from 'axios';
+import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import type {
   BadRequestResponse,
   InternalServerErrorResponse,
   NotFoundResponse,
   Recipe,
   RecipeCreate,
-  RecipeUpdate
-} from '../noryInventoryAPI.schemas'
-
-
+  RecipeUpdate,
+} from '../noryInventoryAPI.schemas';
 
 /**
  * Retrieve a list of all defined recipes.
  * @summary List all recipes
  */
 export const listRecipes = (
-     options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Recipe[]>> => {
-    
-    return axios.get(
-      `/recipes`,options
-    );
-  }
-
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<Recipe[]>> => {
+  return axios.get(`/recipes`, options);
+};
 
 export const getListRecipesQueryKey = () => {
-    return [`/recipes`] as const;
-    }
+  return [`/recipes`] as const;
+};
 
-    
-export const getListRecipesQueryOptions = <TData = Awaited<ReturnType<typeof listRecipes>>, TError = AxiosError<InternalServerErrorResponse>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>>, axios?: AxiosRequestConfig}
-) => {
+export const getListRecipesQueryOptions = <
+  TData = Awaited<ReturnType<typeof listRecipes>>,
+  TError = AxiosError<InternalServerErrorResponse>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>
+  >;
+  axios?: AxiosRequestConfig;
+}) => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {};
 
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getListRecipesQueryKey();
 
-  const queryKey =  queryOptions?.queryKey ?? getListRecipesQueryKey();
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof listRecipes>>> = ({
+    signal,
+  }) => listRecipes({ signal, ...axiosOptions });
 
-  
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listRecipes>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listRecipes>>> = ({ signal }) => listRecipes({ signal, ...axiosOptions });
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData> & { queryKey: QueryKey }
-}
-
-export type ListRecipesQueryResult = NonNullable<Awaited<ReturnType<typeof listRecipes>>>
-export type ListRecipesQueryError = AxiosError<InternalServerErrorResponse>
+export type ListRecipesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listRecipes>>
+>;
+export type ListRecipesQueryError = AxiosError<InternalServerErrorResponse>;
 
 /**
  * @summary List all recipes
  */
-export const useListRecipes = <TData = Awaited<ReturnType<typeof listRecipes>>, TError = AxiosError<InternalServerErrorResponse>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>>, axios?: AxiosRequestConfig}
+export const useListRecipes = <
+  TData = Awaited<ReturnType<typeof listRecipes>>,
+  TError = AxiosError<InternalServerErrorResponse>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>
+  >;
+  axios?: AxiosRequestConfig;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const queryOptions = getListRecipesQueryOptions(options);
 
-  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
 
-  const queryOptions = getListRecipesQueryOptions(options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
-}
-
-
+};
 
 /**
  * Add a new recipe definition.
  * @summary Create a new recipe
  */
 export const createRecipe = (
-    recipeCreate: RecipeCreate, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Recipe>> => {
-    
-    return axios.post(
-      `/recipes`,
-      recipeCreate,options
-    );
-  }
+  recipeCreate: RecipeCreate,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<Recipe>> => {
+  return axios.post(`/recipes`, recipeCreate, options);
+};
 
+export const getCreateRecipeMutationOptions = <
+  TError = AxiosError<BadRequestResponse | InternalServerErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createRecipe>>,
+    TError,
+    { data: RecipeCreate },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createRecipe>>,
+  TError,
+  { data: RecipeCreate },
+  TContext
+> => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createRecipe>>,
+    { data: RecipeCreate }
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getCreateRecipeMutationOptions = <TError = AxiosError<BadRequestResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRecipe>>, TError,{data: RecipeCreate}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof createRecipe>>, TError,{data: RecipeCreate}, TContext> => {
-const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
+    return createRecipe(data, axiosOptions);
+  };
 
-      
+  return { mutationFn, ...mutationOptions };
+};
 
+export type CreateRecipeMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createRecipe>>
+>;
+export type CreateRecipeMutationBody = RecipeCreate;
+export type CreateRecipeMutationError = AxiosError<
+  BadRequestResponse | InternalServerErrorResponse
+>;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createRecipe>>, {data: RecipeCreate}> = (props) => {
-          const {data} = props ?? {};
-
-          return  createRecipe(data,axiosOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateRecipeMutationResult = NonNullable<Awaited<ReturnType<typeof createRecipe>>>
-    export type CreateRecipeMutationBody = RecipeCreate
-    export type CreateRecipeMutationError = AxiosError<BadRequestResponse | InternalServerErrorResponse>
-
-    /**
+/**
  * @summary Create a new recipe
  */
-export const useCreateRecipe = <TError = AxiosError<BadRequestResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRecipe>>, TError,{data: RecipeCreate}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationResult<
-        Awaited<ReturnType<typeof createRecipe>>,
-        TError,
-        {data: RecipeCreate},
-        TContext
-      > => {
+export const useCreateRecipe = <
+  TError = AxiosError<BadRequestResponse | InternalServerErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createRecipe>>,
+    TError,
+    { data: RecipeCreate },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof createRecipe>>,
+  TError,
+  { data: RecipeCreate },
+  TContext
+> => {
+  const mutationOptions = getCreateRecipeMutationOptions(options);
 
-      const mutationOptions = getCreateRecipeMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    /**
+  return useMutation(mutationOptions);
+};
+/**
  * Retrieve a specific recipe using its unique ID.
  * @summary Get a recipe by ID
  */
 export const getRecipeById = (
-    recipeId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Recipe>> => {
-    
-    return axios.get(
-      `/recipes/${recipeId}`,options
-    );
+  recipeId: string,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<Recipe>> => {
+  return axios.get(`/recipes/${recipeId}`, options);
+};
+
+export const getGetRecipeByIdQueryKey = (recipeId: string) => {
+  return [`/recipes/${recipeId}`] as const;
+};
+
+export const getGetRecipeByIdQueryOptions = <
+  TData = Awaited<ReturnType<typeof getRecipeById>>,
+  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
+>(
+  recipeId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getRecipeById>>, TError, TData>
+    >;
+    axios?: AxiosRequestConfig;
   }
-
-
-export const getGetRecipeByIdQueryKey = (recipeId: string,) => {
-    return [`/recipes/${recipeId}`] as const;
-    }
-
-    
-export const getGetRecipeByIdQueryOptions = <TData = Awaited<ReturnType<typeof getRecipeById>>, TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>>(recipeId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipeById>>, TError, TData>>, axios?: AxiosRequestConfig}
 ) => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {};
 
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getGetRecipeByIdQueryKey(recipeId);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetRecipeByIdQueryKey(recipeId);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getRecipeById>>> = ({
+    signal,
+  }) => getRecipeById(recipeId, { signal, ...axiosOptions });
 
-  
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!recipeId,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getRecipeById>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRecipeById>>> = ({ signal }) => getRecipeById(recipeId, { signal, ...axiosOptions });
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(recipeId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getRecipeById>>, TError, TData> & { queryKey: QueryKey }
-}
-
-export type GetRecipeByIdQueryResult = NonNullable<Awaited<ReturnType<typeof getRecipeById>>>
-export type GetRecipeByIdQueryError = AxiosError<NotFoundResponse | InternalServerErrorResponse>
+export type GetRecipeByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getRecipeById>>
+>;
+export type GetRecipeByIdQueryError = AxiosError<
+  NotFoundResponse | InternalServerErrorResponse
+>;
 
 /**
  * @summary Get a recipe by ID
  */
-export const useGetRecipeById = <TData = Awaited<ReturnType<typeof getRecipeById>>, TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>>(
- recipeId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipeById>>, TError, TData>>, axios?: AxiosRequestConfig}
+export const useGetRecipeById = <
+  TData = Awaited<ReturnType<typeof getRecipeById>>,
+  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
+>(
+  recipeId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getRecipeById>>, TError, TData>
+    >;
+    axios?: AxiosRequestConfig;
+  }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const queryOptions = getGetRecipeByIdQueryOptions(recipeId, options);
 
-  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
 
-  const queryOptions = getGetRecipeByIdQueryOptions(recipeId,options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
-}
-
-
+};
 
 /**
  * Update details of an existing recipe definition.
  * @summary Update a recipe
  */
 export const updateRecipe = (
-    recipeId: string,
-    recipeUpdate: RecipeUpdate, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Recipe>> => {
-    
-    return axios.patch(
-      `/recipes/${recipeId}`,
-      recipeUpdate,options
-    );
-  }
+  recipeId: string,
+  recipeUpdate: RecipeUpdate,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<Recipe>> => {
+  return axios.patch(`/recipes/${recipeId}`, recipeUpdate, options);
+};
 
+export const getUpdateRecipeMutationOptions = <
+  TError = AxiosError<
+    BadRequestResponse | NotFoundResponse | InternalServerErrorResponse
+  >,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateRecipe>>,
+    TError,
+    { recipeId: string; data: RecipeUpdate },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof updateRecipe>>,
+  TError,
+  { recipeId: string; data: RecipeUpdate },
+  TContext
+> => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof updateRecipe>>,
+    { recipeId: string; data: RecipeUpdate }
+  > = (props) => {
+    const { recipeId, data } = props ?? {};
 
-export const getUpdateRecipeMutationOptions = <TError = AxiosError<BadRequestResponse | NotFoundResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRecipe>>, TError,{recipeId: string;data: RecipeUpdate}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof updateRecipe>>, TError,{recipeId: string;data: RecipeUpdate}, TContext> => {
-const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
+    return updateRecipe(recipeId, data, axiosOptions);
+  };
 
-      
+  return { mutationFn, ...mutationOptions };
+};
 
+export type UpdateRecipeMutationResult = NonNullable<
+  Awaited<ReturnType<typeof updateRecipe>>
+>;
+export type UpdateRecipeMutationBody = RecipeUpdate;
+export type UpdateRecipeMutationError = AxiosError<
+  BadRequestResponse | NotFoundResponse | InternalServerErrorResponse
+>;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateRecipe>>, {recipeId: string;data: RecipeUpdate}> = (props) => {
-          const {recipeId,data} = props ?? {};
-
-          return  updateRecipe(recipeId,data,axiosOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UpdateRecipeMutationResult = NonNullable<Awaited<ReturnType<typeof updateRecipe>>>
-    export type UpdateRecipeMutationBody = RecipeUpdate
-    export type UpdateRecipeMutationError = AxiosError<BadRequestResponse | NotFoundResponse | InternalServerErrorResponse>
-
-    /**
+/**
  * @summary Update a recipe
  */
-export const useUpdateRecipe = <TError = AxiosError<BadRequestResponse | NotFoundResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRecipe>>, TError,{recipeId: string;data: RecipeUpdate}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationResult<
-        Awaited<ReturnType<typeof updateRecipe>>,
-        TError,
-        {recipeId: string;data: RecipeUpdate},
-        TContext
-      > => {
+export const useUpdateRecipe = <
+  TError = AxiosError<
+    BadRequestResponse | NotFoundResponse | InternalServerErrorResponse
+  >,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateRecipe>>,
+    TError,
+    { recipeId: string; data: RecipeUpdate },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof updateRecipe>>,
+  TError,
+  { recipeId: string; data: RecipeUpdate },
+  TContext
+> => {
+  const mutationOptions = getUpdateRecipeMutationOptions(options);
 
-      const mutationOptions = getUpdateRecipeMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    /**
+  return useMutation(mutationOptions);
+};
+/**
  * Remove a recipe definition. This might require checks for existing ingredient links or menu item links.
  * @summary Delete a recipe
  */
 export const deleteRecipe = (
-    recipeId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<void>> => {
-    
-    return axios.delete(
-      `/recipes/${recipeId}`,options
-    );
-  }
+  recipeId: string,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
+  return axios.delete(`/recipes/${recipeId}`, options);
+};
 
+export const getDeleteRecipeMutationOptions = <
+  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteRecipe>>,
+    TError,
+    { recipeId: string },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof deleteRecipe>>,
+  TError,
+  { recipeId: string },
+  TContext
+> => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteRecipe>>,
+    { recipeId: string }
+  > = (props) => {
+    const { recipeId } = props ?? {};
 
-export const getDeleteRecipeMutationOptions = <TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRecipe>>, TError,{recipeId: string}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof deleteRecipe>>, TError,{recipeId: string}, TContext> => {
-const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
+    return deleteRecipe(recipeId, axiosOptions);
+  };
 
-      
+  return { mutationFn, ...mutationOptions };
+};
 
+export type DeleteRecipeMutationResult = NonNullable<
+  Awaited<ReturnType<typeof deleteRecipe>>
+>;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteRecipe>>, {recipeId: string}> = (props) => {
-          const {recipeId} = props ?? {};
+export type DeleteRecipeMutationError = AxiosError<
+  NotFoundResponse | InternalServerErrorResponse
+>;
 
-          return  deleteRecipe(recipeId,axiosOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DeleteRecipeMutationResult = NonNullable<Awaited<ReturnType<typeof deleteRecipe>>>
-    
-    export type DeleteRecipeMutationError = AxiosError<NotFoundResponse | InternalServerErrorResponse>
-
-    /**
+/**
  * @summary Delete a recipe
  */
-export const useDeleteRecipe = <TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRecipe>>, TError,{recipeId: string}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationResult<
-        Awaited<ReturnType<typeof deleteRecipe>>,
-        TError,
-        {recipeId: string},
-        TContext
-      > => {
+export const useDeleteRecipe = <
+  TError = AxiosError<NotFoundResponse | InternalServerErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteRecipe>>,
+    TError,
+    { recipeId: string },
+    TContext
+  >;
+  axios?: AxiosRequestConfig;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof deleteRecipe>>,
+  TError,
+  { recipeId: string },
+  TContext
+> => {
+  const mutationOptions = getDeleteRecipeMutationOptions(options);
 
-      const mutationOptions = getDeleteRecipeMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    
+  return useMutation(mutationOptions);
+};

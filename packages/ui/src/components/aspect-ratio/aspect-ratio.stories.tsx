@@ -1,18 +1,17 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { AspectRatio } from "./index";
-import Image from "next/image";
+import type { Meta, StoryObj } from '@storybook/react';
+import { AspectRatio } from './index';
 
 const meta: Meta<typeof AspectRatio> = {
-  title: "Components/AspectRatio",
+  title: 'Components/AspectRatio',
   component: AspectRatio,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     ratio: {
-      control: { type: "number" },
-      description: "The aspect ratio of the container",
+      control: { type: 'number' },
+      description: 'The aspect ratio of the container',
     },
   },
 };
@@ -25,7 +24,7 @@ export const Default: Story = {
     <div className="w-[300px]">
       <AspectRatio {...args} className="bg-muted">
         <div className="flex h-full items-center justify-center">
-          Aspect Ratio: {args.ratio || "1:1"}
+          Aspect Ratio: {args.ratio || '1:1'}
         </div>
       </AspectRatio>
     </div>
@@ -72,7 +71,7 @@ export const WithImage: Story = {
         <img
           src="https://images.unsplash.com/photo-1503614472-8c93d56e92ce?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Mountain landscape"
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
         />
       </AspectRatio>
     </div>

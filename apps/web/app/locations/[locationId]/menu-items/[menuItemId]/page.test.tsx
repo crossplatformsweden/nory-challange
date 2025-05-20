@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import MenuItemDetailPage from './page';
-import { useGetLocationMenuItemById } from '@nory/api-client';
+import { useGetLocationMenuItemById } from '@repo/api-client';
 import { useParams } from 'next/navigation';
 
 /**
@@ -18,7 +18,7 @@ import { useParams } from 'next/navigation';
  */
 
 // Mock the hooks
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useGetLocationMenuItemById: jest.fn(),
 }));
 

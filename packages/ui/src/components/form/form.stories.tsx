@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import type { Meta, StoryObj } from '@storybook/react';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
   FormControl,
@@ -10,20 +10,25 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./index";
-import { Input } from "../input";
-import { Button } from "../button";
-import { Checkbox } from "../checkbox";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../select";
-import { toast } from "../use-toast";
-import { useState } from "react";
+} from './index';
+import { Input } from '../input';
+import { Button } from '../button';
+import { Checkbox } from '../checkbox';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../select';
+import { toast } from '../use-toast';
 
 const meta: Meta = {
-  title: "UI/Form",
+  title: 'UI/Form',
   component: Form,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
 };
 
@@ -33,7 +38,7 @@ type Story = StoryObj<typeof Form>;
 // Define basic form schema outside of render function
 const basicFormSchema = z.object({
   username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+    message: 'Username must be at least 2 characters.',
   }),
 });
 
@@ -43,17 +48,19 @@ const BasicFormWrapper = () => {
   const form = useForm<z.infer<typeof basicFormSchema>>({
     resolver: zodResolver(basicFormSchema),
     defaultValues: {
-      username: "",
+      username: '',
     },
   });
 
   // Handle form submission
-  function onSubmit(values: z.infer<typeof basicFormSchema>) {
+  function onSubmit() {
     toast({
-      title: "You submitted the following values:",
+      title: 'You submitted the following values:',
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+          <code className="text-white">
+            {JSON.stringify(form.getValues(), null, 2)}
+          </code>
         </pre>
       ),
     });
@@ -61,14 +68,19 @@ const BasicFormWrapper = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-[400px]">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-[400px] space-y-8"
+      >
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
-              <FormDescription>This is your public display name.</FormDescription>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
               <FormControl>
                 <Input placeholder="Enter username" {...field} />
               </FormControl>
@@ -92,13 +104,13 @@ export const BasicForm: Story = {
 // Define complex form schema outside of render function
 const complexFormSchema = z.object({
   username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+    message: 'Username must be at least 2 characters.',
   }),
   email: z.string().email({
-    message: "Please enter a valid email address.",
+    message: 'Please enter a valid email address.',
   }),
   role: z.string({
-    required_error: "Please select a role.",
+    required_error: 'Please select a role.',
   }),
   notifications: z.boolean().default(false),
 });
@@ -109,19 +121,21 @@ const ComplexFormWrapper = () => {
   const form = useForm<z.infer<typeof complexFormSchema>>({
     resolver: zodResolver(complexFormSchema),
     defaultValues: {
-      username: "",
-      email: "",
+      username: '',
+      email: '',
       notifications: false,
     },
   });
 
   // Handle form submission
-  function onSubmit(values: z.infer<typeof complexFormSchema>) {
+  function onSubmit() {
     toast({
-      title: "You submitted the following values:",
+      title: 'You submitted the following values:',
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+          <code className="text-white">
+            {JSON.stringify(form.getValues(), null, 2)}
+          </code>
         </pre>
       ),
     });
@@ -129,7 +143,10 @@ const ComplexFormWrapper = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-[400px]">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-[400px] space-y-8"
+      >
         <FormField
           control={form.control}
           name="username"
@@ -139,12 +156,14 @@ const ComplexFormWrapper = () => {
               <FormControl>
                 <Input placeholder="Enter username" {...field} />
               </FormControl>
-              <FormDescription>This is your public display name.</FormDescription>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="email"
@@ -154,12 +173,14 @@ const ComplexFormWrapper = () => {
               <FormControl>
                 <Input placeholder="email@example.com" {...field} />
               </FormControl>
-              <FormDescription>We'll never share your email with anyone else.</FormDescription>
+              <FormDescription>
+                We'll never share your email with anyone else.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="role"
@@ -185,7 +206,7 @@ const ComplexFormWrapper = () => {
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="notifications"
@@ -206,7 +227,7 @@ const ComplexFormWrapper = () => {
             </FormItem>
           )}
         />
-        
+
         <Button type="submit">Submit</Button>
       </form>
     </Form>
@@ -223,10 +244,10 @@ export const ComplexForm: Story = {
 // Define schema for form with initial values
 const initialValuesFormSchema = z.object({
   username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+    message: 'Username must be at least 2 characters.',
   }),
   email: z.string().email({
-    message: "Please enter a valid email address.",
+    message: 'Please enter a valid email address.',
   }),
 });
 
@@ -236,18 +257,20 @@ const FormWithInitialValuesWrapper = () => {
   const form = useForm<z.infer<typeof initialValuesFormSchema>>({
     resolver: zodResolver(initialValuesFormSchema),
     defaultValues: {
-      username: "johndoe",
-      email: "john@example.com",
+      username: 'johndoe',
+      email: 'john@example.com',
     },
   });
 
   // Handle form submission
-  function onSubmit(values: z.infer<typeof initialValuesFormSchema>) {
+  function onSubmit() {
     toast({
-      title: "You submitted the following values:",
+      title: 'You submitted the following values:',
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+          <code className="text-white">
+            {JSON.stringify(form.getValues(), null, 2)}
+          </code>
         </pre>
       ),
     });
@@ -255,7 +278,10 @@ const FormWithInitialValuesWrapper = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-[400px]">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-[400px] space-y-8"
+      >
         <FormField
           control={form.control}
           name="username"
@@ -269,7 +295,7 @@ const FormWithInitialValuesWrapper = () => {
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="email"
@@ -283,7 +309,7 @@ const FormWithInitialValuesWrapper = () => {
             </FormItem>
           )}
         />
-        
+
         <Button type="submit">Submit</Button>
       </form>
     </Form>
@@ -298,18 +324,26 @@ export const FormWithInitialValues: Story = {
 };
 
 // Define schema for form with custom validation
-const customValidationFormSchema = z.object({
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters." })
-    .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter." })
-    .regex(/[a-z]/, { message: "Password must contain at least one lowercase letter." })
-    .regex(/[0-9]/, { message: "Password must contain at least one number." }),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match.",
-  path: ["confirmPassword"],
-});
+const customValidationFormSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, { message: 'Password must be at least 8 characters.' })
+      .regex(/[A-Z]/, {
+        message: 'Password must contain at least one uppercase letter.',
+      })
+      .regex(/[a-z]/, {
+        message: 'Password must contain at least one lowercase letter.',
+      })
+      .regex(/[0-9]/, {
+        message: 'Password must contain at least one number.',
+      }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match.',
+    path: ['confirmPassword'],
+  });
 
 // Form with Custom Validation Wrapper Component
 const FormWithCustomValidationWrapper = () => {
@@ -317,23 +351,26 @@ const FormWithCustomValidationWrapper = () => {
   const form = useForm<z.infer<typeof customValidationFormSchema>>({
     resolver: zodResolver(customValidationFormSchema),
     defaultValues: {
-      password: "",
-      confirmPassword: "",
+      password: '',
+      confirmPassword: '',
     },
-    mode: "onChange",
+    mode: 'onChange',
   });
 
   // Handle form submission
-  function onSubmit(values: z.infer<typeof customValidationFormSchema>) {
+  function onSubmit() {
     toast({
-      title: "Password successfully set!",
-      description: "Your password has been updated.",
+      title: 'Password successfully set!',
+      description: 'Your password has been updated.',
     });
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-[400px]">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-[400px] space-y-8"
+      >
         <FormField
           control={form.control}
           name="password"
@@ -344,13 +381,14 @@ const FormWithCustomValidationWrapper = () => {
                 <Input type="password" {...field} />
               </FormControl>
               <FormDescription>
-                Must be at least 8 characters with uppercase, lowercase, and number.
+                Must be at least 8 characters with uppercase, lowercase, and
+                number.
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="confirmPassword"
@@ -364,7 +402,7 @@ const FormWithCustomValidationWrapper = () => {
             </FormItem>
           )}
         />
-        
+
         <Button type="submit">Set Password</Button>
       </form>
     </Form>

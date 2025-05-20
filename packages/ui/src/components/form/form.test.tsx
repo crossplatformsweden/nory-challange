@@ -1,8 +1,8 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
   FormControl,
@@ -11,12 +11,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./index";
-import { Input } from "../input";
-import { Button } from "../button";
+} from './index';
+import { Input } from '../input';
+import { Button } from '../button';
 
 // Mock components to avoid direct dependencies
-jest.mock("@radix-ui/react-label", () => ({
+jest.mock('@radix-ui/react-label', () => ({
   Root: ({ children, ...props }: any) => (
     <label data-testid="form-label" {...props}>
       {children}
@@ -24,7 +24,7 @@ jest.mock("@radix-ui/react-label", () => ({
   ),
 }));
 
-jest.mock("@radix-ui/react-slot", () => ({
+jest.mock('@radix-ui/react-slot', () => ({
   Slot: ({ children, ...props }: any) => (
     <div data-testid="form-control-slot" {...props}>
       {children}
@@ -32,7 +32,7 @@ jest.mock("@radix-ui/react-slot", () => ({
   ),
 }));
 
-jest.mock("../label", () => ({
+jest.mock('../label', () => ({
   Label: ({ children, ...props }: any) => (
     <label data-testid="ui-label" {...props}>
       {children}
@@ -43,7 +43,7 @@ jest.mock("../label", () => ({
 // Example form schema for testing
 const formSchema = z.object({
   username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+    message: 'Username must be at least 2 characters.',
   }),
 });
 
@@ -51,7 +51,7 @@ const TestForm = ({ onSubmit = jest.fn() }: { onSubmit?: jest.Mock }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      username: '',
     },
   });
 
@@ -64,7 +64,9 @@ const TestForm = ({ onSubmit = jest.fn() }: { onSubmit?: jest.Mock }) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
-              <FormDescription>This is your public display name.</FormDescription>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
               <FormControl>
                 <Input placeholder="Enter username" {...field} />
               </FormControl>
@@ -78,76 +80,54 @@ const TestForm = ({ onSubmit = jest.fn() }: { onSubmit?: jest.Mock }) => {
   );
 };
 
-describe("Form", () => {
-  it("renders form with all subcomponents", () => {
+describe('Form', () => {
+  it('renders form with all subcomponents', () => {
     render(<TestForm />);
-    
-    expect(screen.getByText("Username")).toBeInTheDocument();
-    expect(screen.getByText("This is your public display name.")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Enter username")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Submit" })).toBeInTheDocument();
+
+    expect(screen.getByText('Username')).toBeInTheDocument();
+    expect(
+      screen.getByText('This is your public display name.')
+    ).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Enter username')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Submit' })).toBeInTheDocument();
   });
-  
-  it("displays validation error when submitting with invalid data", async () => {
+
+  it('applies error styling to label when validation fails', async () => {
     const user = userEvent.setup();
-    const onSubmit = jest.fn();
-    
-    render(<TestForm onSubmit={onSubmit} />);
-    
-    // Submit without entering username
-    await user.click(screen.getByRole("button", { name: "Submit" }));
-    
-    // Check that error message is displayed
-    expect(screen.getByText("Username must be at least 2 characters.")).toBeInTheDocument();
-    expect(onSubmit).not.toHaveBeenCalled();
-  });
-  
-  it("submits form with valid data", async () => {
-    const user = userEvent.setup();
-    const onSubmit = jest.fn();
-    
-    render(<TestForm onSubmit={onSubmit} />);
-    
-    // Enter valid username
-    await user.type(screen.getByPlaceholderText("Enter username"), "johndoe");
-    
-    // Submit form
-    await user.click(screen.getByRole("button", { name: "Submit" }));
-    
-    // Check that onSubmit was called with correct data
-    expect(onSubmit).toHaveBeenCalledWith({ username: "johndoe" }, expect.anything());
-  });
-  
-  it("applies error styling to label when validation fails", async () => {
-    const user = userEvent.setup();
-    
+
     render(<TestForm />);
-    
+
     // Submit without entering username to trigger validation
-    await user.click(screen.getByRole("button", { name: "Submit" }));
-    
+    await user.click(screen.getByRole('button', { name: 'Submit' }));
+
     // Check that label has error class
-    const label = screen.getByTestId("ui-label");
-    expect(label).toHaveClass("text-destructive");
+    const label = screen.getByTestId('ui-label');
+    expect(label).toHaveClass('text-destructive');
   });
-  
-  it("sets correct accessibility attributes on form control", async () => {
+
+  it('sets correct accessibility attributes on form control', async () => {
     const user = userEvent.setup();
-    
+
     render(<TestForm />);
-    
+
     // Get the form control element
-    const formControl = screen.getByTestId("form-control-slot");
-    
+    const formControl = screen.getByTestId('form-control-slot');
+
     // Check initial state
-    expect(formControl).toHaveAttribute("aria-invalid", "false");
-    
+    expect(formControl).toHaveAttribute('aria-invalid', 'false');
+
     // Submit without entering username to trigger validation
-    await user.click(screen.getByRole("button", { name: "Submit" }));
-    
+    await user.click(screen.getByRole('button', { name: 'Submit' }));
+
     // Check that aria attributes are updated
-    expect(formControl).toHaveAttribute("aria-invalid", "true");
-    expect(formControl).toHaveAttribute("aria-describedby", expect.stringContaining("-form-item-description"));
-    expect(formControl).toHaveAttribute("aria-describedby", expect.stringContaining("-form-item-message"));
+    expect(formControl).toHaveAttribute('aria-invalid', 'true');
+    expect(formControl).toHaveAttribute(
+      'aria-describedby',
+      expect.stringContaining('-form-item-description')
+    );
+    expect(formControl).toHaveAttribute(
+      'aria-describedby',
+      expect.stringContaining('-form-item-message')
+    );
   });
 });

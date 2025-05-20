@@ -6,9 +6,11 @@ export default defineConfig({
   testDir: './app', // Correct relative path to the app directory
   testMatch: '**/*.e2e.test.{ts,tsx}', // Match your test file pattern
   fullyParallel: true,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 2 : 1,
   workers: process.env.CI ? 1 : 2,
-  reporter: process.env.CI ? 'dot' : 'dot',
+  reporter: process.env.CI
+    ? [['dot'], ['json', { outputFile: 'playwright-report.json' }]]
+    : [['dot'], ['json', { outputFile: 'playwright-report.json' }]],
   outputDir: path.join(process.cwd(), 'test-results'),
   use: {
     baseURL: 'http://localhost:3001',

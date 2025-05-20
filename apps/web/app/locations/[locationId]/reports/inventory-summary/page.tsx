@@ -3,14 +3,14 @@
 import { FC, useMemo, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation'; // Removed useSearchParams as it's not used
 // Import generated hooks and types
-import { useListInventoryStock } from '@nory/api-client';
-import type { InventoryStock } from '@nory/api-client';
+import { useListInventoryStock } from '@repo/api-client';
+import type { InventoryStock } from '@repo/api-client';
 
 // Import useQueries from React Query
 // Assuming @tanstack/react-query is a dependency and the generated client works with it
 import { useQueries } from '@tanstack/react-query';
 // Assuming the fetcher function for useGetIngredientById is exposed
-import { getIngredientById } from '@nory/api-client';
+import { getIngredientById } from '@repo/api-client';
 
 /**
  * // Update this page and corresponding test files. Make sure to use testId. And DaisyUI. Look in  utils/nextjsroutes.md To see what hook to use for this page. Source that hook and visualize/use it with daisyUI. Also look for the fakerjs implementation of that hook tanstack by genertaion orval noryApiClient. We will use the faker version in all tests. So all data coming will be random. So just test testId and hasValue() or similar. Use NextJS best practive for routing images etc. Not actual values. Use best pracitce for visualizing forms with use react-hook-form make sure check package.json with available libraries. Dont install any other libraries. For this File make sure you only change the page.tsx page.test.tsx and page.test.e2e.tsx. Verify using gh cli that its only max this 3 files changed. NO OTHER FILE. LEAVE THIS COMMENT IN THE FILE DO NOT REMOVE.
@@ -82,7 +82,7 @@ const InventorySummaryReportPage: FC<InventorySummaryReportPageProps> = () => {
   const ingredientQueryResults = useQueries({
     queries: uniqueIngredientIds.map((id) => ({
       queryKey: ['ingredient', id], // Unique query key for each ingredient
-      // Assuming getIngredientById is the fetcher function exported by @nory/api-client
+      // Assuming getIngredientById is the fetcher function exported by @repo/api-client
       // It should return a Promise that resolves to the data shape expected by the generated hook.
       // Based on the original code's access `ingredientData?.data?.cost`,
       // we assume the fetcher returns an object like `{ data: { cost: number, ... } }`.

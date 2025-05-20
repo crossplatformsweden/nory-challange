@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import InventorySummaryReportPage from './page';
-import { useRouter, useParams, useSearchParams } from 'next/navigation';
-import { useListInventoryStock, useGetIngredientById } from '@nory/api-client';
+import { useRouter, useParams } from 'next/navigation';
+import { useListInventoryStock, useGetIngredientById } from '@repo/api-client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 /**
@@ -36,7 +36,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock the API hooks
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useListInventoryStock: jest.fn(() => ({
     data: {
       data: [],
@@ -44,7 +44,7 @@ jest.mock('@nory/api-client', () => ({
     isLoading: false,
     error: null,
   })),
-  useGetIngredientById: jest.fn().mockImplementation((ingredientId) => ({
+  useGetIngredientById: jest.fn().mockImplementation(() => ({
     data: {
       data: {
         cost: 2.5,
@@ -53,7 +53,7 @@ jest.mock('@nory/api-client', () => ({
     isLoading: false,
     error: null,
   })),
-  getIngredientById: jest.fn().mockImplementation((ingredientId) =>
+  getIngredientById: jest.fn().mockImplementation(() =>
     Promise.resolve({
       data: {
         cost: 2.5,

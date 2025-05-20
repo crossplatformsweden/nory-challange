@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import CreateMenuItemPage from './page';
-import { useCreateLocationMenuItem } from '@nory/api-client';
+import { useCreateLocationMenuItem } from '@repo/api-client';
 import { useParams, useRouter } from 'next/navigation';
 
 /**
@@ -18,7 +18,7 @@ import { useParams, useRouter } from 'next/navigation';
  */
 
 // Mock the hooks
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useCreateLocationMenuItem: jest.fn(),
 }));
 

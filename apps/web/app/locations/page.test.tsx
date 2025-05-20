@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import LocationsListPage from './page';
-import { useListLocations } from '@nory/api-client';
+import { useListLocations } from '@repo/api-client';
 
 /**
  * Testing Guide:
@@ -17,7 +17,7 @@ import { useListLocations } from '@nory/api-client';
  */
 
 // Mock the hook
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useListLocations: jest.fn(),
 }));
 

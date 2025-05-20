@@ -1,12 +1,26 @@
-import { base } from '@repo/eslint-config/index.js';
+// @ts-check
+import { apiClient } from '@repo/eslint-config';
 
+/** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
-  ...base,
+  ...apiClient,
   {
-    files: ['**/*.ts', '**/*.tsx'],
+    files: ['**/*.{js,ts}'],
     rules: {
-      // Add any api-client specific rules here
-      'no-console': 'off', // Allow console logs during development
+      // Add any API client-specific overrides here
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/explicit-function-return-type': 'off',
     },
+  },
+  {
+    ignores: [
+      'dist/**',
+      'node_modules/**',
+      '.turbo/**',
+      '**/*.d.ts',
+      '**/*.config.js',
+      '**/*.config.ts',
+      'src/generated/**',
+    ],
   },
 ];

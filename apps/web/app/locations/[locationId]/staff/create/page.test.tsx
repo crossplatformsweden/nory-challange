@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import CreateStaffPage from './page';
-import { useCreateStaffAtLocation } from '@nory/api-client';
+import { useCreateStaffAtLocation } from '@repo/api-client';
 
 /**
  * Testing Guide:
@@ -28,7 +28,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock the API client hook
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useCreateStaffAtLocation: jest.fn(),
 }));
 

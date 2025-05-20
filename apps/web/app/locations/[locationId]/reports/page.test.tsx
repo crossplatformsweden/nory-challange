@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import ReportsOverviewPage from './page';
 import { useParams, useRouter } from 'next/navigation';
-import { useGetLocationById } from '@nory/api-client';
+import { useGetLocationById } from '@repo/api-client';
 
 /**
  * Testing Guide:
@@ -26,7 +26,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock the API client hook
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useGetLocationById: jest.fn(),
 }));
 

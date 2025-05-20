@@ -1,8 +1,8 @@
-import '@testing-library/jest-dom';
+require('@testing-library/jest-dom');
 
 // Add TextEncoder and TextDecoder polyfills
-import { TextEncoder, TextDecoder } from 'util';
-import { Response, Request, Headers } from 'node-fetch';
+const { TextEncoder, TextDecoder } = require('util');
+require('whatwg-fetch');
 
 // Mock BroadcastChannel
 class MockBroadcastChannel {
@@ -13,7 +13,4 @@ class MockBroadcastChannel {
 
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
-global.Response = Response;
-global.Request = Request;
-global.Headers = Headers;
 global.BroadcastChannel = MockBroadcastChannel;

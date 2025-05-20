@@ -34,3 +34,6 @@ yarn-error.log*
 
 # ui
 dist/
+build-test-result.txt
+build-test-result.txt
+apps/web/playwright-report.json

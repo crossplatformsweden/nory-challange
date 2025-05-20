@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import InventoryStockPage from './page';
-import { useParams, useRouter } from 'next/navigation';
-import { useListInventoryStock } from '@nory/api-client';
+import { useParams } from 'next/navigation';
+import { useListInventoryStock } from '@repo/api-client';
 
 /**
  * Testing Guide:
@@ -27,7 +27,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock the API hook
-jest.mock('@nory/api-client', () => ({
+jest.mock('@repo/api-client', () => ({
   useListInventoryStock: jest.fn(),
 }));
 

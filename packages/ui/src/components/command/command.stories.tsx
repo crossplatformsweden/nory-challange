@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react';
 import {
   Command,
-  CommandDialog,
   CommandInput,
   CommandList,
   CommandEmpty,
@@ -9,31 +8,31 @@ import {
   CommandItem,
   CommandShortcut,
   CommandSeparator,
-} from "./index";
-import { 
-  Calculator, 
-  Calendar, 
-  CreditCard, 
-  Settings, 
+} from './index';
+import {
+  Calculator,
+  Calendar,
+  CreditCard,
+  Settings,
   Smile,
-  User
-} from "lucide-react";
-import { useState } from "react";
+  User,
+} from 'lucide-react';
+import { useState } from 'react';
 
 const meta: Meta<typeof Command> = {
-  title: "Components/Command",
+  title: 'Components/Command',
   component: Command,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
 };
 
 export default meta;
 type Story = StoryObj<typeof Command>;
 
 const DefaultTemplate = (args: any) => (
-  <Command className="rounded-lg border shadow-md w-[400px]" {...args}>
+  <Command className="w-[400px] rounded-lg border shadow-md" {...args}>
     <CommandInput placeholder="Type a command or search..." />
     <CommandList>
       <CommandEmpty>No results found.</CommandEmpty>
@@ -79,39 +78,41 @@ export const Default: Story = {
 
 // Wrapper component to avoid rules-of-hooks ESLint errors
 const WithFilterWrapper = (args: any) => {
-  const [search, setSearch] = useState("");
-  
+  const [search, setSearch] = useState('');
+
   const items = [
     {
-      group: "General",
+      group: 'General',
       items: [
-        { name: "Dashboard", icon: <Calendar className="mr-2 h-4 w-4" /> },
-        { name: "Profile", icon: <User className="mr-2 h-4 w-4" /> },
-        { name: "Settings", icon: <Settings className="mr-2 h-4 w-4" /> },
+        { name: 'Dashboard', icon: <Calendar className="mr-2 h-4 w-4" /> },
+        { name: 'Profile', icon: <User className="mr-2 h-4 w-4" /> },
+        { name: 'Settings', icon: <Settings className="mr-2 h-4 w-4" /> },
       ],
     },
     {
-      group: "Finance",
+      group: 'Finance',
       items: [
-        { name: "Billing", icon: <CreditCard className="mr-2 h-4 w-4" /> },
-        { name: "Transactions", icon: <Calculator className="mr-2 h-4 w-4" /> },
+        { name: 'Billing', icon: <CreditCard className="mr-2 h-4 w-4" /> },
+        { name: 'Transactions', icon: <Calculator className="mr-2 h-4 w-4" /> },
       ],
     },
   ];
-  
-  const filteredItems = search 
-    ? items.map(group => ({
-        ...group,
-        items: group.items.filter(item => 
-          item.name.toLowerCase().includes(search.toLowerCase())
-        ),
-      })).filter(group => group.items.length > 0)
+
+  const filteredItems = search
+    ? items
+        .map((group) => ({
+          ...group,
+          items: group.items.filter((item) =>
+            item.name.toLowerCase().includes(search.toLowerCase())
+          ),
+        }))
+        .filter((group) => group.items.length > 0)
     : items;
-  
+
   return (
-    <Command className="rounded-lg border shadow-md w-[400px]" {...args}>
-      <CommandInput 
-        placeholder="Type to search..." 
+    <Command className="w-[400px] rounded-lg border shadow-md" {...args}>
+      <CommandInput
+        placeholder="Type to search..."
         value={search}
         onValueChange={setSearch}
       />
@@ -123,7 +124,7 @@ const WithFilterWrapper = (args: any) => {
           <div key={group.group}>
             {index > 0 && <CommandSeparator />}
             <CommandGroup heading={group.group}>
-              {group.items.map(item => (
+              {group.items.map((item) => (
                 <CommandItem key={item.name}>
                   {item.icon}
                   <span>{item.name}</span>
@@ -142,22 +143,22 @@ export const WithFilter: Story = {
 };
 
 // Wrapper component for dialog story
-const WithDialogWrapper = (args: any) => {
-  const [open, setOpen] = useState(false);
-  
+const WithDialogWrapper = () => {
   return (
-    <div className="p-4 border rounded-md w-[400px]">
+    <div className="w-[400px] rounded-md border p-4">
       <p className="mb-4">
-        Press <kbd className="px-1 py-0.5 border rounded-md text-sm">Ctrl K</kbd> to open the command dialog
+        Press{' '}
+        <kbd className="rounded-md border px-1 py-0.5 text-sm">Ctrl K</kbd> to
+        open the command dialog
       </p>
-      
-      <div className="text-center text-sm text-muted-foreground">
-        (In a real app, pressing Ctrl+K would trigger the dialog.
-        For this demo, the dialog would appear but is mocked here.)
+
+      <div className="text-muted-foreground text-center text-sm">
+        (In a real app, pressing Ctrl+K would trigger the dialog. For this demo,
+        the dialog would appear but is mocked here.)
       </div>
-      
-      <div className="mt-4 p-4 border border-dashed rounded-md">
-        <p className="text-sm font-medium mb-2">Command Dialog Preview:</p>
+
+      <div className="mt-4 rounded-md border border-dashed p-4">
+        <p className="mb-2 text-sm font-medium">Command Dialog Preview:</p>
         <Command className="rounded-lg border shadow-md">
           <CommandInput placeholder="Type a command or search..." />
           <CommandList>
@@ -182,11 +183,11 @@ const WithDialogWrapper = (args: any) => {
 // This is just a mock example since the Dialog would create portals
 // and doesn't work well within Storybook without additional setup
 export const WithDialog: Story = {
-  render: (args) => <WithDialogWrapper {...args} />,
+  render: () => <WithDialogWrapper />,
 };
 
 const MultipleColumnsTemplate = (args: any) => (
-  <Command className="rounded-lg border shadow-md w-[400px]" {...args}>
+  <Command className="w-[400px] rounded-lg border shadow-md" {...args}>
     <CommandInput placeholder="Type a command or search..." />
     <CommandList>
       <CommandEmpty>No results found.</CommandEmpty>

@@ -1,8 +1,8 @@
 'use client';
 
 import { FC } from 'react';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { useListLocationIngredientCosts } from '@nory/api-client';
+import { useParams, useRouter } from 'next/navigation';
+import { useListLocationIngredientCosts } from '@repo/api-client';
 
 /**
  * // Update this page and corresponding test files. Make sure to use testId. And DaisyUI. Look in  utils/nextjsroutes.md To see what hook to use for this page. Source that hook and visualize/use it with daisyUI. Also look for the fakerjs implementation of that hook tanstack by genertaion orval noryApiClient. We will use the faker version in all tests. So all data coming will be random. So just test testId and hasValue() or similar. Use NextJS best practive for routing images etc. Not actual values. Use best pracitce for visualizing forms with use react-hook-form make sure check package.json with available libraries. Dont install any other libraries. For this File make sure you only change the page.tsx page.test.tsx and page.test.e2e.tsx. Verify using gh cli that its only max this 3 files changed. NO OTHER FILE. LEAVE THIS COMMENT IN THE FILE DO NOT REMOVE.
@@ -32,7 +32,7 @@ import { useListLocationIngredientCosts } from '@nory/api-client';
  * Example implementation using React Query and generated hooks:
  * 
  * import React from 'react';
- * import { useListLocationIngredientCosts } from '@nory/api-client';
+ * import { useListLocationIngredientCosts } from '@repo/api-client';
  * 
  * // Create a client
  * const queryClient = new QueryClient();
@@ -64,7 +64,6 @@ interface IngredientCostsListPageProps {}
 const IngredientCostsListPage: FC<IngredientCostsListPageProps> = () => {
   const { locationId } = useParams();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const { data, isLoading, error } = useListLocationIngredientCosts(
     locationId as string
