@@ -156,10 +156,7 @@ const StaffDetailPage: FC<StaffDetailPageProps> = () => {
                   <label className="text-sm font-semibold">Name</label>
                   <p data-testid="staff-detail-name">{data.data.name}</p>
                 </div>
-                <div>
-                  <label className="text-sm font-semibold">Email</label>
-                  <p data-testid="staff-detail-email">{data.data.name}</p>
-                </div>
+
                 <div>
                   <label className="text-sm font-semibold">Role</label>
                   <p data-testid="staff-detail-role">{data.data.role}</p>

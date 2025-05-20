@@ -31,13 +31,9 @@ describe('MenuItemDetailPage', () => {
   const mockMenuItemId = '456';
   const mockMenuItem = {
     id: mockMenuItemId,
-    name: 'Test Menu Item',
+    recipeId: '789',
     price: 9.99,
-    category: 'Test Category',
-    description: 'Test Description',
-    isActive: true,
-    createdAt: '2024-01-01T00:00:00Z',
-    updatedAt: '2024-01-02T00:00:00Z',
+    modifierIds: ['mod1', 'mod2'],
   };
 
   beforeEach(() => {
@@ -49,7 +45,7 @@ describe('MenuItemDetailPage', () => {
 
     // Mock useGetLocationMenuItemById
     (useGetLocationMenuItemById as jest.Mock).mockReturnValue({
-      data: mockMenuItem,
+      data: { data: mockMenuItem },
       isLoading: false,
       error: null,
     });
@@ -109,29 +105,20 @@ describe('MenuItemDetailPage', () => {
     expect(screen.getByTestId('menu-item-back-button')).toBeInTheDocument();
 
     // Check menu item details
-    expect(screen.getByTestId('menu-item-name')).toHaveTextContent(
-      mockMenuItem.name
-    );
     expect(screen.getByTestId('menu-item-price')).toHaveTextContent(
       `$${mockMenuItem.price.toFixed(2)}`
     );
-    expect(screen.getByTestId('menu-item-category')).toHaveTextContent(
-      mockMenuItem.category
+    expect(screen.getByTestId('menu-item-recipe-id')).toHaveTextContent(
+      mockMenuItem.recipeId
     );
-    expect(screen.getByTestId('menu-item-description')).toHaveTextContent(
-      mockMenuItem.description
-    );
-    expect(screen.getByTestId('menu-item-status')).toHaveTextContent('Active');
-    expect(screen.getByTestId('menu-item-created-at')).toHaveTextContent(
-      new Date(mockMenuItem.createdAt).toLocaleDateString()
-    );
-    expect(screen.getByTestId('menu-item-updated-at')).toHaveTextContent(
-      new Date(mockMenuItem.updatedAt).toLocaleDateString()
-    );
+    expect(screen.getByTestId('menu-item-modifiers')).toBeInTheDocument();
   });
 
-  it('calls useGetLocationMenuItemById with correct menuItemId', () => {
+  it('calls useGetLocationMenuItemById with correct parameters', () => {
     render(<MenuItemDetailPage />);
-    expect(useGetLocationMenuItemById).toHaveBeenCalledWith(mockMenuItemId);
+    expect(useGetLocationMenuItemById).toHaveBeenCalledWith(
+      mockLocationId,
+      mockMenuItemId
+    );
   });
 });

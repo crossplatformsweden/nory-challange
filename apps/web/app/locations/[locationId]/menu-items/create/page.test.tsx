@@ -143,16 +143,17 @@ describe('CreateMenuItemPage', () => {
     // Submit the form without filling required fields
     fireEvent.click(screen.getByTestId('create-menu-item-submit-button'));
 
+    // Wait for validation to complete
     await waitFor(() => {
       expect(
         screen.getByTestId('create-menu-item-recipe-id-error')
       ).toHaveTextContent('Recipe ID is required');
+    });
+
+    await waitFor(() => {
       expect(
         screen.getByTestId('create-menu-item-price-error')
       ).toHaveTextContent('Price is required');
-      expect(
-        screen.getByTestId('create-menu-item-category-error')
-      ).toHaveTextContent('Category is required');
     });
 
     expect(mockMutate).not.toHaveBeenCalled();

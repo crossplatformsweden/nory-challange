@@ -84,7 +84,7 @@ const CreateMenuItemPage: FC<CreateMenuItemPageProps> = () => {
   } = useForm<CreateMenuItemFormData>({
     defaultValues: {
       recipeId: '',
-      price: 0,
+      price: undefined,
       category: '',
       description: '',
       isActive: true,
@@ -98,7 +98,7 @@ const CreateMenuItemPage: FC<CreateMenuItemPageProps> = () => {
         locationId: locationId as string,
         data: {
           recipeId: data.recipeId,
-          price: data.price,
+          price: Number(data.price),
           modifierIds: data.modifierIds,
         },
       },
@@ -108,6 +108,10 @@ const CreateMenuItemPage: FC<CreateMenuItemPageProps> = () => {
         },
       }
     );
+  };
+
+  const handleBack = () => {
+    router.push(`/locations/${locationId}/menu-items`);
   };
 
   return (
@@ -123,13 +127,13 @@ const CreateMenuItemPage: FC<CreateMenuItemPageProps> = () => {
           >
             Create Menu Item
           </h1>
-          <Link
-            href={`/locations/${locationId}/menu-items`}
+          <button
+            onClick={handleBack}
             className="btn btn-ghost"
             data-testid="create-menu-item-back-button"
           >
             Back to List
-          </Link>
+          </button>
         </div>
 
         <div className="divider"></div>
@@ -247,24 +251,18 @@ const CreateMenuItemPage: FC<CreateMenuItemPageProps> = () => {
               </label>
             </div>
 
-            {error && (
-              <div
-                className="alert alert-error"
-                data-testid="create-menu-item-error"
-              >
-                <span>Error creating menu item: {error.message}</span>
-              </div>
-            )}
-
             <div className="form-control mt-6">
               <button
                 type="submit"
                 className="btn btn-primary"
-                disabled={isPending}
                 data-testid="create-menu-item-submit-button"
+                disabled={isPending}
               >
                 {isPending ? (
-                  <span className="loading loading-spinner loading-sm"></span>
+                  <span
+                    className="loading loading-spinner loading-sm"
+                    role="status"
+                  />
                 ) : (
                   'Create Menu Item'
                 )}
@@ -272,6 +270,28 @@ const CreateMenuItemPage: FC<CreateMenuItemPageProps> = () => {
             </div>
           </div>
         </form>
+
+        {error && (
+          <div
+            className="alert alert-error mt-4"
+            data-testid="create-menu-item-error"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>Error creating menu item: {error.message}</span>
+          </div>
+        )}
       </div>
     </div>
   );

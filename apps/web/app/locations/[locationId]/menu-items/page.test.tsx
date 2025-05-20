@@ -35,12 +35,16 @@ describe('MenuItemsListPage', () => {
         name: 'Test Item 1',
         price: 9.99,
         category: 'Test Category 1',
+        recipeId: 'recipe-1',
+        modifierIds: ['mod-1', 'mod-2'],
       },
       {
         id: '2',
         name: 'Test Item 2',
         price: 19.99,
         category: 'Test Category 2',
+        recipeId: 'recipe-2',
+        modifierIds: ['mod-3'],
       },
     ],
   };
@@ -97,9 +101,9 @@ describe('MenuItemsListPage', () => {
     expect(screen.getByTestId('menu-items-create-button')).toBeInTheDocument();
 
     // Check table headers
-    expect(screen.getByText('Name')).toBeInTheDocument();
+    expect(screen.getByText('Recipe ID')).toBeInTheDocument();
     expect(screen.getByText('Price')).toBeInTheDocument();
-    expect(screen.getByText('Category')).toBeInTheDocument();
+    expect(screen.getByText('Modifiers')).toBeInTheDocument();
     expect(screen.getByText('Actions')).toBeInTheDocument();
 
     // Check menu items
@@ -107,15 +111,15 @@ describe('MenuItemsListPage', () => {
       expect(
         screen.getByTestId(`menu-item-row-${item.id}`)
       ).toBeInTheDocument();
-      expect(screen.getByTestId(`menu-item-name-${item.id}`)).toHaveTextContent(
-        item.name
-      );
+      expect(
+        screen.getByTestId(`menu-item-recipe-id-${item.id}`)
+      ).toHaveTextContent(item.recipeId);
       expect(
         screen.getByTestId(`menu-item-price-${item.id}`)
       ).toHaveTextContent(`$${item.price.toFixed(2)}`);
       expect(
-        screen.getByTestId(`menu-item-category-${item.id}`)
-      ).toHaveTextContent(item.category);
+        screen.getByTestId(`menu-item-modifiers-${item.id}`)
+      ).toHaveTextContent(item.modifierIds?.join(', ') || 'None');
       expect(
         screen.getByTestId(`menu-item-view-${item.id}`)
       ).toBeInTheDocument();

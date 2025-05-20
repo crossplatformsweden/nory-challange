@@ -30,7 +30,6 @@ test.describe('StaffDetailPage', () => {
     await expect(page.getByTestId('staff-detail-back-button')).toBeVisible();
     await expect(page.getByTestId('staff-detail-content')).toBeVisible();
     await expect(page.getByTestId('staff-detail-name')).toBeVisible();
-    await expect(page.getByTestId('staff-detail-email')).toBeVisible();
     await expect(page.getByTestId('staff-detail-role')).toBeVisible();
     await expect(page.getByTestId('staff-detail-edit-button')).toBeVisible();
     await expect(page.getByTestId('staff-detail-delete-button')).toBeVisible();

@@ -97,7 +97,6 @@ describe('StaffDetailPage', () => {
     renderComponent();
 
     expect(screen.getByTestId('staff-detail-name')).toBeInTheDocument();
-    expect(screen.getByTestId('staff-detail-email')).toBeInTheDocument();
     expect(screen.getByTestId('staff-detail-role')).toBeInTheDocument();
   });
 

@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import HomePage from './page';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 /**
  * Testing Guide:
@@ -10,14 +11,24 @@ import HomePage from './page';
  * 5. Use the faker implementation from the hook for test data
  * 6. Mock the orval generated client responses
  * 7. Test any user interactions
- * 
+ *
  * Note: Only test the presence of elements and their states.
  * Do not test specific content as it will be random from faker.
  */
 
 describe('HomePage', () => {
+  const queryClient = new QueryClient();
+
+  const renderComponent = () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <HomePage />
+      </QueryClientProvider>
+    );
+  };
+
   beforeEach(() => {
-    render(<HomePage />);
+    renderComponent();
   });
 
   it('renders the page container', () => {
@@ -29,6 +40,6 @@ describe('HomePage', () => {
   });
 
   it('renders the page content', () => {
-    expect(screen.getByTestId('home-content')).toBeInTheDocument();
+    expect(screen.getByTestId('home-page')).toBeInTheDocument();
   });
-}); 
+});

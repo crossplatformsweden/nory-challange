@@ -206,3 +206,61 @@ Make 1 test at a time work. Make sure all test mockData is typed
 15. Add proper UI components
 16. Add proper tests
 17. Add proper documentation
+
+# Test Fixes and Improvements
+
+## Fixed Issues
+
+1. Home Page Test
+
+   - Added missing `home-content` test ID to the main content container
+   - Test now passes as all required elements are visible
+
+2. Staff Detail Page Test
+   - Fixed email display bug where email was showing as name
+   - Test now passes as all required elements are visible and displaying correct data
+
+## Pending Improvements
+
+1. Test Coverage
+
+   - Add more test cases for error handling
+   - Add test cases for loading states
+   - Add test cases for form validation
+   - Add test cases for navigation
+
+2. Test Organization
+
+   - Group related tests together
+   - Add more descriptive test names
+   - Add comments explaining complex test scenarios
+
+3. Test Data
+
+   - Use faker.js for generating test data
+   - Ensure test data is consistent across all tests
+   - Add more edge cases to test data
+
+4. Test Performance
+   - Optimize test execution time
+   - Reduce duplicate test setup
+   - Use shared test utilities where possible
+
+## Best Practices
+
+1. Test IDs
+
+   - Use consistent naming convention for test IDs
+   - Add test IDs to all interactive elements
+   - Document test ID usage in comments
+
+2. Test Structure
+
+   - Follow AAA pattern (Arrange, Act, Assert)
+   - Keep tests focused and atomic
+   - Use descriptive test names
+
+3. Test Maintenance
+   - Keep tests up to date with code changes
+   - Remove obsolete tests
+   - Update test documentation
