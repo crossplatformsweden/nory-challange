@@ -6,7 +6,7 @@ TARGET_DIR="$HOME/Source/nory-challange"
 # Step 1: Close Terminal, VSCode, and Cursor
 osascript <<EOF
 tell application "Visual Studio Code" to quit
-tell application "Cursor" to quit
+tell application "Cursor" to quitl
 EOF
 
 # Wait for apps to close
