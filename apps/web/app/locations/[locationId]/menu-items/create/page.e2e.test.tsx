@@ -96,7 +96,7 @@ test.describe('Create Menu Item Page', () => {
     // Submit the form
     await page.getByTestId('create-menu-item-submit-button').click();
 
-    // Instead of navigation, check for a success message or form reset
+    // Check for success message
     await expect(page.getByTestId('create-menu-item-success')).toBeVisible({
       timeout: 1500,
     });
