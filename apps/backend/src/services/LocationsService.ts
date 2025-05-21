@@ -92,6 +92,10 @@ const getLocationById = async ({
   locationId: string;
 }): Promise<ServiceResponse> => {
   try {
+    // Validate input
+    if (!locationId || !locationId.trim()) {
+      return Service.rejectResponse('Invalid location ID', 400);
+    }
     // Mock implementation - create sample data
     const mockLocation = {
       id: locationId,
@@ -172,6 +176,10 @@ const updateLocation = async ({
   locationUpdate: unknown;
 }): Promise<ServiceResponse> => {
   try {
+    // Validate input
+    if (!locationUpdate || Object.keys(locationUpdate as object).length === 0) {
+      return Service.rejectResponse('Invalid update data', 400);
+    }
     // Validate the input data using Zod
     const validatedData = updateLocationBody.parse(locationUpdate);
 
