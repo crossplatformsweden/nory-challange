@@ -116,10 +116,10 @@ test.describe('Create Menu Item Page', () => {
     // Check if the submit button is disabled and shows loading spinner
     await expect(
       page.getByTestId('create-menu-item-submit-button')
-    ).toBeDisabled();
+    ).toBeDisabled({ timeout: 1500 });
     await expect(
       page.getByTestId('create-menu-item-submit-button').locator('span.loading')
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 1500 });
   });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {
