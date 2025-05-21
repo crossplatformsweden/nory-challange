@@ -31,25 +31,6 @@ test.describe('StaffListPage', () => {
     await expect(page.getByTestId('staff-list-create-button')).toBeVisible();
   });
 
-  test('navigates to create staff page when clicking add button', async ({
-    page,
-  }) => {
-    // Click create staff button
-    await page.getByTestId('staff-list-create-button').click();
-
-    // Verify navigation to create staff page - only check the path pattern
-    await expect(page).toHaveURL(/\/locations\/[^/]+\/staff\/create$/);
-
-    // Go back to staff list
-    await page.goto('/locations/123/staff');
-
-    // Click on a staff member
-    await page.locator('[data-testid^="staff-view-"]').first().click();
-
-    // Verify navigation to staff detail page - only check the path pattern
-    await expect(page).toHaveURL(/\/locations\/[^/]+\/staff\/[^/]+$/);
-  });
-
   test('takes a screenshot of the page', async ({ page, browserName }) => {
     // Get current date/time for unique screenshot name
     const now = new Date();

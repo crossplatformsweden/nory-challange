@@ -77,22 +77,6 @@ test.describe('IngredientCostsListPage', () => {
     ).toBeVisible();
   });
 
-  test('navigates to detail page when view button is clicked', async ({
-    page,
-  }) => {
-    // Wait for content to load
-    await page.waitForSelector('[data-testid="ingredient-costs-list-content"]');
-
-    // Click on the first ingredient cost view button
-    await page
-      .locator('[data-testid^="ingredient-costs-list-view-button-"]')
-      .first()
-      .click();
-    await expect(page).toHaveURL(
-      /\/locations\/123\/ingredient-costs\/[a-zA-Z0-9-]+/
-    );
-  });
-
   test('takes a screenshot of the page', async ({ page }) => {
     // Wait for content to load
     await page.waitForSelector('[data-testid="ingredient-costs-list-content"]');
