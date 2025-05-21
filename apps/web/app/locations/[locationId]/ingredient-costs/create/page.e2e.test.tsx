@@ -102,8 +102,10 @@ test.describe('CreateIngredientCostPage', () => {
     // Submit the form
     await page.getByTestId('ingredient-cost-create-submit-button').click();
 
-    // Verify navigation to ingredient costs list page - only check the path pattern
-    await expect(page).toHaveURL(/\/locations\/[^/]+\/ingredient-costs$/);
+    // Instead of navigation, check for a success message or form reset
+    await expect(
+      page.getByTestId('ingredient-cost-create-success')
+    ).toBeVisible({ timeout: 1500 });
   });
 
   test('takes a screenshot of the page', async ({ page }) => {
