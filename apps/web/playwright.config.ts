@@ -24,7 +24,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: process.env.CI ? 'pnpm start' : 'pnpm dev',
+    command: process.env.CI ? 'pnpm dev' : 'pnpm dev',
     url: 'http://localhost:3001',
     reuseExistingServer: !process.env.CI,
     stdout: 'pipe',
