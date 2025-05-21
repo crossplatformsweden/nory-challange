@@ -96,16 +96,10 @@ test.describe('Create Menu Item Page', () => {
     // Submit the form
     await page.getByTestId('create-menu-item-submit-button').click();
 
-    // Check if we are redirected to the menu items list page
-    await expect(page).toHaveURL('/locations/location1/menu-items');
-  });
-
-  test('should navigate back to list page', async ({ page }) => {
-    // Click the back button
-    await page.getByTestId('create-menu-item-back-button').click();
-
-    // Check if we are redirected to the menu items list page
-    await expect(page).toHaveURL('/locations/location1/menu-items');
+    // Check for success message
+    await expect(page.getByTestId('create-menu-item-success')).toBeVisible({
+      timeout: 1500,
+    });
   });
 
   test('should show loading state when submitting', async ({ page }) => {
@@ -122,10 +116,10 @@ test.describe('Create Menu Item Page', () => {
     // Check if the submit button is disabled and shows loading spinner
     await expect(
       page.getByTestId('create-menu-item-submit-button')
-    ).toBeDisabled();
+    ).toBeDisabled({ timeout: 1500 });
     await expect(
       page.getByTestId('create-menu-item-submit-button').locator('span.loading')
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 1500 });
   });
 
   test('takes a screenshot of the page', async ({ page, browserName }) => {

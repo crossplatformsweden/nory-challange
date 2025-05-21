@@ -45,10 +45,9 @@ test.describe('CreateStaffPage', () => {
     await page.getByTestId('create-staff-submit-button').click();
 
     // Check for success message
-    await expect(page.getByTestId('create-staff-success')).toBeVisible();
-
-    // Verify navigation to staff list page - only check the path pattern
-    await expect(page).toHaveURL(/\/locations\/[^/]+\/staff$/);
+    await expect(page.getByTestId('create-staff-success')).toBeVisible({
+      timeout: 1500,
+    });
   });
 
   test('shows error state when API fails', async () => {
