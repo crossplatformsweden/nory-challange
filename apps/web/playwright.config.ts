@@ -7,7 +7,7 @@ export default defineConfig({
   testMatch: '**/*.e2e.test.{ts,tsx}', // Match your test file pattern
   fullyParallel: true,
   retries: process.env.CI ? 2 : 1,
-  workers: process.env.CI ? 1 : 2,
+  workers: process.env.CI ? 1 : 4,
   reporter: process.env.CI
     ? [['dot'], ['json', { outputFile: 'playwright-report.json' }]]
     : [['dot'], ['json', { outputFile: 'playwright-report.json' }]],
@@ -24,7 +24,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'pnpm dev',
+    command: 'pnpm build && pnpm start',
     url: 'http://localhost:3001',
     reuseExistingServer: !process.env.CI,
     stdout: 'pipe',
