@@ -46,7 +46,7 @@ tell application "System Events"
         delay 1
         key code 36 -- press Enter
         delay 2
-        keystroke "read Todo.me and do not use --verify-ignore in any commit if all tasks are complete commit and push using git or gh cli. Verify buildserver pullrequest if everything is complete and test is green. Plan and think then execute! Dont ask. Execute! Start with a task!"
+        keystroke "see build-test-result.txt and read todo.md and do not use --verify-ignore in any commit if all tasks are complete commit and push using git or gh cli. Verify buildserver pullrequest if everything is complete and test is green. Plan and think then execute! Dont ask. Execute! Start with a task!"
         delay 0.5
         key code 36 -- press Enter
     end tell
