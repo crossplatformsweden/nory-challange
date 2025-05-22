@@ -139,3 +139,5 @@ while true; do
         echo "[*] Build status: $STATUS... still waiting"
     fi
 done
+
+echo "[run pnpm all] to test locally"
