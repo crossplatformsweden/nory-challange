@@ -17,5 +17,5 @@ sleep 2
 
 # Open a new Terminal and run external-test
 osascript -e 'tell application "Terminal"
-    do script "cd /Users/xemil/Source/nory-challange && pnpm external-test"
+    do script "cd /Users/xemil/Source/nory-challange && pnpm external-test && todo run here:"
 end tell'
