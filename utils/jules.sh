@@ -41,6 +41,13 @@ EOF
 
 gh auth status
 
+# === SKIP PR IF ON MAIN BRANCH ===
+if [ "$BRANCH" == "main" ]; then
+    echo "✅ You are on the main branch. No pull request needed."
+    echo "🎉 Success. Nothing more to do."
+    exit 0
+fi
+
 # === COMMIT AND PUSH ===
 echo "[*] Checking for files to commit..."
 git add .
@@ -52,12 +59,16 @@ else
 fi
 
 # === PR CHECK / CREATE ===
-echo "[*] Checking or creating pull request..."
+echo "[*] Checking or creating pull request for branch '$BRANCH'..."
 PR_URL=$(gh pr list --head "$BRANCH" --json url -q '.[0].url')
+
 if [ -z "$PR_URL" ]; then
-    PR_URL=$(gh pr create --base main --head "$BRANCH" --title "$COMMIT_MSG" --body "Automated PR by Jules script" --json url -q .url)
+    echo "[*] Creating pull request..."
+    gh pr create --base main --head "$BRANCH" --title "$COMMIT_MSG" --body "Automated PR by Jules script"
+    PR_URL=$(gh pr list --head "$BRANCH" --json url -q '.[0].url')
 fi
-echo "[*] PR: $PR_URL"
+
+echo "[*] Pull request created or found: $PR_URL"
 
 # === WAIT FOR BUILD RESULT ===
 echo "[*] Waiting for '🌿 Feature Branch Workflow' to complete on branch '$BRANCH'..."
