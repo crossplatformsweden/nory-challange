@@ -6,7 +6,15 @@ module.exports = {
   moduleFileExtensions: ['ts', 'js', 'json'],
   testMatch: ['**/?(*.)+(spec|test).[tj]s'],
   coverageDirectory: '../coverage',
-  collectCoverageFrom: ['**/*.{ts,js}', '!**/node_modules/**'],
+  collectCoverageFrom: ['**/*.{ts,tsx}', '!**/*.d.ts', '!**/node_modules/**', '!**/dist/**', '!**/build/**'],
+  coverageThreshold: {
+    global: {
+      branches: 50,
+      functions: 50,
+      lines: 50,
+      statements: 50,
+    },
+  },
   setupFilesAfterEnv: [],
   extensionsToTreatAsEsm: ['.ts'],
   transform: {
