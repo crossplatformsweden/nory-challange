@@ -25,7 +25,8 @@
     "external-test": "osascript -e 'tell application \"Terminal\" to do script \"cd ~/Source/nory-challange && pnpm all > build-test-result.txt 2>&1; pnpm cursor-ai\"'",
     "external-clicktest": "osascript -e 'tell application \"Terminal\" to do script \"cd ~/Source/nory-challange && pnpm --filter=web run test:e2e > clickteste2e.txt 2>&1\"'",
     "all": "pnpm build --filter=./packages/* && pnpm check-types --filter=./packages/* && pnpm lint --filter=./packages/* && pnpm test --filter=./packages/* --if-present || true && pnpm build --filter=./apps/* && pnpm check-types --filter=./apps/* && pnpm lint --filter=./apps/* && pnpm test --filter=./apps/* --if-present || true",
-    "cursor-ai": "bash /Users/xemil/Source/nory-challange/cursor_ai.sh"
+    "cursor-ai": "bash /Users/xemil/Source/nory-challange/cursor_ai.sh",
+    "jules": "bash ./utils/jules.sh"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
