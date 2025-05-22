@@ -1,42 +1,42 @@
 #!/bin/bash
 
-# Step 0: Expand path
+# Define target directory
 TARGET_DIR="$HOME/Source/nory-challange"
 
-# Step 1: Close Terminal, VSCode, and Cursor
+# Step 1: Close applications
 osascript <<EOF
 tell application "Visual Studio Code" to quit
 tell application "Cursor" to quit
 EOF
 
-# Wait for apps to close
+# Wait for applications to close
 sleep 2
 
-# Step 2: Open Visual Studio Code at specified path
+# Step 2: Open Visual Studio Code
 open -a "Visual Studio Code" "$TARGET_DIR"
-
-# Wait for VSCode to fully launch and stabilize
 sleep 5
 
-# Step 3: Open Cursor at specified path
+# Step 3: Open Cursor
 open -a "Cursor" "$TARGET_DIR"
+sleep 10
 
-# Wait for Cursor to fully launch and stabilize
-sleep 15
-
-# Step 4: Ensure Cursor window is focused
+# Step 3.5: Position Cursor fullscreen on external monitor (2560x1440 at {-2560, 0})
 osascript <<EOF
 tell application "System Events"
     tell application process "Cursor"
         set frontmost to true
+        delay 0.5
+        try
+            set position of window 1 to {-2560, 0}
+            set size of window 1 to {2560, 1440}
+        end try
     end tell
 end tell
 EOF
 
-# Step 5: Simulate Cmd+Shift+P, search, and type
+# Step 4: Focus Cursor and initiate new chat
 osascript <<EOF
 tell application "System Events"
-    delay 0.5
     tell application process "Cursor"
         set frontmost to true
         delay 1
@@ -44,17 +44,20 @@ tell application "System Events"
         delay 1
         keystroke "Cursor: New Chat"
         delay 1
-        key code 36 -- press Enter
-        delay 2
-        keystroke "read Todo.me and do not use --verify-ignore in any commit if all tasks are complete commit and push using git or gh cli. Verify buildserver pullrequest if everything is complete and test is green. Plan and think then execute! Dont ask. Execute! Start with a task!"
+        key code 36 -- Enter
+        delay 1
+        keystroke "read build-test-result.txt and fix build and lint errors. Run pnpm lint && pnpm build. If it works, commit and push. Update todo.md."
         delay 0.5
-        key code 36 -- press Enter
+        key code 36 -- Enter
     end tell
 end tell
 EOF
 
-# Step 6: After 2 minutes, focus Cursor, run '>Cursor: Focus Chat', and send follow-up message
+
+# Wait for 3 minutes
 sleep 180
+
+# Step 5: Focus chat and send follow-up message
 osascript <<EOF
 tell application "System Events"
     tell application process "Cursor"
@@ -62,19 +65,21 @@ tell application "System Events"
         delay 1
         keystroke "P" using {command down, shift down}
         delay 1
-        keystroke ">Cursor: Focus Chat"
+        keystroke "Cursor: Focus Chat"
         delay 1
-        key code 36 -- press Enter
+        key code 36 -- Enter
         delay 1
-        keystroke "Read backend todo.md and continue with the best approach, follow best practice"
+        keystroke "Continue with the best approach, follow best practices. After changes, update todo.md. Run pnpm all and make commits."
         delay 0.5
-        key code 36 -- press Enter
+        key code 36 -- Enter
     end tell
 end tell
 EOF
 
-# Step 7: After another 2 minutes, repeat follow-up message
-sleep 120
+# Wait for 3 minutes
+sleep 180
+
+# Step 6: Final follow-up message
 osascript <<EOF
 tell application "System Events"
     tell application process "Cursor"
@@ -82,13 +87,100 @@ tell application "System Events"
         delay 1
         keystroke "P" using {command down, shift down}
         delay 1
-        keystroke ">Cursor: Focus Chat"
+        keystroke "Cursor: Focus Chat"
         delay 1
-        key code 36 -- press Enter
+        key code 36 -- Enter
         delay 1
-        keystroke "Read todo.md and continue with the best approach, follow best practice"
+        keystroke "Ensure there are no lint and build errors. If none, make a commit."
         delay 0.5
-        key code 36 -- press Enter
+        key code 36 -- Enter
     end tell
 end tell
 EOF
+
+# Wait for 30 seconds
+sleep 30
+
+# Step 7: Commit changes if any
+cd "$TARGET_DIR"
+if [[ -n $(git status --porcelain) ]]; then
+    git add .
+    git commit -m "Auto save" --no-verify
+    git push origin HEAD --no-verify
+fi
+
+# Step 8: Run pnpm all
+pnpm all
+
+# Step 9: Launch Claude 1 in new iTerm window (left side)
+CLAUDE_CMD_1="claude -p 'See build errors at the end of file build-test-result.txt. Update todo.md and commit and push fixes to relevant files. Think about what files to focus on. Test with pnpm all, plan and execute.'"
+
+osascript <<EOF
+tell application "iTerm"
+    set newWindow to (create window with default profile)
+    tell current session of newWindow
+        write text "$CLAUDE_CMD_1"
+    end tell
+end tell
+EOF
+
+sleep 2
+
+# Position Claude 1 window on left side of main screen
+osascript <<EOF
+tell application "iTerm"
+    set bounds of front window to {0, 0, 720, 900}
+end tell
+EOF
+
+# Get PID of Claude 1
+CLAUDE_PID_1=$(pgrep -n -f "$CLAUDE_CMD_1")
+
+# Wait and kill
+sleep 180
+if [ -n "$CLAUDE_PID_1" ]; then
+    kill "$CLAUDE_PID_1" 2>/dev/null
+fi
+osascript -e 'tell application "iTerm" to close (first window)'
+
+# Step 10: Launch Claude 2 in new iTerm window (right side)
+CLAUDE_CMD_2="claude -p 'Commit and push the code update todo.md about current status and append on top Answer Is the Todo complete?'"
+
+osascript <<EOF
+tell application "iTerm"
+    set newWindow to (create window with default profile)
+    tell current session of newWindow
+        write text "$CLAUDE_CMD_2"
+    end tell
+end tell
+EOF
+
+sleep 2
+
+# Position Claude 2 window on right side of main screen
+osascript <<EOF
+tell application "iTerm"
+    set bounds of front window to {720, 0, 1440, 900}
+end tell
+EOF
+
+# Get PID of Claude 2
+CLAUDE_PID_2=$(pgrep -n -f "$CLAUDE_CMD_2")
+
+# Wait and kill
+sleep 180
+if [ -n "$CLAUDE_PID_2" ]; then
+    kill "$CLAUDE_PID_2" 2>/dev/null
+fi
+osascript -e 'tell application "iTerm" to close (first window)'
+
+# Step 11: Final commit check
+cd "$TARGET_DIR"
+if [[ -n $(git status --porcelain) ]]; then
+    git add .
+    git commit -m "Auto save" --no-verify
+    git push origin HEAD --no-verify
+fi
+
+# Step 12: Optional — close Terminal if you're not in iTerm
+# osascript -e 'tell application "Terminal" to quit'
