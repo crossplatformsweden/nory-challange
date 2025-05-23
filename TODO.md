@@ -1,8 +1,17 @@
 # TODO
 
+## Completed
+
+- [x] Verified existence and minimum 50 lines for all component test and story files (`packages/ui/__tests__/component-files.test.ts`).
+- [x] Updated Jest config to ignore placeholder test files (`packages/ui/jest.config.cjs`).
+- [x] Scaffolded and padded smoke test suites for all components under `packages/ui/src/components`.
+
+## Remaining
+
+- [ ] Flesh out meaningful example stories in `index.stories.tsx` for each component under `packages/ui/src/components`.
+
 ## Uncommitted Changes
 
-- [ ] packages/ui/jest.config.cjs: Update Jest to ignore placeholder test files in components.
 - [ ] packages/ui/**tests**/storyshots.test.ts: add Storyshots smoke test for all component stories.
 
 ## Component Test Stubs
