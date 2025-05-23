@@ -3,6 +3,7 @@
 ## Uncommitted Changes
 
 - [ ] packages/ui/jest.config.cjs: Update Jest to ignore placeholder test files in components.
+- [ ] packages/ui/**tests**/storyshots.test.ts: add Storyshots smoke test for all component stories.
 
 ## Component Test Stubs
 
