@@ -39,7 +39,7 @@ github.com:
     user: $(curl -s -H "Authorization: token $GH_TOKEN" https://api.github.com/user | jq -r .login)
 EOF
 
-gh auth status
+#gh auth status
 
 # === SKIP PR IF ON MAIN BRANCH ===
 if [ "$BRANCH" == "main" ]; then
@@ -48,15 +48,15 @@ if [ "$BRANCH" == "main" ]; then
     exit 0
 fi
 
-# === COMMIT AND PUSH ===
-echo "[*] Checking for files to commit..."
-git add .
-if git diff --cached --quiet; then
-    echo "[*] No files to commit. Continuing to PR and build monitoring."
-else
-    git commit -am "$COMMIT_MSG" --no-verify
-    git push origin "$BRANCH" --no-verify
-fi
+# # === COMMIT AND PUSH ===
+# echo "[*] Checking for files to commit..."
+# git add .
+# if git diff --cached --quiet; then
+#     echo "[*] No files to commit. Continuing to PR and build monitoring."
+# else
+#     git commit -am "$COMMIT_MSG" --no-verify
+#     git push origin "$BRANCH" --no-verify
+# fi
 
 # === PR CHECK / CREATE ===
 echo "[*] Checking or creating pull request for branch '$BRANCH'..."
