@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-// @ts-ignore
-const { testStories } = require('@storybook/test');
+import initStoryshots from '@storybook/addon-storyshots';
 
-testStories({
-  configDir: `${__dirname}/../.storybook`,
+initStoryshots({
+  configPath: `${__dirname}/../.storybook`,
 });
