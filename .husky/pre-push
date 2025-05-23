@@ -2,6 +2,10 @@
 echo "Running full build check before push..."
 pnpm build
 
+# Ensure Playwright browsers are installed
+echo "Installing Playwright browsers..."
+pnpm exec playwright install
+
 # Run tests to make sure everything is working
 echo "Running tests before push..."
 pnpm test
