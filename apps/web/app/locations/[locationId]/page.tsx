@@ -1,10 +1,14 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-// Using the hook as specified in nextjsroutes.md
 import { useGetLocationById } from '@repo/api-client';
+import { StaffList } from './components/StaffList';
+import { LocationMenuItemsList } from './components/LocationMenuItemsList';
+import { LocationIngredientCostsList } from './components/LocationIngredientCostsList';
+import { LocationInventoryStockList } from './components/LocationInventoryStockList';
+import { LocationInventoryMovementsList } from './components/LocationInventoryMovementsList'; // Import the new component
 
 /**
  * // Update this page and corresponding test files. Make sure to use testId. And DaisyUI. Look in  utils/nextjsroutes.md To see what hook to use for this page. Source that hook and visualize/use it with daisyUI. Also look for the fakerjs implementation of that hook tanstack by genertaion orval noryApiClient. We will use the faker version in all tests. So all data coming will be random. So just test testId and hasValue() or similar. Use NextJS best practive for routing images etc. Not actual values. Use best pracitce for visualizing forms with use react-hook-form make sure check package.json with available libraries. Dont install any other libraries. For this File make sure you only change the page.tsx page.test.tsx and page.test.e2e.tsx. Verify using gh cli that its only max this 3 files changed. NO OTHER FILE. LEAVE THIS COMMENT IN THE FILE DO NOT REMOVE.
@@ -63,12 +67,14 @@ import { useGetLocationById } from '@repo/api-client';
 
 interface LocationDetailPageProps {}
 
+type ActiveTab = 'staff' | 'menuItems' | 'ingredientCosts' | 'inventoryStock' | 'inventoryMovements';
+
 const LocationDetailPage: FC<LocationDetailPageProps> = () => {
   const params = useParams();
   const router = useRouter();
   const locationId = params.locationId as string;
+  const [activeTab, setActiveTab] = useState<ActiveTab>('staff');
 
-  // Using the hook as specified in nextjsroutes.md
   const { data, isLoading, error } = useGetLocationById(locationId, {
     query: {
       refetchOnMount: true,
@@ -235,146 +241,89 @@ const LocationDetailPage: FC<LocationDetailPageProps> = () => {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth="2"
-                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" // Staff icon
                     />
                   </svg>
                   Staff
                 </Link>
-
-                <Link
-                  href={`/locations/${data.data.id}/menu-items`}
-                  className="btn btn-outline"
-                  data-testid="location-detail-menu-items-link"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="mr-2 h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                    />
-                  </svg>
-                  Menu Items
-                </Link>
-
-                <Link
-                  href={`/locations/${data.data.id}/sales`}
-                  className="btn btn-outline"
-                  data-testid="location-detail-sales-link"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="mr-2 h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  Sales
-                </Link>
-
-                <Link
-                  href={`/locations/${data.data.id}/ingredient-costs`}
-                  className="btn btn-outline"
-                  data-testid="location-detail-ingredient-costs-link"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="mr-2 h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  Ingredient Costs
-                </Link>
-
-                <Link
-                  href={`/locations/${data.data.id}/inventory-stock`}
-                  className="btn btn-outline"
-                  data-testid="location-detail-inventory-stock-link"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="mr-2 h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                    />
-                  </svg>
-                  Inventory Stock
-                </Link>
-
-                <Link
-                  href={`/locations/${data.data.id}/inventory-movements/record`}
-                  className="btn btn-outline"
-                  data-testid="location-detail-inventory-movements-link"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="mr-2 h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
-                    />
-                  </svg>
-                  Record Movement
-                </Link>
-
-                <Link
-                  href={`/locations/${data.data.id}/reports`}
-                  className="btn btn-outline"
-                  data-testid="location-detail-reports-link"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="mr-2 h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                    />
-                  </svg>
-                  Reports
-                </Link>
+                 {/* Other links are removed as they will be replaced by tabs/sections below */}
               </div>
             </div>
           </div>
+
+          {/* Tabs for Child Entities */}
+          <div role="tablist" className="tabs tabs-lifted tabs-lg" data-testid="location-detail-tabs">
+            <button
+              role="tab"
+              className={`tab ${activeTab === 'staff' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('staff')}
+              data-testid="tab-staff"
+            >
+              Staff
+            </button>
+            <button
+              role="tab"
+              className={`tab ${activeTab === 'menuItems' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('menuItems')}
+              data-testid="tab-menu-items"
+            >
+              Menu Items
+            </button>
+            <button
+              role="tab"
+              className={`tab ${activeTab === 'ingredientCosts' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('ingredientCosts')}
+              data-testid="tab-ingredient-costs"
+            >
+              Ingredient Costs
+            </button>
+            <button
+              role="tab"
+              className={`tab ${activeTab === 'inventoryStock' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('inventoryStock')}
+              data-testid="tab-inventory-stock"
+            >
+              Inventory Stock
+            </button>
+            <button
+              role="tab"
+              className={`tab ${activeTab === 'inventoryMovements' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('inventoryMovements')}
+              data-testid="tab-inventory-movements"
+            >
+              Inventory Movements
+            </button>
+          </div>
+
+          {/* Tab Content */}
+          <div className="p-4 border border-t-0 rounded-b-box bg-base-100" data-testid="location-detail-tab-content">
+            {activeTab === 'staff' && (
+              <div data-testid="content-staff">
+                <StaffList locationId={locationId} />
+              </div>
+            )}
+            {activeTab === 'menuItems' && (
+              <div data-testid="content-menu-items">
+                <LocationMenuItemsList locationId={locationId} />
+              </div>
+            )}
+            {activeTab === 'ingredientCosts' && (
+              <div data-testid="content-ingredient-costs">
+                <LocationIngredientCostsList locationId={locationId} />
+              </div>
+            )}
+            {activeTab === 'inventoryStock' && (
+              <div data-testid="content-inventory-stock">
+                <LocationInventoryStockList locationId={locationId} />
+              </div>
+            )}
+            {activeTab === 'inventoryMovements' && (
+              <div data-testid="content-inventory-movements">
+                <LocationInventoryMovementsList locationId={locationId} />
+              </div>
+            )}
+          </div>
+
         </div>
       )}
     </div>
