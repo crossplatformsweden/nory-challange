@@ -18,7 +18,12 @@ module.exports = {
     "\\.(gif|ttf|eot|svg|png|jpg|jpeg)$": "<rootDir>/__mocks__/fileMock.js",
   },
   setupFilesAfterEnv: ["<rootDir>/jest.setup.cjs"],
-  testPathIgnorePatterns: ["/node_modules/", "/.turbo/", "/dist/"],
+  testPathIgnorePatterns: [
+    "/node_modules/",
+    "/.turbo/",
+    "/dist/",
+    "/src/components/.*\\.test\\.tsx$",
+  ],
   collectCoverageFrom: [
     "src/**/*.{ts,tsx}",
     "!src/**/*.stories.{ts,tsx}",
