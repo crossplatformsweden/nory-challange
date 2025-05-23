@@ -10,10 +10,6 @@
 
 - [ ] Flesh out meaningful example stories in `index.stories.tsx` for each component under `packages/ui/src/components`.
 
-## Uncommitted Changes
-
-- [ ] packages/ui/**tests**/storyshots.test.ts: add Storyshots smoke test for all component stories.
-
 ## Component Test Stubs
 
 For each component directory under `packages/ui/src/components/`, implement a smoke test in `index.test.tsx`:
