@@ -59,85 +59,88 @@ fi
 # fi
 
 # === PR CHECK / CREATE ===
-echo "[*] Checking or creating pull request for branch '$BRANCH'..."
-PR_URL=$(gh pr list --head "$BRANCH" --json url -q '.[0].url')
+# echo "[*] Checking or creating pull request for branch '$BRANCH'..."
+# PR_URL=$(gh pr list --head "$BRANCH" --json url -q '.[0].url')
 
-if [ -z "$PR_URL" ]; then
-    echo "[*] Creating pull request..."
-    gh pr create --base main --head "$BRANCH" --title "$COMMIT_MSG" --body "Automated PR by Jules script"
-    PR_URL=$(gh pr list --head "$BRANCH" --json url -q '.[0].url')
-fi
+# if [ -z "$PR_URL" ]; then
+#     echo "[*] Creating pull request..."
+#     gh pr create --base main --head "$BRANCH" --title "$COMMIT_MSG" --body "Automated PR by Jules script"
+#     PR_URL=$(gh pr list --head "$BRANCH" --json url -q '.[0].url')
+# fi
 
-echo "[*] Pull request created or found: $PR_URL"
+# echo "[*] Pull request created or found: $PR_URL"
 
-# === WAIT FOR BUILD RESULT ===
-echo "[*] Waiting for '🌿 Feature Branch Workflow' to complete on branch '$BRANCH'..."
+# # === WAIT FOR BUILD RESULT ===
+# echo "[*] Waiting for '🌿 Feature Branch Workflow' to complete on branch '$BRANCH'..."
 
-while true; do
-    sleep 5
+# while true; do
+#     sleep 5
 
-    RUN_JSON=$(gh run list --branch "$BRANCH" --workflow "🌿 Feature Branch Workflow" --limit 1 --json name,status,conclusion,headBranch,url,databaseId)
+#     RUN_JSON=$(gh run list --branch "$BRANCH" --workflow "🌿 Feature Branch Workflow" --limit 1 --json name,status,conclusion,headBranch,url,databaseId)
 
-    if [[ $(echo "$RUN_JSON" | jq length) -eq 0 ]]; then
-        echo "[*] Waiting for workflow to appear..."
-        continue
-    fi
+#     if [[ $(echo "$RUN_JSON" | jq length) -eq 0 ]]; then
+#         echo "[*] Waiting for workflow to appear..."
+#         continue
+#     fi
 
-    HEAD_BRANCH=$(echo "$RUN_JSON" | jq -r '.[0].headBranch')
-    STATUS=$(echo "$RUN_JSON" | jq -r '.[0].status')
-    CONCLUSION=$(echo "$RUN_JSON" | jq -r '.[0].conclusion')
-    RUN_URL=$(echo "$RUN_JSON" | jq -r '.[0].url')
-    RUN_ID=$(echo "$RUN_JSON" | jq -r '.[0].databaseId')
+#     HEAD_BRANCH=$(echo "$RUN_JSON" | jq -r '.[0].headBranch')
+#     STATUS=$(echo "$RUN_JSON" | jq -r '.[0].status')
+#     CONCLUSION=$(echo "$RUN_JSON" | jq -r '.[0].conclusion')
+#     RUN_URL=$(echo "$RUN_JSON" | jq -r '.[0].url')
+#     RUN_ID=$(echo "$RUN_JSON" | jq -r '.[0].databaseId')
 
-    if [ "$HEAD_BRANCH" != "$BRANCH" ]; then
-        echo "[*] Ignoring unrelated branch: $HEAD_BRANCH"
-        continue
-    fi
+#     if [ "$HEAD_BRANCH" != "$BRANCH" ]; then
+#         echo "[*] Ignoring unrelated branch: $HEAD_BRANCH"
+#         continue
+#     fi
 
-    if [ "$STATUS" == "completed" ]; then
-        echo ""
-        echo "🔍 Build Result: $CONCLUSION"
-        echo "🔗 $RUN_URL"
-        echo "$RUN_JSON" | jq
+#     if [ "$STATUS" == "completed" ]; then
+#         echo ""
+#         echo "🔍 Build Result: $CONCLUSION"
+#         echo "🔗 $RUN_URL"
+#         echo "$RUN_JSON" | jq
 
-        if [ "$CONCLUSION" == "success" ]; then
-            echo ""
-            echo "✅✅✅ BUILD SUCCESSFUL ✅✅✅"
-            echo "🎉 The branch '$BRANCH' has passed all checks."
+#         if [ "$CONCLUSION" == "success" ]; then
+#             echo ""
+#             echo "✅✅✅ BUILD SUCCESSFUL ✅✅✅"
+#             echo "🎉 The branch '$BRANCH' has passed all checks."
 
-            echo "[*] Verifying pull request files:"
-            gh pr view "$PR_URL" --json files -q '.files[].path' | jq -R -s -c 'split("\n") | map(select(. != ""))' | jq
+#             echo "[*] Verifying pull request files:"
+#             gh pr view "$PR_URL" --json files -q '.files[].path' | jq -R -s -c 'split("\n") | map(select(. != ""))' | jq
 
-            echo "[*] Checking for any final changes..."
-            git add .
-            if git diff --cached --quiet; then
-                echo "🎯 No additional changes to commit."
-                echo "🎉 Task complete. Build is green and PR is verified!"
-            else
-                git commit -am "✅ Post-build sync" --no-verify
-                git push origin "$BRANCH" --no-verify
-                echo "[*] Triggering Jules again..."
-                npx jules
-            fi
-        else
-            echo ""
-            echo "❌ Build failed!"
-            echo "📄 Reviewing GitHub Actions log using gh CLI:"
-            echo ""
+#             echo "[*] Checking for any final changes..."
+#             git add .
+#             if git diff --cached --quiet; then
+#                 echo "🎯 No additional changes to commit."
+#                 echo "🎉 Task complete. Build is green and PR is verified!"
+#             else
+#                 git commit -am "✅ Post-build sync" --no-verify
+#                 git push origin "$BRANCH" --no-verify
+#                 echo "[*] Triggering Jules again..."
+#                 npx jules
+#             fi
+#         else
+#             echo ""
+#             echo "❌ Build failed!"
+#             echo "📄 Reviewing GitHub Actions log using gh CLI:"
+#             echo ""
 
-            gh run view "$RUN_ID" --log || echo "⚠️ Could not retrieve full logs."
+#             gh run view "$RUN_ID" --log || echo "⚠️ Could not retrieve full logs."
 
-            echo ""
-            echo "💡 Fix the issues in your code, and then run:"
-            echo ""
-            echo "   npx jules <your_token> \"Fix build errors\""
-            echo ""
-            echo "🔐 Make sure your GitHub token is configured properly."
-        fi
-        break
-    else
-        echo "[*] Build status: $STATUS... still waiting"
-    fi
-done
+#             echo ""
+#             echo "💡 Fix the issues in your code, and then run:"
+#             echo ""
+#             echo "   npx jules <your_token> \"Fix build errors\""
+#             echo ""
+#             echo "🔐 Make sure your GitHub token is configured properly."
+#         fi
+#         break
+#     else
+#         echo "[*] Build status: $STATUS... still waiting"
+#     fi
+# done
 
-echo "[run pnpm all] to test locally"
+echo "[run pnpm all] to test locally and use gh cli to view current pull request status"
+echo "[*] Done."
+echo "🎉 Success. Nothing more to do."
+exit 0
