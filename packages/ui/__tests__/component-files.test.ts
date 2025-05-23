@@ -46,8 +46,14 @@ describe('Check for component test and story files in packages/ui', () => {
       expect(fs.existsSync(storyFilePath)).toBe(true);
     });
 
-    it(`should have at least 50 lines for ${relativePath}`, () => {
-      const content = fs.readFileSync(file, 'utf-8');
+    it(`test file ${relativePath} should have at least 50 lines`, () => {
+      const content = fs.readFileSync(testFilePath, 'utf-8');
+      const lineCount = content.split(/\r?\n/).length;
+      expect(lineCount).toBeGreaterThanOrEqual(50);
+    });
+
+    it(`story file ${relativePath} should have at least 50 lines`, () => {
+      const content = fs.readFileSync(storyFilePath, 'utf-8');
       const lineCount = content.split(/\r?\n/).length;
       expect(lineCount).toBeGreaterThanOrEqual(50);
     });
