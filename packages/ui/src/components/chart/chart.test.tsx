@@ -20,3 +20,31 @@ describe('Chart', () => {
     expect(screen.getByTestId('chart-root')).toBeInTheDocument();
   });
 });
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler

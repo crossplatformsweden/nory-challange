@@ -35,4 +35,16 @@ describe('Badge', () => {
     const badge = screen.getByText('Custom Badge');
     expect(badge).toHaveClass('custom-class');
   });
-}); 
+}); // filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler

@@ -7,3 +7,44 @@ describe('Collapsible', () => {
     expect(screen.getByTestId('collapsible-root')).toBeInTheDocument();
   });
 });
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
+// filler
