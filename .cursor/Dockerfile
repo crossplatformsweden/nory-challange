@@ -37,7 +37,7 @@ WORKDIR /app
 COPY . .
 
 # Install dependencies and browsers
-RUN pnpm install && pnpm exec playwright install --with-deps chromium
+RUN pnpm install && pnpm exec playwright install
 
 # Default command
 CMD [ "bash" ]
